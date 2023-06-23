@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.home;
+package com.fitstir.fitstirapp.ui.goals;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.databinding.FragmentHomeBinding;
+import com.fitstir.fitstirapp.databinding.FragmentHealthBinding;
 
-public class HomeFragment extends Fragment {
+public class GoalsFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentHealthBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        GoalsViewModel goalsViewModel =
+                new ViewModelProvider(this).get(GoalsViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentHealthBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textHealth;
+        goalsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

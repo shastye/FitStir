@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.dashboard;
+package com.fitstir.fitstirapp.ui.workouts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.databinding.FragmentDashboardBinding;
+import com.fitstir.fitstirapp.databinding.FragmentWorkoutsBinding;
 
-public class DashboardFragment extends Fragment {
+public class WorkoutsFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentWorkoutsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        WorkoutsViewModel workoutsViewModel =
+                new ViewModelProvider(this).get(WorkoutsViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentWorkoutsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textWorkouts;
+        workoutsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

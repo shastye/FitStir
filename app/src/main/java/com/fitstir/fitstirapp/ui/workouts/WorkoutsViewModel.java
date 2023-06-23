@@ -1,16 +1,16 @@
-package com.fitstir.fitstirapp.ui.dashboard;
+package com.fitstir.fitstirapp.ui.workouts;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class WorkoutsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public WorkoutsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is workouts fragment");
     }
 
     public LiveData<String> getText() {

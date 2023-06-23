@@ -1,16 +1,16 @@
-package com.fitstir.fitstirapp.ui.notifications;
+package com.fitstir.fitstirapp.ui.health;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class HealthViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public HealthViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is health fragment");
     }
 
     public LiveData<String> getText() {
