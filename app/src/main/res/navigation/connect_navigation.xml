@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/connect_navigation"
+    app:startDestination="@id/navigation_initial">
+
+    <fragment
+        android:id="@+id/navigation_initial"
+        android:name="com.fitstir.fitstirapp.ui.connect.InitialFragment"
+        android:label="Welcome!"
+        tools:layout="@layout/fragment_initial" />
+</navigation>
