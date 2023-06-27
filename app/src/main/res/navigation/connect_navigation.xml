@@ -17,6 +17,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_navigation_initial_to_navigation_sign_up"
+            app:destination="@id/navigation_sign_up" />
     </fragment>
 
     <fragment
@@ -24,5 +27,21 @@
         android:name="com.fitstir.fitstirapp.ui.connect.LogInFragment"
         android:label="Log In!"
         tools:layout="@layout/fragment_log_in" />
+
+    <fragment
+        android:id="@+id/navigation_sign_up"
+        android:name="com.fitstir.fitstirapp.ui.connect.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_navigation_sign_up_to_navigation_question"
+            app:destination="@id/navigation_question" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_question"
+        android:name="com.fitstir.fitstirapp.ui.connect.QuestionFragment"
+        android:label="fragment_question"
+        tools:layout="@layout/fragment_question" />
 
 </navigation>

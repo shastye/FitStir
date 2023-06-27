@@ -46,6 +46,11 @@ public class InitialFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_initial_to_navigation_log_in)
         );
 
+        Button signUpButton = root.findViewById(R.id.initial_sign_up_button);
+        signUpButton.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.action_navigation_initial_to_navigation_sign_up)
+        );
+
         // End
 
         return root;
