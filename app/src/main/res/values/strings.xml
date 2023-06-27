@@ -4,4 +4,6 @@
     <string name="title_workouts">Workouts</string>
     <string name="title_health">Health</string>
     <string name="title_explore">Explore</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
 </resources>
