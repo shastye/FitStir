@@ -1,50 +1,52 @@
 package com.fitstir.fitstirapp.ui.connect;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.fitstir.fitstirapp.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.databinding.FragmentInitialBinding;
+import com.fitstir.fitstirapp.ConnectActivity;
+import com.fitstir.fitstirapp.MainActivity;
+import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.databinding.FragmentLogInBinding;
 
 import java.util.Objects;
 
-public class InitialFragment extends Fragment {
+public class LogInFragment extends Fragment {
 
-    private FragmentInitialBinding binding;
+    private FragmentLogInBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ConnectViewModel connectViewModel =
                 new ViewModelProvider(this).get(ConnectViewModel.class);
 
-        binding = FragmentInitialBinding.inflate(inflater, container, false);
+        binding = FragmentLogInBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textInitial;
+        final TextView textView = binding.textLogIn;
         connectViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
-        Button logInButton = root.findViewById(R.id.initial_log_in_button);
-        logInButton.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.action_navigation_initial_to_navigation_log_in)
-        );
+        Button logInButton = root.findViewById(R.id.button_log_in);
+        logInButton.setOnClickListener(v -> {
+            // TODO: Do the log in
+
+            // If logged in
+            Intent myIntent = new Intent(getActivity(), MainActivity.class);
+            Objects.requireNonNull(getActivity()).startActivity(myIntent);
+        });
 
         // End
 
