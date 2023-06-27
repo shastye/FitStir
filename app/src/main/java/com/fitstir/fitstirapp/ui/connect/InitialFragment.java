@@ -1,5 +1,6 @@
 package com.fitstir.fitstirapp.ui.connect;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.fitstir.fitstirapp.R;
 
 import com.fitstir.fitstirapp.databinding.FragmentInitialBinding;
 
+import java.util.Objects;
+
 public class InitialFragment extends Fragment {
 
     private FragmentInitialBinding binding;
@@ -31,6 +34,13 @@ public class InitialFragment extends Fragment {
 
         final TextView textView = binding.textInitial;
         connectViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        // Addition Text Here
+
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
+
+        // End
+
         return root;
     }
 
