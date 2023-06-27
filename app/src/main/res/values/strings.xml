@@ -6,4 +6,6 @@
     <string name="title_explore">Explore</string>
     <string name="sign_up">Sign Up</string>
     <string name="log_in">Log In</string>
+    <string name="log_in_intro">This is the log in fragment.</string>
+    <string name="sign_up_intro">This is the sign up fragment.</string>
 </resources>

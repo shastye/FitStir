@@ -8,10 +8,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.fitstir.fitstirapp.R;
@@ -38,6 +40,11 @@ public class InitialFragment extends Fragment {
         // Addition Text Here
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
+
+        Button logInButton = root.findViewById(R.id.initial_log_in_button);
+        logInButton.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.action_navigation_initial_to_navigation_log_in)
+        );
 
         // End
 
