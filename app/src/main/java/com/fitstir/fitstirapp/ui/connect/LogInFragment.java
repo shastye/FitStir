@@ -46,7 +46,7 @@ public class LogInFragment extends Fragment {
 
         Button ForgotButton = root.findViewById(R.id.button_forgot_pass);
         ForgotButton.setOnClickListener(v->{
-            Navigation.findNavController(v).navigate(R.id.action_navigation_log_in_to_navigation_forgot);
+            Navigation.findNavController(v).navigate(R.id.action_navigation_log_in_to_navigation_forgot_password);
         });
 
         // End

@@ -44,25 +44,25 @@ public class WorkoutsFragment extends Fragment {
             public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
                 switch(_position) {
                     case 0:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_run_club);
                         break;
                     case 1:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_upper_body);
                         break;
                     case 2:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_lower_body);
                         break;
                     case 3:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_weight_lifting);
                         break;
                     case 4:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_circuit_workouts);
                         break;
                     case 5:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_yoga);
                         break;
                     default:
-                        // Show error?
+                        // TODO: Show error?
                         break;
                 }
             }

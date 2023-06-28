@@ -9,7 +9,62 @@
         android:id="@+id/navigation_workouts"
         android:name="com.fitstir.fitstirapp.ui.workouts.WorkoutsFragment"
         android:label="@string/title_workouts"
-        tools:layout="@layout/fragment_workouts" />
+        tools:layout="@layout/fragment_workouts" >
+        <action
+            android:id="@+id/action_navigation_workouts_to_navigation_run_club"
+            app:destination="@id/navigation_run_club" />
+        <action
+            android:id="@+id/action_navigation_workouts_to_navigation_upper_body"
+            app:destination="@id/navigation_upper_body" />
+        <action
+            android:id="@+id/action_navigation_workouts_to_navigation_lower_body"
+            app:destination="@id/navigation_lower_body" />
+        <action
+            android:id="@+id/action_navigation_workouts_to_navigation_weight_lifting"
+            app:destination="@id/navigation_weight_lifting" />
+        <action
+            android:id="@+id/action_navigation_workouts_to_navigation_circuit_workouts"
+            app:destination="@id/navigation_circuit_workouts" />
+        <action
+            android:id="@+id/action_navigation_workouts_to_navigation_yoga"
+            app:destination="@id/navigation_yoga" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_run_club"
+        android:name="com.fitstir.fitstirapp.ui.workouts.RunClubFragment"
+        android:label="Run Club"
+        tools:layout="@layout/fragment_run_club" />
+
+    <fragment
+        android:id="@+id/navigation_upper_body"
+        android:name="com.fitstir.fitstirapp.ui.workouts.UpperBodyFragment"
+        android:label="Upper Body"
+        tools:layout="@layout/fragment_upper_body" />
+
+    <fragment
+        android:id="@+id/navigation_lower_body"
+        android:name="com.fitstir.fitstirapp.ui.workouts.LowerBodyFragment"
+        android:label="Lower Body"
+        tools:layout="@layout/fragment_lower_body" />
+
+    <fragment
+        android:id="@+id/navigation_weight_lifting"
+        android:name="com.fitstir.fitstirapp.ui.workouts.WeightLiftingFragment"
+        android:label="Weight Lifting"
+        tools:layout="@layout/fragment_weight_lifting" />
+
+    <fragment
+        android:id="@+id/navigation_circuit_workouts"
+        android:name="com.fitstir.fitstirapp.ui.workouts.CircuitWorkoutsFragment"
+        android:label="Circuit Workouts"
+        tools:layout="@layout/fragment_circuit_workouts" />
+
+    <fragment
+        android:id="@+id/navigation_yoga"
+        android:name="com.fitstir.fitstirapp.ui.workouts.YogaFragment"
+        android:label="Yoga"
+        tools:layout="@layout/fragment_yoga" />
 
     <fragment
         android:id="@+id/navigation_health"
