@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Change Bottom Navigation to match secondary theme colors -->
     <style name="BottomNavigation">
         <item name="backgroundTint">?attr/colorSecondary</item>

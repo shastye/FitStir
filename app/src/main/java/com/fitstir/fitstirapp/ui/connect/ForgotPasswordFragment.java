@@ -1,10 +1,12 @@
 package com.fitstir.fitstirapp.ui.connect;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+
 import com.fitstir.fitstirapp.R;
 
 public class ForgotPasswordFragment extends Fragment {

@@ -11,11 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentWorkoutsBinding;
 import com.fitstir.fitstirapp.ui.utility.SectionGridAdapter;
-import com.fitstir.fitstirapp.ui.utility.SectionItem;
 import com.fitstir.fitstirapp.ui.utility.Tags;
 
 public class WorkoutsFragment extends Fragment {

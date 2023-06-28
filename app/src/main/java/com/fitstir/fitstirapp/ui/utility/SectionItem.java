@@ -1,7 +1,5 @@
 package com.fitstir.fitstirapp.ui.utility;
 
-import android.graphics.drawable.Drawable;
-
 public class SectionItem {
     int icon;
     String label;
