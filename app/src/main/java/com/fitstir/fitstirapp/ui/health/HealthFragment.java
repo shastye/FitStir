@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentHealthBinding;
@@ -43,25 +44,25 @@ public class HealthFragment extends Fragment {
             public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
                 switch(_position) {
                     case 0:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_calorie_tracker);
                         break;
                     case 1:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_food_guide);
                         break;
                     case 2:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_weight_loss);
                         break;
                     case 3:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_recipes);
                         break;
                     case 4:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_find_dietitian);
                         break;
                     case 5:
-                        // Navigate to section
+                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_diary);
                         break;
                     default:
-                        // Show error?
+                        // TODO: Show error?
                         break;
                 }
             }
