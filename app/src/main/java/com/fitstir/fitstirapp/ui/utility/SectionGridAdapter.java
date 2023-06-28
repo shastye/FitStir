@@ -1,12 +1,15 @@
 package com.fitstir.fitstirapp.ui.utility;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import com.fitstir.fitstirapp.R;
 
@@ -48,6 +51,8 @@ public class SectionGridAdapter extends BaseAdapter {
 
         ImageView icon = view.findViewById(R.id.layout_section_icon);
         icon.setImageResource(item.getIcon());
+        int color = ResourcesCompat.getColor(root.getResources(), R.color.off_white, null);
+        icon.setColorFilter(color);
 
         TextView label = view.findViewById(R.id.layout_section_label);
         label.setText(item.getLabel());
