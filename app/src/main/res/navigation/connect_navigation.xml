@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/connect_navigation"
+    app:startDestination="@id/navigation_initial">
+
+    <fragment
+        android:id="@+id/navigation_initial"
+        android:name="com.fitstir.fitstirapp.ui.connect.InitialFragment"
+        android:label="Welcome!"
+        tools:layout="@layout/fragment_initial" >
+        <action
+            android:id="@+id/action_navigation_initial_to_navigation_log_in"
+            app:destination="@id/navigation_log_in"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_navigation_initial_to_navigation_sign_up"
+            app:destination="@id/navigation_sign_up" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_log_in"
+        android:name="com.fitstir.fitstirapp.ui.connect.LogInFragment"
+        android:label="Log In!"
+        tools:layout="@layout/fragment_log_in" />
+
+    <fragment
+        android:id="@+id/navigation_sign_up"
+        android:name="com.fitstir.fitstirapp.ui.connect.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_navigation_sign_up_to_navigation_question"
+            app:destination="@id/navigation_question" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_question"
+        android:name="com.fitstir.fitstirapp.ui.connect.QuestionFragment"
+        android:label="fragment_question"
+        tools:layout="@layout/fragment_question" />
+
+</navigation>
