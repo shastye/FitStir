@@ -26,7 +26,11 @@
         android:id="@+id/navigation_log_in"
         android:name="com.fitstir.fitstirapp.ui.connect.LogInFragment"
         android:label="Log In!"
-        tools:layout="@layout/fragment_log_in" />
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_navigation_log_in_to_navigation_forgot"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_sign_up"
@@ -43,5 +47,10 @@
         android:name="com.fitstir.fitstirapp.ui.connect.QuestionFragment"
         android:label="fragment_question"
         tools:layout="@layout/fragment_question" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
 
 </navigation>

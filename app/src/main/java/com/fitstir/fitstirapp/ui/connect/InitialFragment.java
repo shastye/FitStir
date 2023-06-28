@@ -2,24 +2,17 @@ package com.fitstir.fitstirapp.ui.connect;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.fitstir.fitstirapp.R;
-
 import com.fitstir.fitstirapp.databinding.FragmentInitialBinding;
-
 import java.util.Objects;
 
 public class InitialFragment extends Fragment {
