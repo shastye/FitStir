@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.ConnectActivity;
 import com.fitstir.fitstirapp.MainActivity;
@@ -43,6 +44,11 @@ public class LogInFragment extends Fragment {
             // If logged in
             Intent myIntent = new Intent(getActivity(), MainActivity.class);
             Objects.requireNonNull(getActivity()).startActivity(myIntent);
+        });
+
+        Button ForgotButton = root.findViewById(R.id.button_forgot_pass);
+        ForgotButton.setOnClickListener(v->{
+            Navigation.findNavController(v).navigate(R.id.action_navigation_log_in_to_navigation_forgot);
         });
 
         // End
