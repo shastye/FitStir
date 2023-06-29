@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.fitstir.fitstirapp.ConnectActivity;
 import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentLogInBinding;
@@ -48,7 +46,7 @@ public class LogInFragment extends Fragment {
 
         Button ForgotButton = root.findViewById(R.id.button_forgot_pass);
         ForgotButton.setOnClickListener(v->{
-            Navigation.findNavController(v).navigate(R.id.action_navigation_log_in_to_navigation_forgot);
+            Navigation.findNavController(v).navigate(R.id.action_navigation_log_in_to_navigation_forgot_password);
         });
 
         // End

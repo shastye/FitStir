@@ -14,4 +14,13 @@
     <string name="log_out_label">Log Out</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_for_section">Label</string>
+    <string name="icon_for_section">icon for section</string>
+    <string name="background_for_section">background for section</string>
+    <string name="run_club_intro">This is the run club fragment</string>
+    <string name="upper_body_intro">This is the upper body fragment.</string>
+    <string name="lower_body_intro">This is the lower body fragment.</string>
+    <string name="weight_lifting_intro">This is the weight lifting fragment.</string>
+    <string name="circuit_workouts_intro">This is the circuit workouts fragment.</string>
+    <string name="yoga_intro">This is the yoga fragment.</string>
 </resources>

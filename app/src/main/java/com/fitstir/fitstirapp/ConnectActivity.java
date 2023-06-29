@@ -8,9 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.ActivityConnectBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class ConnectActivity extends AppCompatActivity {

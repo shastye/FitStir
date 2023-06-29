@@ -51,10 +51,6 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.fitstir.fitstirapp.ui.connect.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" >
-        <action
-            android:id="@+id/action_forgotPasswordFragment_to_navigation_log_in"
-            app:destination="@id/navigation_log_in" />
-    </fragment>
+        tools:layout="@layout/fragment_forgot_password" />
 
 </navigation>
