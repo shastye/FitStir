@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.connect;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -78,6 +80,8 @@ public class LogInFragment extends Fragment {
     String email = user_Email.getText().toString();
     String password = user_Password.getText().toString();
 
+    final Drawable warning = AppCompatResources.getDrawable(requireContext(),R.drawable.baseline_warning_amber_24);
+    warning.setBounds(0,0, warning.getIntrinsicWidth(),warning.getIntrinsicHeight());
     if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
         if(!password.isEmpty() &&  password.length() >= 6){
             auth.signInWithEmailAndPassword(email,password)
@@ -97,21 +101,21 @@ public class LogInFragment extends Fragment {
         }
         else if(password.isEmpty())
         {
-            user_Password.setError("Password can not be empty");
+            user_Password.setError("Password can not be empty",warning);
         }
         else
         {
-            user_Password.setError("Password must be at least 6 characters");
+            user_Password.setError("Password must be at least 6 characters", warning);
         }
 
     }
     else if(email.isEmpty())
     {
-        user_Email.setError("Email can not be empty...Please Try Again!!");
+        user_Email.setError("Email can not be empty...Please Try Again!!", warning);
     }
     else
     {
-        user_Email.setError("Please enter valid Email!!");
+        user_Email.setError("Please enter valid Email!!", warning);
     }
     }
 }
