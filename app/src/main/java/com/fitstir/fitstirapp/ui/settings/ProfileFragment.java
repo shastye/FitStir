@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -27,12 +28,18 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textProfile;
+        final TextView textView = binding.textUserId;
         //settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
 
-
+        CardView editButton = root.findViewById(R.id.editbutton_cardView);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: navigate to edit form
+            }
+        });
 
         // End
 
