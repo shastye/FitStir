@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.ProfileFragment">
+    tools:context=".ui.settings.EditProfileFragment">
 
     <ImageView
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_user_id"
+        android:id="@+id/text_user_id_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.10" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/profile_cardView"
+        android:id="@+id/profile_cardView_edit"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:cardElevation="50dp"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_user_id"
+        app:layout_constraintTop_toBottomOf="@id/text_user_id_edit"
         app:layout_constraintVertical_bias="0.10">
 
         <androidx.cardview.widget.CardView
@@ -52,7 +52,7 @@
             app:cardCornerRadius="250dp">
 
             <ImageView
-                android:id="@+id/profile_image"
+                android:id="@+id/profile_image_edit"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
@@ -62,7 +62,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/editbutton_cardView"
+        android:id="@+id/savebutton_cardView_edit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:clickable="true"
@@ -81,13 +81,13 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
-            android:foreground="@drawable/ic_pencil_black_200dp"
+            android:foreground="@drawable/ic_save_black_200dp"
             android:foregroundTint="?attr/colorOnSecondary" />
     </androidx.cardview.widget.CardView>
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/profile_textbox"
+        android:id="@+id/profile_textbox_edit"
         android:layout_width="320dp"
         android:layout_height="300dp"
         app:cardElevation="50dp"
@@ -95,7 +95,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_cardView"
+        app:layout_constraintTop_toBottomOf="@id/profile_cardView_edit"
         app:layout_constraintVertical_bias="0.30">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -107,7 +107,7 @@
             app:layout_constraintTop_toBottomOf="parent">
 
             <ImageView
-                android:id="@+id/textbox_image"
+                android:id="@+id/textbox_image_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/textblock_background"
@@ -117,7 +117,7 @@
                 app:layout_constraintTop_toBottomOf="parent"/>
 
             <ImageView
-                android:id="@+id/name_image"
+                android:id="@+id/name_image_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_person_black_200dp"
@@ -129,20 +129,20 @@
                 app:layout_constraintVertical_bias="0.1" />
 
             <TextView
-                android:id="@+id/text_name"
+                android:id="@+id/text_name_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Jane Doe"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/name_image"
+                app:layout_constraintStart_toEndOf="@id/name_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_bias="0.11"
                 app:layout_constraintVertical_bias="0.12" />
 
             <ImageView
-                android:id="@+id/age_image"
+                android:id="@+id/age_image_edit"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/ic_age_black_200dp"
@@ -154,20 +154,20 @@
                 app:layout_constraintVertical_bias="0.29" />
 
             <TextView
-                android:id="@+id/text_age"
+                android:id="@+id/text_age_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="21 years old"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/age_image"
+                app:layout_constraintStart_toEndOf="@id/age_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintVertical_bias="0.31" />
 
             <ImageView
-                android:id="@+id/height_image"
+                android:id="@+id/height_image_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_height_black_200dp"
@@ -179,20 +179,20 @@
                 app:layout_constraintVertical_bias="0.49" />
 
             <TextView
-                android:id="@+id/text_height"
+                android:id="@+id/text_height_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5 feet 7 inches"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/height_image"
+                app:layout_constraintStart_toEndOf="@id/height_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_bias="0.14"
                 app:layout_constraintVertical_bias="0.49" />
 
             <ImageView
-                android:id="@+id/weight_image"
+                android:id="@+id/weight_image_edit"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/ic_weight_black_200dp"
@@ -204,20 +204,20 @@
                 app:layout_constraintVertical_bias="0.715" />
 
             <TextView
-                android:id="@+id/text_weight"
+                android:id="@+id/text_weight_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="148 lbs"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/weight_image"
+                app:layout_constraintStart_toEndOf="@id/weight_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintVertical_bias="0.67" />
 
             <ImageView
-                android:id="@+id/email_image"
+                android:id="@+id/email_image_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_email_black_200dp"
@@ -229,14 +229,14 @@
                 app:layout_constraintVertical_bias="0.88" />
 
             <TextView
-                android:id="@+id/text_email"
+                android:id="@+id/text_email_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="janedoe-177@gmail.com"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/email_image"
+                app:layout_constraintStart_toEndOf="@id/email_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_bias="0.32"
                 app:layout_constraintVertical_bias="0.86" />
