@@ -39,6 +39,30 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
+        CardView editButton = root.findViewById(R.id.editpicturebutton_cardView_edit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: do the edit
+                PickImageDialog.build(new PickSetup())
+                        .setOnPickResult(new IPickResult() {
+                            @Override
+                            public void onPickResult(PickResult r) {
+                                if (r.getError() == null) {
+                                    SettingsViewModel.avatar = r.getBitmap();
+                                    ImageView profileImage = root.findViewById(R.id.profile_image_edit);
+                                    profileImage.setImageBitmap(SettingsViewModel.avatar);
+
+                                    Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getContext(), r.getError().getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        })
+                        .show(getParentFragmentManager());
+            }
+        });
+
         // End
 
         return root;
@@ -48,5 +72,10 @@ public class EditProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onPickResult(PickResult r) {
+        return;
     }
 }
