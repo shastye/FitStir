@@ -79,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
                             Runtime.getRuntime().exit(0);
                             break;
                         default:
-                            pageID = SettingsViewModel.getPreviousPage();
+                            pageID = SettingsViewModel.previousPage;
                             break;
                     }
 
                     try {
-                        SettingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());
-                        navController.navigate(pageID);
+                            SettingsViewModel.previousPage = navController.getCurrentDestination().getId();
+                            navController.navigate(pageID);
                     } catch (NullPointerException e) {
                         Log.e("Back up error", e.getMessage());
                     }

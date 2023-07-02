@@ -61,6 +61,7 @@
     </androidx.cardview.widget.CardView>
 
 
+    <!--TODO: make button click animation-->
     <androidx.cardview.widget.CardView
         android:id="@+id/editbutton_cardView"
         android:layout_width="48dp"
@@ -80,7 +81,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_gravity="center"
+            android:layout_margin="12dp"
             android:foreground="@drawable/ic_pencil_black_200dp"
             android:foregroundTint="?attr/colorOnSecondary" />
     </androidx.cardview.widget.CardView>

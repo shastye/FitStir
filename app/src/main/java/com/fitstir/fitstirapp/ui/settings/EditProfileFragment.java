@@ -4,17 +4,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
+import com.vansuita.pickimage.bean.PickResult;
+import com.vansuita.pickimage.bundle.PickSetup;
+import com.vansuita.pickimage.dialog.PickImageDialog;
+import com.vansuita.pickimage.listeners.IPickResult;
 
-public class EditProfileFragment extends Fragment {
+import java.util.Vector;
+
+public class EditProfileFragment extends Fragment implements IPickResult {
 
     private FragmentEditProfileBinding binding;
 
@@ -31,11 +41,51 @@ public class EditProfileFragment extends Fragment {
 
         // Add additions here
 
+        EditText name = root.findViewById(R.id.text_name_edit);
+        EditText age = root.findViewById(R.id.text_age_edit);
+        EditText feet = root.findViewById(R.id.text_height_feet_edit);
+        EditText inches = root.findViewById(R.id.text_height_inches_edit);
+        EditText weight = root.findViewById(R.id.text_weight_edit);
+        EditText email = root.findViewById(R.id.text_email_edit);
+
+        name.setText(SettingsViewModel.name);
+        age.setText(String.valueOf(SettingsViewModel.age));
+        feet.setText(String.valueOf(SettingsViewModel.height_feet));
+        inches.setText(String.valueOf(SettingsViewModel.height_inches));
+        weight.setText(String.valueOf(SettingsViewModel.weight));
+        email.setText(SettingsViewModel.email);
+
         CardView saveButton = root.findViewById(R.id.savebutton_cardView_edit);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: update info and navigate to profile form
+                while (true) {
+                    Vector<EditText> editTexts = new Vector<>();
+
+                    editTexts.add(root.findViewById(R.id.text_name_edit));
+                    editTexts.add(root.findViewById(R.id.text_age_edit));
+                    editTexts.add(root.findViewById(R.id.text_height_feet_edit));
+                    editTexts.add(root.findViewById(R.id.text_height_inches_edit));
+                    editTexts.add(root.findViewById(R.id.text_weight_edit));
+                    editTexts.add(root.findViewById(R.id.text_email_edit));
+
+                    if (!isEmpty(editTexts)) {
+                        SettingsViewModel.name = editTexts.get(0).getText().toString();
+                        SettingsViewModel.age = Integer.parseInt(editTexts.get(1).getText().toString());
+                        SettingsViewModel.height_feet = Integer.parseInt(editTexts.get(2).getText().toString());
+                        SettingsViewModel.height_inches = Integer.parseInt(editTexts.get(3).getText().toString());
+                        SettingsViewModel.weight = Integer.parseInt(editTexts.get(4).getText().toString());
+                        SettingsViewModel.email = editTexts.get(5).getText().toString();
+
+                        break;
+                    }
+
+                    // TODO: display error dialog
+                }
+
+                // TODO: update info
+
+                Navigation.findNavController(root).navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
             }
         });
 
@@ -68,9 +118,26 @@ public class EditProfileFragment extends Fragment {
         return root;
     }
 
+    private boolean isEmpty(Vector<EditText> _vet) {
+        boolean isEmpty = false;
+
+        for (EditText et : _vet) {
+            isEmpty = (et.getText().toString().trim().length() == 0);
+
+            if (isEmpty) {
+                break;
+            }
+        }
+
+        return isEmpty;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        // TODO: save to database
+
         binding = null;
     }
 

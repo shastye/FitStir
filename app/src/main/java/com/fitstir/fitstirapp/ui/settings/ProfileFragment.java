@@ -1,12 +1,13 @@
 package com.fitstir.fitstirapp.ui.settings;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -33,11 +34,33 @@ public class ProfileFragment extends Fragment {
 
         // Add additions here
 
+        // TODO: load from database
+
+        ImageView profileImage = root.findViewById(R.id.profile_image);
+        profileImage.setImageBitmap(SettingsViewModel.avatar);
+
+        TextView name = root.findViewById(R.id.text_name);
+        TextView age = root.findViewById(R.id.text_age);
+        TextView height = root.findViewById(R.id.text_height);
+        TextView weight = root.findViewById(R.id.text_weight);
+        TextView email = root.findViewById(R.id.text_email);
+
+        name.setText(SettingsViewModel.name);
+        age.setText(String.valueOf(SettingsViewModel.age));
+        String tHeight = String.valueOf(SettingsViewModel.height_feet) + " feet " +
+                String.valueOf(SettingsViewModel.height_inches) + " inches";
+        height.setText(tHeight);
+        String tWeight = String.valueOf(SettingsViewModel.weight) + " lbs";
+        weight.setText(tWeight);
+        email.setText(SettingsViewModel.email);
+
+
+
         CardView editButton = root.findViewById(R.id.editbutton_cardView);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: navigate to edit form
+                Navigation.findNavController(root).navigate(R.id.action_navigation_profile_to_navigation_edit_profile);
             }
         });
 

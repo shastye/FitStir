@@ -85,6 +85,29 @@
             android:foregroundTint="?attr/colorOnSecondary" />
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/editpicturebutton_cardView_edit"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        app:cardBackgroundColor="?attr/colorSecondaryVariant"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.21">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:foreground="@drawable/ic_pencil_black_200dp"
+            android:foregroundTint="?attr/colorOnSecondary" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_textbox_edit"
@@ -128,18 +151,19 @@
                 app:layout_constraintHorizontal_bias="0.10"
                 app:layout_constraintVertical_bias="0.1" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_name_edit"
-                android:layout_width="wrap_content"
+                android:layout_width="205dp"
                 android:layout_height="wrap_content"
-                android:text="Jane Doe"
                 android:textSize="20sp"
+                android:inputType="textCapWords"
+                android:hint="Your Name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/name_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.11"
-                app:layout_constraintVertical_bias="0.12" />
+                app:layout_constraintHorizontal_bias="0.41"
+                app:layout_constraintVertical_bias="0.095" />
 
             <ImageView
                 android:id="@+id/age_image_edit"
@@ -153,18 +177,32 @@
                 app:layout_constraintHorizontal_bias="0.07"
                 app:layout_constraintVertical_bias="0.29" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_age_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="21 years old"
+                android:hint="21"
                 android:textSize="20sp"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/age_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.06"
-                app:layout_constraintVertical_bias="0.31" />
+                app:layout_constraintHorizontal_bias="0.04"
+                app:layout_constraintVertical_bias="0.295" />
+
+            <TextView
+                android:id="@+id/text_yo_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="years old"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_height_feet_edit"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintVertical_bias="0.305" />
 
             <ImageView
                 android:id="@+id/height_image_edit"
@@ -178,17 +216,58 @@
                 app:layout_constraintHorizontal_bias="0.10"
                 app:layout_constraintVertical_bias="0.49" />
 
-            <TextView
-                android:id="@+id/text_height_edit"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/text_height_feet_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5 feet 7 inches"
+                android:hint="0"
                 android:textSize="20sp"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/height_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.14"
+                app:layout_constraintHorizontal_bias="0.08"
+                app:layout_constraintVertical_bias="0.49" />
+
+            <TextView
+                android:id="@+id/text_feet_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="feet"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_height_feet_edit"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintVertical_bias="0.49" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/text_height_inches_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="0"
+                android:textSize="20sp"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_feet_edit"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintVertical_bias="0.49" />
+
+            <TextView
+                android:id="@+id/text_inches_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="inches"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_height_inches_edit"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintVertical_bias="0.49" />
 
             <ImageView
@@ -203,18 +282,32 @@
                 app:layout_constraintHorizontal_bias="0.035"
                 app:layout_constraintVertical_bias="0.715" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_weight_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="148 lbs"
+                android:hint="148"
                 android:textSize="20sp"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/weight_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="0.67" />
+                app:layout_constraintVertical_bias="0.689" />
+
+            <TextView
+                android:id="@+id/text_lbs_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lbs"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_weight_edit"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintVertical_bias="0.675" />
 
             <ImageView
                 android:id="@+id/email_image_edit"
@@ -228,18 +321,19 @@
                 app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintVertical_bias="0.88" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_email_edit"
-                android:layout_width="wrap_content"
+                android:layout_width="205dp"
                 android:layout_height="wrap_content"
-                android:text="janedoe-177@gmail.com"
+                android:hint="Your email"
                 android:textSize="18sp"
+                android:inputType="textEmailAddress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/email_image_edit"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.32"
-                app:layout_constraintVertical_bias="0.86" />
+                app:layout_constraintHorizontal_bias="0.42"
+                app:layout_constraintVertical_bias="0.87" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
