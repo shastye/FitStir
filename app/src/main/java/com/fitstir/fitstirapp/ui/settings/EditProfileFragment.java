@@ -80,10 +80,8 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                         break;
                     }
 
-                    // TODO: display error dialog
+                    Toast.makeText(getContext(), "Please fill in all of the fields.", Toast.LENGTH_LONG).show();
                 }
-
-                // TODO: update info
 
                 Navigation.findNavController(root).navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
             }
@@ -93,7 +91,6 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: do the edit
                 PickImageDialog.build(new PickSetup())
                         .setOnPickResult(new IPickResult() {
                             @Override
