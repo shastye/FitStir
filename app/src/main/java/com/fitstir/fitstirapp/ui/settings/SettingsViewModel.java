@@ -25,9 +25,15 @@ public class SettingsViewModel extends ViewModel {
     public static String email = "shastye.7x@gmail.com";
 
 
-
     public SettingsViewModel() {
+        // TODO: Get user id from firestore
+        int userID = 7777;
+
         mText = new MutableLiveData<>();
-        mText.setValue("This is settings fragment");
+        mText.setValue("User ID: " + userID);
+    }
+
+    public LiveData<String> getText() {
+        return mText;
     }
 }

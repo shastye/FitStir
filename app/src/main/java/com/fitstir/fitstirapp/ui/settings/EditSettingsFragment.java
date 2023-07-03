@@ -10,21 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.databinding.FragmentSettingsBinding;
+import com.fitstir.fitstirapp.databinding.FragmentEditSettingsBinding;
 
-public class SettingsFragment extends Fragment {
+public class EditSettingsFragment extends Fragment {
 
-    private FragmentSettingsBinding binding;
+    private FragmentEditSettingsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SettingsViewModel settingsViewModel =
                 new ViewModelProvider(this).get(SettingsViewModel.class);
 
-        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        binding = FragmentEditSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textUserIdSettings;
+        final TextView textView = binding.textUserIdSettingsEdit;
         settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
