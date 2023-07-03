@@ -48,9 +48,15 @@ public class EditSettingsFragment extends Fragment {
 
 
                 }
+
+                SettingsViewModel.themeID = themeSpinner.getSelectedItemPosition();
+                SettingsViewModel.rangeID = rangeSpinner.getSelectedItemPosition();
+                SettingsViewModel.intervalID = intervalSpinner.getSelectedItemPosition();
+                SettingsViewModel.unitID = unitsSpinner.getSelectedItemPosition();
+
+                Navigation.findNavController(root).navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
             }
         });
-
 
         // End
 
