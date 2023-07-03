@@ -38,8 +38,8 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         binding = FragmentEditProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textUserIdEdit;
-        //settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textUserIdProfileEdit;
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
 

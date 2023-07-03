@@ -30,7 +30,7 @@ public class ProfileFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textUserIdProfile;
-        //settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
 
