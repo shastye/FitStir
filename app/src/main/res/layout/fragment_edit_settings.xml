@@ -96,15 +96,16 @@
                 android:id="@+id/themeID_edit"
                 android:layout_width="190dp"
                 android:layout_height="48dp"
-                android:background="@drawable/spinner_background"
+                android:background="@drawable/spinner_outline"
                 android:layout_marginEnd="15dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:id="@+id/themeID_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignEnd="@+id/dropdown_button"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
@@ -122,7 +123,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/spinner_dropdown" />
+                    android:src="@drawable/spinner_dropdown_button" />
             </RelativeLayout>
 
             <TextView
@@ -141,7 +142,7 @@
                 android:id="@+id/rangeID_edit"
                 android:layout_width="190dp"
                 android:layout_height="48dp"
-                android:background="@drawable/spinner_background"
+                android:background="@drawable/spinner_outline"
                 android:layout_marginEnd="15dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@id/themeID_edit"
@@ -149,8 +150,9 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:id="@+id/rangeID_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignEnd="@+id/dropdown_button2"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
@@ -167,7 +169,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/spinner_dropdown" />
+                    android:src="@drawable/spinner_dropdown_button" />
             </RelativeLayout>
 
             <TextView
@@ -186,7 +188,7 @@
                 android:id="@+id/intervalID_edit"
                 android:layout_width="190dp"
                 android:layout_height="48dp"
-                android:background="@drawable/spinner_background"
+                android:background="@drawable/spinner_outline"
                 android:layout_marginEnd="15dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@id/rangeID_edit"
@@ -194,8 +196,9 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:id="@+id/intervalID_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignEnd="@+id/dropdown_button3"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
@@ -212,7 +215,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/spinner_dropdown" />
+                    android:src="@drawable/spinner_dropdown_button" />
             </RelativeLayout>
 
             <TextView
@@ -231,7 +234,7 @@
                 android:id="@+id/unitsID_edit"
                 android:layout_width="190dp"
                 android:layout_height="48dp"
-                android:background="@drawable/spinner_background"
+                android:background="@drawable/spinner_outline"
                 android:layout_marginEnd="15dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@id/intervalID_edit"
@@ -239,15 +242,16 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:id="@+id/unitsID_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignEnd="@+id/dropdown_button4"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/app_name"
-                    android:textAlignment="textStart" />
+                    android:textAlignment="textStart"/>
 
                 <ImageView
                     android:id="@+id/dropdown_button4"
@@ -257,7 +261,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/spinner_dropdown" />
+                    android:src="@drawable/spinner_dropdown_button" />
             </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

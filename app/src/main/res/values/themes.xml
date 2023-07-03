@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Change Bottom Navigation to match secondary theme colors -->
     <style name="BottomNavigation">
         <item name="backgroundTint">?attr/colorSecondary</item>
@@ -12,6 +12,16 @@
         <item name="labelVisibilityMode">labeled</item>
         <item name="itemRippleColor">@color/bnv_ripple</item>
     </style>
+
+    <!-- Spinner Style settings -->
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+
+    </style>
+
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+
+    </style>
+
 
     <!-- Base application theme. -->
     <style name="Theme1" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
