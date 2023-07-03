@@ -156,12 +156,12 @@
                 android:textSize="20sp"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@id/interval_label"
-                android:layout_toStartOf="@id/unitsID"
+                android:layout_toStartOf="@id/unitID"
                 android:layout_marginTop="45dp"
                 android:layout_marginStart="20dp"/>
 
             <TextView
-                android:id="@+id/unitsID"
+                android:id="@+id/unitID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Unit1"

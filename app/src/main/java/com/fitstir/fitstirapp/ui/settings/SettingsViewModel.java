@@ -16,6 +16,7 @@ public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
 
     public static int previousPage = -1;
+
     public static Bitmap avatar = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.profileimage_background);
     public static String name = "Sierra Clubb";
     public static int age = 26;
