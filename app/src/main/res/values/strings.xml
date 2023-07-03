@@ -22,4 +22,30 @@
     <string name="circuit_workouts_intro">This is the circuit workouts fragment.</string>
     <string name="yoga_intro">This is the yoga fragment.</string>
     <string name="email_validation">^[A-Za-z0-9._]{1,16}+@{1}+[a-z]{1,7}\\.[a-z]{1,3}$</string>
+    <string name="reset_button_description"><u>This will delete all downloaded application data.</u></string>
+    <string name="deactivate_button_description"><u>This will delete all saved user data.</u></string>
+    <string name="hard_reset_button_description"><u>This will delete all downloaded application data \n<b>AND</b> saved user data.</u></string>
+
+    <string-array name="theme_array">
+        <item>Theme 1</item>
+        <item>Theme 2</item>
+    </string-array>
+    <string-array name="range_array">
+        <item>Last 1 Weeks</item>
+        <item>Last 2 Weeks</item>
+        <item>Last 1 Month</item>
+        <item>Last 3 Months</item>
+        <item>Last 6 Months</item>
+        <item>Last 9 Months</item>
+        <item>Last 12 Months</item>
+    </string-array>
+    <string-array name="interval_array">
+        <item>1 Day</item>
+        <item>1 Week</item>
+        <item>1 Month</item>
+    </string-array>
+    <string-array name="unit_array">
+        <item>Imperial</item>
+        <item>Metric</item>
+    </string-array>
 </resources>
