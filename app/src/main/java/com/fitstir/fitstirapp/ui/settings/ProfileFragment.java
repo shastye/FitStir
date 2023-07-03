@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textUserId;
+        final TextView textView = binding.textUserIdProfile;
         //settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
@@ -57,7 +57,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-        CardView editButton = root.findViewById(R.id.editbutton_cardView);
+        CardView editButton = root.findViewById(R.id.editbutton_cardView_profile);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -129,7 +129,7 @@
                 android:id="@+id/textbox_image_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/textblock_background"/>
+                android:src="@drawable/fiveline_textblock_background"/>
 
             <ImageView
                 android:id="@+id/name_image_edit"
