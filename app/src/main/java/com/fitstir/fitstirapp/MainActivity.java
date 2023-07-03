@@ -47,11 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         addMenuProvider(new MenuProvider() {
             @Override
-            public void onPrepareMenu(@NonNull Menu menu) {
-                // Handle for example visibility of menu items
-            }
-
-            @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
                 menuInflater.inflate(R.menu.base_toolbar_menu, menu);
             }

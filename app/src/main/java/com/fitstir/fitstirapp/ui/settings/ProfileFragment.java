@@ -46,7 +46,8 @@ public class ProfileFragment extends Fragment {
         TextView email = root.findViewById(R.id.text_email);
 
         name.setText(SettingsViewModel.name);
-        age.setText(String.valueOf(SettingsViewModel.age));
+        String tAge = String.valueOf(SettingsViewModel.age) + " years old";
+        age.setText(tAge);
         String tHeight = String.valueOf(SettingsViewModel.height_feet) + " feet " +
                 String.valueOf(SettingsViewModel.height_inches) + " inches";
         height.setText(tHeight);

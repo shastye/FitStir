@@ -23,6 +23,8 @@ import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
 
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EditProfileFragment extends Fragment implements IPickResult {
 
@@ -40,6 +42,9 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         //settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
+
+        ImageView profileImage = root.findViewById(R.id.profile_image_edit);
+        profileImage.setImageBitmap(SettingsViewModel.avatar);
 
         EditText name = root.findViewById(R.id.text_name_edit);
         EditText age = root.findViewById(R.id.text_age_edit);
@@ -75,9 +80,18 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                         SettingsViewModel.height_feet = Integer.parseInt(editTexts.get(2).getText().toString());
                         SettingsViewModel.height_inches = Integer.parseInt(editTexts.get(3).getText().toString());
                         SettingsViewModel.weight = Integer.parseInt(editTexts.get(4).getText().toString());
-                        SettingsViewModel.email = editTexts.get(5).getText().toString();
+                        String tEmail = editTexts.get(5).getText().toString();
 
-                        break;
+                        Pattern pattern = Pattern.compile(getString(R.string.email_validation));
+                        Matcher mail = pattern.matcher(tEmail);
+
+                        if (mail.find()) {
+                            SettingsViewModel.email = tEmail;
+
+                            break;
+                        } else {
+                            Toast.makeText(getContext(), "Email address isn't a valid format.", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     Toast.makeText(getContext(), "Please fill in all of the fields.", Toast.LENGTH_LONG).show();

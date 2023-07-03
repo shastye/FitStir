@@ -121,75 +121,53 @@
         app:layout_constraintTop_toBottomOf="@id/profile_cardView_edit"
         app:layout_constraintVertical_bias="0.30">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/textbox_image_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/textblock_background"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"/>
+                android:src="@drawable/textblock_background"/>
 
             <ImageView
                 android:id="@+id/name_image_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_person_black_200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.10"
-                app:layout_constraintVertical_bias="0.1" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_name_edit"
                 android:layout_width="205dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:textSize="20sp"
                 android:inputType="textCapWords"
                 android:hint="Your Name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/name_image_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.41"
-                app:layout_constraintVertical_bias="0.095" />
+                android:textAlignment="viewStart"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="24dp" />
 
             <ImageView
                 android:id="@+id/age_image_edit"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/ic_age_black_200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.07"
-                app:layout_constraintVertical_bias="0.29" />
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="68dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_age_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="74.5dp"
                 android:hint="21"
-                android:textSize="20sp"
                 android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/age_image_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.04"
-                app:layout_constraintVertical_bias="0.295" />
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/text_yo_edit"
@@ -197,38 +175,27 @@
                 android:layout_height="wrap_content"
                 android:text="years old"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text_height_feet_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintVertical_bias="0.305" />
+                android:layout_marginStart="128dp"
+                android:layout_marginTop="83dp" />
 
             <ImageView
                 android:id="@+id/height_image_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_height_black_200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.10"
-                app:layout_constraintVertical_bias="0.49" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="128dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_height_feet_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:hint="0"
                 android:textSize="20sp"
                 android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/height_image_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.08"
-                app:layout_constraintVertical_bias="0.49" />
+                android:textAlignment="center"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="123dp" />
 
             <TextView
                 android:id="@+id/text_feet_edit"
@@ -236,26 +203,20 @@
                 android:layout_height="wrap_content"
                 android:text="feet"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text_height_feet_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.02"
-                app:layout_constraintVertical_bias="0.49" />
+                android:textAlignment="viewStart"
+                android:layout_marginStart="128dp"
+                android:layout_marginTop="135dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_height_inches_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:hint="0"
                 android:textSize="20sp"
                 android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text_feet_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.02"
-                app:layout_constraintVertical_bias="0.49" />
+                android:textAlignment="center"
+                android:layout_marginStart="168dp"
+                android:layout_marginTop="123dp" />
 
             <TextView
                 android:id="@+id/text_inches_edit"
@@ -263,38 +224,28 @@
                 android:layout_height="wrap_content"
                 android:text="inches"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text_height_inches_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.02"
-                app:layout_constraintVertical_bias="0.49" />
+                android:textAlignment="viewStart"
+                android:layout_marginStart="221dp"
+                android:layout_marginTop="135dp" />
 
             <ImageView
                 android:id="@+id/weight_image_edit"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/ic_weight_black_200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.035"
-                app:layout_constraintVertical_bias="0.715" />
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="159dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_weight_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:hint="148"
                 android:textSize="20sp"
                 android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/weight_image_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="0.689" />
+                android:textAlignment="viewStart"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="173dp" />
 
             <TextView
                 android:id="@+id/text_lbs_edit"
@@ -302,39 +253,29 @@
                 android:layout_height="wrap_content"
                 android:text="lbs"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text_weight_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.02"
-                app:layout_constraintVertical_bias="0.675" />
+                android:textAlignment="viewStart"
+                android:layout_marginStart="128dp"
+                android:layout_marginTop="183.5dp" />
 
             <ImageView
                 android:id="@+id/email_image_edit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_email_black_200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintVertical_bias="0.88" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="230dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/text_email_edit"
                 android:layout_width="205dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:hint="Your email"
                 android:textSize="18sp"
                 android:inputType="textEmailAddress"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/email_image_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.42"
-                app:layout_constraintVertical_bias="0.87" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textAlignment="viewStart"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="224dp" />
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
