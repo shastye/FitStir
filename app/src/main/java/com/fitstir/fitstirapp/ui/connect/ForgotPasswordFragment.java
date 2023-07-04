@@ -22,7 +22,8 @@ import java.util.Objects;
 public class ForgotPasswordFragment extends Fragment {
 
     private FragmentForgotPasswordBinding binding;
-
+    private Button submitButton;
+    private Button cancelButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class ForgotPasswordFragment extends Fragment {
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
-        Button submitButton = root.findViewById(R.id.submit_password_forgot_button);
+        submitButton = root.findViewById(R.id.submit_password_forgot_button);
         submitButton.setOnClickListener(v->{
             //TODO: reset password
 
@@ -44,7 +45,7 @@ public class ForgotPasswordFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_forgotPasswordFragment_to_navigation_log_in2);
         });
 
-        Button cancelButton = root.findViewById(R.id.cancel_password_forgot_button);
+        cancelButton = root.findViewById(R.id.cancel_password_forgot_button);
         cancelButton.setOnClickListener(v-> {
             //cancelled reset request
             Navigation.findNavController(v).navigate(R.id.action_forgotPasswordFragment_to_navigation_log_in2);
