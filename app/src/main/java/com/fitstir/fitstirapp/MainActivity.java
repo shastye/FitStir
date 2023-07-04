@@ -20,6 +20,7 @@ import androidx.navigation.ui.NavigationUiSaveStateControl;
 
 import com.fitstir.fitstirapp.databinding.ActivityMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.utility.ResetTheme;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     @NavigationUiSaveStateControl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // RESETS THE THEME
+        ResetTheme.onActivityCreateSetTheme(this);
+        //
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

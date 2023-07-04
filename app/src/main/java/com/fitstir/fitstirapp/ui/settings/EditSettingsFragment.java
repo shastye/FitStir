@@ -8,6 +8,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.ThemeUtils;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,6 +17,9 @@ import androidx.navigation.Navigation;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditSettingsBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.ResetTheme;
+
+import java.util.Objects;
 
 public class EditSettingsFragment extends Fragment {
 
@@ -48,17 +52,24 @@ public class EditSettingsFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: edit the stuff
-
                 int theme = themeSpinner.getSelectedItemPosition();
                 int range = rangeSpinner.getSelectedItemPosition();
                 int interval = intervalSpinner.getSelectedItemPosition();
                 int unit = unitSpinner.getSelectedItemPosition();
 
-                SettingsViewModel.themeID = theme;
-                SettingsViewModel.rangeID = range;
-                SettingsViewModel.intervalID = interval;
-                SettingsViewModel.unitID = unit;
+                if (SettingsViewModel.themeID != theme) {
+                    // TODO: display dialog saying app will have to restart
+                    //       and ask if they are sure
+
+                    SettingsViewModel.rangeID = range;
+                    SettingsViewModel.intervalID = interval;
+                    SettingsViewModel.unitID = unit;
+
+                    if (true) {
+                        SettingsViewModel.themeID = theme;
+                        ResetTheme.changeToTheme(Objects.requireNonNull(getActivity()), theme);
+                    }
+                }
 
                 Navigation.findNavController(root).navigate(R.id.action_navigation_edit_settings_to_navigation_settings);
             }
