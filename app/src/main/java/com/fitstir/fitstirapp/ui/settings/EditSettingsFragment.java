@@ -39,15 +39,13 @@ public class EditSettingsFragment extends Fragment {
         Spinner intervalSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.intervalID_spinner, root.getResources().getStringArray(R.array.interval_array));
         Spinner unitsSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.unitsID_spinner, root.getResources().getStringArray(R.array.unit_array));
 
-        CardView saveButton = root.findViewById(R.id.savebutton_cardView_edit);
+        CardView saveButton = root.findViewById(R.id.savebutton_cardView_settings_edit);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (SettingsViewModel.themeID != themeSpinner.getSelectedItemPosition()) {
-                      // TODO: change theme; no point in doing this if it doesn't change
+                // TODO: edit the stuff
 
-
-                }
+                Navigation.findNavController(root).navigate(R.id.action_navigation_edit_settings_to_navigation_settings);
             }
         });
 

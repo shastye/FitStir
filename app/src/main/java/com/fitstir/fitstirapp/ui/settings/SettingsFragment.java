@@ -7,9 +7,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSettingsBinding;
 
 public class SettingsFragment extends Fragment {
@@ -29,7 +32,13 @@ public class SettingsFragment extends Fragment {
 
         // Add additions here
 
-
+        CardView editButton = root.findViewById(R.id.editbutton_cardView_settings);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(root).navigate(R.id.action_navigation_settings_to_navigation_edit_settings);
+            }
+        });
 
         // End
 
