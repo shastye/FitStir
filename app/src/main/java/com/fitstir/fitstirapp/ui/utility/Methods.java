@@ -3,6 +3,9 @@ package com.fitstir.fitstirapp.ui.utility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -34,5 +37,15 @@ public class Methods {
         }
 
         return isEmpty;
+    }
+
+    public static Vector<Bitmap> convertPNGtoBitmap(View _root, int[] _drawables) {
+        Vector<Bitmap> bitmaps = new Vector<>();
+
+        for (int drawable : _drawables) {
+            bitmaps.add(BitmapFactory.decodeResource(_root.getContext().getResources(), drawable));
+        }
+
+        return bitmaps;
     }
 }

@@ -1,16 +1,21 @@
 package com.fitstir.fitstirapp.ui.settings;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.ThemeUtils;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -18,6 +23,7 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditSettingsBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.ResetTheme;
+import com.fitstir.fitstirapp.ui.utility.Tags;
 
 import java.util.Objects;
 
@@ -58,20 +64,31 @@ public class EditSettingsFragment extends Fragment {
                 int unit = unitSpinner.getSelectedItemPosition();
 
                 if (SettingsViewModel.themeID != theme) {
+
                     // TODO: display dialog saying app will have to restart
                     //       and ask if they are sure
+                    ChangeThemeDialog.newInstance(
+                            theme,
+                            R.layout.dialog_change_theme,
+                            R.id.dialog_accept_button,
+                            R.id.dialog_cancel_button
+                    ).show(getChildFragmentManager(), "Change Theme");
 
+                    if (SettingsViewModel.dialogResponse) {
+                        SettingsViewModel.themeID = theme;
+                        SettingsViewModel.rangeID = range;
+                        SettingsViewModel.intervalID = interval;
+                        SettingsViewModel.unitID = unit;
+
+                        ResetTheme.changeToTheme(Objects.requireNonNull(getActivity()), theme);
+                    }
+                } else {
                     SettingsViewModel.rangeID = range;
                     SettingsViewModel.intervalID = interval;
                     SettingsViewModel.unitID = unit;
 
-                    if (true) {
-                        SettingsViewModel.themeID = theme;
-                        ResetTheme.changeToTheme(Objects.requireNonNull(getActivity()), theme);
-                    }
+                    Navigation.findNavController(root).navigate(R.id.action_navigation_edit_settings_to_navigation_settings);
                 }
-
-                Navigation.findNavController(root).navigate(R.id.action_navigation_edit_settings_to_navigation_settings);
             }
         });
 
