@@ -61,7 +61,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_textbox"
-        android:layout_width="320dp"
+        android:layout_width="380dp"
         android:layout_height="210dp"
         app:cardElevation="50dp"
         app:cardBackgroundColor="@android:color/transparent"
@@ -79,7 +79,7 @@
                 android:id="@+id/textbox_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/fourline_textblock_background"/>
+                android:src="@drawable/fourline_textblock_background_wide"/>
 
             <TextView
                 android:id="@+id/theme_label"
