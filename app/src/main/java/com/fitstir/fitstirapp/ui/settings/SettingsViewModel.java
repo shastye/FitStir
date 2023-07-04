@@ -25,6 +25,12 @@ public class SettingsViewModel extends ViewModel {
     public static int weight = 145;
     public static String email = "shastye.7x@gmail.com";
 
+    public static int themeID = 0;
+    public static int rangeID = 0;
+    public static int intervalID = 0;
+    public static int unitID = 0;
+
+
 
     public SettingsViewModel() {
         // TODO: Get user id from firestore
