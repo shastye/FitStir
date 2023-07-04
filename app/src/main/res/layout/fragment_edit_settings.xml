@@ -36,7 +36,7 @@
 
     <!--TODO: make button click animation-->
     <androidx.cardview.widget.CardView
-        android:id="@+id/savebutton_cardView_settings_edit"
+        android:id="@+id/savebutton_cardView_settings"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:clickable="true"

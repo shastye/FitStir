@@ -61,7 +61,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         weight.setText(String.valueOf(SettingsViewModel.weight));
         email.setText(SettingsViewModel.email);
 
-        CardView saveButton = root.findViewById(R.id.savebutton_cardView_profile_edit);
+        CardView saveButton = root.findViewById(R.id.savebutton_cardView_edit);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
