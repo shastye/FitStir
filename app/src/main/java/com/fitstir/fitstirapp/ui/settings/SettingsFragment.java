@@ -7,12 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
-import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSettingsBinding;
 
 public class SettingsFragment extends Fragment {
@@ -32,25 +29,7 @@ public class SettingsFragment extends Fragment {
 
         // Add additions here
 
-        // TODO: load from database
 
-        TextView theme = root.findViewById(R.id.themeID);
-        TextView range = root.findViewById(R.id.rangeID);
-        TextView interval = root.findViewById(R.id.intervalID);
-        TextView unit = root.findViewById(R.id.unitID);
-
-        theme.setText(root.getResources().getStringArray(R.array.theme_array)[SettingsViewModel.themeID]);
-        range.setText(root.getResources().getStringArray(R.array.range_array)[SettingsViewModel.rangeID]);
-        interval.setText(root.getResources().getStringArray(R.array.interval_array)[SettingsViewModel.intervalID]);
-        unit.setText(root.getResources().getStringArray(R.array.unit_array)[SettingsViewModel.unitID]);
-
-        CardView editButton = root.findViewById(R.id.editbutton_cardView_settings);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(root).navigate(R.id.action_navigation_settings_to_navigation_edit_settings);
-            }
-        });
 
         // End
 
