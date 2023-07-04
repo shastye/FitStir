@@ -51,7 +51,7 @@ public class SectionGridAdapter extends BaseAdapter {
 
         ImageView icon = view.findViewById(R.id.layout_section_icon);
         icon.setImageResource(item.getIcon());
-        int color = ResourcesCompat.getColor(root.getResources(), R.color.off_white, null);
+        int color = root.getResources().getColor(R.color.off_white, null);
         icon.setColorFilter(color);
 
         TextView label = view.findViewById(R.id.layout_section_label);

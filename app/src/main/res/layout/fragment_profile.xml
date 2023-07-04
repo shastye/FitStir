@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.settings.ProfileFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_user_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="User ID: 785216"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.10" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_cardView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:cardElevation="50dp"
+        app:cardBackgroundColor="?attr/colorPrimary"
+        app:cardCornerRadius="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_user_id"
+        app:layout_constraintVertical_bias="0.10">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="250dp">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profileimage_background" />
+        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+
+    <!--TODO: make button click animation-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/editbutton_cardView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        app:cardBackgroundColor="?attr/colorSecondary"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="12dp"
+            android:foreground="@drawable/ic_pencil_black_200dp"
+            android:foregroundTint="?attr/colorOnSecondary" />
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_textbox"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        app:cardElevation="50dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_cardView"
+        app:layout_constraintVertical_bias="0.30">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/textbox_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/textblock_background"/>
+
+            <ImageView
+                android:id="@+id/name_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_person_black_200dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp" />
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jane Doe"
+                android:textSize="20sp"
+                android:textAlignment="viewStart"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="30dp" />
+
+            <ImageView
+                android:id="@+id/age_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_age_black_200dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="68dp" />
+
+            <TextView
+                android:id="@+id/text_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21 years old"
+                android:textSize="20sp"
+                android:textAlignment="viewStart"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="83dp" />
+
+            <ImageView
+                android:id="@+id/height_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_height_black_200dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="128dp" />
+
+            <TextView
+                android:id="@+id/text_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 feet 7 inches"
+                android:textSize="20sp"
+                android:textAlignment="viewStart"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="135dp" />
+
+            <ImageView
+                android:id="@+id/weight_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_weight_black_200dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="159dp" />
+
+            <TextView
+                android:id="@+id/text_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="148 lbs"
+                android:textSize="20sp"
+                android:textAlignment="viewStart"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="183.5dp" />
+
+            <ImageView
+                android:id="@+id/email_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_email_black_200dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="230dp" />
+
+            <TextView
+                android:id="@+id/text_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="janedoe-177@gmail.com"
+                android:textSize="18sp"
+                android:textAlignment="viewStart"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="235dp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
