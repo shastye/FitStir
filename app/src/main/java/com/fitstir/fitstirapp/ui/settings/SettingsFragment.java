@@ -34,8 +34,6 @@ public class SettingsFragment extends Fragment {
 
         // Add additions here
 
-        // TODO: load from database
-
         TextView theme = root.findViewById(R.id.themeID);
         TextView range = root.findViewById(R.id.rangeID);
         TextView interval = root.findViewById(R.id.intervalID);

@@ -33,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        // TODO: load from database
+
         // RESETS THE THEME
+        ResetTheme.setInitialTheme(SettingsViewModel.themeID);
         ResetTheme.onActivityCreateSetTheme(this);
         //
 

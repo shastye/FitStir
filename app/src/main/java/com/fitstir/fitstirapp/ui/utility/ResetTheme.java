@@ -14,6 +14,10 @@ public class ResetTheme {
         _activity.startActivity(new Intent(_activity, _activity.getClass()));
     }
 
+    public static void setInitialTheme(int _themeID) {
+        themeID = _themeID;
+    }
+
     public static void onActivityCreateSetTheme(Activity _activity) {
         switch (themeID) {
             case 0:

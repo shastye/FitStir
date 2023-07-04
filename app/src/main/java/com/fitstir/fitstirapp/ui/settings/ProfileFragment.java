@@ -33,8 +33,6 @@ public class ProfileFragment extends Fragment {
 
         // Add additions here
 
-        // TODO: load from database
-
         ImageView profileImage = root.findViewById(R.id.profile_image);
         profileImage.setImageBitmap(SettingsViewModel.avatar);
 
