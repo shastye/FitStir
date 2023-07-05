@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,10 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSignUpBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,7 +52,7 @@ public class SignUpFragment extends Fragment {
 
         // Addition Text Here
         database = FirebaseDatabase.getInstance();
-        dataRef = database.getReference("users");
+        dataRef = database.getReference("Users");
         auth = FirebaseAuth.getInstance();
         firstName = root.findViewById(R.id.sign_up_first_name);
         lastName = root.findViewById(R.id.sign_up_last_name);
@@ -60,10 +65,7 @@ public class SignUpFragment extends Fragment {
         Button signUpButton = root.findViewById(R.id.button_sign_up);
         signUpButton.setOnClickListener(v -> {
             signUp();
-            // If signed up
-
         });
-
         // End
 
         return root;
@@ -76,8 +78,6 @@ public class SignUpFragment extends Fragment {
     }
 
     public void signUp(){
-
-
 
         String fName = firstName.getText().toString();
         String lName = lastName.getText().toString();
@@ -96,12 +96,34 @@ public class SignUpFragment extends Fragment {
                 {
                     if(!pass.isEmpty() && pass.length() >= 6)
                     {
-                        if(pass == confirm_pass)
+                        if(pass.matches(confirm_pass))
                         {
                             //TODO: finish creating new user
-                            auth.createUserWithEmailAndPassword(email, pass);
+                            auth.createUserWithEmailAndPassword(email, pass)
+                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            UserProfileData user = new UserProfileData(fName, lName,email,pass);
+                                            final String uid = auth.getCurrentUser().getUid();
+                                            UserProfileData user = new UserProfileData(fName, lName,email,pass);
+                                            if(uid != null)
+                                            {
+                                                dataRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                      Navigation.findNavController(getView()).navigate(R.id.action_navigation_sign_up_to_navigation_question);
+                                                    }
+                                                });
+                                            }
+
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getActivity(), "Sign Up Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
                         }
                         else
@@ -109,7 +131,6 @@ public class SignUpFragment extends Fragment {
                             confirmPassword.setError("Passwords do not match", warning);
                         }
                     }
-
                     else if (pass.isEmpty())
                     {
                         setPassword.setError("Password can not be empty",warning);
@@ -137,6 +158,5 @@ public class SignUpFragment extends Fragment {
         {
             firstName.setError("Field can not be left empty", warning);
         }
-
     }
 }
