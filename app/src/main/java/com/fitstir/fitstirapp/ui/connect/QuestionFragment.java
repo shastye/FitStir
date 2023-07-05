@@ -34,14 +34,42 @@ public class QuestionFragment extends Fragment {
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
-        Button signUpButton = root.findViewById(R.id.button_sign_up_question);
-        signUpButton.setOnClickListener(v -> {
-            // TODO: Do the questionnaire
+        Button loseWeight = root.findViewById(R.id.button_lose_weight);
+        loseWeight.setOnClickListener(v -> {
 
-            // If completed
-            Intent myIntent = new Intent(getActivity(), MainActivity.class);
-            Objects.requireNonNull(getActivity()).startActivity(myIntent);
+
         });
+        Button gainWeight = root.findViewById(R.id.button_gain_weight);
+        gainWeight.setOnClickListener(v -> {
+
+
+        });
+        Button maintain = root.findViewById(R.id.button_Maintain_weight);
+        maintain.setOnClickListener(v -> {
+
+
+        });
+        Button gainMuscle = root.findViewById(R.id.button_gain_muscle);
+        gainMuscle.setOnClickListener(v -> {
+
+
+        });
+        Button diet = root.findViewById(R.id.button_modify_diet);
+        diet.setOnClickListener(v -> {
+
+
+        });
+        Button stress = root.findViewById(R.id.button_manage_stress);
+        stress.setOnClickListener(v -> {
+
+
+        });
+        Button cardio = root.findViewById(R.id.button_cardio);
+        cardio.setOnClickListener(v -> {
+
+
+        });
+
 
         // End
 

@@ -22,4 +22,6 @@
     <string name="circuit_workouts_intro">This is the circuit workouts fragment.</string>
     <string name="yoga_intro">This is the yoga fragment.</string>
     <string name="email_validation">^[A-Za-z0-9._]{1,16}+@{1}+[a-z]{1,7}\\.[a-z]{1,3}$</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
