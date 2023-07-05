@@ -3,8 +3,8 @@ package com.fitstir.fitstirapp.ui.settings;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,7 +16,8 @@ public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
 
     public static int previousPage = -1;
-    public static boolean dialogResponse = false;
+
+    public static View dialogRoot;
 
     public static Bitmap avatar = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.profileimage_background);
     public static String name = "Sierra Clubb";

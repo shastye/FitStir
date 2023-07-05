@@ -15,8 +15,6 @@ import androidx.navigation.Navigation;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSettingsBinding;
 
-import org.w3c.dom.Text;
-
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
