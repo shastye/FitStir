@@ -46,7 +46,17 @@
         android:id="@+id/navigation_question"
         android:name="com.fitstir.fitstirapp.ui.connect.QuestionFragment"
         android:label="fragment_question"
-        tools:layout="@layout/fragment_question" />
+        tools:layout="@layout/fragment_question" >
+        <action
+            android:id="@+id/action_navigation_question_to_messageBoardFragment2"
+            app:destination="@id/messageBoardFragment" />
+        <action
+            android:id="@+id/action_navigation_question_to_messageBoard2Fragment2"
+            app:destination="@id/messageBoard2Fragment" />
+        <action
+            android:id="@+id/action_navigation_question_to_messagBoard3Fragment"
+            app:destination="@id/messagBoard3Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.fitstir.fitstirapp.ui.connect.ForgotPasswordFragment"
@@ -60,27 +70,47 @@
         android:id="@+id/messageBoardFragment"
         android:name="com.fitstir.fitstirapp.ui.connect.MessageBoardFragment"
         android:label="fragment_message_board"
-        tools:layout="@layout/fragment_message_board" />
+        tools:layout="@layout/fragment_message_board" >
+        <action
+            android:id="@+id/action_messageBoardFragment_to_questions2Fragment"
+            app:destination="@id/questions2Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/messageBoard2Fragment"
         android:name="com.fitstir.fitstirapp.ui.connect.MessageBoard2Fragment"
         android:label="fragment_message_board2"
-        tools:layout="@layout/fragment_message_board2" />
+        tools:layout="@layout/fragment_message_board2" >
+        <action
+            android:id="@+id/action_messageBoard2Fragment_to_questions3Fragment"
+            app:destination="@id/questions3Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/messagBoard3Fragment"
         android:name="com.fitstir.fitstirapp.ui.connect.MessagBoard3Fragment"
         android:label="fragment_messag_board3"
-        tools:layout="@layout/fragment_messag_board3" />
+        tools:layout="@layout/fragment_messag_board3" >
+        <action
+            android:id="@+id/action_messagBoard3Fragment_to_questions3Fragment"
+            app:destination="@id/questions3Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/questions2Fragment"
         android:name="com.fitstir.fitstirapp.ui.connect.Questions2Fragment"
         android:label="fragment_questions2"
-        tools:layout="@layout/fragment_questions2" />
+        tools:layout="@layout/fragment_questions2" >
+        <action
+            android:id="@+id/action_questions2Fragment_to_questions4Fragment"
+            app:destination="@id/questions4Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/questions3Fragment"
         android:name="com.fitstir.fitstirapp.ui.connect.Questions3Fragment"
         android:label="fragment_questions3"
-        tools:layout="@layout/fragment_questions3" />
+        tools:layout="@layout/fragment_questions3" >
+        <action
+            android:id="@+id/action_questions3Fragment_to_questions4Fragment"
+            app:destination="@id/questions4Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/questions4Fragment"
         android:name="com.fitstir.fitstirapp.ui.connect.Questions4Fragment"
