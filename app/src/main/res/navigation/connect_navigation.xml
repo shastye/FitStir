@@ -56,5 +56,35 @@
             android:id="@+id/action_forgotPasswordFragment_to_navigation_log_in2"
             app:destination="@id/navigation_log_in" />
     </fragment>
+    <fragment
+        android:id="@+id/messageBoardFragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.MessageBoardFragment"
+        android:label="fragment_message_board"
+        tools:layout="@layout/fragment_message_board" />
+    <fragment
+        android:id="@+id/messageBoard2Fragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.MessageBoard2Fragment"
+        android:label="fragment_message_board2"
+        tools:layout="@layout/fragment_message_board2" />
+    <fragment
+        android:id="@+id/messagBoard3Fragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.MessagBoard3Fragment"
+        android:label="fragment_messag_board3"
+        tools:layout="@layout/fragment_messag_board3" />
+    <fragment
+        android:id="@+id/questions2Fragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.Questions2Fragment"
+        android:label="fragment_questions2"
+        tools:layout="@layout/fragment_questions2" />
+    <fragment
+        android:id="@+id/questions3Fragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.Questions3Fragment"
+        android:label="fragment_questions3"
+        tools:layout="@layout/fragment_questions3" />
+    <fragment
+        android:id="@+id/questions4Fragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.Questions4Fragment"
+        android:label="fragment_question4"
+        tools:layout="@layout/fragment_question4" />
 
 </navigation>
