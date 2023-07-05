@@ -55,6 +55,9 @@ public class EditSettingsFragment extends Fragment {
 
                 if (SettingsViewModel.themeID != theme) {
                     ChangeThemeDialog.newInstance(
+                            R.layout.dialog_change_theme,
+                            R.id.dialog_accept_button,
+                            R.id.dialog_cancel_button,
                             theme,
                             range,
                             interval,
