@@ -7,29 +7,100 @@
     tools:context=".ui.connect.QuestionFragment">
 
     <TextView
-        android:id="@+id/text_sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="409dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="128dp"
+        android:text="Choose a Goal area you would like to start in"
         android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="@string/question_intro"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_sign_up_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/button_lose_weight"
+        android:layout_width="227dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="438dp"
+        android:text="Lose Weight"
+        android:background="@drawable/buttonquestion"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button_gain_weight"
+        android:layout_width="227dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="212dp"
+        android:text="Gain Weight"
+        android:background="@drawable/buttonquestion"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button_Maintain_weight"
+        android:layout_width="227dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="250dp"
+        android:text="Maintain Weight"
+        android:background="@drawable/buttonquestion"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button_gain_muscle"
+        android:layout_width="227dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="288dp"
+        android:background="@drawable/buttonquestion"
+        android:text="Gain Muscle"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button_modify_diet"
+        android:layout_width="227dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="326dp"
+        android:background="@drawable/buttonquestion"
+        android:text="Modify Diet"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button_manage_stress"
+        android:layout_width="227dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="363dp"
+        android:text="Manage Stress"
+        android:background="@drawable/buttonquestion"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_cardio"
+        android:layout_width="227dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="400dp"
+        android:text="Increase Cardio"
+        android:background="@drawable/buttonquestion"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

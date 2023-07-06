@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "1016436046945",
+    "project_id": "fitstir-cef67",
+    "storage_bucket": "fitstir-cef67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016436046945:android:f98bee2b3e84907d3dfe20",
+        "android_client_info": {
+          "package_name": "com.fitstir.fitstirapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016436046945-6eose1d25lfmqg92r5ma0s1887eka728.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVnELwsZKk_41fNEdIrkpjc1S6GUUSvsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016436046945-6eose1d25lfmqg92r5ma0s1887eka728.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016436046945:android:1d005d75d7e228db3dfe20",
+        "android_client_info": {
+          "package_name": "com.fitstir.fitstirapp.ui.connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016436046945-a9p9h9t6j6naomaull9mbekvqql0qp3v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fitstir.fitstirapp.ui.connect",
+            "certificate_hash": "8be46f63dc4b491d94f0efad39f23d728c65f4e5"
+          }
+        },
+        {
+          "client_id": "1016436046945-6eose1d25lfmqg92r5ma0s1887eka728.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVnELwsZKk_41fNEdIrkpjc1S6GUUSvsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016436046945-6eose1d25lfmqg92r5ma0s1887eka728.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

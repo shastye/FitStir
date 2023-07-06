@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
@@ -34,13 +35,41 @@ public class QuestionFragment extends Fragment {
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
-        Button signUpButton = root.findViewById(R.id.button_sign_up_question);
-        signUpButton.setOnClickListener(v -> {
-            // TODO: Do the questionnaire
+        // navigate to correct message
+        Button loseWeight = root.findViewById(R.id.button_lose_weight);
+        loseWeight.setOnClickListener(v -> {
 
-            // If completed
-            Intent myIntent = new Intent(getActivity(), MainActivity.class);
-            Objects.requireNonNull(getActivity()).startActivity(myIntent);
+            Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoard2Fragment2);
+        });
+        Button gainWeight = root.findViewById(R.id.button_gain_weight);
+        gainWeight.setOnClickListener(v -> {
+
+            Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
+        });
+        Button maintain = root.findViewById(R.id.button_Maintain_weight);
+        maintain.setOnClickListener(v -> {
+
+            Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
+        });
+        Button gainMuscle = root.findViewById(R.id.button_gain_muscle);
+        gainMuscle.setOnClickListener(v -> {
+
+            Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
+        });
+        Button diet = root.findViewById(R.id.button_modify_diet);
+        diet.setOnClickListener(v -> {
+
+            Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoard2Fragment2);
+        });
+        Button stress = root.findViewById(R.id.button_manage_stress);
+        stress.setOnClickListener(v -> {
+
+            Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messagBoard3Fragment);
+        });
+        Button cardio = root.findViewById(R.id.button_cardio);
+        cardio.setOnClickListener(v -> {
+
+            Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messagBoard3Fragment);
         });
 
         // End
