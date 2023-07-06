@@ -25,4 +25,19 @@ public class Tags {
         add(new SectionItem(R.drawable.ic_loc_black_200dp, "Find Dietitian"));
         add(new SectionItem(R.drawable.ic_diary_black_200dp, "Diary"));
     }};
+
+    public static final Vector<int[]> THEME_COLORS = new Vector<int[]>() {{
+        add(new int[]{
+                //primary   pVariant  onPrimary
+                0xFF590C64,0xFFEA16B5,0xFFFCFCFC,
+              //secondary   sVariant  onSecondary
+                0xFF245E1E,0xFF3AB833,0xFFFCFCFC
+        });
+        add(new int[]{
+                //primary   pVariant  onPrimary
+                0xFF000000,0xFF3700B3,0xFFFFFFFF,
+                //secondary   sVariant  onSecondary
+                0xFFBB86FC,0xFF03DAC5,0xFFFFFFFF
+        });
+    }};
 }

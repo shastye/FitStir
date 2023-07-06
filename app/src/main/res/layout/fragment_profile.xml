@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_user_id"
+        android:id="@+id/text_user_id_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_user_id"
+        app:layout_constraintTop_toBottomOf="@id/text_user_id_profile"
         app:layout_constraintVertical_bias="0.10">
 
         <androidx.cardview.widget.CardView
@@ -63,7 +63,7 @@
 
     <!--TODO: make button click animation-->
     <androidx.cardview.widget.CardView
-        android:id="@+id/editbutton_cardView"
+        android:id="@+id/editbutton_cardView_profile"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:clickable="true"
@@ -107,7 +107,7 @@
                 android:id="@+id/textbox_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/textblock_background"/>
+                android:src="@drawable/fiveline_textblock_background"/>
 
             <ImageView
                 android:id="@+id/name_image"

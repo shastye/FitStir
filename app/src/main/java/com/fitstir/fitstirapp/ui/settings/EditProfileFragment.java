@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -38,8 +39,8 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         binding = FragmentEditProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textUserIdEdit;
-        //settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textUserIdProfileEdit;
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
 
@@ -60,7 +61,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         weight.setText(String.valueOf(SettingsViewModel.weight));
         email.setText(SettingsViewModel.email);
 
-        CardView saveButton = root.findViewById(R.id.savebutton_cardView_edit);
+        CardView saveButton = root.findViewById(R.id.savebutton_cardView_profile_edit);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +75,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                     editTexts.add(root.findViewById(R.id.text_weight_edit));
                     editTexts.add(root.findViewById(R.id.text_email_edit));
 
-                    if (!isEmpty(editTexts)) {
+                    if (!Methods.isEmpty(editTexts)) {
                         SettingsViewModel.name = editTexts.get(0).getText().toString();
                         SettingsViewModel.age = Integer.parseInt(editTexts.get(1).getText().toString());
                         SettingsViewModel.height_feet = Integer.parseInt(editTexts.get(2).getText().toString());
@@ -127,20 +128,6 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         // End
 
         return root;
-    }
-
-    private boolean isEmpty(Vector<EditText> _vet) {
-        boolean isEmpty = false;
-
-        for (EditText et : _vet) {
-            isEmpty = (et.getText().toString().trim().length() == 0);
-
-            if (isEmpty) {
-                break;
-            }
-        }
-
-        return isEmpty;
     }
 
     @Override

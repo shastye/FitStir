@@ -1,6 +1,5 @@
 package com.fitstir.fitstirapp.ui.settings;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,12 +28,10 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textUserId;
-        //settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textUserIdProfile;
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
-
-        // TODO: load from database
 
         ImageView profileImage = root.findViewById(R.id.profile_image);
         profileImage.setImageBitmap(SettingsViewModel.avatar);
@@ -57,7 +54,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-        CardView editButton = root.findViewById(R.id.editbutton_cardView);
+        CardView editButton = root.findViewById(R.id.editbutton_cardView_profile);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
