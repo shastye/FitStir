@@ -60,7 +60,7 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         switch (theme) {
             case 0:
                 colors = new int[]{
-                        R.color.magenta,
+                        R.color.soft_blue,
                         R.color.fuchsia,
                         R.color.forest,
                         R.color.lime
