@@ -17,7 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
+import com.fitstir.fitstirapp.databinding.FragmentQuestion4Binding;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -105,7 +105,7 @@ public class SignUpFragment extends Fragment {
                                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                                             final String uid = auth.getCurrentUser().getUid();
-                                            UserProfileData user = new UserProfileData(fName, lName,email,pass);
+                                            UserProfileData user = new UserProfileData(fName, lName,email,pass, 0,0,0,0,0);
                                             if(uid != null)
                                             {
                                                 dataRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/messagBoard3Fragment"
-        android:name="com.fitstir.fitstirapp.ui.connect.MessagBoard3Fragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.MessageBoard3Fragment"
         android:label="fragment_messag_board3"
         tools:layout="@layout/fragment_messag_board3" >
         <action
@@ -99,8 +99,8 @@
         android:label="fragment_questions2"
         tools:layout="@layout/fragment_questions2" >
         <action
-            android:id="@+id/action_questions2Fragment_to_questions4Fragment"
-            app:destination="@id/questions4Fragment" />
+            android:id="@+id/action_questions2Fragment_to_questions3Fragment"
+            app:destination="@id/questions3Fragment" />
     </fragment>
     <fragment
         android:id="@+id/questions3Fragment"
