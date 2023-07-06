@@ -113,15 +113,13 @@ public class SignUpFragment extends Fragment {
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                       Navigation.findNavController(getView()).navigate(R.id.action_navigation_sign_up_to_navigation_question);
                                                     }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getActivity(), "Sign Up Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 });
                                             }
-
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getActivity(), "Sign Up Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
