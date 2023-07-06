@@ -1,10 +1,15 @@
 package com.fitstir.fitstirapp.ui.settings;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
@@ -51,31 +56,36 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         ImageView secondaryColor = getView().findViewById(R.id.secondary_color_image);
         ImageView secondaryVariantColor = getView().findViewById(R.id.secondary_variant_image);
 
-        int[] drawables = new int[0];
+        int[] colors = new int[0];
         switch (theme) {
             case 0:
-                drawables = new int[]{
-                        R.drawable.magenta,
-                        R.drawable.fuschia,
-                        R.drawable.forest,
-                        R.drawable.lime
+                colors = new int[]{
+                        R.color.magenta,
+                        R.color.fuchsia,
+                        R.color.forest,
+                        R.color.lime
                 };
                 break;
             case 1:
-                drawables = new int[]{
-                        R.drawable.black,
-                        R.drawable.dark_purple,
-                        R.drawable.lavender,
-                        R.drawable.teal
+                colors = new int[]{
+                        R.color.black,
+                        R.color.purple_700,
+                        R.color.purple_200,
+                        R.color.teal_200
                 };
                 break;
         }
-        Vector<Bitmap> bitmaps = Methods.convertPNGtoBitmap(getView(), drawables);
 
-        primaryColor.setImageBitmap(bitmaps.get(0));
-        primaryVariantColor.setImageBitmap(bitmaps.get(1));
-        secondaryColor.setImageBitmap(bitmaps.get(2));
-        secondaryVariantColor.setImageBitmap(bitmaps.get(3));
+        Drawable background = ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.change_dialog_fragment_theme_color_background);
+        assert background != null;
+        background.setTint(ContextCompat.getColor(getActivity(), colors[0]));
+        primaryColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
+        background.setTint(ContextCompat.getColor(getActivity(), colors[1]));
+        primaryVariantColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
+        background.setTint(ContextCompat.getColor(getActivity(), colors[2]));
+        secondaryColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
+        background.setTint(ContextCompat.getColor(getActivity(), colors[3]));
+        secondaryVariantColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
     }
 
     @Override
