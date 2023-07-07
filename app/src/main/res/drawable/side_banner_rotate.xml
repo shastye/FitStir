@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rotate  android:drawable="@drawable/side_banner" xmlns:android="http://schemas.android.com/apk/res/android">
+<rotate android:fromDegrees="90"
+    android:toDegrees="0"/>
+
+
+</rotate>

@@ -30,8 +30,6 @@ public class InitialFragment extends Fragment {
         binding = FragmentInitialBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textInitial;
-        connectViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here
 
@@ -44,7 +42,7 @@ public class InitialFragment extends Fragment {
 
         Button signUpButton = root.findViewById(R.id.initial_sign_up_button);
         signUpButton.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.action_navigation_initial_to_navigation_sign_up)
+                Navigation.findNavController(v).navigate(R.id.action_navigation_initial_to_navigation_question)
         );
 
         // End

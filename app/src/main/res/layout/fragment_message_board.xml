@@ -8,22 +8,52 @@
 
 
     <TextView
-        android:layout_width="402dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="236dp"
-        android:text="Statement about the importance of exercise in relation to mental health."
+        android:layout_width="411dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="216dp"
+        android:text="Congratulations on your new fitness journey with FitStir:"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:layout_width="414dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="253dp"
+        android:text="Regular physical activity is one of the most important things you can do for your health. Being physically active can improve your brain health, help manage weight, reduce the risk of disease, strengthen bones and muscles, and improve your ability to do everyday activities."
+
+        android:textSize="17dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:layout_width="402dp"
         android:layout_height="62dp"
         android:layout_marginTop="152dp"
-        android:text="Attached to gain weight, gain muscle, and maintain weight"
+        android:background="@drawable/rounded_green_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="402dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="154dp"
+        android:text="Health and WellNess"
+        android:textAlignment="center"
+        android:textColor="@color/soft_blue"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

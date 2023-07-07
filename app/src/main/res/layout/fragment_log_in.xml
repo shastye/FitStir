@@ -4,21 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/logo"
     tools:context=".ui.connect.LogInFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        app:layout_constraintBottom_toTopOf="@+id/username_log_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/logo"/>
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/side_banner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+    </ImageView>
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/side_banner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></ImageView>
 
     <EditText
         android:id="@+id/username_log_in"
         android:layout_width="300dp"
         android:layout_height="35dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="360dp"
         android:drawablePadding="3dp"
         android:hint="Email:"
         android:padding="8sp"
         android:textColor="@color/black"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +59,7 @@
         android:id="@+id/user_password"
         android:layout_width="299dp"
         android:layout_height="38dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginTop="415dp"
         android:drawablePadding="3dp"
         android:hint="Password"
         android:inputType="textPassword"
@@ -42,7 +75,7 @@
         android:id="@+id/button_log_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="472dp"
+        android:layout_marginTop="604dp"
         android:text="@string/log_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -53,7 +86,7 @@
         android:id="@+id/button_forgot_pass"
         android:layout_width="25dp"
         android:layout_height="24dp"
-        android:layout_marginTop="360dp"
+        android:layout_marginTop="514dp"
         android:background="@drawable/baseline_question_mark_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.145"
@@ -64,7 +97,7 @@
         android:id="@+id/textView2"
         android:layout_width="110dp"
         android:layout_height="17dp"
-        android:layout_marginTop="364dp"
+        android:layout_marginTop="520dp"
         android:hint="Forgot Password"
         android:textColorHint="@color/black"
         android:textSize="10dp"

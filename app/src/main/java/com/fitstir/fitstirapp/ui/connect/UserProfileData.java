@@ -2,23 +2,15 @@ package com.fitstir.fitstirapp.ui.connect;
 
 public class UserProfileData {
 
-    String firstname, lastname,email, password;
+    String fullname, email, password, sex;
     Integer height_ft,height_in, weight, goal_weight, age;
 
-    public String getFirstname() {
-        return firstname;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -76,10 +68,16 @@ public class UserProfileData {
     public void setAge(Integer age) {
         this.age = age;
     }
+    public String getSex() {
+        return sex;
+    }
 
-    public UserProfileData(String firstname, String lastname, String email, String password, Integer height_ft, Integer height_in, Integer weight, Integer goal_weight, Integer age) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public UserProfileData(String fullname, String email, String password,String sex, Integer height_ft, Integer height_in, Integer weight, Integer goal_weight, Integer age) {
+        this.fullname = fullname;
         this.email = email;
         this.password = password;
         this.height_ft = height_ft;
@@ -87,6 +85,8 @@ public class UserProfileData {
         this.weight = weight;
         this.goal_weight = goal_weight;
         this.age = age;
+        this.sex = sex;
+
     }
     public UserProfileData(){
 
