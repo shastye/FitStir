@@ -6,24 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".ui.connect.MessageBoard3Fragment">
 
-    <TextView
+    <ImageView
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="108dp"
-        android:text="Statment about mental health and working out and running or walking as a stress reliever"
+        android:layout_marginTop="152dp"
+        android:background="@drawable/rounded_green_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="402dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="154dp"
+        android:text="Health and WellNess"
+        android:textAlignment="center"
+        android:textColor="@color/soft_blue"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="411dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="216dp"
+        android:text="Congratulations on your new fitness journey with FitStir:"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="244dp"
+        android:layout_marginTop="276dp"
         android:text="Attached to manage stress and increase cardio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

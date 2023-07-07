@@ -6,24 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".ui.connect.MessageBoard2Fragment">
 
-    <TextView
+    <ImageView
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="304dp"
-        android:text="Statement about the pit falls of losing weight. Unmotivated, not enough time throughout the day etc. Importance of a health diet"
+        android:layout_marginTop="152dp"
+        android:background="@drawable/rounded_green_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView6"
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="204dp"
-        android:text="Attached to lose weight, modify diet"
+        android:layout_marginTop="154dp"
+        android:text="Health and WellNess"
+        android:textAlignment="center"
+        android:textColor="@color/soft_blue"
+        android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="411dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="216dp"
+        android:text="Congratulations on your new fitness journey with FitStir:"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="216dp"
+        android:layout_marginTop="252dp"
+        android:text="Tackling a new diet and weight loss can be tough. 28% of people give up because of lack of will power, another 27% lose motivation. Theres another 25% that have trouble finding time to workout and a shared 25% between the expenses of healither foods and having gym access. Every health journey comes with some bumps in the road. With this journey you can decrease anxiety, depression and boost your overall brain power. So keep pushing and welcome to FitStir where we help you bet the odds."
+        android:textSize="17dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
