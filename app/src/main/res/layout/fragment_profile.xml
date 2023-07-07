@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.ProfileFragment">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/background"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/text_user_id_profile"
         android:layout_width="match_parent"
@@ -91,7 +81,7 @@
         android:id="@+id/profile_textbox"
         android:layout_width="320dp"
         android:layout_height="300dp"
-        app:cardElevation="50dp"
+        android:outlineProvider="none"
         app:cardBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

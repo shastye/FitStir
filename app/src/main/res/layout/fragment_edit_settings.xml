@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.EditSettingsFragment">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/text_user_id_settings_edit"
         android:layout_width="match_parent"
@@ -63,7 +51,7 @@
         android:id="@+id/profile_textbox"
         android:layout_width="400dp"
         android:layout_height="270dp"
-        app:cardElevation="50dp"
+        android:outlineProvider="none"
         app:cardBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +111,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/spinner_dropdown_button" />
+                    android:src="@drawable/spinner_dropdown_button"
+                    app:tint="?attr/colorPrimaryVariant"/>
             </RelativeLayout>
 
             <TextView
@@ -169,7 +158,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/spinner_dropdown_button" />
+                    android:src="@drawable/spinner_dropdown_button"
+                    app:tint="?attr/colorPrimaryVariant" />
             </RelativeLayout>
 
             <TextView
@@ -215,7 +205,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/spinner_dropdown_button" />
+                    android:src="@drawable/spinner_dropdown_button"
+                    app:tint="?attr/colorPrimaryVariant" />
             </RelativeLayout>
 
             <TextView
@@ -261,7 +252,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/spinner_dropdown_button" />
+                    android:src="@drawable/spinner_dropdown_button"
+                    app:tint="?attr/colorPrimaryVariant" />
             </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
