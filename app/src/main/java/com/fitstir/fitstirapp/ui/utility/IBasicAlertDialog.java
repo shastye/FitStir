@@ -48,6 +48,8 @@ public class IBasicAlertDialog extends DialogFragment {
         layoutID = getArguments().getInt("layoutID");
         acceptButtonID = getArguments().getInt("acceptButtonID");
         cancelButtonID = getArguments().getInt("cancelButtonID");
+
+        setStyle(DialogFragment.STYLE_NO_FRAME, 0);
     }
 
     @Nullable

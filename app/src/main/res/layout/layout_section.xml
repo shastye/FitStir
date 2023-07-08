@@ -4,46 +4,50 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@android:drawable/screen_background_light_transparent"
+    android:background="@android:color/transparent"
     android:orientation="vertical"
     android:paddingHorizontal="15dp"
     android:paddingVertical="10dp">
 
-    <ImageView
+    <androidx.cardview.widget.CardView
         android:id="@+id/layout_section_background"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:contentDescription="@string/background_for_section"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:outlineProvider="none"
+        app:cardBackgroundColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/section_background" />
+        app:cardCornerRadius="50dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:outlineProvider="none"
+            app:cardCornerRadius="40dp"
+            app:cardBackgroundColor="@color/alpha_80_off_white"/>
 
-    <ImageView
-        android:id="@+id/layout_section_icon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:contentDescription="@string/icon_for_section"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.20"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        <ImageView
+            android:id="@+id/layout_section_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/icon_for_section"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            app:srcCompat="@drawable/ic_shoe_black_200dp"
+            app:tint="?attr/colorOnPrimary" />
 
-    <TextView
-        android:id="@+id/layout_section_label"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:text="@string/label_for_section"
-        android:textColor="@color/off_white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/layout_section_background"
-        app:layout_constraintEnd_toEndOf="@id/layout_section_background"
-        app:layout_constraintStart_toStartOf="@id/layout_section_background"
-        app:layout_constraintTop_toBottomOf="@id/layout_section_icon"
-        app:layout_constraintVertical_bias="0.20" />
+        <TextView
+            android:id="@+id/layout_section_label"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="@string/label_for_section"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp" />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
