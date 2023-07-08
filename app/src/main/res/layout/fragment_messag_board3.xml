@@ -15,19 +15,21 @@
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="154dp"
+        android:layout_marginTop="155dp"
         android:text="Health and WellNess"
         android:textAlignment="center"
         android:textColor="@color/soft_blue"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:layout_width="411dp"
         android:layout_height="38dp"
@@ -43,10 +45,12 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="402dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="276dp"
-        android:text="Attached to manage stress and increase cardio"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="252dp"
+        android:text="Been Having trouble sleeping? Having insomnia and not sure why or have you been feeling anxious? If you didn't know, walking or running is a great way to imporve your sleep habits. While exercising you're increasing your endorphins and dopamine levels. Both are chemicals in your brain that give people their happy feeling. They can also give a since of calm to ease anxiety that sometimes lead to insomnia. If you run outside you give yourself a good level of serotonin as well from the sun. All running roads lead to better sleep and mental health. "
+        android:textSize="16sp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

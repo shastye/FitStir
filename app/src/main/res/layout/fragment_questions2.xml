@@ -4,39 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.connect.Questions2Fragment">
+    tools:context=".ui.connect.Questions2Fragment"
+    android:background="@drawable/background_logo">
 
-    <TextView
-        android:layout_width="408dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="156dp"
-        android:text="each button will have an explanation of what the term means"
-
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_tone_up"
-        android:layout_width="227dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="338dp"
-        android:text="Tone Up"
+        android:layout_width="331dp"
+        android:layout_height="145dp"
+        android:layout_marginTop="448dp"
+        android:text="Tone Up -
+                                                These workouts are aimed at developing a physique with a large emphasis on musculature. In this context, the term toned implies leanness in the body (low levels of body fat)     "
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_bulk_up"
-        android:layout_width="227dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="292dp"
+        android:layout_width="331dp"
+        android:layout_height="144dp"
+        android:layout_marginTop="296dp"
+        android:text="Bulk Up -
 
-        android:text="Bulk Up"
+                     You will intentionally consume more calories than your body needs for a set period. These extra calories provide your body with the necessary fuel to boost muscle size and strength while weight training"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,13 +39,16 @@
 
     <Button
         android:id="@+id/button_strength"
-        android:layout_width="227dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="250dp"
-        android:text="Increase Strength"
+        android:layout_width="331dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="172dp"
+        android:text="Increase Strength -
+
+                            Will focus on lifting heavy(greater than 90% of your one-rep max. Lifting explosively and doing plyometrics"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +56,7 @@
         android:id="@+id/button_back2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="536dp"
+        android:layout_marginTop="676dp"
         android:text="Back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
