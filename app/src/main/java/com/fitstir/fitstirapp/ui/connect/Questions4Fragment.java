@@ -168,6 +168,7 @@ public class Questions4Fragment extends Fragment {
                                                 @Override
                                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                                     Boolean radioBtnState = male.isChecked();
+                                                    Boolean radioBtnState_female = female.isChecked();
 
                                                     if(radioBtnState == true)
                                                     {
@@ -190,7 +191,7 @@ public class Questions4Fragment extends Fragment {
                                                             });
                                                         }
                                                     }
-                                                    else
+                                                    else if(radioBtnState_female == true)
                                                     {
                                                         final String uid = auth.getCurrentUser().getUid();
                                                         UserProfileData user = new UserProfileData(fName,email,pass,"female", finalFt, finalIn, finalWt, finalGWt, finalAge);

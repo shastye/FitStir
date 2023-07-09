@@ -54,9 +54,10 @@ public class ProfileFragment extends Fragment {
         name.setText(SettingsViewModel.name);
         String tAge = String.valueOf(SettingsViewModel.age) + " years old";
         age.setText(tAge);
-        String tHeight = String.valueOf(SettingsViewModel.height_feet) + " feet " +
-                String.valueOf(SettingsViewModel.height_inches) + " inches";
+        String tHeight = String.valueOf(SettingsViewModel.height_feet) + " feet ";
         height.setText(tHeight);
+        String _height = String.valueOf(SettingsViewModel.height_inches) + " inches";
+        height_in.setText(_height);
         String tWeight = String.valueOf(SettingsViewModel.weight) + " lbs";
         weight.setText(tWeight);
         email.setText(SettingsViewModel.email);
@@ -77,15 +78,23 @@ public class ProfileFragment extends Fragment {
                         String email = String.valueOf(snapshot.child("email").getValue());
                         String age = String.valueOf(snapshot.child("age").getValue());
                         String height = String.valueOf(snapshot.child("height_ft").getValue());
-                        //String height_In = String.valueOf(snapshot.child("height_in"));
+                        String height_In = String.valueOf(snapshot.child("height_in").getValue());
                         String weight = String.valueOf(snapshot.child("_Weight").getValue());
+
+                        SettingsViewModel.name = fullName;
+                        SettingsViewModel.email = email;
+                        SettingsViewModel.age = Integer.parseInt(age);
+                        SettingsViewModel.height_feet = Integer.parseInt(height);
+                        SettingsViewModel.height_inches = Integer.parseInt(height_In);
+                        SettingsViewModel.weight = Integer.parseInt(weight);
 
                         binding.textName.setText(fullName);
                         binding.textEmail.setText(email);
                         binding.textAge.setText(age);
                         binding.textHeight.setText(height);
-                        //binding.textHeightIn.setText(height_In);
+                        binding.textHeightIn.setText(height_In);
                         binding.textWeight.setText(weight);
+
                     }
                 }
             }
@@ -114,5 +123,6 @@ public class ProfileFragment extends Fragment {
     public void editProfile()
     {
         //TODO: edit and save changes to firebase
+
     }
 }
