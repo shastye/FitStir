@@ -96,15 +96,13 @@ public class SettingsFragment extends Fragment {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean success = Methods.clearApplicationData(getActivity());
-
-                if (success) {
-                    // show dialog saying everything deleted
-                    Toast.makeText(getContext(), "Application Data Deleted", Toast.LENGTH_LONG).show();
-                } else {
-                    // show dialog saying error
-                    Toast.makeText(getContext(), "Application Data **NOT** Deleted", Toast.LENGTH_LONG).show();
-                }
+                ResetApplicationDialog.newInstance(
+                        R.layout.dialog_generic_alert,
+                        R.id.dialog_generic_accept_button,
+                        R.id.dialog_generic_cancel_button,
+                        R.id.dialog_generic_message,
+                        "You are about to delete all saved application data."
+                ).show(getParentFragmentManager(), "Reset Application");
             }
         });
 
