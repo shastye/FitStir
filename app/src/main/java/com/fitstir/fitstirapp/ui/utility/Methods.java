@@ -6,13 +6,28 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.fitstir.fitstirapp.R;
+import androidx.annotation.NonNull;
 
+import com.fitstir.fitstirapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.File;
+import java.util.Objects;
 import java.util.Vector;
 
 public class Methods {
@@ -47,5 +62,95 @@ public class Methods {
         }
 
         return bitmaps;
+    }
+
+
+
+    public static boolean clearApplicationData(Activity _activity) {
+        boolean success = true;
+
+        File cache = _activity.getCacheDir();
+        File appDir = new File(cache.getParent());
+        if (appDir.exists()) {
+            String[] children = appDir.list();
+            for (String s : children) {
+                if (!s.equals("lib")) {
+                    success = deleteDir(new File(appDir, s));
+
+                    if (!success) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return success;
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+
+        return dir.delete();
+    }
+
+    public static boolean deleteFromDatabase() {
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        final boolean[] success = {false};
+
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                databaseReference.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        success[0] = true;
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("deleteFromDatabase Error", "An error occurred: " + error.getMessage());
+            }
+        };
+        databaseReference.addValueEventListener(listener);
+
+        return success[0];
+    }
+
+    public static boolean deleteUser() {
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final boolean[] success = {false};
+
+        if (user != null) {
+            OnCompleteListener<Void> listener = new  OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        success[0] = true;
+                    }
+                }
+            };
+            user.delete().addOnCompleteListener(listener);
+        }
+
+        return success[0];
+    }
+
+    public static void navigateToLogInActivity(Context _context) {
+        Intent intent = _context
+                .getPackageManager()
+                .getLaunchIntentForPackage(_context.getPackageName());
+        Intent mainIntent = Intent.makeRestartActivityTask(intent.getComponent());
+        _context.startActivity(mainIntent);
+        Runtime.getRuntime().exit(0);
     }
 }
