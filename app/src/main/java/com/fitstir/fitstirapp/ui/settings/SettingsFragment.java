@@ -112,6 +112,36 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 deleteFromDatabase();
                 deleteUser();
+
+                // show dialog saying account deleted and redirected to login
+            }
+        });
+
+        Button hardResetButton = root.findViewById(R.id.hard_reset_button);
+        hardResetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean success = clearApplicationData();
+
+                if (success) {
+                    success = deleteFromDatabase();
+
+                    if (success) {
+                        success = deleteUser();
+
+                        if (success) {
+                            // show dialog saying everything deleted and saying account deleted and redirected to login
+                            Toast.makeText(getContext(), "Application AND Database AND Account Data Deleted", Toast.LENGTH_LONG).show();
+                        } else {
+                            // show dialog saying error
+                            Toast.makeText(getContext(), "Account Data **NOT** Deleted", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Database Data **NOT** Deleted", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Application Data **NOT** Deleted", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -163,15 +193,19 @@ public class SettingsFragment extends Fragment {
         return dir.delete();
     }
 
-    private void deleteFromDatabase() {
+    private boolean deleteFromDatabase() {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        final boolean[] success = {false};
+
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 databaseReference.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        if (!task.isSuccessful()) {
+                            success[0] = true;
+                        }
                     }
                 });
 
@@ -182,21 +216,28 @@ public class SettingsFragment extends Fragment {
             }
         };
         databaseReference.addValueEventListener(listener);
+
+        return success[0];
     }
 
-    private void deleteUser() {
+    private boolean deleteUser() {
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final boolean[] success = {false};
 
         if (user != null) {
             OnCompleteListener<Void> listener = new  OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-
+                    if (task.isSuccessful()) {
+                        success[0] = true;
+                    }
                 }
             };
             user.delete().addOnCompleteListener(listener);
         }
+
+        return success[0];
     }
 
     private void navigateToLogInActivity() {
