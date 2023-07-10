@@ -15,9 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSettingsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,11 +35,29 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
+    private Timer t = new Timer();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
+                if (auth == null) {
+                    navigateToLogInActivity();
+                }
+            }
+        }, 0, 1000); // run immediately, then every 1 second
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -85,14 +106,14 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        /*Button deactivateButton = root.findViewById(R.id.deactivate_button);
+        Button deactivateButton = root.findViewById(R.id.deactivate_button);
         deactivateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteFromDatabase();
                 deleteUser();
             }
-        });*/
+        });
 
         // End
 
