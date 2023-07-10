@@ -124,25 +124,13 @@ public class SettingsFragment extends Fragment {
         hardResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean success = Methods.clearApplicationData(getActivity());
-
-                if (success) {
-                    success = Methods.deleteFromDatabase();
-
-                    if (success) {
-                        success = Methods.deleteUser();
-
-                        if (success) {
-
-                        } else {
-                            Toast.makeText(getContext(), "Account Data **NOT** Deleted", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        Toast.makeText(getContext(), "Database Data **NOT** Deleted", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Application Data **NOT** Deleted", Toast.LENGTH_LONG).show();
-                }
+                HardResetDialog.newInstance(
+                        R.layout.dialog_generic_alert,
+                        R.id.dialog_generic_accept_button,
+                        R.id.dialog_generic_cancel_button,
+                        R.id.dialog_generic_message,
+                        "You are about to delete your FitStir account and all application data.\nThis cannot be undone."
+                ).show(getParentFragmentManager(), "Reset Application");
             }
         });
 
