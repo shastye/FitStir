@@ -101,7 +101,7 @@ public class SettingsFragment extends Fragment {
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
                         R.id.dialog_generic_message,
-                        "You are about to delete all saved application data."
+                        "You are about to delete all saved application data.\nThis cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }
         });
@@ -110,10 +110,13 @@ public class SettingsFragment extends Fragment {
         deactivateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Methods.deleteFromDatabase();
-                Methods.deleteUser();
-
-                // show dialog saying account deleted and redirected to login
+                DeactivateAccountDialog.newInstance(
+                        R.layout.dialog_generic_alert,
+                        R.id.dialog_generic_accept_button,
+                        R.id.dialog_generic_cancel_button,
+                        R.id.dialog_generic_message,
+                        "You are about to delete your FitStir account.\nThis cannot be undone."
+                ).show(getParentFragmentManager(), "Reset Application");
             }
         });
 
@@ -130,10 +133,8 @@ public class SettingsFragment extends Fragment {
                         success = Methods.deleteUser();
 
                         if (success) {
-                            // show dialog saying everything deleted and saying account deleted and redirected to login
-                            Toast.makeText(getContext(), "Application AND Database AND Account Data Deleted", Toast.LENGTH_LONG).show();
+
                         } else {
-                            // show dialog saying error
                             Toast.makeText(getContext(), "Account Data **NOT** Deleted", Toast.LENGTH_LONG).show();
                         }
                     } else {
