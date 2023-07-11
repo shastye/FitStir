@@ -1,11 +1,33 @@
 package com.fitstir.fitstirapp.ui.utility;
 
+import androidx.core.util.Pair;
+
 import com.fitstir.fitstirapp.R;
 
+import java.util.Map;
 import java.util.Vector;
 
 public class Tags {
-    public static String FIRST_NAME = "first_name";
+    public enum Reminder_Channel_ID {
+        WORKOUT_REMINDERS(0),
+        MENTAL_WELLNESS_REMINDERS(1);
+
+        private final int value;
+        private Reminder_Channel_ID(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+    public static Vector<Integer> Notification_IDs = new Vector<Integer>();
+    public static final Vector<Pair<String, String>> NOTIFICATION_CHANNELS = new Vector<Pair<String, String>>() {{
+            add(new Pair<String, String>("Workout Reminders", "Reminders to workout."));
+            add(new Pair<String, String>("Mental Wellness Check-In Reminders", "Reminders to check in with regards to your mental health."));
+    }};
+
+
 
 
     public static final Vector<SectionItem> WORKOUTS_SECTION = new Vector<SectionItem>() {{
@@ -24,20 +46,5 @@ public class Tags {
         add(new SectionItem(R.drawable.ic_recipe_black_200dp, "Recipes"));
         add(new SectionItem(R.drawable.ic_loc_black_200dp, "Find Dietitian"));
         add(new SectionItem(R.drawable.ic_diary_black_200dp, "Diary"));
-    }};
-
-    public static final Vector<int[]> THEME_COLORS = new Vector<int[]>() {{
-        add(new int[]{
-                //primary   pVariant  onPrimary
-                0xFF590C64,0xFFEA16B5,0xFFFCFCFC,
-              //secondary   sVariant  onSecondary
-                0xFF245E1E,0xFF3AB833,0xFFFCFCFC
-        });
-        add(new int[]{
-                //primary   pVariant  onPrimary
-                0xFF000000,0xFF3700B3,0xFFFFFFFF,
-                //secondary   sVariant  onSecondary
-                0xFFBB86FC,0xFF03DAC5,0xFFFFFFFF
-        });
     }};
 }

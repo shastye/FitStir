@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.utility;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +15,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.navigation.NavDeepLinkBuilder;
 
+import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +37,10 @@ import java.util.Objects;
 import java.util.Vector;
 
 public class Methods {
-    public static Spinner getSpinnerWithAdapter(Activity _activity, View _root, int _spinnerID, String[] _spinnerOptions) {
+    private static int NOTIFICATION_ID = 0;
+
+    @NonNull
+    public static Spinner getSpinnerWithAdapter(@NonNull Activity _activity, @NonNull View _root, int _spinnerID, String[] _spinnerOptions) {
         Spinner spinner = (Spinner) _root.findViewById(_spinnerID);
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(_activity, R.layout.spinner_text, _spinnerOptions);
         langAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -43,7 +51,7 @@ public class Methods {
 
 
 
-    public static boolean clearApplicationData(Activity _activity) {
+    public static boolean clearApplicationData(@NonNull Activity _activity) {
         boolean success = true;
 
         File cache = _activity.getCacheDir();
@@ -122,7 +130,7 @@ public class Methods {
         return success[0];
     }
 
-    public static void navigateToLogInActivity(Context _context) {
+    public static void navigateToLogInActivity(@NonNull Context _context) {
         Intent intent = _context
                 .getPackageManager()
                 .getLaunchIntentForPackage(_context.getPackageName());
@@ -132,9 +140,31 @@ public class Methods {
     }
 
 
-    public static int getThemeAttributeColor(int _R_attr_color, Context _context) {
+    public static int getThemeAttributeColor(int _R_attr_color, @NonNull Context _context) {
         TypedValue value = new TypedValue();
         _context.getTheme().resolveAttribute(_R_attr_color, value, true);
         return value.data;
+    }
+
+    public static void createNotification(@NonNull Activity _activity, int _channel_id, int _drawableID, String _title, String _small_content, String _extra_content, int _navID) {
+        NavDeepLinkBuilder navBuilder = new NavDeepLinkBuilder(_activity.getApplicationContext());
+        navBuilder.setComponentName(MainActivity.class);
+        navBuilder.setGraph(R.navigation.main_navigation);
+        navBuilder.setDestination(_navID);
+        PendingIntent pendingIntent = navBuilder.createPendingIntent();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(_activity, String.valueOf(_channel_id))
+                .setSmallIcon(_drawableID)
+                .setContentTitle(_title)
+                .setContentText(_small_content)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(_extra_content))
+                .setContentIntent(pendingIntent);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(_activity);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+        Tags.Notification_IDs.add(NOTIFICATION_ID++);
     }
 }

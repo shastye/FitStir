@@ -1,8 +1,13 @@
 package com.fitstir.fitstirapp;
 
+import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +16,8 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,20 +28,19 @@ import androidx.navigation.ui.NavigationUiSaveStateControl;
 import com.fitstir.fitstirapp.databinding.ActivityMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.ResetTheme;
+import com.fitstir.fitstirapp.ui.utility.Tags;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private NavController navController;
+    private NotificationManager notificationManager;
 
     @Override
     @NavigationUiSaveStateControl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        // TODO: load from database
 
         // RESETS THE THEME
         ResetTheme.setInitialTheme(SettingsViewModel.themeID);
@@ -99,6 +105,36 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        notificationManager = getSystemService(NotificationManager.class);
+
+        for (int i = 0; i < Tags.NOTIFICATION_CHANNELS.size(); i++) {
+            String name = Tags.NOTIFICATION_CHANNELS.get(i).first;
+            String description = Tags.NOTIFICATION_CHANNELS.get(i).second;
+            int importance = NotificationManager.IMPORTANCE_LOW;
+
+            NotificationChannel channel = new NotificationChannel(String.valueOf(i), name, importance);
+            channel.setDescription(description);
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            channel.setShowBadge(true);
+
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // ASKS USER FOR NOTIFICATION PERMISSIONS
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.POST_NOTIFICATIONS},101);
+        }
+        //
+
+        notificationManager.cancelAll();
     }
 
     @Override
