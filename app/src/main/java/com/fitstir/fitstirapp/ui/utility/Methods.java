@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -38,30 +39,6 @@ public class Methods {
         spinner.setAdapter(langAdapter);
 
         return spinner;
-    }
-
-    public static boolean isEmpty(Vector<EditText> _vet) {
-        boolean isEmpty = false;
-
-        for (EditText et : _vet) {
-            isEmpty = (et.getText().toString().trim().length() == 0);
-
-            if (isEmpty) {
-                break;
-            }
-        }
-
-        return isEmpty;
-    }
-
-    public static Vector<Bitmap> convertPNGtoBitmap(View _root, int[] _drawables) {
-        Vector<Bitmap> bitmaps = new Vector<>();
-
-        for (int drawable : _drawables) {
-            bitmaps.add(BitmapFactory.decodeResource(_root.getContext().getResources(), drawable));
-        }
-
-        return bitmaps;
     }
 
 
@@ -152,5 +129,12 @@ public class Methods {
         Intent mainIntent = Intent.makeRestartActivityTask(intent.getComponent());
         _context.startActivity(mainIntent);
         Runtime.getRuntime().exit(0);
+    }
+
+
+    public static int getThemeAttributeColor(int _R_attr_color, Context _context) {
+        TypedValue value = new TypedValue();
+        _context.getTheme().resolveAttribute(_R_attr_color, value, true);
+        return value.data;
     }
 }

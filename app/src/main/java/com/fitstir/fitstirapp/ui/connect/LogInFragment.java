@@ -72,45 +72,45 @@ public class LogInFragment extends Fragment {
     }
 
     public void validate(){
-    String email = user_Email.getText().toString();
-    String password = user_Password.getText().toString();
+        String email = user_Email.getText().toString();
+        String password = user_Password.getText().toString();
 
-    final Drawable warning = AppCompatResources.getDrawable(requireContext(),R.drawable.baseline_warning_amber_24);
-    warning.setBounds(0,0, warning.getIntrinsicWidth(),warning.getIntrinsicHeight());
-    if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-        if(!password.isEmpty() &&  password.length() >= 6){
-            auth.signInWithEmailAndPassword(email,password)
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>(){
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(getActivity(), "LogIn Successfull", Toast.LENGTH_SHORT).show();
-                            Intent myIntent = new Intent(getActivity(), MainActivity.class);
-                            Objects.requireNonNull(getActivity()).startActivity(myIntent);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "LogIn Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+        final Drawable warning = AppCompatResources.getDrawable(requireContext(),R.drawable.baseline_warning_amber_24);
+        warning.setBounds(0,0, warning.getIntrinsicWidth(),warning.getIntrinsicHeight());
+        if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            if(!password.isEmpty() &&  password.length() >= 6){
+                auth.signInWithEmailAndPassword(email,password)
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>(){
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                Toast.makeText(getActivity(), "LogIn Successfull", Toast.LENGTH_SHORT).show();
+                                Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                                Objects.requireNonNull(getActivity()).startActivity(myIntent);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(), "LogIn Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+            else if(password.isEmpty())
+            {
+                user_Password.setError("Password can not be empty",warning);
+            }
+            else
+            {
+                user_Password.setError("Password must be at least 6 characters", warning);
+            }
+
         }
-        else if(password.isEmpty())
+        else if(email.isEmpty())
         {
-            user_Password.setError("Password can not be empty",warning);
+            user_Email.setError("Email can not be empty...Please Try Again!!", warning);
         }
         else
         {
-            user_Password.setError("Password must be at least 6 characters", warning);
+            user_Email.setError("Please enter valid Email!!", warning);
         }
-
-    }
-    else if(email.isEmpty())
-    {
-        user_Email.setError("Email can not be empty...Please Try Again!!", warning);
-    }
-    else
-    {
-        user_Email.setError("Please enter valid Email!!", warning);
-    }
     }
 }
