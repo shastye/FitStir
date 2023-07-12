@@ -15,8 +15,8 @@ public class CheckRecentRun extends Service {
     private static long MILLISECS_PER_SEC = 1000L;
     private static long MILLISECS_PER_DAY = 86400000;
 
-    private static final long delay = MILLISECS_PER_DAY * 2;
-    //private static final long delay = MILLISECS_PER_SEC * 20;
+    //private static final long delay = MILLISECS_PER_DAY * 2;
+    private static final long delay = MILLISECS_PER_SEC * 3;
 
     @Override
     public void onCreate() {
@@ -29,10 +29,13 @@ public class CheckRecentRun extends Service {
                         this,
                         Tags.Reminder_Channel_ID.WORKOUT_REMINDERS.getValue(),
                         R.drawable.ic_bicep_black_200dp,
-                        "Testing",
-                        "This is a test.",
-                        "This is still a test..........................",
-                        R.id.navigation_workouts
+                        "Don't forget to check in!",
+                        "It's been 2 days since you last checked in.",
+                        "It's been 2 days since you last updated your " +
+                                "calorie tracker, diary, or completed a workout. " +
+                                "Come back and check in with FitStir to keep up with " +
+                                "your mental wellness!",
+                        R.id.navigation_goals
                 );
             }
         }
