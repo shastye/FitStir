@@ -2,11 +2,14 @@ package com.fitstir.fitstirapp.ui.connect;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,7 +32,7 @@ import java.util.Objects;
 public class LogInFragment extends Fragment {
 
     private FragmentLogInBinding binding;
-    private ImageButton ForgotButton;
+    private ImageButton ForgotButton, visible, invisible;
     private FirebaseAuth auth;
     private EditText user_Email, user_Password;
 
@@ -46,6 +49,7 @@ public class LogInFragment extends Fragment {
         user_Email = root.findViewById(R.id.username_log_in);
         user_Password = root.findViewById(R.id.user_password);
 
+
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
         Button logInButton = root.findViewById(R.id.button_log_in);
@@ -60,7 +64,30 @@ public class LogInFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_navigation_log_in_to_navigation_forgot);
         });
 
-        // End
+        visible = root.findViewById(R.id.view_password);
+        visible.setOnClickListener(v-> {
+
+            if(visible.getVisibility() == View.VISIBLE)
+            {
+                visible.setVisibility(View.INVISIBLE);
+                invisible.setVisibility(View.VISIBLE);
+                user_Password.setInputType(View.VISIBLE);
+
+            }
+        });
+
+        invisible = root.findViewById(R.id.invisible_password);
+        invisible.setOnClickListener(v-> {
+            if(invisible.getVisibility() == View.VISIBLE)
+            {
+                invisible.setVisibility(View.INVISIBLE);
+                visible.setVisibility(View.VISIBLE);
+                user_Password.setTransformationMethod(new PasswordTransformationMethod());
+            }
+        });
+
+
+        //End
 
         return root;
     }
@@ -77,6 +104,9 @@ public class LogInFragment extends Fragment {
 
     final Drawable warning = AppCompatResources.getDrawable(requireContext(),R.drawable.baseline_warning_amber_24);
     warning.setBounds(0,0, warning.getIntrinsicWidth(),warning.getIntrinsicHeight());
+
+
+    user_Password.setTransformationMethod(new PasswordTransformationMethod());
     if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
         if(!password.isEmpty() &&  password.length() >= 6){
             auth.signInWithEmailAndPassword(email,password)
