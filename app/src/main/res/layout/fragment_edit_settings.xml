@@ -75,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="Theme"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/themeID_edit"
                 android:layout_marginTop="35dp"
@@ -82,7 +83,7 @@
 
             <RelativeLayout
                 android:id="@+id/themeID_edit"
-                android:layout_width="190dp"
+                android:layout_width="170dp"
                 android:layout_height="48dp"
                 android:background="@drawable/spinner_outline"
                 android:layout_marginEnd="15dp"
@@ -121,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:text="Goal Date Range"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@id/theme_label"
                 android:layout_toStartOf="@id/rangeID_edit"
@@ -129,7 +131,7 @@
 
             <RelativeLayout
                 android:id="@+id/rangeID_edit"
-                android:layout_width="190dp"
+                android:layout_width="170dp"
                 android:layout_height="48dp"
                 android:background="@drawable/spinner_outline"
                 android:layout_marginEnd="15dp"
@@ -168,6 +170,7 @@
                 android:layout_height="wrap_content"
                 android:text="Goal Date Interval"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@id/range_label"
                 android:layout_toStartOf="@id/rangeID_edit"
@@ -176,7 +179,7 @@
 
             <RelativeLayout
                 android:id="@+id/intervalID_edit"
-                android:layout_width="190dp"
+                android:layout_width="170dp"
                 android:layout_height="48dp"
                 android:background="@drawable/spinner_outline"
                 android:layout_marginEnd="15dp"
@@ -215,6 +218,7 @@
                 android:layout_height="wrap_content"
                 android:text="Units"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@id/interval_label"
                 android:layout_toStartOf="@id/unitsID_edit"
@@ -223,7 +227,7 @@
 
             <RelativeLayout
                 android:id="@+id/unitsID_edit"
-                android:layout_width="190dp"
+                android:layout_width="170dp"
                 android:layout_height="48dp"
                 android:background="@drawable/spinner_outline"
                 android:layout_marginEnd="15dp"
@@ -257,4 +261,56 @@
             </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/theme_hint"
+        android:layout_width="24dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_question_mark_200dp"
+        android:elevation="2dp"
+        app:tint="@color/mid_grey"
+        app:layout_constraintVertical_bias="0.11"
+        app:layout_constraintTop_toTopOf="@id/profile_textbox"
+        app:layout_constraintEnd_toEndOf="@id/profile_textbox"
+        app:layout_constraintStart_toStartOf="@id/profile_textbox"
+        app:layout_constraintBottom_toBottomOf="@id/profile_textbox" />
+
+    <ImageView
+        android:id="@+id/range_hint"
+        android:layout_width="24dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_question_mark_200dp"
+        android:elevation="2dp"
+        app:tint="@color/mid_grey"
+        app:layout_constraintVertical_bias="0.37"
+        app:layout_constraintTop_toTopOf="@id/profile_textbox"
+        app:layout_constraintEnd_toEndOf="@id/profile_textbox"
+        app:layout_constraintStart_toStartOf="@id/profile_textbox"
+        app:layout_constraintBottom_toBottomOf="@id/profile_textbox" />
+
+    <ImageView
+        android:id="@+id/interval_hint"
+        android:layout_width="24dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_question_mark_200dp"
+        android:elevation="2dp"
+        app:tint="@color/mid_grey"
+        app:layout_constraintVertical_bias="0.625"
+        app:layout_constraintTop_toTopOf="@id/profile_textbox"
+        app:layout_constraintEnd_toEndOf="@id/profile_textbox"
+        app:layout_constraintStart_toStartOf="@id/profile_textbox"
+        app:layout_constraintBottom_toBottomOf="@id/profile_textbox" />
+
+    <ImageView
+        android:id="@+id/units_hint"
+        android:layout_width="24dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_question_mark_200dp"
+        android:elevation="2dp"
+        app:tint="@color/mid_grey"
+        app:layout_constraintVertical_bias="0.885"
+        app:layout_constraintTop_toTopOf="@id/profile_textbox"
+        app:layout_constraintEnd_toEndOf="@id/profile_textbox"
+        app:layout_constraintStart_toStartOf="@id/profile_textbox"
+        app:layout_constraintBottom_toBottomOf="@id/profile_textbox" />
 </androidx.constraintlayout.widget.ConstraintLayout>
