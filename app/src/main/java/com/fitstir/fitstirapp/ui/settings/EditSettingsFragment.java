@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -43,6 +44,15 @@ public class EditSettingsFragment extends Fragment {
         rangeSpinner.setSelection(SettingsViewModel.rangeID);
         intervalSpinner.setSelection(SettingsViewModel.intervalID);
         unitSpinner.setSelection(SettingsViewModel.unitID);
+
+        ImageView themeIV = root.findViewById(R.id.theme_hint);
+        themeIV.setTooltipText("This will change the theme of your entire application.");
+        ImageView rangeIV = root.findViewById(R.id.range_hint);
+        rangeIV.setTooltipText("This will change how far back in time your goals will show data for.");
+        ImageView intervalIV = root.findViewById(R.id.interval_hint);
+        intervalIV.setTooltipText("This will change the interval of date jumps for your goal's range.");
+        ImageView unitsIV = root.findViewById(R.id.units_hint);
+        unitsIV.setTooltipText("This will change the units in which everything is measured.");
 
         CardView saveButton = root.findViewById(R.id.savebutton_cardView_settings_edit);
         saveButton.setOnClickListener(new View.OnClickListener() {

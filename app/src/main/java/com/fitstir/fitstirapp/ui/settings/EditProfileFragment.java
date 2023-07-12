@@ -1,6 +1,11 @@
 package com.fitstir.fitstirapp.ui.settings;
 
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Patterns;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.R.attr;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -18,6 +26,7 @@ import androidx.navigation.Navigation;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.google.android.material.color.MaterialColors;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -65,40 +74,54 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                while (true) {
-                    Vector<EditText> editTexts = new Vector<>();
 
-                    editTexts.add(root.findViewById(R.id.text_name_edit));
-                    editTexts.add(root.findViewById(R.id.text_age_edit));
-                    editTexts.add(root.findViewById(R.id.text_height_feet_edit));
-                    editTexts.add(root.findViewById(R.id.text_height_inches_edit));
-                    editTexts.add(root.findViewById(R.id.text_weight_edit));
-                    editTexts.add(root.findViewById(R.id.text_email_edit));
+                final Drawable warningIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.baseline_warning_amber_24);
+                assert warningIcon != null;
+                warningIcon.setBounds(0, 0, warningIcon.getIntrinsicWidth(), warningIcon.getIntrinsicHeight());
 
-                    if (!Methods.isEmpty(editTexts)) {
-                        SettingsViewModel.name = editTexts.get(0).getText().toString();
-                        SettingsViewModel.age = Integer.parseInt(editTexts.get(1).getText().toString());
-                        SettingsViewModel.height_feet = Integer.parseInt(editTexts.get(2).getText().toString());
-                        SettingsViewModel.height_inches = Integer.parseInt(editTexts.get(3).getText().toString());
-                        SettingsViewModel.weight = Integer.parseInt(editTexts.get(4).getText().toString());
-                        String tEmail = editTexts.get(5).getText().toString();
+                warningIcon.setTint(Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorSecondaryVariant, requireContext()));
 
-                        Pattern pattern = Pattern.compile(getString(R.string.email_validation));
-                        Matcher mail = pattern.matcher(tEmail);
+                String t_name = name.getText().toString();
+                String t_age = age.getText().toString();
+                String t_feet = feet.getText().toString();
+                String t_inches = inches.getText().toString();
+                String t_weight = weight.getText().toString();
+                String t_email = email.getText().toString();
 
-                        if (mail.find()) {
-                            SettingsViewModel.email = tEmail;
+                if (!t_name.isEmpty()) {
+                    if (!t_age.isEmpty()) {
+                        if (!t_feet.isEmpty()) {
+                            if (!t_inches.isEmpty()) {
+                                if (!t_weight.isEmpty()) {
+                                    if (!t_email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(t_email).matches()) {
+                                        SettingsViewModel.name = t_name;
+                                        SettingsViewModel.age = Integer.parseInt(t_age);
+                                        SettingsViewModel.height_feet = Integer.parseInt(t_feet);
+                                        SettingsViewModel.height_inches = Integer.parseInt(t_inches);
+                                        SettingsViewModel.weight = Integer.parseInt(t_weight);
+                                        SettingsViewModel.email = t_email;
 
-                            break;
+                                        Navigation.findNavController(root).navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
+                                    } else if (t_email.isEmpty()) {
+                                        email.setError("Email cannot be empty. Please try again.", warningIcon);
+                                    } else {
+                                        email.setError("Email must be a valid email format. Please try again.", warningIcon);
+                                    }
+                                } else {
+                                    weight.setError("Weight cannot be empty. Please try again.", warningIcon);
+                                }
+                            } else {
+                                inches.setError("Height in inches cannot be empty. Please try again.", warningIcon);
+                            }
                         } else {
-                            Toast.makeText(getContext(), "Email address isn't a valid format.", Toast.LENGTH_LONG).show();
+                            feet.setError("Height in feet cannot be empty. Please try again.", warningIcon);
                         }
+                    } else {
+                        age.setError("Age cannot be empty. Please try again.", warningIcon);
                     }
-
-                    Toast.makeText(getContext(), "Please fill in all of the fields.", Toast.LENGTH_LONG).show();
+                } else {
+                    name.setError("Name cannot be empty. Please try again.", warningIcon);
                 }
-
-                Navigation.findNavController(root).navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
             }
         });
 

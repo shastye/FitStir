@@ -15,12 +15,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSettingsBinding;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,11 +37,29 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
+    private Timer t = new Timer();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
+                if (auth == null) {
+                    Methods.navigateToLogInActivity(getContext());
+                }
+            }
+        }, 0, 1000); // run immediately, then every 1 second
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,26 +96,43 @@ public class SettingsFragment extends Fragment {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean success = clearApplicationData();
-
-                if (success) {
-                    // show dialog saying everything deleted
-                    Toast.makeText(getContext(), "Application Data Deleted", Toast.LENGTH_LONG).show();
-                } else {
-                    // show dialog saying error
-                    Toast.makeText(getContext(), "Application Data **NOT** Deleted", Toast.LENGTH_LONG).show();
-                }
+                ResetApplicationDialog.newInstance(
+                        R.layout.dialog_generic_alert,
+                        R.id.dialog_generic_accept_button,
+                        R.id.dialog_generic_cancel_button,
+                        R.id.dialog_generic_message,
+                        "You are about to delete all saved application data.\nThis cannot be undone."
+                ).show(getParentFragmentManager(), "Reset Application");
             }
         });
 
-        /*Button deactivateButton = root.findViewById(R.id.deactivate_button);
+        Button deactivateButton = root.findViewById(R.id.deactivate_button);
         deactivateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteFromDatabase();
-                deleteUser();
+                DeactivateAccountDialog.newInstance(
+                        R.layout.dialog_generic_alert,
+                        R.id.dialog_generic_accept_button,
+                        R.id.dialog_generic_cancel_button,
+                        R.id.dialog_generic_message,
+                        "You are about to delete your FitStir account.\nThis cannot be undone."
+                ).show(getParentFragmentManager(), "Reset Application");
             }
-        });*/
+        });
+
+        Button hardResetButton = root.findViewById(R.id.hard_reset_button);
+        hardResetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HardResetDialog.newInstance(
+                        R.layout.dialog_generic_alert,
+                        R.id.dialog_generic_accept_button,
+                        R.id.dialog_generic_cancel_button,
+                        R.id.dialog_generic_message,
+                        "You are about to delete your FitStir account and all application data.\nThis cannot be undone."
+                ).show(getParentFragmentManager(), "Reset Application");
+            }
+        });
 
         // End
 
@@ -103,88 +143,5 @@ public class SettingsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-
-
-    private boolean clearApplicationData() {
-        boolean success = true;
-
-        File cache = getActivity().getCacheDir();
-        File appDir = new File(cache.getParent());
-        if (appDir.exists()) {
-            String[] children = appDir.list();
-            for (String s : children) {
-                if (!s.equals("lib")) {
-                    success = deleteDir(new File(appDir, s));
-
-                    if (!success) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return success;
-    }
-
-    private boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-        }
-
-        return dir.delete();
-    }
-
-    private void deleteFromDatabase() {
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                    }
-                });
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("deleteFromDatabase Error", "An error occurred: " + error.getMessage());
-            }
-        };
-        databaseReference.addValueEventListener(listener);
-    }
-
-    private void deleteUser() {
-
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-            OnCompleteListener<Void> listener = new  OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-
-                }
-            };
-            user.delete().addOnCompleteListener(listener);
-        }
-    }
-
-    private void navigateToLogInActivity() {
-        Context context = getContext();
-        Intent intent = getContext()
-                .getPackageManager()
-                .getLaunchIntentForPackage(context.getPackageName());
-        Intent mainIntent = Intent.makeRestartActivityTask(intent.getComponent());
-        context.startActivity(mainIntent);
-        Runtime.getRuntime().exit(0);
     }
 }
