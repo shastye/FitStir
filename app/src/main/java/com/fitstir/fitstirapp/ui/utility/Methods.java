@@ -146,24 +146,23 @@ public class Methods {
         return value.data;
     }
 
-    public static void createNotification(@NonNull Activity _activity, int _channel_id, int _drawableID, String _title, String _small_content, String _extra_content, int _navID) {
-        NavDeepLinkBuilder navBuilder = new NavDeepLinkBuilder(_activity.getApplicationContext());
+    public static void createNotification(@NonNull Context _context, int _channel_id, int _drawableID, String _title, String _small_content, String _extra_content, int _navID) {
+        NavDeepLinkBuilder navBuilder = new NavDeepLinkBuilder(_context.getApplicationContext());
         navBuilder.setComponentName(MainActivity.class);
         navBuilder.setGraph(R.navigation.main_navigation);
         navBuilder.setDestination(_navID);
         PendingIntent pendingIntent = navBuilder.createPendingIntent();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(_activity, String.valueOf(_channel_id))
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(_context, String.valueOf(_channel_id))
                 .setSmallIcon(_drawableID)
                 .setContentTitle(_title)
                 .setContentText(_small_content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
-                .setOnlyAlertOnce(true)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(_extra_content))
                 .setContentIntent(pendingIntent);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(_activity);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(_context);
         notificationManager.notify(NOTIFICATION_ID, builder.build());
         Tags.Notification_IDs.add(NOTIFICATION_ID++);
     }

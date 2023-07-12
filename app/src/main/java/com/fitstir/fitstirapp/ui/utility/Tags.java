@@ -26,6 +26,8 @@ public class Tags {
             add(new Pair<String, String>("Workout Reminders", "Reminders to workout."));
             add(new Pair<String, String>("Mental Wellness Check-In Reminders", "Reminders to check in with regards to your mental health."));
     }};
+    public static final String TIMED_NOTIFICATION_TAG = "TimedNotifications";
+    public static final String LAST_ON_DESTROY_TAG = "LastOnDestroy";
 
 
 

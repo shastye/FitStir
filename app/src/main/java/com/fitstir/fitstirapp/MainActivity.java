@@ -6,18 +6,17 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -35,7 +34,15 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private NavController navController;
+
     private NotificationManager notificationManager;
+    private SharedPreferences settings = null;
+    private SharedPreferences.Editor editor = null;
+    private ActivityResultLauncher<String> notificationPermission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
+        userAllowedNotifications = result;
+    });
+    private static boolean userAllowedNotifications = false;
+    public static boolean areNotificationsAllowed() { return userAllowedNotifications; }
 
     @Override
     @NavigationUiSaveStateControl
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController, false);
 
+        // SET UP TOOLBAR MENU
         addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -105,6 +113,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //
+
+        settings = getSharedPreferences(Tags.TIMED_NOTIFICATION_TAG, MODE_PRIVATE);
+        editor = settings.edit();
+
+        if (userAllowedNotifications) {
+            editor.putLong(Tags.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
+            editor.commit();
+        }
     }
 
     @Override
@@ -129,9 +146,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // ASKS USER FOR NOTIFICATION PERMISSIONS
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.POST_NOTIFICATIONS},101);
-        }
+        notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS);
         //
 
         notificationManager.cancelAll();
@@ -140,5 +155,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         return Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigateUp();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        editor.putLong(Tags.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
+        editor.commit();
+
+        startService(new Intent(this, CheckRecentRun.class));
     }
 }
