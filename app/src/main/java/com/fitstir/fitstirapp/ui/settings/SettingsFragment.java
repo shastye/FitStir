@@ -101,7 +101,7 @@ public class SettingsFragment extends Fragment {
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
                         R.id.dialog_generic_message,
-                        "You are about to delete all saved application data.\nThis cannot be undone."
+                        "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }
         });
@@ -115,7 +115,7 @@ public class SettingsFragment extends Fragment {
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
                         R.id.dialog_generic_message,
-                        "You are about to delete your FitStir account.\nThis cannot be undone."
+                        "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }
         });
@@ -129,7 +129,7 @@ public class SettingsFragment extends Fragment {
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
                         R.id.dialog_generic_message,
-                        "You are about to delete your FitStir account and all application data.\nThis cannot be undone."
+                        "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }
         });
