@@ -10,6 +10,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fitstir.fitstirapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SettingsViewModel extends ViewModel {
 
@@ -35,8 +37,11 @@ public class SettingsViewModel extends ViewModel {
 
 
     public SettingsViewModel() {
-        // TODO: Get user id from firestore
-        int userID = 7777;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = "Error: No user logged in...\nContact customer support.";
+        if (user != null) {
+            userID = user.getUid();
+        }
 
         mText = new MutableLiveData<>();
         mText.setValue("User ID: " + userID);

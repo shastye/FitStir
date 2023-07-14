@@ -29,6 +29,8 @@ import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.ResetTheme;
 import com.fitstir.fitstirapp.ui.utility.Tags;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                             pageID = R.id.navigation_settings;
                             break;
                         case R.id.log_out_item:
-                            // TODO: Do the log out
+                            FirebaseAuth.getInstance().signOut();
 
                             Context context = getApplicationContext();
                             Intent intent = getApplicationContext()
