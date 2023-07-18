@@ -13,14 +13,14 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.fitstir.fitstirapp.R;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class SectionGridAdapter extends BaseAdapter {
 
-    private Vector<SectionItem> options;
+    private ArrayList<SectionItem> options;
     private View root;
 
-    public SectionGridAdapter(Vector<SectionItem> _options, View _root) {
+    public SectionGridAdapter(ArrayList<SectionItem> _options, View _root) {
         super();
 
         options = _options;
@@ -59,5 +59,5 @@ public class SectionGridAdapter extends BaseAdapter {
     }
 
     public View getRoot() { return root; }
-    public Vector<SectionItem> getOptions() { return options; }
+    public ArrayList<SectionItem> getOptions() { return options; }
 }

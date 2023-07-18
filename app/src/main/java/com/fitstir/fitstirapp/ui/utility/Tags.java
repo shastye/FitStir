@@ -5,7 +5,7 @@ import androidx.core.util.Pair;
 import com.fitstir.fitstirapp.R;
 
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Tags {
     public enum Reminder_Channel_ID {
@@ -21,20 +21,20 @@ public class Tags {
             return value;
         }
     }
-    public static Vector<Integer> Notification_IDs = new Vector<Integer>();
-    public static final Vector<Pair<String, String>> NOTIFICATION_CHANNELS = new Vector<Pair<String, String>>() {{
+    public static ArrayList<Integer> Notification_IDs = new ArrayList<Integer>();
+    public static final ArrayList<Pair<String, String>> NOTIFICATION_CHANNELS = new ArrayList<Pair<String, String>>() {{
             add(new Pair<String, String>("Workout Reminders", "Reminders to workout."));
             add(new Pair<String, String>("Mental Wellness Check-In Reminders", "Reminders to check in with regards to your mental health."));
     }};
     public static final String TIMED_NOTIFICATION_TAG = "TimedNotifications";
     public static final String LAST_ON_DESTROY_TAG = "LastOnDestroy";
     public static final long MILLISECS_PER_SEC = 1000L;
-    public static final long MILLISECS_PER_DAY = 86400000;
+    public static final long MILLISECS_PER_DAY = 86400000L;
 
 
 
 
-    public static final Vector<SectionItem> WORKOUTS_SECTION = new Vector<SectionItem>() {{
+    public static final ArrayList<SectionItem> WORKOUTS_SECTION = new ArrayList<SectionItem>() {{
         add(new SectionItem(R.drawable.ic_shoe_black_200dp, "Run Club"));
         add(new SectionItem(R.drawable.ic_bicep_black_200dp, "Upper Body"));
         add(new SectionItem(R.drawable.ic_legs_black_200dp, "Lower Body"));
@@ -43,7 +43,7 @@ public class Tags {
         add(new SectionItem(R.drawable.ic_yoga_black_200dp, "Yoga"));
     }};
 
-    public static final Vector<SectionItem> HEALTH_SECTION = new Vector<SectionItem>() {{
+    public static final ArrayList<SectionItem> HEALTH_SECTION = new ArrayList<SectionItem>() {{
         add(new SectionItem(R.drawable.ic_cal_black_200dp, "Calorie Tracker"));
         add(new SectionItem(R.drawable.ic_guide_black_200dp, "Food Guide"));
         add(new SectionItem(R.drawable.ic_scale_black_200dp, "Weight Loss"));
