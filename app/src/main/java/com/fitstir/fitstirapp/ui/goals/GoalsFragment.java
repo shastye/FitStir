@@ -1,7 +1,6 @@
 package com.fitstir.fitstirapp.ui.goals;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentGoalsBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.Tags;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
-import com.jjoe64.graphview.LabelFormatter;
-import com.jjoe64.graphview.Viewport;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,7 +60,7 @@ public class GoalsFragment extends Fragment {
     }
 
     private void updateUI() {
-        ArrayList<Goal> goals = new ArrayList<>(); // retrieve from database
+        ArrayList<Goal> goals = new ArrayList<>(); // TODO: retrieve from database
 
         Calendar calendar1 = Calendar.getInstance();
 
@@ -183,7 +176,7 @@ public class GoalsFragment extends Fragment {
             int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
             int colorSecondary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorSecondary, requireContext());
 
-            int range = 30; // get from settings in days
+            int range = 30; // TODO: get from settings in days
 
             Date startDate = this.goal.getMinDate();
             Date endDate = this.goal.getMaxDate();

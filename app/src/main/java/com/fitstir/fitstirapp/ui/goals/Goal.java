@@ -3,16 +3,14 @@ package com.fitstir.fitstirapp.ui.goals;
 import androidx.core.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Vector;
 
 
 
 public class Goal {
     private String name;
-    private String type; // change to enum
-    private String unit; // set based on enum value of type
+    private String type; // TODO: change to enum
+    private String unit; // TODO: set based on enum value of type
     private int value;
     private ArrayList<Pair<Date, Double>> data;
 
