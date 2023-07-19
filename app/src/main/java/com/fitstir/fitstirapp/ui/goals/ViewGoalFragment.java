@@ -11,8 +11,10 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -54,6 +56,19 @@ public class ViewGoalFragment extends Fragment {
 
         bind();
 
+        FloatingActionButton editButton = root.findViewById(R.id.view_goal_edit_button);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditGoalDialog.newInstance(
+                        R.layout.dialog_create_goal,
+                        R.id.dialog_create_goal_accept_button,
+                        R.id.dialog_create_goal_cancel_button,
+                        ViewGoalFragment.this
+                ).show(getParentFragmentManager(), "Edit Goal");
+            }
+        });
+
         // End
         return root;
     }
@@ -64,7 +79,9 @@ public class ViewGoalFragment extends Fragment {
         binding = null;
     }
 
-    private void bind() {
+    public void bind() {
+        this.graphView.removeAllSeries();
+
         this.nameTextView.setText(this.goal.getName());
         this.typeTextView.setText(this.goal.getType());
         String valueText = String.valueOf(this.goal.getValue()) + " " + this.goal.getUnit();

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 
 import java.util.ArrayList;
