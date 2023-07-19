@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
@@ -25,10 +27,12 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class ViewGoalFragment extends Fragment {
 
     private FragmentViewGoalBinding binding;
+    GoalsViewModel goalsViewModel;
     private Goal goal;
 
     private TextView nameTextView, typeTextView, valueTextView, idTextView;
@@ -36,8 +40,7 @@ public class ViewGoalFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GoalsViewModel goalsViewModel =
-                new ViewModelProvider(this).get(GoalsViewModel.class);
+        goalsViewModel = new ViewModelProvider(requireActivity()).get(GoalsViewModel.class);
 
         binding = FragmentViewGoalBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -52,8 +55,7 @@ public class ViewGoalFragment extends Fragment {
         this.valueTextView = binding.viewGoalValueLabel;
         this.idTextView = binding.viewGoalIdLabel;
         this.graphView = binding.viewGoalGridGraph;
-
-        this.goal = GoalsViewModel.clickedGoal;
+        this.goal = goalsViewModel.getClickedGoal().getValue();
 
         bind();
 
@@ -110,7 +112,7 @@ public class ViewGoalFragment extends Fragment {
         int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
         int colorSecondary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorSecondary, requireContext());
 
-        int range = GoalsViewModel.goalRange;
+        int range = goalsViewModel.getGoalRange().getValue();
 
         Date startDate = this.goal.getMinDate();
         Date endDate = this.goal.getMaxDate();

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,9 +28,11 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class GoalsFragment extends Fragment {
 
+    private GoalsViewModel goalsViewModel;
     private FragmentGoalsBinding binding;
     private RecyclerView goalRecyclerView;
     private GoalAdapter goalAdapter;
@@ -37,8 +40,7 @@ public class GoalsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GoalsViewModel goalsViewModel =
-                new ViewModelProvider(this).get(GoalsViewModel.class);
+        goalsViewModel = new ViewModelProvider(requireActivity()).get(GoalsViewModel.class);
 
         binding = FragmentGoalsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
@@ -52,7 +54,7 @@ public class GoalsFragment extends Fragment {
 
         goalRecyclerView = root.findViewById(R.id.goal_recycler_view);
         goalRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        updateUI(GoalsViewModel.goals);
+        updateUI(goalsViewModel.getGoals().getValue());
 
         FloatingActionButton createGoalButton = binding.createGoalButton;
         createGoalButton.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +119,7 @@ public class GoalsFragment extends Fragment {
             int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
             int colorSecondary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorSecondary, requireContext());
 
-            int range = GoalsViewModel.goalRange;
+            int range = goalsViewModel.getGoalRange().getValue();
 
             Date startDate = this.goal.getMinDate();
             Date endDate = this.goal.getMaxDate();
@@ -277,7 +279,7 @@ public class GoalsFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            GoalsViewModel.clickedGoal = goal;
+            goalsViewModel.setClickedGoal(goal);
             Navigation.findNavController(v).navigate(R.id.action_navigation_goals_to_navigation_view_goal);
         }
     }

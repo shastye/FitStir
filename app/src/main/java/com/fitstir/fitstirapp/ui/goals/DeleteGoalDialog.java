@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class DeleteGoalDialog extends IBasicAlertDialog {
     private String message;
     private int messageID;
+    private GoalsViewModel goalsViewModel;
 
     public DeleteGoalDialog() { }
 
@@ -35,6 +37,8 @@ public class DeleteGoalDialog extends IBasicAlertDialog {
     public void onStart() {
         super.onStart();
 
+        goalsViewModel = new ViewModelProvider(requireActivity()).get(GoalsViewModel.class);
+
         assert getArguments() != null;
         message = getArguments().getString("message");
         messageID = getArguments().getInt("messageID");
@@ -47,8 +51,8 @@ public class DeleteGoalDialog extends IBasicAlertDialog {
 
     @Override
     public void onAccept() {
-        GoalsViewModel.goals.remove(GoalsViewModel.clickedGoal);
-        GoalsViewModel.clickedGoal = null;
+        goalsViewModel.removeGoal(goalsViewModel.getClickedGoal().getValue());
+        goalsViewModel.setClickedGoal(null);
         Navigation.findNavController(Objects.requireNonNull(getParentFragment().getView())).navigate(R.id.navigation_goals);
     }
 

@@ -5,6 +5,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
 import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
@@ -15,6 +17,7 @@ import java.util.Objects;
 
 public class EditGoalDialog extends IBasicAlertDialog {
 
+    private GoalsViewModel goalsViewModel;
     private EditText titleEditText, valueEditText;
     private TextView unitTextView;
     private final Tags.Workout_Type[] typeEnumArray = Tags.Workout_Type.values();
@@ -41,25 +44,27 @@ public class EditGoalDialog extends IBasicAlertDialog {
     public void onStart() {
         super.onStart();
 
+        goalsViewModel = new ViewModelProvider(requireActivity()).get(GoalsViewModel.class);
+
         assert getView() != null;
         DialogCreateGoalBinding binding = DialogCreateGoalBinding.bind(getView());
 
         titleEditText = binding.dialogCreateGoalTitleEditText;
-        titleEditText.setText(GoalsViewModel.clickedGoal.getName());
+        titleEditText.setText(goalsViewModel.getClickedGoal().getValue().getName());
 
         String[] spinnerOptions = new String[typeEnumArray.length];
         for (int i = 0; i < typeEnumArray.length; i++) {
             spinnerOptions[i] = typeEnumArray[i].getSpinnerTitle();
         }
         Spinner typeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), getView(), binding.dialogCreateGoalTypeSpinner.getId(), spinnerOptions);
-        typeSpinner.setSelection(GoalsViewModel.clickedGoal.getType().getValue());
+        typeSpinner.setSelection(goalsViewModel.getClickedGoal().getValue().getType().getValue());
         typeSpinner.setEnabled(false);
 
         valueEditText = binding.dialogCreateGoalValueEditText;
-        valueEditText.setText(String.valueOf(GoalsViewModel.clickedGoal.getValue()));
+        valueEditText.setText(String.valueOf(goalsViewModel.getClickedGoal().getValue().getValue()));
 
         unitTextView = binding.dialogCreateGoalUnitTextView;
-        unitTextView.setText(GoalsViewModel.clickedGoal.getType().getImperialUnit());
+        unitTextView.setText(goalsViewModel.getClickedGoal().getValue().getType().getImperialUnit());
     }
 
     @Override
@@ -69,14 +74,11 @@ public class EditGoalDialog extends IBasicAlertDialog {
 
         int value = Integer.parseInt(strValue);
 
-        int index = GoalsViewModel.goals.indexOf(GoalsViewModel.clickedGoal);
-        GoalsViewModel.goals.remove(GoalsViewModel.clickedGoal);
-        GoalsViewModel.clickedGoal.setName(title);
-        GoalsViewModel.clickedGoal.setValue(value);
+        int index = goalsViewModel.getGoals().getValue().indexOf(goalsViewModel.getClickedGoal().getValue());
+        goalsViewModel.getGoals().getValue().get(index).setName(title);
+        goalsViewModel.getGoals().getValue().get(index).setValue(value);
 
         baseFragment.bind();
-
-        GoalsViewModel.goals.add(index, GoalsViewModel.clickedGoal);
     }
 
     @Override

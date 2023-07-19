@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class CreateGoalDialog extends IBasicAlertDialog {
 
+    private GoalsViewModel goalsViewModel;
     private EditText titleEditText, valueEditText;
     private Spinner typeSpinner;
     private TextView unitTextView;
@@ -42,6 +43,8 @@ public class CreateGoalDialog extends IBasicAlertDialog {
     @Override
     public void onStart() {
         super.onStart();
+
+        goalsViewModel = new ViewModelProvider(requireActivity()).get(GoalsViewModel.class);
 
         assert getView() != null;
         DialogCreateGoalBinding binding = DialogCreateGoalBinding.bind(getView());
@@ -80,7 +83,7 @@ public class CreateGoalDialog extends IBasicAlertDialog {
         //       get workouts that match {type}
         //       add data to goal
 
-        GoalsViewModel.goals.add(thisGoal);
+        goalsViewModel.addGoal(thisGoal);
     }
 
     @Override
