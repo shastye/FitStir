@@ -2,6 +2,8 @@ package com.fitstir.fitstirapp.ui.goals;
 
 import androidx.core.util.Pair;
 
+import com.fitstir.fitstirapp.ui.utility.Tags;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -10,7 +12,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class Goal {
     private String name;
-    private String type; // TODO: change to enum
+    private Tags.Workout_Type type; // TODO: change to enum
     private String unit; // TODO: set based on enum value of type
     private int value;
     private ArrayList<Pair<Date, Double>> data;
@@ -21,18 +23,18 @@ public class Goal {
 
     public Goal() {
         this.name = "Goal Name";
-        this.type = "Goal Type";
-        this.unit = "Goal Unit";
+        this.type = Tags.Workout_Type.RUN_CLUB_DISTANCE;
+        this.unit = this.type.getImperialUnit();
         this.value = 0;
         this.data = new ArrayList<>();
         this.minDate = null;
         this.maxDate = null;
         this.id = RandomStringUtils.randomAlphanumeric(12); // ID is 12 characters long
     }
-    public Goal(String name, String type, int value) {
+    public Goal(String name, Tags.Workout_Type type, int value) {
         this.name = name;
         this.type = type;
-        this.unit = "Miles";
+        this.unit = this.type.getImperialUnit();
         this.value = value;
         this.data = new ArrayList<>();
         this.minDate = null;
@@ -77,7 +79,7 @@ public class Goal {
     public void resetData() { this.data.clear(); }
 
     public String getName() { return this.name; }
-    public String getType() { return this.type; }
+    public Tags.Workout_Type getType() { return this.type; }
     public String getUnit() { return this.unit; }
     public int getValue() { return this.value; }
     public ArrayList<Pair<Date, Double>> getData() { return this.data; }
@@ -86,7 +88,7 @@ public class Goal {
     public String getID() { return id; }
 
     public void setName(String name) { this.name = name; }
-    public void setType(String type) { this.type = type; }
+    public void setType(Tags.Workout_Type type) { this.type = type; }
     public void setValue(int value) { this.value = value; }
     public void setData(ArrayList<Pair<Date, Double>> data) { this.data = new ArrayList<>(data); }
 }

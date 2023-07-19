@@ -3,18 +3,27 @@ package com.fitstir.fitstirapp.ui.goals;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
 import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.Tags;
+
+import java.util.ArrayList;
 
 public class CreateGoalDialog extends IBasicAlertDialog {
 
-    private EditText titleEditText, typeEditText, valueEditText;
-    private GoalsViewModel goalsViewModel;
+    private EditText titleEditText, valueEditText;
+    private Spinner typeSpinner;
+    private TextView unitTextView;
+    private final Tags.Workout_Type[] typeEnumArray = Tags.Workout_Type.values();
 
     public CreateGoalDialog() { }
 
@@ -38,18 +47,34 @@ public class CreateGoalDialog extends IBasicAlertDialog {
         DialogCreateGoalBinding binding = DialogCreateGoalBinding.bind(getView());
 
         titleEditText = binding.dialogCreateGoalTitleEditText;
-        typeEditText = binding.dialogCreateGoalTypeEditText;
+        String[] spinnerOptions = new String[typeEnumArray.length];
+        for (int i = 0; i < typeEnumArray.length; i++) {
+            spinnerOptions[i] = typeEnumArray[i].getSpinnerTitle();
+        }
+        unitTextView = binding.dialogCreateGoalUnitTextView;
+        typeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), getView(), binding.dialogCreateGoalTypeSpinner.getId(), spinnerOptions);
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                unitTextView.setText(typeEnumArray[position].getImperialUnit());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         valueEditText = binding.dialogCreateGoalValueEditText;
     }
 
     @Override
     public void onAccept() {
         String title = titleEditText.getText().toString();
-        String type = typeEditText.getText().toString();
+        int type = typeSpinner.getSelectedItemPosition();
         String strValue = valueEditText.getText().toString().trim();
         int value = Integer.parseInt(strValue);
 
-        Goal thisGoal = new Goal(title, type, value);
+        Goal thisGoal = new Goal(title, typeEnumArray[type], value);
 
         // TODO: pull from database
         //       get workouts that match {type}

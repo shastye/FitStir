@@ -176,7 +176,7 @@ public class Methods {
         
         switch(goalNum) {
             case 1:
-                g = new Goal("Test1", "Type1", 16);
+                g = new Goal("Test1", Tags.Workout_Type.RUN_CLUB_DISTANCE, 16);
                 
                 calendar.set(Calendar.MONTH, Calendar.MAY);
                 calendar.set(Calendar.DAY_OF_MONTH, 10);
@@ -214,7 +214,7 @@ public class Methods {
                 g.addData(calendar.getTime(), 14.7);
                 break;
             default:
-                g = new Goal("Test#", "Type#", 14);
+                g = new Goal("Test#", Tags.Workout_Type.RUN_CLUB_ENDURANCE, 14);
                 
                 calendar.set(Calendar.MONTH, Calendar.JUNE);
                 calendar.set(Calendar.DAY_OF_MONTH, 1);

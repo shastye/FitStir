@@ -98,7 +98,7 @@ public class ViewGoalFragment extends Fragment {
         this.graphView.removeAllSeries();
 
         this.nameTextView.setText(this.goal.getName());
-        this.typeTextView.setText(this.goal.getType());
+        this.typeTextView.setText(this.goal.getType().getSpinnerTitle());
         String valueText = String.valueOf(this.goal.getValue()) + " " + this.goal.getUnit();
         this.valueTextView.setText(valueText);
         String idText = "Goal ID: " + String.valueOf(this.goal.getID());

@@ -14,7 +14,10 @@ public class GoalsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
     public static Goal clickedGoal = new Goal();
-    public static ArrayList<Goal> goals = new ArrayList<>(Arrays.asList(Methods.getGenericGoal(0), Methods.getGenericGoal(1)));
+    public static ArrayList<Goal> goals = new ArrayList<Goal>() {{
+        add(Methods.getGenericGoal(0));
+        add(Methods.getGenericGoal(1));
+    }};
     public static int goalRange = 30; // TODO: Get from settings in days
 
     public GoalsViewModel() {
