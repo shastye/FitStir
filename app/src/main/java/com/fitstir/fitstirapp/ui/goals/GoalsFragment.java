@@ -48,7 +48,7 @@ public class GoalsFragment extends Fragment {
 
         // Addition Text Here
 
-        //GoalsViewModel.goals =  // TODO: Get from database and delete next three lines
+        //GoalsViewModel.goals =  // TODO: Get from database
 
         goalRecyclerView = root.findViewById(R.id.goal_recycler_view);
         goalRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -117,7 +117,7 @@ public class GoalsFragment extends Fragment {
             int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
             int colorSecondary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorSecondary, requireContext());
 
-            int range = 30; // TODO: get from settings in days
+            int range = GoalsViewModel.goalRange;
 
             Date startDate = this.goal.getMinDate();
             Date endDate = this.goal.getMaxDate();
