@@ -50,6 +50,10 @@ public class ViewGoalFragment extends Fragment {
         this.idTextView = binding.viewGoalIdLabel;
         this.graphView = binding.viewGoalGridGraph;
 
+        this.goal = GoalsViewModel.clickedGoal;
+
+        bind();
+
         // End
         return root;
     }
@@ -60,16 +64,13 @@ public class ViewGoalFragment extends Fragment {
         binding = null;
     }
 
-    private void bind(Goal goal) {
-        this.goal = goal;
-
-
-
+    private void bind() {
         this.nameTextView.setText(this.goal.getName());
         this.typeTextView.setText(this.goal.getType());
         String valueText = String.valueOf(this.goal.getValue()) + " " + this.goal.getUnit();
         this.valueTextView.setText(valueText);
-        this.idTextView.setText(this.goal.getID());
+        String idText = "Goal ID: " + String.valueOf(this.goal.getID());
+        this.idTextView.setText(idText);
 
 
 
@@ -201,7 +202,7 @@ public class ViewGoalFragment extends Fragment {
                         }
                     }
                 } else {
-                    if ((((int) value) % 4) == 0) {
+                    if ((((int) value) % 2) == 0) {
                         toReturn = String.valueOf((int) value);
                     } else {
                         toReturn = "";

@@ -4,7 +4,8 @@ import androidx.core.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.UUID;
+import org.apache.commons.lang3.RandomStringUtils;
 
 
 public class Goal {
@@ -13,6 +14,7 @@ public class Goal {
     private String unit; // TODO: set based on enum value of type
     private int value;
     private ArrayList<Pair<Date, Double>> data;
+    private String id;
 
     private Date minDate;
     private Date maxDate;
@@ -25,6 +27,7 @@ public class Goal {
         this.data = new ArrayList<>();
         this.minDate = null;
         this.maxDate = null;
+        this.id = RandomStringUtils.randomAlphanumeric(12); // ID is 12 characters long
     }
     public Goal(String name, String type, int value) {
         this.name = name;
@@ -34,6 +37,7 @@ public class Goal {
         this.data = new ArrayList<>();
         this.minDate = null;
         this.maxDate = null;
+        this.id = RandomStringUtils.randomAlphanumeric(12); // ID is 12 characters long
     }
     public Goal(Goal goal) {
         this.name = goal.name;
@@ -43,6 +47,7 @@ public class Goal {
         this.data = new ArrayList<>(goal.data);
         this.minDate = goal.minDate;
         this.maxDate = goal.maxDate;
+        this.id = goal.id;
     }
 
     public void addData(Pair<Date, Double> data) {
@@ -76,12 +81,10 @@ public class Goal {
     public ArrayList<Pair<Date, Double>> getData() { return this.data; }
     public Date getMaxDate() { return this.maxDate; }
     public Date getMinDate() { return this.minDate; }
+    public String getID() { return id; }
 
     public void setName(String name) { this.name = name; }
     public void setType(String type) { this.type = type; }
-    public void setUnit(String unit) { this.unit = unit; }
     public void setValue(int value) { this.value = value; }
     public void setData(ArrayList<Pair<Date, Double>> data) { this.data = new ArrayList<>(data); }
-    public void setMinDate(Date minDate) { this.minDate = minDate; }
-    public void setMaxDate(Date maxDate) { this.maxDate = maxDate; }
 }
