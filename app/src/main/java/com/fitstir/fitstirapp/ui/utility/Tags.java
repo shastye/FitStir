@@ -9,8 +9,7 @@ import java.util.ArrayList;
 
 public class Tags {
     public enum Reminder_Channel_ID {
-        WORKOUT_REMINDERS(0),
-        MENTAL_WELLNESS_REMINDERS(1);
+        COME_BACK_REMINDERS(0);
 
         private final int value;
         private Reminder_Channel_ID(int value) {
@@ -23,8 +22,7 @@ public class Tags {
     }
     public static ArrayList<Integer> Notification_IDs = new ArrayList<Integer>();
     public static final ArrayList<Pair<String, String>> NOTIFICATION_CHANNELS = new ArrayList<Pair<String, String>>() {{
-            add(new Pair<String, String>("Workout Reminders", "Reminders to workout."));
-            add(new Pair<String, String>("Mental Wellness Check-In Reminders", "Reminders to check in with regards to your mental health."));
+            add(new Pair<String, String>("Reminders", "Reminders to come back."));
     }};
     public static final String TIMED_NOTIFICATION_TAG = "TimedNotifications";
     public static final String LAST_ON_DESTROY_TAG = "LastOnDestroy";
