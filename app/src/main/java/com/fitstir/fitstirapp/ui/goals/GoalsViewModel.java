@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 public class GoalsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
+    public static Goal clickedGoal;
 
     public GoalsViewModel() {
         mText = new MutableLiveData<>();

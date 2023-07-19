@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +32,7 @@ public class GoalsFragment extends Fragment {
     private FragmentGoalsBinding binding;
     private RecyclerView goalRecyclerView;
     private GoalAdapter goalAdapter;
+    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,10 +40,10 @@ public class GoalsFragment extends Fragment {
                 new ViewModelProvider(this).get(GoalsViewModel.class);
 
         binding = FragmentGoalsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
-        final TextView textView = binding.textGoals;
-        goalsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        //final TextView textView = binding.textGoals;
+        //goalsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here
 
@@ -144,7 +146,7 @@ public class GoalsFragment extends Fragment {
         goalRecyclerView.setAdapter(goalAdapter);
     }
 
-    private class GoalHolder extends RecyclerView.ViewHolder {
+    private class GoalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Goal goal;
         private final TextView nameTextView;
         private final TextView typeTextView;
@@ -153,6 +155,7 @@ public class GoalsFragment extends Fragment {
 
         public GoalHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.layout_goals_grid, parent, false));
+            itemView.setOnClickListener(this);
 
             nameTextView = (TextView) itemView.findViewById(R.id.layout_goal_name_label);
             typeTextView = (TextView) itemView.findViewById(R.id.layout_goal_type_label);
@@ -332,6 +335,12 @@ public class GoalsFragment extends Fragment {
 
             this.graphView.getViewport().setScrollable(true);
             this.graphView.getViewport().scrollToEnd();
+        }
+
+        @Override
+        public void onClick(View v) {
+            GoalsViewModel.clickedGoal = goal;
+            Navigation.findNavController(v).navigate(R.id.action_navigation_goals_to_navigation_view_goal);
         }
     }
 
