@@ -110,7 +110,7 @@ public class ViewGoalFragment extends Fragment {
         int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
         int colorSecondary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorSecondary, requireContext());
 
-        int range = 30; // TODO: get from settings in days
+        int range = GoalsViewModel.goalRange;
 
         Date startDate = this.goal.getMinDate();
         Date endDate = this.goal.getMaxDate();

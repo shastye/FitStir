@@ -21,6 +21,8 @@ import java.util.Vector;
 
 public class ChangeThemeDialog extends IBasicAlertDialog {
     private int theme, range, interval, unit;
+    private View root;
+    private void setRoot(View view) { root = view; }
 
     public ChangeThemeDialog() { }
 
@@ -36,7 +38,8 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         args.putInt("acceptButtonID", _acceptButtonID);
         args.putInt("cancelButtonID", _cancelButtonID);
         frag.setArguments(args);
-        SettingsViewModel.dialogRoot = _root;
+        frag.setRoot(_root);
+
         return frag;
     }
 
@@ -100,7 +103,7 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
 
     @Override
     public void onCancel() {
-        ((Spinner) SettingsViewModel.dialogRoot.findViewById(R.id.themeID_spinner)).setSelection(SettingsViewModel.themeID);
+        ((Spinner) root.findViewById(R.id.themeID_spinner)).setSelection(SettingsViewModel.themeID);
 
         dismiss();
     }
