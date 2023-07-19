@@ -17,10 +17,12 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.util.Pair;
 import androidx.navigation.NavDeepLinkBuilder;
 
 import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -165,5 +168,85 @@ public class Methods {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(_context);
         notificationManager.notify(NOTIFICATION_ID, builder.build());
         Tags.Notification_IDs.add(NOTIFICATION_ID++);
+    }
+    
+    public static Goal getGenericGoal(int goalNum) {
+        Goal g;
+        Calendar calendar = Calendar.getInstance();
+        
+        switch(goalNum) {
+            case 1:
+                g = new Goal("Test1", "Type1", 16);
+                
+                calendar.set(Calendar.MONTH, Calendar.MAY);
+                calendar.set(Calendar.DAY_OF_MONTH, 10);
+                calendar.set(Calendar.YEAR, 2023);
+                g.addData(calendar.getTime(), 1.1);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 3.6);
+                calendar.add(Calendar.DATE, 1);
+                g.addData(calendar.getTime(), 4.7);
+                calendar.add(Calendar.DATE, 5);
+                g.addData(calendar.getTime(), 7.0);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 8.9);
+                calendar.add(Calendar.DATE, 6);
+                g.addData(calendar.getTime(), 7.5);
+                calendar.add(Calendar.DATE, 6);
+                g.addData(calendar.getTime(), 7.7);
+                calendar.add(Calendar.DATE, 6);
+                g.addData(calendar.getTime(), 7.0);
+                calendar.add(Calendar.DATE, 6);
+                g.addData(calendar.getTime(), 7.9);
+                calendar.add(Calendar.DATE, 6);
+                g.addData(calendar.getTime(), 7.2);
+                calendar.add(Calendar.DATE, 5);
+                g.addData(calendar.getTime(), 7.9);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 8.4);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 12.9);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 11.1);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 8.6);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 14.7);
+                break;
+            default:
+                g = new Goal("Test#", "Type#", 14);
+                
+                calendar.set(Calendar.MONTH, Calendar.JUNE);
+                calendar.set(Calendar.DAY_OF_MONTH, 1);
+                calendar.set(Calendar.YEAR, 2023);
+                g.addData(calendar.getTime(), 3.6);
+                calendar.add(Calendar.DATE, 1);
+                g.addData(calendar.getTime(), 4.7);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 8.9);
+                calendar.add(Calendar.DATE, 6);
+                g.addData(calendar.getTime(), 7.5);
+                calendar.add(Calendar.DATE, 3);
+                g.addData(calendar.getTime(), 7.7);
+                calendar.add(Calendar.DATE, 4);
+                g.addData(calendar.getTime(), 7.0);
+                calendar.add(Calendar.DATE, 6);
+                g.addData(calendar.getTime(), 7.9);
+                calendar.add(Calendar.DATE, 6);
+                g.addData(calendar.getTime(), 7.2);
+                calendar.add(Calendar.DATE, 5);
+                g.addData(calendar.getTime(), 7.9);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 8.4);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 12.9);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 11.1);
+                calendar.add(Calendar.DATE, 2);
+                g.addData(calendar.getTime(), 8.6);
+                break;
+        }
+        
+        return g;
     }
 }

@@ -4,10 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.fitstir.fitstirapp.ui.utility.Methods;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class GoalsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
-    public static Goal clickedGoal;
+    public static Goal clickedGoal = new Goal();
+    public static ArrayList<Goal> goals = new ArrayList<>(Arrays.asList(Methods.getGenericGoal(0), Methods.getGenericGoal(1)));
 
     public GoalsViewModel() {
         mText = new MutableLiveData<>();

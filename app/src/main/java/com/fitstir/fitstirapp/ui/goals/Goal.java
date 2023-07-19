@@ -50,7 +50,9 @@ public class Goal {
         this.id = goal.id;
     }
 
-    public void addData(Pair<Date, Double> data) {
+    public void addData(Date date, double value) {
+        Pair<Date, Double> data = new Pair<>(date, value);
+
         if (this.data.size() == 0) {
             this.maxDate = data.first;
         } else if (this.data.size() == 1) {

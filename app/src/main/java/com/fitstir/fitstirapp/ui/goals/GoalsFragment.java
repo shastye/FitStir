@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentGoalsBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -47,9 +48,23 @@ public class GoalsFragment extends Fragment {
 
         // Addition Text Here
 
+        //GoalsViewModel.goals =  // TODO: Get from database and delete next three lines
+
         goalRecyclerView = root.findViewById(R.id.goal_recycler_view);
         goalRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        updateUI();
+        updateUI(GoalsViewModel.goals);
+
+        FloatingActionButton createGoalButton = binding.createGoalButton;
+        createGoalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateGoalDialog.newInstance(
+                        R.layout.dialog_create_goal,
+                        R.id.dialog_create_goal_accept_button,
+                        R.id.dialog_create_goal_cancel_button
+                ).show(getParentFragmentManager(), "Create Goal");
+            }
+        });
 
         // End
         return root;
@@ -58,90 +73,13 @@ public class GoalsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        // TODO: Save to database
+
         binding = null;
     }
 
-    private void updateUI() {
-        ArrayList<Goal> goals = new ArrayList<>(); // TODO: retrieve from database
-
-        Calendar calendar1 = Calendar.getInstance();
-
-        Goal g1 = new Goal("Test1", "Type1", 16);
-        calendar1.set(Calendar.MONTH, Calendar.MAY);
-        calendar1.set(Calendar.DAY_OF_MONTH, 10);
-        calendar1.set(Calendar.YEAR, 2023);
-        g1.addData(new Pair<>(calendar1.getTime(), 1.1));
-        calendar1.add(Calendar.DATE, 2);
-        g1.addData(new Pair<>(calendar1.getTime(), 3.6));
-        calendar1.add(Calendar.DATE, 1);
-        g1.addData(new Pair<>(calendar1.getTime(), 4.7));
-        calendar1.add(Calendar.DATE, 5);
-        g1.addData(new Pair<>(calendar1.getTime(), 7.0));
-        calendar1.add(Calendar.DATE, 2);
-        g1.addData(new Pair<>(calendar1.getTime(), 8.9));
-        calendar1.add(Calendar.DATE, 6);
-        g1.addData(new Pair<>(calendar1.getTime(), 7.5));
-        calendar1.add(Calendar.DATE, 6);
-        g1.addData(new Pair<>(calendar1.getTime(), 7.7));
-        calendar1.add(Calendar.DATE, 6);
-        g1.addData(new Pair<>(calendar1.getTime(), 7.0));
-        calendar1.add(Calendar.DATE, 6);
-        g1.addData(new Pair<>(calendar1.getTime(), 7.9));
-        calendar1.add(Calendar.DATE, 6);
-        g1.addData(new Pair<>(calendar1.getTime(), 7.2));
-        calendar1.add(Calendar.DATE, 5);
-        g1.addData(new Pair<>(calendar1.getTime(), 7.9));
-        calendar1.add(Calendar.DATE, 2);
-        g1.addData(new Pair<>(calendar1.getTime(), 8.4));
-        calendar1.add(Calendar.DATE, 2);
-        g1.addData(new Pair<>(calendar1.getTime(), 12.9));
-        calendar1.add(Calendar.DATE, 2);
-        g1.addData(new Pair<>(calendar1.getTime(), 11.1));
-        calendar1.add(Calendar.DATE, 2);
-        g1.addData(new Pair<>(calendar1.getTime(), 8.6));
-        calendar1.add(Calendar.DATE, 2);
-        g1.addData(new Pair<>(calendar1.getTime(), 14.7));
-
-        goals.add(g1);
-
-
-
-
-        Calendar calendar2 = Calendar.getInstance();
-
-        Goal g2 = new Goal("Test2", "Type2", 14);
-        calendar2.set(Calendar.MONTH, Calendar.JUNE);
-        calendar2.set(Calendar.DAY_OF_MONTH, 1);
-        calendar2.set(Calendar.YEAR, 2023);
-        g2.addData(new Pair<>(calendar2.getTime(), 3.6));
-        calendar2.add(Calendar.DATE, 1);
-        g2.addData(new Pair<>(calendar2.getTime(), 4.7));
-        calendar2.add(Calendar.DATE, 2);
-        g2.addData(new Pair<>(calendar2.getTime(), 8.9));
-        calendar2.add(Calendar.DATE, 6);
-        g2.addData(new Pair<>(calendar2.getTime(), 7.5));
-        calendar2.add(Calendar.DATE, 3);
-        g2.addData(new Pair<>(calendar2.getTime(), 7.7));
-        calendar2.add(Calendar.DATE, 4);
-        g2.addData(new Pair<>(calendar2.getTime(), 7.0));
-        calendar2.add(Calendar.DATE, 6);
-        g2.addData(new Pair<>(calendar2.getTime(), 7.9));
-        calendar2.add(Calendar.DATE, 6);
-        g2.addData(new Pair<>(calendar2.getTime(), 7.2));
-        calendar2.add(Calendar.DATE, 5);
-        g2.addData(new Pair<>(calendar2.getTime(), 7.9));
-        calendar2.add(Calendar.DATE, 2);
-        g2.addData(new Pair<>(calendar2.getTime(), 8.4));
-        calendar2.add(Calendar.DATE, 2);
-        g2.addData(new Pair<>(calendar2.getTime(), 12.9));
-        calendar2.add(Calendar.DATE, 2);
-        g2.addData(new Pair<>(calendar2.getTime(), 11.1));
-        calendar2.add(Calendar.DATE, 2);
-        g2.addData(new Pair<>(calendar2.getTime(), 8.6));
-
-        goals.add(g2);
-
-
+    private void updateUI(ArrayList<Goal> goals) {
         goalAdapter = new GoalAdapter(goals);
         goalRecyclerView.setAdapter(goalAdapter);
     }
