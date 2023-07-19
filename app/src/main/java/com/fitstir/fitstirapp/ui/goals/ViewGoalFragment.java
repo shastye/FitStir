@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
+import com.fitstir.fitstirapp.ui.settings.ResetApplicationDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.DefaultLabelFormatter;
@@ -66,6 +67,20 @@ public class ViewGoalFragment extends Fragment {
                         R.id.dialog_create_goal_cancel_button,
                         ViewGoalFragment.this
                 ).show(getParentFragmentManager(), "Edit Goal");
+            }
+        });
+
+        FloatingActionButton deleteButton = root.findViewById(R.id.view_goal_delete_button);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteGoalDialog.newInstance(
+                        R.layout.dialog_generic_alert,
+                        R.id.dialog_generic_accept_button,
+                        R.id.dialog_generic_cancel_button,
+                        R.id.dialog_generic_message,
+                        "This action cannot be undone."
+                ).show(getParentFragmentManager(), "Delete Goal");
             }
         });
 

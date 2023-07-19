@@ -158,4 +158,21 @@
         app:layout_constraintVertical_bias="0.00"
         app:layout_constraintHorizontal_bias="1.00" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/view_goal_delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@android:drawable/ic_delete"
+        android:elevation="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.00"
+        app:layout_constraintHorizontal_bias="0.00" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
