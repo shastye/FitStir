@@ -2,22 +2,21 @@ package com.fitstir.fitstirapp.ui.goals;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
-import com.fitstir.fitstirapp.ui.settings.ResetApplicationDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -27,7 +26,6 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 public class ViewGoalFragment extends Fragment {
 
@@ -45,10 +43,7 @@ public class ViewGoalFragment extends Fragment {
         binding = FragmentViewGoalBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //final TextView textView = binding.textGoals;
-        //goalsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        // Addition Text Here
+        // Additional Text Here
 
         this.nameTextView = binding.viewGoalNameLabel;
         this.typeTextView = binding.viewGoalTypeLabel;
@@ -59,30 +54,39 @@ public class ViewGoalFragment extends Fragment {
 
         bind();
 
-        FloatingActionButton editButton = root.findViewById(R.id.view_goal_edit_button);
-        editButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton moreButton = binding.viewGoalMoreButton;
+        moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditGoalDialog.newInstance(
-                        R.layout.dialog_create_goal,
-                        R.id.dialog_create_goal_accept_button,
-                        R.id.dialog_create_goal_cancel_button,
-                        ViewGoalFragment.this
-                ).show(getParentFragmentManager(), "Edit Goal");
-            }
-        });
+                PopupMenu popupMenu = new PopupMenu(requireActivity(), moreButton);
+                popupMenu.getMenuInflater().inflate(R.menu.goal_menu, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.edit_goal:
+                                EditGoalDialog.newInstance(
+                                        R.layout.dialog_create_goal,
+                                        R.id.dialog_create_goal_accept_button,
+                                        R.id.dialog_create_goal_cancel_button,
+                                        ViewGoalFragment.this
+                                ).show(getParentFragmentManager(), "Edit Goal");
+                                break;
+                            case R.id.delete_goal:
+                                DeleteGoalDialog.newInstance(
+                                        R.layout.dialog_generic_alert,
+                                        R.id.dialog_generic_accept_button,
+                                        R.id.dialog_generic_cancel_button,
+                                        R.id.dialog_generic_message,
+                                        "This action cannot be undone."
+                                ).show(getParentFragmentManager(), "Delete Goal");
+                                break;
+                        }
 
-        FloatingActionButton deleteButton = root.findViewById(R.id.view_goal_delete_button);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DeleteGoalDialog.newInstance(
-                        R.layout.dialog_generic_alert,
-                        R.id.dialog_generic_accept_button,
-                        R.id.dialog_generic_cancel_button,
-                        R.id.dialog_generic_message,
-                        "This action cannot be undone."
-                ).show(getParentFragmentManager(), "Delete Goal");
+                        return true;
+                    }
+                });
+                popupMenu.show();
             }
         });
 

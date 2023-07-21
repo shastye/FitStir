@@ -18,7 +18,7 @@ public class SettingsViewModel extends ViewModel {
 
     private static int sThemeID = 0;
 
-    private final MutableLiveData<Integer> _previousPage = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> previousPage = new MutableLiveData<>(0);
     private final MutableLiveData<Bitmap> avatar = new MutableLiveData<>(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.profileimage_background));
     private final MutableLiveData<String> name = new MutableLiveData<>("Sierra Clubb");
     private final MutableLiveData<Integer> age = new MutableLiveData<>(26);
@@ -46,7 +46,7 @@ public class SettingsViewModel extends ViewModel {
     public LiveData<String> getText() { return mText; }
 
 
-    public LiveData<Integer> getPreviousPage() { return _previousPage; }
+    public LiveData<Integer> getPreviousPage() { return previousPage; }
     public LiveData<Bitmap> getAvatar() { return avatar; }
     public LiveData<String> getName() { return name; }
     public LiveData<Integer> getAge() { return age; }
@@ -60,7 +60,7 @@ public class SettingsViewModel extends ViewModel {
     public LiveData<Integer> getIntervalID() { return intervalID; }
     public LiveData<Integer> getUnitID() { return unitID; }
 
-    public void setPreviousPage(int previousPage) { this._previousPage.setValue(previousPage); }
+    public void setPreviousPage(int previousPage) { this.previousPage.setValue(previousPage); }
     public void setAvatar(Bitmap avatar) { this.avatar.setValue(avatar); }
     public void setName(String name) { this.name.setValue(name); }
     public void setAge(int age) { this.age.setValue(age); }
