@@ -144,7 +144,7 @@
                 android:layout_marginTop="128dp" />
 
             <TextView
-                android:id="@+id/text_height"
+                android:id="@+id/text_height_ft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="75dp"

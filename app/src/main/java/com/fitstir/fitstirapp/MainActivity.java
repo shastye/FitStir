@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuProvider;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -31,6 +32,8 @@ import com.fitstir.fitstirapp.ui.utility.Tags;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,13 +49,18 @@ public class MainActivity extends AppCompatActivity {
     private static boolean userAllowedNotifications = false;
     public static boolean areNotificationsAllowed() { return userAllowedNotifications; }
 
+    private SettingsViewModel settingsViewModel;
+
+
     @Override
     @NavigationUiSaveStateControl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+
         // RESETS THE THEME
-        ResetTheme.setInitialTheme(SettingsViewModel.themeID);
+        ResetTheme.setInitialTheme(settingsViewModel.getThemeID_inMain());
         ResetTheme.onActivityCreateSetTheme(this);
         //
 
@@ -99,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
                             Runtime.getRuntime().exit(0);
                             break;
                         default:
-                            pageID = SettingsViewModel.previousPage;
+                            pageID = settingsViewModel.getPreviousPage().getValue();
                             break;
                     }
 
                     try {
-                            SettingsViewModel.previousPage = navController.getCurrentDestination().getId();
+                            settingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());;
                             navController.navigate(pageID);
                     } catch (NullPointerException e) {
                         Log.e("Back up error", e.getMessage());
