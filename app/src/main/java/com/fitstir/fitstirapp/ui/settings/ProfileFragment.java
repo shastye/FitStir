@@ -30,8 +30,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth auth;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SettingsViewModel settingsViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
+        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -42,25 +41,25 @@ public class ProfileFragment extends Fragment {
         // Add additions here
 
         ImageView profileImage = root.findViewById(R.id.profile_image);
-        profileImage.setImageBitmap(SettingsViewModel.avatar);
+        profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
         TextView name = root.findViewById(R.id.text_name);
         TextView age = root.findViewById(R.id.text_age);
-        TextView height = root.findViewById(R.id.text_height);
+        TextView height_ft = root.findViewById(R.id.text_height_ft);
         TextView weight = root.findViewById(R.id.text_weight);
         TextView email = root.findViewById(R.id.text_email);
         TextView height_in = root.findViewById(R.id.text_height_in);
 
-        name.setText(SettingsViewModel.name);
-        String tAge = String.valueOf(SettingsViewModel.age) + " years old";
+        name.setText(settingsViewModel.getName().getValue());
+        String tAge = settingsViewModel.getAge().getValue() + " years old";
         age.setText(tAge);
-        String tHeight = String.valueOf(SettingsViewModel.height_feet) + " feet ";
-        height.setText(tHeight);
-        String _height = String.valueOf(SettingsViewModel.height_inches) + " inches";
-        height_in.setText(_height);
-        String tWeight = String.valueOf(SettingsViewModel.weight) + " lbs";
+        String tHeightFeet = settingsViewModel.getHeightInFeet().getValue() + " feet ";
+        height_ft.setText(tHeightFeet);
+        String tHeightInches = settingsViewModel.getHeightInInches().getValue() + " inches";
+        height_in.setText(tHeightInches);
+        String tWeight = settingsViewModel.getWeight().getValue() + " lbs";
         weight.setText(tWeight);
-        email.setText(SettingsViewModel.email);
+        email.setText(settingsViewModel.getEmail().getValue());
 
         auth = FirebaseAuth.getInstance();
         String user = auth.getCurrentUser().getUid();
@@ -77,22 +76,22 @@ public class ProfileFragment extends Fragment {
                         String fullName = String.valueOf(snapshot.child("fullname").getValue());
                         String email = String.valueOf(snapshot.child("email").getValue());
                         String age = String.valueOf(snapshot.child("age").getValue());
-                        String height = String.valueOf(snapshot.child("height_ft").getValue());
-                        String height_In = String.valueOf(snapshot.child("height_in").getValue());
+                        String height_ft = String.valueOf(snapshot.child("height_ft").getValue());
+                        String height_in = String.valueOf(snapshot.child("height_in").getValue());
                         String weight = String.valueOf(snapshot.child("_Weight").getValue());
 
-                        SettingsViewModel.name = fullName;
-                        SettingsViewModel.email = email;
-                        SettingsViewModel.age = Integer.parseInt(age);
-                        SettingsViewModel.height_feet = Integer.parseInt(height);
-                        SettingsViewModel.height_inches = Integer.parseInt(height_In);
-                        SettingsViewModel.weight = Integer.parseInt(weight);
+                        settingsViewModel.setName(fullName);
+                        settingsViewModel.setEmail(email);
+                        settingsViewModel.setAge(Integer.parseInt(age));
+                        settingsViewModel.setHeightInFeet(Integer.parseInt(height_ft));
+                        settingsViewModel.setHeightInInches(Integer.parseInt(height_in));
+                        settingsViewModel.setWeight(Integer.parseInt(weight));
 
                         binding.textName.setText(fullName);
                         binding.textEmail.setText(email);
                         binding.textAge.setText(age);
-                        binding.textHeight.setText(height);
-                        binding.textHeightIn.setText(height_In);
+                        binding.textHeightFt.setText(height_ft);
+                        binding.textHeightIn.setText(height_in);
                         binding.textWeight.setText(weight);
 
                     }

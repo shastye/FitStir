@@ -24,11 +24,11 @@ public class CheckRecentRun extends Service {
             if (settings.getLong(Tags.LAST_ON_DESTROY_TAG, Long.MAX_VALUE) + Tags.MILLISECS_PER_SEC < System.currentTimeMillis()) {
                 Methods.createNotification(
                         this,
-                        Tags.Reminder_Channel_ID.WORKOUT_REMINDERS.getValue(),
+                        Tags.Reminder_Channel_ID.COME_BACK_REMINDERS.getValue(),
                         R.drawable.ic_bicep_black_200dp,
                         "Don't forget to check in!",
-                        "It's been 2 days since you last checked in.",
-                        "It's been 2 days since you last updated your " +
+                        "It's been a few days since you last checked in.",
+                        "It's been a few days since you last updated your " +
                                 "calorie tracker, diary, or completed a workout. " +
                                 "Come back and check in with FitStir to keep up with " +
                                 "your mental wellness!",

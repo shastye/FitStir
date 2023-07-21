@@ -10,6 +10,7 @@ import android.widget.Spinner;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
@@ -21,6 +22,9 @@ import java.util.Vector;
 
 public class ChangeThemeDialog extends IBasicAlertDialog {
     private int theme, range, interval, unit;
+    private View root;
+    private void setRoot(View view) { root = view; }
+    private SettingsViewModel settingsViewModel;
 
     public ChangeThemeDialog() { }
 
@@ -36,13 +40,16 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         args.putInt("acceptButtonID", _acceptButtonID);
         args.putInt("cancelButtonID", _cancelButtonID);
         frag.setArguments(args);
-        SettingsViewModel.dialogRoot = _root;
+        frag.setRoot(_root);
+
         return frag;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         assert getArguments() != null;
         theme = getArguments().getInt("themeID");
@@ -90,17 +97,17 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
 
     @Override
     public void onAccept() {
-        SettingsViewModel.themeID = theme;
-        SettingsViewModel.rangeID = range;
-        SettingsViewModel.intervalID = interval;
-        SettingsViewModel.unitID = unit;
+        settingsViewModel.setThemeID(theme);
+        settingsViewModel.setRangeID(range);
+        settingsViewModel.setIntervalID(interval);
+        settingsViewModel.setUnitID(unit);
 
         ResetTheme.changeToTheme(Objects.requireNonNull(getActivity()), theme);
     }
 
     @Override
     public void onCancel() {
-        ((Spinner) SettingsViewModel.dialogRoot.findViewById(R.id.themeID_spinner)).setSelection(SettingsViewModel.themeID);
+        ((Spinner) root.findViewById(R.id.themeID_spinner)).setSelection(settingsViewModel.getThemeID().getValue());
 
         dismiss();
     }

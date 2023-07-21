@@ -42,8 +42,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SettingsViewModel settingsViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
+        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         binding = FragmentEditProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -54,7 +53,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         // Add additions here
 
         ImageView profileImage = root.findViewById(R.id.profile_image_edit);
-        profileImage.setImageBitmap(SettingsViewModel.avatar);
+        profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
         EditText name = root.findViewById(R.id.text_name_edit);
         EditText age = root.findViewById(R.id.text_age_edit);
@@ -63,12 +62,12 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         EditText weight = root.findViewById(R.id.text_weight_edit);
         EditText email = root.findViewById(R.id.text_email_edit);
 
-        name.setText(SettingsViewModel.name);
-        age.setText(String.valueOf(SettingsViewModel.age));
-        feet.setText(String.valueOf(SettingsViewModel.height_feet));
-        inches.setText(String.valueOf(SettingsViewModel.height_inches));
-        weight.setText(String.valueOf(SettingsViewModel.weight));
-        email.setText(SettingsViewModel.email);
+        name.setText(settingsViewModel.getName().getValue());
+        age.setText(String.valueOf(settingsViewModel.getAge().getValue()));
+        feet.setText(String.valueOf(settingsViewModel.getHeightInFeet().getValue()));
+        inches.setText(String.valueOf(settingsViewModel.getHeightInInches().getValue()));
+        weight.setText(String.valueOf(settingsViewModel.getWeight().getValue()));
+        email.setText(settingsViewModel.getEmail().getValue());
 
         CardView saveButton = root.findViewById(R.id.savebutton_cardView_profile_edit);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -94,12 +93,12 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                             if (!t_inches.isEmpty()) {
                                 if (!t_weight.isEmpty()) {
                                     if (!t_email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(t_email).matches()) {
-                                        SettingsViewModel.name = t_name;
-                                        SettingsViewModel.age = Integer.parseInt(t_age);
-                                        SettingsViewModel.height_feet = Integer.parseInt(t_feet);
-                                        SettingsViewModel.height_inches = Integer.parseInt(t_inches);
-                                        SettingsViewModel.weight = Integer.parseInt(t_weight);
-                                        SettingsViewModel.email = t_email;
+                                        settingsViewModel.setName(t_name);
+                                        settingsViewModel.setAge(Integer.parseInt(t_age));
+                                        settingsViewModel.setHeightInFeet(Integer.parseInt(t_feet));
+                                        settingsViewModel.setHeightInInches(Integer.parseInt(t_inches));
+                                        settingsViewModel.setWeight(Integer.parseInt(t_weight));
+                                        settingsViewModel.setEmail(t_email);
 
                                         Navigation.findNavController(root).navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
                                     } else if (t_email.isEmpty()) {
@@ -134,9 +133,9 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                             @Override
                             public void onPickResult(PickResult r) {
                                 if (r.getError() == null) {
-                                    SettingsViewModel.avatar = r.getBitmap();
+                                    settingsViewModel.setAvatar(r.getBitmap());
                                     ImageView profileImage = root.findViewById(R.id.profile_image_edit);
-                                    profileImage.setImageBitmap(SettingsViewModel.avatar);
+                                    profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
                                     Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();
                                 } else {

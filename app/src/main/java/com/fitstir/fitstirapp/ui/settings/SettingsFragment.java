@@ -63,8 +63,7 @@ public class SettingsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SettingsViewModel settingsViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
+        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -79,10 +78,10 @@ public class SettingsFragment extends Fragment {
         TextView interval = root.findViewById(R.id.intervalID);
         TextView unit = root.findViewById(R.id.unitID);
 
-        theme.setText(root.getResources().getStringArray(R.array.theme_array)[SettingsViewModel.themeID]);
-        range.setText(root.getResources().getStringArray(R.array.range_array)[SettingsViewModel.rangeID]);
-        interval.setText(root.getResources().getStringArray(R.array.interval_array)[SettingsViewModel.intervalID]);
-        unit.setText(root.getResources().getStringArray(R.array.unit_array)[SettingsViewModel.unitID]);
+        theme.setText(root.getResources().getStringArray(R.array.theme_array)[settingsViewModel.getThemeID().getValue()]);
+        range.setText(root.getResources().getStringArray(R.array.range_array)[settingsViewModel.getRangeID().getValue()]);
+        interval.setText(root.getResources().getStringArray(R.array.interval_array)[settingsViewModel.getIntervalID().getValue()]);
+        unit.setText(root.getResources().getStringArray(R.array.unit_array)[settingsViewModel.getUnitID().getValue()]);
 
         CardView editButton = root.findViewById(R.id.editbutton_cardView_settings);
         editButton.setOnClickListener(new View.OnClickListener() {

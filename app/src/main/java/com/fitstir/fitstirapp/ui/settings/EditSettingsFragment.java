@@ -24,8 +24,7 @@ public class EditSettingsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SettingsViewModel settingsViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
+        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         binding = FragmentEditSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -40,10 +39,10 @@ public class EditSettingsFragment extends Fragment {
         Spinner intervalSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.intervalID_spinner, root.getResources().getStringArray(R.array.interval_array));
         Spinner unitSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.unitsID_spinner, root.getResources().getStringArray(R.array.unit_array));
 
-        themeSpinner.setSelection(SettingsViewModel.themeID);
-        rangeSpinner.setSelection(SettingsViewModel.rangeID);
-        intervalSpinner.setSelection(SettingsViewModel.intervalID);
-        unitSpinner.setSelection(SettingsViewModel.unitID);
+        themeSpinner.setSelection(settingsViewModel.getThemeID().getValue());
+        rangeSpinner.setSelection(settingsViewModel.getRangeID().getValue());
+        intervalSpinner.setSelection(settingsViewModel.getIntervalID().getValue());
+        unitSpinner.setSelection(settingsViewModel.getUnitID().getValue());
 
         ImageView themeIV = root.findViewById(R.id.theme_hint);
         themeIV.setTooltipText("This will change the theme of your entire application.");
@@ -63,7 +62,7 @@ public class EditSettingsFragment extends Fragment {
                 int interval = intervalSpinner.getSelectedItemPosition();
                 int unit = unitSpinner.getSelectedItemPosition();
 
-                if (SettingsViewModel.themeID != theme) {
+                if (settingsViewModel.getThemeID().getValue() != theme) {
                     ChangeThemeDialog.newInstance(
                             R.layout.dialog_change_theme,
                             R.id.dialog_accept_button,
@@ -75,9 +74,9 @@ public class EditSettingsFragment extends Fragment {
                             root
                     ).show(getParentFragmentManager(), "Change Theme");
                 } else {
-                    SettingsViewModel.rangeID = range;
-                    SettingsViewModel.intervalID = interval;
-                    SettingsViewModel.unitID = unit;
+                    settingsViewModel.setRangeID(range);
+                    settingsViewModel.setIntervalID(interval);
+                    settingsViewModel.setUnitID(unit);
 
                     Navigation.findNavController(root).navigate(R.id.action_navigation_edit_settings_to_navigation_settings);
                 }
