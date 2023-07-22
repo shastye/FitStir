@@ -36,10 +36,10 @@ public class EditSettingsFragment extends Fragment {
 
         // Add additions here
 
-        Spinner themeSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.themeID_spinner, root.getResources().getStringArray(R.array.theme_array));
-        Spinner rangeSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.rangeID_spinner, root.getResources().getStringArray(R.array.range_array));
-        Spinner intervalSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.intervalID_spinner, root.getResources().getStringArray(R.array.interval_array));
-        Spinner unitSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.unitsID_spinner, root.getResources().getStringArray(R.array.unit_array));
+        Spinner themeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.themeID_spinner, root.getResources().getStringArray(R.array.theme_array));
+        Spinner rangeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.rangeID_spinner, root.getResources().getStringArray(R.array.range_array));
+        Spinner intervalSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.intervalID_spinner, root.getResources().getStringArray(R.array.interval_array));
+        Spinner unitSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.unitsID_spinner, root.getResources().getStringArray(R.array.unit_array));
 
         themeSpinner.setSelection(settingsViewModel.getThemeID().getValue());
         rangeSpinner.setSelection(settingsViewModel.getRangeID().getValue());

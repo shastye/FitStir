@@ -79,15 +79,15 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
                 break;
         }
 
-        Drawable background = ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.change_dialog_fragment_theme_color_background);
+        Drawable background = ContextCompat.getDrawable(Objects.requireNonNull(requireActivity()), R.drawable.change_dialog_fragment_theme_color_background);
         assert background != null;
-        background.setTint(ContextCompat.getColor(getActivity(), colors[0]));
+        background.setTint(ContextCompat.getColor(requireActivity(), colors[0]));
         primaryColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(getActivity(), colors[1]));
+        background.setTint(ContextCompat.getColor(requireActivity(), colors[1]));
         primaryVariantColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(getActivity(), colors[2]));
+        background.setTint(ContextCompat.getColor(requireActivity(), colors[2]));
         secondaryColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(getActivity(), colors[3]));
+        background.setTint(ContextCompat.getColor(requireActivity(), colors[3]));
         secondaryVariantColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
     }
 
@@ -98,7 +98,7 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         settingsViewModel.setIntervalID(interval);
         settingsViewModel.setUnitID(unit);
 
-        ResetTheme.changeToTheme(Objects.requireNonNull(getActivity()), theme);
+        ResetTheme.changeToTheme(requireActivity(), theme);
     }
 
     @Override

@@ -47,7 +47,7 @@ public class ResetApplicationDialog extends IBasicAlertDialog {
 
     @Override
     public void onAccept() {
-        boolean success = settingsViewModel.clearApplicationData(getActivity());
+        boolean success = settingsViewModel.clearApplicationData(requireActivity());
 
         if (success) {
             // show dialog saying everything deleted

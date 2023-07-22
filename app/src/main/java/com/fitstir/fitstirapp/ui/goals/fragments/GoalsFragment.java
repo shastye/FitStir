@@ -54,7 +54,7 @@ public class GoalsFragment extends Fragment {
         //GoalsViewModel.goals =  // TODO: Get from database
 
         goalRecyclerView = root.findViewById(R.id.goal_recycler_view);
-        goalRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         updateUI(goalsViewModel.getGoals().getValue());
 
         FloatingActionButton createGoalButton = binding.createGoalButton;
@@ -295,7 +295,7 @@ public class GoalsFragment extends Fragment {
         @NonNull
         @Override
         public GoalHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            LayoutInflater layoutInflater = LayoutInflater.from(requireActivity());
 
             return new GoalHolder(layoutInflater, parent);
         }
