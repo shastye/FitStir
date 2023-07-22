@@ -13,6 +13,7 @@ import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
 import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
 public class CreateGoalDialog extends IBasicAlertDialog {
 
@@ -20,7 +21,7 @@ public class CreateGoalDialog extends IBasicAlertDialog {
     private EditText titleEditText, valueEditText;
     private Spinner typeSpinner;
     private TextView unitTextView;
-    private final Constants.Workout_Type[] typeEnumArray = Constants.Workout_Type.values();
+    private final WorkoutTypes[] typeEnumArray = WorkoutTypes.values();
 
     public CreateGoalDialog() { }
 

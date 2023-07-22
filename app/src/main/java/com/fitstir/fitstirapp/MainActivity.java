@@ -140,9 +140,9 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager = getSystemService(NotificationManager.class);
 
-        for (int i = 0; i < getNotificationChannels.size(); i++) {
-            String name = getNotificationChannels.get(i).first;
-            String description = getNotificationChannels.get(i).second;
+        for (int i = 0; i < getNotificationChannels().size(); i++) {
+            String name = getNotificationChannels().get(i).first;
+            String description = getNotificationChannels().get(i).second;
             int importance = NotificationManager.IMPORTANCE_LOW;
 
             NotificationChannel channel = new NotificationChannel(String.valueOf(i), name, importance);
@@ -177,7 +177,9 @@ public class MainActivity extends AppCompatActivity {
         startService(new Intent(this, CheckRecentRun.class));
     }
 
-    private final ArrayList<Pair<String, String>> getNotificationChannels = new ArrayList<Pair<String, String>>() {{
-        add(new Pair<String, String>("Reminders", "Reminders to come back."));
-    }};
+    private final ArrayList<Pair<String, String>> getNotificationChannels() {
+        return new ArrayList<Pair<String, String>>() {{
+            add(new Pair<String, String>("Reminders", "Reminders to come back."));
+        }};
+    }
 }

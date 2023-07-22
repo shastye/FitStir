@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
 public class EditGoalDialog extends IBasicAlertDialog {
 
     private GoalsViewModel goalsViewModel;
     private EditText titleEditText, valueEditText;
     private TextView unitTextView;
-    private final Constants.Workout_Type[] typeEnumArray = Constants.Workout_Type.values();
+    private final WorkoutTypes[] typeEnumArray = WorkoutTypes.values();
     private ViewGoalFragment baseFragment;
 
     public void setBaseFragment(ViewGoalFragment fragment) { baseFragment = fragment; }
