@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.settings;
+package com.fitstir.fitstirapp.ui.settings.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,8 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditSettingsBinding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.settings.dialogs.ChangeThemeDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 
 public class EditSettingsFragment extends Fragment {

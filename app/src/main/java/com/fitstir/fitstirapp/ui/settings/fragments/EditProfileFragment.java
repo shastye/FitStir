@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.settings;
+package com.fitstir.fitstirapp.ui.settings.fragments;
 
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -25,6 +25,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.android.material.color.MaterialColors;
 import com.vansuita.pickimage.bean.PickResult;

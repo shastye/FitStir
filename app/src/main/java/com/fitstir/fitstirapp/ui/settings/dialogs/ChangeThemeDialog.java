@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.settings;
+package com.fitstir.fitstirapp.ui.settings.dialogs;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
 

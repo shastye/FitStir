@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.settings;
+package com.fitstir.fitstirapp.ui.settings.dialogs;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
 
 public class ResetApplicationDialog extends IBasicAlertDialog {
