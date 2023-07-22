@@ -19,15 +19,15 @@ public class DeleteGoalDialog extends IBasicAlertDialog {
 
     public DeleteGoalDialog() { }
 
-    public static DeleteGoalDialog newInstance(int _layoutID, int _acceptButtonID, int _cancelButtonID, int _messageID, String _message) {
+    public static DeleteGoalDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, int messageID, String message) {
         DeleteGoalDialog frag = new DeleteGoalDialog();
 
         Bundle args = new Bundle();
-        args.putString("message", _message);
-        args.putInt("messageID", _messageID);
-        args.putInt("layoutID", _layoutID);
-        args.putInt("acceptButtonID", _acceptButtonID);
-        args.putInt("cancelButtonID", _cancelButtonID);
+        args.putString("message", message);
+        args.putInt("messageID", messageID);
+        args.putInt("layoutID", layoutID);
+        args.putInt("acceptButtonID", acceptButtonID);
+        args.putInt("cancelButtonID", cancelButtonID);
         frag.setArguments(args);
         return frag;
     }

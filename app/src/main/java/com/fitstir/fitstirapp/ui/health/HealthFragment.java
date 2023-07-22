@@ -43,25 +43,25 @@ public class HealthFragment extends Fragment {
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
-                switch(_position) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position) {
                     case 0:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_calorie_tracker);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_calorie_tracker);
                         break;
                     case 1:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_food_guide);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_food_guide);
                         break;
                     case 2:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_weight_loss);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_weight_loss);
                         break;
                     case 3:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_recipes);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_recipes);
                         break;
                     case 4:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_find_dietitian);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_find_dietitian);
                         break;
                     case 5:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_health_to_navigation_diary);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_diary);
                         break;
                     default:
                         // TODO: Show error?

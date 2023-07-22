@@ -43,25 +43,25 @@ public class WorkoutsFragment extends Fragment {
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
-                switch(_position) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position) {
                     case 0:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_run_club);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_run_club);
                         break;
                     case 1:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_upper_body);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_upper_body);
                         break;
                     case 2:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_lower_body);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_lower_body);
                         break;
                     case 3:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_weight_lifting);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_weight_lifting);
                         break;
                     case 4:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_circuit_workouts);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_circuit_workouts);
                         break;
                     case 5:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_yoga);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_yoga);
                         break;
                     default:
                         // TODO: Show error?

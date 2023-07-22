@@ -16,11 +16,11 @@ public class SectionGridAdapter extends BaseAdapter {
     private final ArrayList<SectionItem> options;
     private final View root;
 
-    public SectionGridAdapter(ArrayList<SectionItem> _options, View _root) {
+    public SectionGridAdapter(ArrayList<SectionItem> options, View root) {
         super();
 
-        options = _options;
-        root = _root;
+        this.options = options;
+        this.root = root;
     }
 
     @Override
@@ -29,21 +29,21 @@ public class SectionGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int _position) {
-        return options.get(_position);
+    public Object getItem(int position) {
+        return options.get(position);
     }
 
     @Override
-    public long getItemId(int _position) {
-        return (long)_position;
+    public long getItemId(int position) {
+        return (long) position;
     }
 
     @Override
-    public View getView(int _position, View _convertView, ViewGroup _parent) {
-        SectionItem item = options.get(_position);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        SectionItem item = options.get(position);
 
         LayoutInflater inflater = (LayoutInflater) root.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.layout_section, _parent, false);
+        View view = inflater.inflate(R.layout.layout_section, parent, false);
 
         ImageView icon = view.findViewById(R.id.layout_section_icon);
         icon.setImageResource(item.getIcon());

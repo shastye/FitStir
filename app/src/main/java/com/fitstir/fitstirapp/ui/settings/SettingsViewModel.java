@@ -90,10 +90,10 @@ public class SettingsViewModel extends ViewModel {
 
 
 
-    public boolean clearApplicationData(@NonNull Activity _activity) {
+    public boolean clearApplicationData(@NonNull Activity activity) {
         boolean success = true;
 
-        File cache = _activity.getCacheDir();
+        File cache = activity.getCacheDir();
         File appDir = new File(Objects.requireNonNull(cache.getParent()));
         if (appDir.exists()) {
             String[] children = appDir.list();

@@ -16,15 +16,15 @@ public class ResetApplicationDialog extends IBasicAlertDialog {
 
     public ResetApplicationDialog() { }
 
-    public static ResetApplicationDialog newInstance(int _layoutID, int _acceptButtonID, int _cancelButtonID, int _messageID, String _message) {
+    public static ResetApplicationDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, int messageID, String message) {
         ResetApplicationDialog frag = new ResetApplicationDialog();
 
         Bundle args = new Bundle();
-        args.putString("message", _message);
-        args.putInt("messageID", _messageID);
-        args.putInt("layoutID", _layoutID);
-        args.putInt("acceptButtonID", _acceptButtonID);
-        args.putInt("cancelButtonID", _cancelButtonID);
+        args.putString("message", message);
+        args.putInt("messageID", messageID);
+        args.putInt("layoutID", layoutID);
+        args.putInt("acceptButtonID", acceptButtonID);
+        args.putInt("cancelButtonID", cancelButtonID);
         frag.setArguments(args);
         return frag;
     }

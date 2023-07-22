@@ -24,19 +24,19 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
 
     public ChangeThemeDialog() { }
 
-    public static ChangeThemeDialog newInstance(int _layoutID, int _acceptButtonID, int _cancelButtonID, int _themeID, int _rangeID, int _intervalID, int _unitID, View _root) {
+    public static ChangeThemeDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, int themeID, int rangeID, int intervalID, int unitID, View root) {
         ChangeThemeDialog  frag = new ChangeThemeDialog();
 
         Bundle args = new Bundle();
-        args.putInt("themeID", _themeID);
-        args.putInt("rangeID", _rangeID);
-        args.putInt("intervalID", _intervalID);
-        args.putInt("unitID", _unitID);
-        args.putInt("layoutID", _layoutID);
-        args.putInt("acceptButtonID", _acceptButtonID);
-        args.putInt("cancelButtonID", _cancelButtonID);
+        args.putInt("themeID", themeID);
+        args.putInt("rangeID", rangeID);
+        args.putInt("intervalID", intervalID);
+        args.putInt("unitID", unitID);
+        args.putInt("layoutID", layoutID);
+        args.putInt("acceptButtonID", acceptButtonID);
+        args.putInt("cancelButtonID", cancelButtonID);
         frag.setArguments(args);
-        frag.setRoot(_root);
+        frag.setRoot(root);
 
         return frag;
     }

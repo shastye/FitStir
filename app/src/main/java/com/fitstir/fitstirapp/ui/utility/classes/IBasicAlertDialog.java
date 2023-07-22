@@ -30,12 +30,12 @@ public class IBasicAlertDialog extends DialogFragment {
 
     public IBasicAlertDialog() { }
 
-    public static IBasicAlertDialog newInstance(int _layoutID, int _acceptButtonID, int _cancelButtonID) {
+    public static IBasicAlertDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID) {
         IBasicAlertDialog frag = new IBasicAlertDialog();
         Bundle args = new Bundle();
-        args.putInt("layoutID", _layoutID);
-        args.putInt("acceptButtonID", _acceptButtonID);
-        args.putInt("cancelButtonID", _cancelButtonID);
+        args.putInt("layoutID", layoutID);
+        args.putInt("acceptButtonID", acceptButtonID);
+        args.putInt("cancelButtonID", cancelButtonID);
         frag.setArguments(args);
         return frag;
     }
