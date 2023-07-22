@@ -12,9 +12,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 
 import com.fitstir.fitstirapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +25,6 @@ import java.io.File;
 import java.util.Objects;
 
 public class Methods {
-
     @NonNull
     public static Spinner getSpinnerWithAdapter(@NonNull Activity _activity, @NonNull View _root, int _spinnerID, String[] _spinnerOptions) {
         Spinner spinner = (Spinner) _root.findViewById(_spinnerID);
@@ -38,15 +35,25 @@ public class Methods {
         return spinner;
     }
 
+    public static void navigateToLogInActivity(@NonNull Context _context) {
+        Intent intent = _context
+                .getPackageManager()
+                .getLaunchIntentForPackage(_context.getPackageName());
+        Intent mainIntent = Intent.makeRestartActivityTask(intent.getComponent());
+        _context.startActivity(mainIntent);
+        Runtime.getRuntime().exit(0);
+    }
+
 
 
     public static boolean clearApplicationData(@NonNull Activity _activity) {
         boolean success = true;
 
         File cache = _activity.getCacheDir();
-        File appDir = new File(cache.getParent());
+        File appDir = new File(Objects.requireNonNull(cache.getParent()));
         if (appDir.exists()) {
             String[] children = appDir.list();
+            assert children != null;
             for (String s : children) {
                 if (!s.equals("lib")) {
                     success = deleteDir(new File(appDir, s));
@@ -64,14 +71,17 @@ public class Methods {
     public static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
+
+            assert children != null;
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
                 if (!success) {
                     return false;
                 }
             }
         }
 
+        assert dir != null;
         return dir.delete();
     }
 
@@ -105,27 +115,15 @@ public class Methods {
         final boolean[] success = {false};
 
         if (user != null) {
-            OnCompleteListener<Void> listener = new  OnCompleteListener<Void>() {
+            user.delete().addOnSuccessListener(new  OnSuccessListener<Void>() {
                 @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        success[0] = true;
-                    }
+                public void onSuccess(Void unused) {
+                    success[0] = true;
                 }
-            };
-            user.delete().addOnCompleteListener(listener);
+            });
         }
 
         return success[0];
-    }
-
-    public static void navigateToLogInActivity(@NonNull Context _context) {
-        Intent intent = _context
-                .getPackageManager()
-                .getLaunchIntentForPackage(_context.getPackageName());
-        Intent mainIntent = Intent.makeRestartActivityTask(intent.getComponent());
-        _context.startActivity(mainIntent);
-        Runtime.getRuntime().exit(0);
     }
 
 

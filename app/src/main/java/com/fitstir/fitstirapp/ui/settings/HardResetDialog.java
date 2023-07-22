@@ -7,6 +7,8 @@ import android.widget.Toast;
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 
+import java.util.Objects;
+
 public class HardResetDialog extends IBasicAlertDialog {
     private String message;
     private int messageID;
@@ -42,13 +44,7 @@ public class HardResetDialog extends IBasicAlertDialog {
 
     @Override
     public void onAccept() {
-        Methods.deleteFromDatabase();
-        Methods.deleteUser();
-    }
-
-    @Override
-    public void onCancel() {
-        boolean success = Methods.clearApplicationData(getActivity());
+        boolean success = Methods.clearApplicationData(Objects.requireNonNull(getActivity()));
 
         if (success) {
             success = Methods.deleteFromDatabase();
@@ -65,6 +61,10 @@ public class HardResetDialog extends IBasicAlertDialog {
         } else {
             Toast.makeText(getContext(), "Application Data **NOT** Deleted", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onCancel() {
 
     }
 }

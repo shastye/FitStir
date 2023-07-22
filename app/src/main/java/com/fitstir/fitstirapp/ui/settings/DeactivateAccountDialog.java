@@ -42,8 +42,17 @@ public class DeactivateAccountDialog extends IBasicAlertDialog {
 
     @Override
     public void onAccept() {
-        Methods.deleteFromDatabase();
-        Methods.deleteUser();
+        boolean success = Methods.deleteFromDatabase();
+
+        if (success) {
+            success = Methods.deleteUser();
+
+            if (!success) {
+                Toast.makeText(getContext(), "Account Data **NOT** Deleted", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getContext(), "Database Data **NOT** Deleted", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
