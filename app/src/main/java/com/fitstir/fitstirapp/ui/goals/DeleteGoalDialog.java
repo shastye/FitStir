@@ -2,14 +2,12 @@ package com.fitstir.fitstirapp.ui.goals;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
-import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
-import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
 
 import java.util.Objects;
 

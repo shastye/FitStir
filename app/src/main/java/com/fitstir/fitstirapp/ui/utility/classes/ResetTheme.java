@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.utility;
+package com.fitstir.fitstirapp.ui.utility.classes;
 
 import android.app.Activity;
 import android.content.Intent;

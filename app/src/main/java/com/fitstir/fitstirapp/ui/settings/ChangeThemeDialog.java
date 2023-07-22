@@ -1,24 +1,19 @@
 package com.fitstir.fitstirapp.ui.settings;
 
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
-import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
-import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.ResetTheme;
+import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
+import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
 
 import java.util.Objects;
-import java.util.Vector;
 
 public class ChangeThemeDialog extends IBasicAlertDialog {
     private int theme, range, interval, unit;

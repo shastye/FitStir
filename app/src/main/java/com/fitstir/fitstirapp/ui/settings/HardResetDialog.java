@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
+import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
 
 import java.util.Objects;
 

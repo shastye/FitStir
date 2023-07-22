@@ -15,7 +15,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentHealthBinding;
-import com.fitstir.fitstirapp.ui.utility.SectionGridAdapter;
+import com.fitstir.fitstirapp.ui.utility.classes.SectionGridAdapter;
 
 import java.util.ArrayList;
 

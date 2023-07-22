@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.utility;
+package com.fitstir.fitstirapp.ui.utility.classes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

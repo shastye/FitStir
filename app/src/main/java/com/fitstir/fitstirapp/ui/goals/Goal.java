@@ -12,11 +12,11 @@ import java.util.Date;
 
 public class Goal {
     private String name;
-    private WorkoutTypes type; // TODO: change to enum
-    private String unit; // TODO: set based on enum value of type
+    private WorkoutTypes type;
+    private String unit;
     private int value;
     private ArrayList<Pair<Date, Double>> data;
-    private String id;
+    private final String id;
 
     private Date minDate;
     private Date maxDate;

@@ -29,7 +29,7 @@ import com.fitstir.fitstirapp.databinding.ActivityMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.ResetTheme;
+import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 

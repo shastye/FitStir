@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
-import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
+import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
