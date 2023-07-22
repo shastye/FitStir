@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 import androidx.core.view.MenuProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -31,9 +32,8 @@ import com.fitstir.fitstirapp.ui.utility.ResetTheme;
 import com.fitstir.fitstirapp.ui.utility.Tags;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -140,9 +140,9 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager = getSystemService(NotificationManager.class);
 
-        for (int i = 0; i < Tags.NOTIFICATION_CHANNELS.size(); i++) {
-            String name = Tags.NOTIFICATION_CHANNELS.get(i).first;
-            String description = Tags.NOTIFICATION_CHANNELS.get(i).second;
+        for (int i = 0; i < getNotificationChannels.size(); i++) {
+            String name = getNotificationChannels.get(i).first;
+            String description = getNotificationChannels.get(i).second;
             int importance = NotificationManager.IMPORTANCE_LOW;
 
             NotificationChannel channel = new NotificationChannel(String.valueOf(i), name, importance);
@@ -176,4 +176,8 @@ public class MainActivity extends AppCompatActivity {
 
         startService(new Intent(this, CheckRecentRun.class));
     }
+
+    private final ArrayList<Pair<String, String>> getNotificationChannels = new ArrayList<Pair<String, String>>() {{
+        add(new Pair<String, String>("Reminders", "Reminders to come back."));
+    }};
 }

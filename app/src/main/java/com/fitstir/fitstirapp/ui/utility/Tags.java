@@ -1,25 +1,10 @@
 package com.fitstir.fitstirapp.ui.utility;
 
-import androidx.core.util.Pair;
-
 import com.fitstir.fitstirapp.R;
 
-import java.util.Map;
 import java.util.ArrayList;
 
 public class Tags {
-    public enum Reminder_Channel_ID {
-        COME_BACK_REMINDERS(0);
-
-        private final int value;
-        private Reminder_Channel_ID(int value) { this.value = value; }
-
-        public int getValue() { return value; }
-    }
-    public static ArrayList<Integer> Notification_IDs = new ArrayList<Integer>();
-    public static final ArrayList<Pair<String, String>> NOTIFICATION_CHANNELS = new ArrayList<Pair<String, String>>() {{
-            add(new Pair<String, String>("Reminders", "Reminders to come back."));
-    }};
     public static final String TIMED_NOTIFICATION_TAG = "TimedNotifications";
     public static final String LAST_ON_DESTROY_TAG = "LastOnDestroy";
     public static final long MILLISECS_PER_SEC = 1000L;

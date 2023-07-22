@@ -1,28 +1,17 @@
 package com.fitstir.fitstirapp.ui.utility;
 
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.util.Pair;
-import androidx.navigation.NavDeepLinkBuilder;
 
-import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
-import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -35,12 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
-import java.util.Calendar;
 import java.util.Objects;
-import java.util.Vector;
 
 public class Methods {
-    private static int NOTIFICATION_ID = 0;
 
     @NonNull
     public static Spinner getSpinnerWithAdapter(@NonNull Activity _activity, @NonNull View _root, int _spinnerID, String[] _spinnerOptions) {
@@ -149,26 +135,7 @@ public class Methods {
         return value.data;
     }
 
-    public static void createNotification(@NonNull Context _context, int _channel_id, int _drawableID, String _title, String _small_content, String _extra_content, int _navID) {
-        NavDeepLinkBuilder navBuilder = new NavDeepLinkBuilder(_context.getApplicationContext());
-        navBuilder.setComponentName(MainActivity.class);
-        navBuilder.setGraph(R.navigation.main_navigation);
-        navBuilder.setDestination(_navID);
-        PendingIntent pendingIntent = navBuilder.createPendingIntent();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(_context, String.valueOf(_channel_id))
-                .setSmallIcon(_drawableID)
-                .setContentTitle(_title)
-                .setContentText(_small_content)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(_extra_content))
-                .setContentIntent(pendingIntent);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(_context);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
-        Tags.Notification_IDs.add(NOTIFICATION_ID++);
-    }
     
 
 }
