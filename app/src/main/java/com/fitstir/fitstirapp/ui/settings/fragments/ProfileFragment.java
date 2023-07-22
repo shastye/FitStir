@@ -41,15 +41,15 @@ public class ProfileFragment extends Fragment {
 
         // Add additions here
 
-        ImageView profileImage = root.findViewById(R.id.profile_image);
+        ImageView profileImage = binding.profileImage;
         profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
-        TextView name = root.findViewById(R.id.text_name);
-        TextView age = root.findViewById(R.id.text_age);
-        TextView height_ft = root.findViewById(R.id.text_height_ft);
-        TextView weight = root.findViewById(R.id.text_weight);
-        TextView email = root.findViewById(R.id.text_email);
-        TextView height_in = root.findViewById(R.id.text_height_in);
+        TextView name = binding.textName;
+        TextView age = binding.textAge;
+        TextView height_ft = binding.textHeightFt;
+        TextView height_in = binding.textHeightIn;
+        TextView weight = binding.textWeight;
+        TextView email = binding.textEmail;
 
         name.setText(settingsViewModel.getName().getValue());
         String tAge = settingsViewModel.getAge().getValue() + " years old";
@@ -101,7 +101,7 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        CardView editButton = root.findViewById(R.id.editbutton_cardView_profile);
+        CardView editButton = binding.editbuttonCardViewProfile;
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

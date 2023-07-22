@@ -1,11 +1,8 @@
 package com.fitstir.fitstirapp.ui.settings.fragments;
 
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.R.attr;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -27,15 +22,10 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.google.android.material.color.MaterialColors;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
-
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class EditProfileFragment extends Fragment implements IPickResult {
 
@@ -53,15 +43,15 @@ public class EditProfileFragment extends Fragment implements IPickResult {
 
         // Add additions here
 
-        ImageView profileImage = root.findViewById(R.id.profile_image_edit);
+        ImageView profileImage = binding.profileImageEdit;
         profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
-        EditText name = root.findViewById(R.id.text_name_edit);
-        EditText age = root.findViewById(R.id.text_age_edit);
-        EditText feet = root.findViewById(R.id.text_height_feet_edit);
-        EditText inches = root.findViewById(R.id.text_height_inches_edit);
-        EditText weight = root.findViewById(R.id.text_weight_edit);
-        EditText email = root.findViewById(R.id.text_email_edit);
+        EditText name = binding.textNameEdit;
+        EditText age = binding.textAgeEdit;
+        EditText feet = binding.textHeightFeetEdit;
+        EditText inches = binding.textHeightInchesEdit;
+        EditText weight = binding.textWeightEdit;
+        EditText email = binding.textEmailEdit;
 
         name.setText(settingsViewModel.getName().getValue());
         age.setText(String.valueOf(settingsViewModel.getAge().getValue()));
@@ -70,7 +60,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         weight.setText(String.valueOf(settingsViewModel.getWeight().getValue()));
         email.setText(settingsViewModel.getEmail().getValue());
 
-        CardView saveButton = root.findViewById(R.id.savebutton_cardView_profile_edit);
+        CardView saveButton = binding.savebuttonCardViewProfileEdit;
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +115,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
             }
         });
 
-        CardView editButton = root.findViewById(R.id.editpicturebutton_cardView_edit);
+        CardView editButton = binding.editpicturebuttonCardViewEdit;
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +125,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                             public void onPickResult(PickResult r) {
                                 if (r.getError() == null) {
                                     settingsViewModel.setAvatar(r.getBitmap());
-                                    ImageView profileImage = root.findViewById(R.id.profile_image_edit);
+                                    ImageView profileImage = binding.profileImageEdit;
                                     profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
                                     Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();

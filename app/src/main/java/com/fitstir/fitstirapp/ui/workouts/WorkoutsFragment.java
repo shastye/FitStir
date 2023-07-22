@@ -38,7 +38,7 @@ public class WorkoutsFragment extends Fragment {
         // Addition Text Here
 
         SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(getWorkoutsSections(), root);
-        GridView grid = root.findViewById(R.id.workouts_grid_view);
+        GridView grid = binding.workoutsGridView;
         grid.setAdapter(sectionGridAdapter);
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -22,7 +22,7 @@ public class ConnectActivity extends AppCompatActivity {
         binding = ActivityConnectBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NavigationView navView = findViewById(R.id.nav_view_connect);
+        NavigationView navView = binding.navViewConnect;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

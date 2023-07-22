@@ -38,7 +38,7 @@ public class HealthFragment extends Fragment {
         // Addition Text Here
 
         SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(getHealthSections(), root);
-        GridView grid = root.findViewById(R.id.health_grid_view);
+        GridView grid = binding.healthGridView;
         grid.setAdapter(sectionGridAdapter);
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {

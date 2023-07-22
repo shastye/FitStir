@@ -59,17 +59,17 @@ public class SettingsFragment extends Fragment {
 
         // Add additions here
 
-        TextView theme = root.findViewById(R.id.themeID);
-        TextView range = root.findViewById(R.id.rangeID);
-        TextView interval = root.findViewById(R.id.intervalID);
-        TextView unit = root.findViewById(R.id.unitID);
+        TextView theme = binding.themeID;
+        TextView range = binding.rangeID;
+        TextView interval = binding.intervalID;
+        TextView unit = binding.unitID;
 
         theme.setText(root.getResources().getStringArray(R.array.theme_array)[settingsViewModel.getThemeID().getValue()]);
         range.setText(root.getResources().getStringArray(R.array.range_array)[settingsViewModel.getRangeID().getValue()]);
         interval.setText(root.getResources().getStringArray(R.array.interval_array)[settingsViewModel.getIntervalID().getValue()]);
         unit.setText(root.getResources().getStringArray(R.array.unit_array)[settingsViewModel.getUnitID().getValue()]);
 
-        CardView editButton = root.findViewById(R.id.editbutton_cardView_settings);
+        CardView editButton = binding.editbuttonCardViewSettings;
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +77,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button resetButton = root.findViewById(R.id.reset_button);
+        Button resetButton = binding.resetButton;
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +90,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button deactivateButton = root.findViewById(R.id.deactivate_button);
+        Button deactivateButton = binding.deactivateButton;
         deactivateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +103,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button hardResetButton = root.findViewById(R.id.hard_reset_button);
+        Button hardResetButton = binding.hardResetButton;
         hardResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

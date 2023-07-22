@@ -53,7 +53,7 @@ public class GoalsFragment extends Fragment {
 
         //GoalsViewModel.goals =  // TODO: Get from database
 
-        goalRecyclerView = root.findViewById(R.id.goal_recycler_view);
+        goalRecyclerView = binding.goalRecyclerView;
         goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         updateUI(goalsViewModel.getGoals().getValue());
 
