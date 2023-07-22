@@ -13,21 +13,6 @@ import com.fitstir.fitstirapp.R;
 import java.util.ArrayList;
 
 public class SectionGridAdapter extends BaseAdapter {
-    public static class SectionItem {
-        final int icon;
-        final String label;
-
-        public SectionItem(int _drawable, String _label) {
-            icon = _drawable;
-            label = _label;
-        }
-
-        int getIcon() { return icon; }
-        String getLabel() { return label; }
-    }
-
-
-
     private final ArrayList<SectionItem> options;
     private final View root;
 
