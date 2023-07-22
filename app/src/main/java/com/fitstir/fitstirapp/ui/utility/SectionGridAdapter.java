@@ -1,7 +1,6 @@
 package com.fitstir.fitstirapp.ui.utility;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +8,28 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.res.ResourcesCompat;
-
 import com.fitstir.fitstirapp.R;
 
 import java.util.ArrayList;
 
 public class SectionGridAdapter extends BaseAdapter {
+    public static class SectionItem {
+        final int icon;
+        final String label;
 
-    private ArrayList<SectionItem> options;
-    private View root;
+        SectionItem(int _drawable, String _label) {
+            icon = _drawable;
+            label = _label;
+        }
+
+        int getIcon() { return icon; }
+        String getLabel() { return label; }
+    }
+
+
+
+    private final ArrayList<SectionItem> options;
+    private final View root;
 
     public SectionGridAdapter(ArrayList<SectionItem> _options, View _root) {
         super();
