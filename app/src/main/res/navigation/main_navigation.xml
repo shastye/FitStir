@@ -129,7 +129,7 @@
 
     <fragment
         android:id="@+id/navigation_goals"
-        android:name="com.fitstir.fitstirapp.ui.goals.GoalsFragment"
+        android:name="com.fitstir.fitstirapp.ui.goals.fragments.GoalsFragment"
         android:label="Goals"
         tools:layout="@layout/fragment_goals" >
         <action
@@ -193,7 +193,7 @@
 
     <fragment
         android:id="@+id/navigation_view_goal"
-        android:name="com.fitstir.fitstirapp.ui.goals.ViewGoalFragment"
+        android:name="com.fitstir.fitstirapp.ui.goals.fragments.ViewGoalFragment"
         android:label="View Goal"
         tools:layout="@layout/fragment_view_goal" />
 </navigation>

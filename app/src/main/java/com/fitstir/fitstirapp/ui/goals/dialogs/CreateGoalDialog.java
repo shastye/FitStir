@@ -1,37 +1,38 @@
-package com.fitstir.fitstirapp.ui.goals;
+package com.fitstir.fitstirapp.ui.goals.dialogs;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
+import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
+import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
-public class EditGoalDialog extends IBasicAlertDialog {
+public class CreateGoalDialog extends IBasicAlertDialog {
 
     private GoalsViewModel goalsViewModel;
     private EditText titleEditText, valueEditText;
+    private Spinner typeSpinner;
     private TextView unitTextView;
     private final WorkoutTypes[] typeEnumArray = WorkoutTypes.values();
-    private ViewGoalFragment baseFragment;
 
-    public void setBaseFragment(ViewGoalFragment fragment) { baseFragment = fragment; }
+    public CreateGoalDialog() { }
 
-    public EditGoalDialog() { }
-
-    public static EditGoalDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, ViewGoalFragment fragment) {
-        EditGoalDialog frag = new EditGoalDialog();
+    public static CreateGoalDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID) {
+        CreateGoalDialog frag = new CreateGoalDialog();
 
         Bundle args = new Bundle();
         args.putInt("layoutID", layoutID);
         args.putInt("acceptButtonID", acceptButtonID);
         args.putInt("cancelButtonID", cancelButtonID);
-        frag.setBaseFragment(fragment);
 
         frag.setArguments(args);
         return frag;
@@ -47,35 +48,40 @@ public class EditGoalDialog extends IBasicAlertDialog {
         DialogCreateGoalBinding binding = DialogCreateGoalBinding.bind(getView());
 
         titleEditText = binding.dialogCreateGoalTitleEditText;
-        titleEditText.setText(goalsViewModel.getClickedGoal().getValue().getName());
-
         String[] spinnerOptions = new String[typeEnumArray.length];
         for (int i = 0; i < typeEnumArray.length; i++) {
             spinnerOptions[i] = typeEnumArray[i].getSpinnerTitle();
         }
-        Spinner typeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), getView(), binding.dialogCreateGoalTypeSpinner.getId(), spinnerOptions);
-        typeSpinner.setSelection(goalsViewModel.getClickedGoal().getValue().getType().getValue());
-        typeSpinner.setEnabled(false);
-
-        valueEditText = binding.dialogCreateGoalValueEditText;
-        valueEditText.setText(String.valueOf(goalsViewModel.getClickedGoal().getValue().getValue()));
-
         unitTextView = binding.dialogCreateGoalUnitTextView;
-        unitTextView.setText(goalsViewModel.getClickedGoal().getValue().getType().getImperialUnit());
+        typeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), getView(), binding.dialogCreateGoalTypeSpinner.getId(), spinnerOptions);
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                unitTextView.setText(typeEnumArray[position].getImperialUnit());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        valueEditText = binding.dialogCreateGoalValueEditText;
     }
 
     @Override
     public void onAccept() {
         String title = titleEditText.getText().toString();
+        int type = typeSpinner.getSelectedItemPosition();
         String strValue = valueEditText.getText().toString().trim();
-
         int value = Integer.parseInt(strValue);
 
-        int index = goalsViewModel.getGoals().getValue().indexOf(goalsViewModel.getClickedGoal().getValue());
-        goalsViewModel.getGoals().getValue().get(index).setName(title);
-        goalsViewModel.getGoals().getValue().get(index).setValue(value);
+        Goal thisGoal = new Goal(title, typeEnumArray[type], value);
 
-        baseFragment.bind();
+        // TODO: pull from database
+        //       get workouts that match {type}
+        //       add data to goal
+
+        goalsViewModel.addGoal(thisGoal);
     }
 
     @Override

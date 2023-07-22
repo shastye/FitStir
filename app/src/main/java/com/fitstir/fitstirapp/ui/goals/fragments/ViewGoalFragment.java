@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.goals;
+package com.fitstir.fitstirapp.ui.goals.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
+import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
+import com.fitstir.fitstirapp.ui.goals.dialogs.DeleteGoalDialog;
+import com.fitstir.fitstirapp.ui.goals.dialogs.EditGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
