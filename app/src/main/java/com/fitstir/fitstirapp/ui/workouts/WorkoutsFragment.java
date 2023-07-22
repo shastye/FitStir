@@ -15,8 +15,8 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentWorkoutsBinding;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.SectionGridAdapter;
-import com.fitstir.fitstirapp.ui.utility.Tags;
 
 public class WorkoutsFragment extends Fragment {
 
@@ -35,7 +35,7 @@ public class WorkoutsFragment extends Fragment {
 
         // Addition Text Here
 
-        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(Tags.WORKOUTS_SECTION, root);
+        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(Constants.WORKOUTS_SECTION, root);
         GridView grid = root.findViewById(R.id.workouts_grid_view);
         grid.setAdapter(sectionGridAdapter);
 

@@ -13,14 +13,14 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavDeepLinkBuilder;
 
+import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.enums.ReminderChannels;
-import com.fitstir.fitstirapp.ui.utility.Tags;
 
 import java.util.ArrayList;
 
 public class CheckRecentRun extends Service {
-    private final long delay = Tags.MILLISECS_PER_DAY * 2;
-    //private final long delay = Tags.MILLISECS_PER_SEC * 3;
+    private final long delay = Constants.MILLISECS_PER_DAY * 2;
+    //private final long delay = Constants.MILLISECS_PER_SEC * 3;
 
     private static int NOTIFICATION_ID = 0;
     private static final ArrayList<Integer> notificationIDs = new ArrayList<Integer>();
@@ -29,9 +29,9 @@ public class CheckRecentRun extends Service {
     public void onCreate() {
         super.onCreate();
 
-        SharedPreferences settings = getSharedPreferences(Tags.TIMED_NOTIFICATION_TAG, MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(Constants.TIMED_NOTIFICATION_TAG, MODE_PRIVATE);
         if (MainActivity.areNotificationsAllowed()) {
-            if (settings.getLong(Tags.LAST_ON_DESTROY_TAG, Long.MAX_VALUE) + Tags.MILLISECS_PER_SEC < System.currentTimeMillis()) {
+            if (settings.getLong(Constants.LAST_ON_DESTROY_TAG, Long.MAX_VALUE) + Constants.MILLISECS_PER_SEC < System.currentTimeMillis()) {
                 createNotification(
                         this,
                         ReminderChannels.COME_BACK_REMINDERS.getValue(),

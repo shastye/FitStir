@@ -28,8 +28,8 @@ import androidx.navigation.ui.NavigationUiSaveStateControl;
 
 import com.fitstir.fitstirapp.databinding.ActivityMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.ResetTheme;
-import com.fitstir.fitstirapp.ui.utility.Tags;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -125,11 +125,11 @@ public class MainActivity extends AppCompatActivity {
         });
         //
 
-        settings = getSharedPreferences(Tags.TIMED_NOTIFICATION_TAG, MODE_PRIVATE);
+        settings = getSharedPreferences(Constants.TIMED_NOTIFICATION_TAG, MODE_PRIVATE);
         editor = settings.edit();
 
         if (userAllowedNotifications) {
-            editor.putLong(Tags.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
+            editor.putLong(Constants.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
             editor.commit();
         }
     }
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
 
-        editor.putLong(Tags.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
+        editor.putLong(Constants.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
         editor.commit();
 
         startService(new Intent(this, CheckRecentRun.class));

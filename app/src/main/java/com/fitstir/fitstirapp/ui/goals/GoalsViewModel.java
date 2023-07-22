@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.fitstir.fitstirapp.ui.utility.Tags;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,7 +50,7 @@ public class GoalsViewModel extends ViewModel {
 
         switch(goalNum) {
             case 1:
-                g = new Goal("Test1", Tags.Workout_Type.RUN_CLUB_DISTANCE, 16);
+                g = new Goal("Test1", Constants.Workout_Type.RUN_CLUB_DISTANCE, 16);
 
                 calendar.set(Calendar.MONTH, Calendar.MAY);
                 calendar.set(Calendar.DAY_OF_MONTH, 10);
@@ -88,7 +88,7 @@ public class GoalsViewModel extends ViewModel {
                 g.addData(calendar.getTime(), 14.7);
                 break;
             default:
-                g = new Goal("Test#", Tags.Workout_Type.RUN_CLUB_ENDURANCE, 14);
+                g = new Goal("Test#", Constants.Workout_Type.RUN_CLUB_ENDURANCE, 14);
 
                 calendar.set(Calendar.MONTH, Calendar.JUNE);
                 calendar.set(Calendar.DAY_OF_MONTH, 1);

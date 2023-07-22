@@ -15,8 +15,8 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentHealthBinding;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.SectionGridAdapter;
-import com.fitstir.fitstirapp.ui.utility.Tags;
 
 public class HealthFragment extends Fragment {
 
@@ -35,7 +35,7 @@ public class HealthFragment extends Fragment {
 
         // Addition Text Here
 
-        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(Tags.HEALTH_SECTION, root);
+        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(Constants.HEALTH_SECTION, root);
         GridView grid = root.findViewById(R.id.health_grid_view);
         grid.setAdapter(sectionGridAdapter);
 

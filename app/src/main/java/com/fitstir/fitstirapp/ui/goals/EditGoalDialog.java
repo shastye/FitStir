@@ -8,19 +8,16 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
-import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.Tags;
-
-import java.util.Objects;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 
 public class EditGoalDialog extends IBasicAlertDialog {
 
     private GoalsViewModel goalsViewModel;
     private EditText titleEditText, valueEditText;
     private TextView unitTextView;
-    private final Tags.Workout_Type[] typeEnumArray = Tags.Workout_Type.values();
+    private final Constants.Workout_Type[] typeEnumArray = Constants.Workout_Type.values();
     private ViewGoalFragment baseFragment;
 
     public void setBaseFragment(ViewGoalFragment fragment) { baseFragment = fragment; }

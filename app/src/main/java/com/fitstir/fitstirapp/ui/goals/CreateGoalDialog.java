@@ -2,21 +2,17 @@ package com.fitstir.fitstirapp.ui.goals;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
 import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.Tags;
-
-import java.util.ArrayList;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 
 public class CreateGoalDialog extends IBasicAlertDialog {
 
@@ -24,7 +20,7 @@ public class CreateGoalDialog extends IBasicAlertDialog {
     private EditText titleEditText, valueEditText;
     private Spinner typeSpinner;
     private TextView unitTextView;
-    private final Tags.Workout_Type[] typeEnumArray = Tags.Workout_Type.values();
+    private final Constants.Workout_Type[] typeEnumArray = Constants.Workout_Type.values();
 
     public CreateGoalDialog() { }
 
