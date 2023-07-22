@@ -15,8 +15,9 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentWorkoutsBinding;
-import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.SectionGridAdapter;
+
+import java.util.ArrayList;
 
 public class WorkoutsFragment extends Fragment {
 
@@ -35,7 +36,7 @@ public class WorkoutsFragment extends Fragment {
 
         // Addition Text Here
 
-        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(Constants.WORKOUTS_SECTION, root);
+        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(getWorkoutsSections(), root);
         GridView grid = root.findViewById(R.id.workouts_grid_view);
         grid.setAdapter(sectionGridAdapter);
 
@@ -77,5 +78,18 @@ public class WorkoutsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+
+
+    private ArrayList<SectionGridAdapter.SectionItem> getWorkoutsSections() {
+        return new ArrayList<SectionGridAdapter.SectionItem>() {{
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_shoe_black_200dp, "Run Club"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_bicep_black_200dp, "Upper Body"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_legs_black_200dp, "Lower Body"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_lifting_black_200dp, "Weight Lifting"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_cir_black_200dp, "Circuit Workouts"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_yoga_black_200dp, "Yoga"));
+        }};
     }
 }

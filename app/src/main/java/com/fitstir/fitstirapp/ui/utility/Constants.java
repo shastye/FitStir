@@ -15,15 +15,6 @@ public class Constants {
 
 
 
-    public static final ArrayList<SectionGridAdapter.SectionItem> WORKOUTS_SECTION = new ArrayList<SectionGridAdapter.SectionItem>() {{
-        add(new SectionGridAdapter.SectionItem(R.drawable.ic_shoe_black_200dp, "Run Club"));
-        add(new SectionGridAdapter.SectionItem(R.drawable.ic_bicep_black_200dp, "Upper Body"));
-        add(new SectionGridAdapter.SectionItem(R.drawable.ic_legs_black_200dp, "Lower Body"));
-        add(new SectionGridAdapter.SectionItem(R.drawable.ic_lifting_black_200dp, "Weight Lifting"));
-        add(new SectionGridAdapter.SectionItem(R.drawable.ic_cir_black_200dp, "Circuit Workouts"));
-        add(new SectionGridAdapter.SectionItem(R.drawable.ic_yoga_black_200dp, "Yoga"));
-    }};
-
     public static final ArrayList<SectionGridAdapter.SectionItem> HEALTH_SECTION = new ArrayList<SectionGridAdapter.SectionItem>() {{
         add(new SectionGridAdapter.SectionItem(R.drawable.ic_cal_black_200dp, "Calorie Tracker"));
         add(new SectionGridAdapter.SectionItem(R.drawable.ic_guide_black_200dp, "Food Guide"));

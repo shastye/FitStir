@@ -17,7 +17,7 @@ public class SectionGridAdapter extends BaseAdapter {
         final int icon;
         final String label;
 
-        SectionItem(int _drawable, String _label) {
+        public SectionItem(int _drawable, String _label) {
             icon = _drawable;
             label = _label;
         }
