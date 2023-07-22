@@ -1,27 +1,17 @@
 package com.fitstir.fitstirapp.ui.settings;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
-import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.ResetTheme;
-
-import org.w3c.dom.Text;
-
-import java.util.Objects;
 
 public class ResetApplicationDialog extends IBasicAlertDialog {
     private String message;
     private int messageID;
+    private SettingsViewModel settingsViewModel;
 
     public ResetApplicationDialog() { }
 
@@ -42,6 +32,8 @@ public class ResetApplicationDialog extends IBasicAlertDialog {
     public void onStart() {
         super.onStart();
 
+        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
         assert getArguments() != null;
         message = getArguments().getString("message");
         messageID = getArguments().getInt("messageID");
@@ -54,7 +46,7 @@ public class ResetApplicationDialog extends IBasicAlertDialog {
 
     @Override
     public void onAccept() {
-        boolean success = Methods.clearApplicationData(getActivity());
+        boolean success = settingsViewModel.clearApplicationData(getActivity());
 
         if (success) {
             // show dialog saying everything deleted

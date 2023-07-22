@@ -4,14 +4,16 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
-import com.fitstir.fitstirapp.ui.utility.Methods;
 
 import java.util.Objects;
 
 public class HardResetDialog extends IBasicAlertDialog {
     private String message;
     private int messageID;
+    private SettingsViewModel settingsViewModel;
 
     public HardResetDialog() { }
 
@@ -32,6 +34,8 @@ public class HardResetDialog extends IBasicAlertDialog {
     public void onStart() {
         super.onStart();
 
+        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
         assert getArguments() != null;
         message = getArguments().getString("message");
         messageID = getArguments().getInt("messageID");
@@ -44,13 +48,13 @@ public class HardResetDialog extends IBasicAlertDialog {
 
     @Override
     public void onAccept() {
-        boolean success = Methods.clearApplicationData(Objects.requireNonNull(getActivity()));
+        boolean success = settingsViewModel.clearApplicationData(Objects.requireNonNull(getActivity()));
 
         if (success) {
-            success = Methods.deleteFromDatabase();
+            success = settingsViewModel.deleteFromDatabase();
 
             if (success) {
-                success = Methods.deleteUser();
+                success = settingsViewModel.deleteUser();
 
                 if (!success) {
                     Toast.makeText(getContext(), "Account Data **NOT** Deleted", Toast.LENGTH_LONG).show();

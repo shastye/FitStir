@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
-import com.fitstir.fitstirapp.ui.utility.Methods;
 
 public class DeactivateAccountDialog extends IBasicAlertDialog {
     private String message;
     private int messageID;
+    private SettingsViewModel settingsViewModel;
 
     public DeactivateAccountDialog() { }
 
@@ -30,6 +32,8 @@ public class DeactivateAccountDialog extends IBasicAlertDialog {
     public void onStart() {
         super.onStart();
 
+        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
         assert getArguments() != null;
         message = getArguments().getString("message");
         messageID = getArguments().getInt("messageID");
@@ -42,10 +46,10 @@ public class DeactivateAccountDialog extends IBasicAlertDialog {
 
     @Override
     public void onAccept() {
-        boolean success = Methods.deleteFromDatabase();
+        boolean success = settingsViewModel.deleteFromDatabase();
 
         if (success) {
-            success = Methods.deleteUser();
+            success = settingsViewModel.deleteUser();
 
             if (!success) {
                 Toast.makeText(getContext(), "Account Data **NOT** Deleted", Toast.LENGTH_LONG).show();
