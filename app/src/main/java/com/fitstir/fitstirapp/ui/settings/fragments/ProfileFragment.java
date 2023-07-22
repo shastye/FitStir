@@ -90,10 +90,14 @@ public class ProfileFragment extends Fragment {
 
                         binding.textName.setText(fullName);
                         binding.textEmail.setText(email);
-                        binding.textAge.setText(age);
-                        binding.textHeightFt.setText(height_ft);
-                        binding.textHeightIn.setText(height_in);
-                        binding.textWeight.setText(weight);
+                        String tAge = settingsViewModel.getAge().getValue() + " years old";
+                        binding.textAge.setText(tAge);
+                        String tHeightFeet = settingsViewModel.getHeightInFeet().getValue() + " feet ";
+                        binding.textHeightFt.setText(tHeightFeet);
+                        String tHeightInches = settingsViewModel.getHeightInInches().getValue() + " inches";
+                        binding.textHeightIn.setText(tHeightInches);
+                        String tWeight = settingsViewModel.getWeight().getValue() + " lbs";
+                        binding.textWeight.setText(tWeight);
 
                     }
                 }
