@@ -15,8 +15,9 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentHealthBinding;
-import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.SectionGridAdapter;
+
+import java.util.ArrayList;
 
 public class HealthFragment extends Fragment {
 
@@ -35,7 +36,7 @@ public class HealthFragment extends Fragment {
 
         // Addition Text Here
 
-        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(Constants.HEALTH_SECTION, root);
+        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(getHealthSections(), root);
         GridView grid = root.findViewById(R.id.health_grid_view);
         grid.setAdapter(sectionGridAdapter);
 
@@ -77,5 +78,16 @@ public class HealthFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private ArrayList<SectionGridAdapter.SectionItem> getHealthSections() {
+        return new ArrayList<SectionGridAdapter.SectionItem>() {{
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_cal_black_200dp, "Calorie Tracker"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_guide_black_200dp, "Food Guide"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_scale_black_200dp, "Weight Loss"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_recipe_black_200dp, "Recipes"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_loc_black_200dp, "Find Dietitian"));
+            add(new SectionGridAdapter.SectionItem(R.drawable.ic_diary_black_200dp, "Diary"));
+        }};
     }
 }
