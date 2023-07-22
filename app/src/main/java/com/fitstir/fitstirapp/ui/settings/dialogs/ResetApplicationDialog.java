@@ -7,21 +7,19 @@ import android.widget.Toast;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
-import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
+import com.fitstir.fitstirapp.ui.utility.classes.IGenericAlertDialog;
 
-public class ResetApplicationDialog extends IBasicAlertDialog {
+public class ResetApplicationDialog extends IGenericAlertDialog {
     private String message;
-    private int messageID;
     private SettingsViewModel settingsViewModel;
 
     public ResetApplicationDialog() { }
 
-    public static ResetApplicationDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, int messageID, String message) {
+    public static ResetApplicationDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, String message) {
         ResetApplicationDialog frag = new ResetApplicationDialog();
 
         Bundle args = new Bundle();
         args.putString("message", message);
-        args.putInt("messageID", messageID);
         args.putInt("layoutID", layoutID);
         args.putInt("acceptButtonID", acceptButtonID);
         args.putInt("cancelButtonID", cancelButtonID);
@@ -37,11 +35,10 @@ public class ResetApplicationDialog extends IBasicAlertDialog {
 
         assert getArguments() != null;
         message = getArguments().getString("message");
-        messageID = getArguments().getInt("messageID");
 
         assert getView() != null;
 
-        TextView messageView = getView().findViewById(messageID);
+        TextView messageView = binding.dialogGenericMessage;
         messageView.setText(message);
     }
 

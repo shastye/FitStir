@@ -85,7 +85,6 @@ public class SettingsFragment extends Fragment {
                         R.layout.dialog_generic_alert,
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
-                        R.id.dialog_generic_message,
                         "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }
@@ -99,7 +98,6 @@ public class SettingsFragment extends Fragment {
                         R.layout.dialog_generic_alert,
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
-                        R.id.dialog_generic_message,
                         "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }
@@ -113,7 +111,6 @@ public class SettingsFragment extends Fragment {
                         R.layout.dialog_generic_alert,
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
-                        R.id.dialog_generic_message,
                         "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }

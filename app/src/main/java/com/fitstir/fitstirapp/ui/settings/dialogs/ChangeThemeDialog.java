@@ -10,13 +10,14 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.databinding.DialogChangeThemeBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
-import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
+import com.fitstir.fitstirapp.ui.utility.classes.IBasicDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
 
 import java.util.Objects;
 
-public class ChangeThemeDialog extends IBasicAlertDialog {
+public class ChangeThemeDialog extends IBasicDialog {
     private int theme, range, interval, unit;
     private View root;
     private void setRoot(View view) { root = view; }
@@ -46,6 +47,7 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         super.onStart();
 
         settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+        DialogChangeThemeBinding binding = DialogChangeThemeBinding.bind(requireView());
 
         assert getArguments() != null;
         theme = getArguments().getInt("themeID");
@@ -54,10 +56,10 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         unit = getArguments().getInt("unitID");
 
         assert getView() != null;
-        ImageView primaryColor = getView().findViewById(R.id.primary_color_image);
-        ImageView primaryVariantColor = getView().findViewById(R.id.primary_variant_image);
-        ImageView secondaryColor = getView().findViewById(R.id.secondary_color_image);
-        ImageView secondaryVariantColor = getView().findViewById(R.id.secondary_variant_image);
+        ImageView primaryColor = binding.primaryColorImage;
+        ImageView primaryVariantColor = binding.primaryVariantImage;
+        ImageView secondaryColor = binding.secondaryColorImage;
+        ImageView secondaryVariantColor = binding.secondaryVariantImage;
 
         int[] colors = new int[0];
         switch (theme) {

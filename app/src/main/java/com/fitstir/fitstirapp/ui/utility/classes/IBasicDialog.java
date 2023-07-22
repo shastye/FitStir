@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class IBasicAlertDialog extends DialogFragment {
+public class IBasicDialog extends DialogFragment {
 
     /*
      *
@@ -28,10 +28,10 @@ public class IBasicAlertDialog extends DialogFragment {
 
     protected int layoutID, acceptButtonID, cancelButtonID;
 
-    public IBasicAlertDialog() { }
+    public IBasicDialog() { }
 
-    public static IBasicAlertDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID) {
-        IBasicAlertDialog frag = new IBasicAlertDialog();
+    public static IBasicDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID) {
+        IBasicDialog frag = new IBasicDialog();
         Bundle args = new Bundle();
         args.putInt("layoutID", layoutID);
         args.putInt("acceptButtonID", acceptButtonID);

@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:foreground="@android:color/transparent"
     android:orientation="vertical"
-    tools:context=".ui.goals.dialogs.CreateGoalDialog">
+    tools:context=".ui.utility.classes.IGenericGoalDialog">
 
     <ImageView
         android:id="@+id/dialog_background"

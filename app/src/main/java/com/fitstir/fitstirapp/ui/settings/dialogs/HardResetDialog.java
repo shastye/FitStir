@@ -6,21 +6,19 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
-import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
+import com.fitstir.fitstirapp.ui.utility.classes.IGenericAlertDialog;
 
-public class HardResetDialog extends IBasicAlertDialog {
+public class HardResetDialog extends IGenericAlertDialog {
     private String message;
-    private int messageID;
     private SettingsViewModel settingsViewModel;
 
     public HardResetDialog() { }
 
-    public static HardResetDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, int messageID, String message) {
+    public static HardResetDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, String message) {
         HardResetDialog frag = new HardResetDialog();
 
         Bundle args = new Bundle();
         args.putString("message", message);
-        args.putInt("messageID", messageID);
         args.putInt("layoutID", layoutID);
         args.putInt("acceptButtonID", acceptButtonID);
         args.putInt("cancelButtonID", cancelButtonID);
@@ -36,11 +34,10 @@ public class HardResetDialog extends IBasicAlertDialog {
 
         assert getArguments() != null;
         message = getArguments().getString("message");
-        messageID = getArguments().getInt("messageID");
 
         assert getView() != null;
 
-        TextView messageView = getView().findViewById(messageID);
+        TextView messageView = binding.dialogGenericMessage;
         messageView.setText(message);
     }
 

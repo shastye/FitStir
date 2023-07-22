@@ -11,12 +11,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
-import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
-import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.IGenericGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
-public class CreateGoalDialog extends IBasicAlertDialog {
+public class CreateGoalDialog extends IGenericGoalDialog {
 
     private GoalsViewModel goalsViewModel;
     private EditText titleEditText, valueEditText;
@@ -45,7 +44,6 @@ public class CreateGoalDialog extends IBasicAlertDialog {
         goalsViewModel = new ViewModelProvider(requireActivity()).get(GoalsViewModel.class);
 
         assert getView() != null;
-        DialogCreateGoalBinding binding = DialogCreateGoalBinding.bind(getView());
 
         titleEditText = binding.dialogCreateGoalTitleEditText;
         String[] spinnerOptions = new String[typeEnumArray.length];

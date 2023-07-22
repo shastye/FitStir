@@ -6,21 +6,19 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
-import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
+import com.fitstir.fitstirapp.ui.utility.classes.IGenericAlertDialog;
 
-public class DeactivateAccountDialog extends IBasicAlertDialog {
+public class DeactivateAccountDialog extends IGenericAlertDialog {
     private String message;
-    private int messageID;
     private SettingsViewModel settingsViewModel;
 
     public DeactivateAccountDialog() { }
 
-    public static DeactivateAccountDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, int messageID, String message) {
+    public static DeactivateAccountDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, String message) {
         DeactivateAccountDialog frag = new DeactivateAccountDialog();
 
         Bundle args = new Bundle();
         args.putString("message", message);
-        args.putInt("messageID", messageID);
         args.putInt("layoutID", layoutID);
         args.putInt("acceptButtonID", acceptButtonID);
         args.putInt("cancelButtonID", cancelButtonID);
@@ -36,11 +34,10 @@ public class DeactivateAccountDialog extends IBasicAlertDialog {
 
         assert getArguments() != null;
         message = getArguments().getString("message");
-        messageID = getArguments().getInt("messageID");
 
         assert getView() != null;
 
-        TextView messageView = getView().findViewById(messageID);
+        TextView messageView = binding.dialogGenericMessage;
         messageView.setText(message);
     }
 

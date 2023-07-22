@@ -7,14 +7,13 @@ import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.goals.fragments.ViewGoalFragment;
-import com.fitstir.fitstirapp.ui.utility.classes.IBasicAlertDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.IGenericGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
-public class EditGoalDialog extends IBasicAlertDialog {
+public class EditGoalDialog extends IGenericGoalDialog {
 
     private GoalsViewModel goalsViewModel;
     private EditText titleEditText, valueEditText;
@@ -46,7 +45,6 @@ public class EditGoalDialog extends IBasicAlertDialog {
         goalsViewModel = new ViewModelProvider(requireActivity()).get(GoalsViewModel.class);
 
         assert getView() != null;
-        DialogCreateGoalBinding binding = DialogCreateGoalBinding.bind(getView());
 
         titleEditText = binding.dialogCreateGoalTitleEditText;
         titleEditText.setText(goalsViewModel.getClickedGoal().getValue().getName());

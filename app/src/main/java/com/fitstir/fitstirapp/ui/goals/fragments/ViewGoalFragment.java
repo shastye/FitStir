@@ -70,7 +70,7 @@ public class ViewGoalFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.edit_goal:
                                 EditGoalDialog.newInstance(
-                                        R.layout.dialog_create_goal,
+                                        R.layout.dialog_generic_goal,
                                         R.id.dialog_create_goal_accept_button,
                                         R.id.dialog_create_goal_cancel_button,
                                         ViewGoalFragment.this
@@ -81,7 +81,6 @@ public class ViewGoalFragment extends Fragment {
                                         R.layout.dialog_generic_alert,
                                         R.id.dialog_generic_accept_button,
                                         R.id.dialog_generic_cancel_button,
-                                        R.id.dialog_generic_message,
                                         "This action cannot be undone."
                                 ).show(getParentFragmentManager(), "Delete Goal");
                                 break;

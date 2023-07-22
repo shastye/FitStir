@@ -62,7 +62,7 @@ public class GoalsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 CreateGoalDialog.newInstance(
-                        R.layout.dialog_create_goal,
+                        R.layout.dialog_generic_goal,
                         R.id.dialog_create_goal_accept_button,
                         R.id.dialog_create_goal_cancel_button
                 ).show(getParentFragmentManager(), "Create Goal");
