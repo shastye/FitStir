@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,6 +28,7 @@ import androidx.navigation.ui.NavigationUiSaveStateControl;
 import com.fitstir.fitstirapp.databinding.ActivityMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.ResetTheme;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -97,14 +97,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.log_out_item:
                             FirebaseAuth.getInstance().signOut();
-
-                            Context context = getApplicationContext();
-                            Intent intent = getApplicationContext()
-                                    .getPackageManager()
-                                    .getLaunchIntentForPackage(context.getPackageName());
-                            Intent mainIntent = Intent.makeRestartActivityTask(intent.getComponent());
-                            context.startActivity(mainIntent);
-                            Runtime.getRuntime().exit(0);
+                            Methods.navigateToLogInActivity(getApplicationContext());
                             break;
                         default:
                             pageID = settingsViewModel.getPreviousPage().getValue();
