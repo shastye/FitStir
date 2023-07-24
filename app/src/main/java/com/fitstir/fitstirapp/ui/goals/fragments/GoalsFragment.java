@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.goals;
+package com.fitstir.fitstirapp.ui.goals.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentGoalsBinding;
+import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
+import com.fitstir.fitstirapp.ui.goals.dialogs.CreateGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.DefaultLabelFormatter;
@@ -28,7 +30,6 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 public class GoalsFragment extends Fragment {
 
@@ -52,8 +53,8 @@ public class GoalsFragment extends Fragment {
 
         //GoalsViewModel.goals =  // TODO: Get from database
 
-        goalRecyclerView = root.findViewById(R.id.goal_recycler_view);
-        goalRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        goalRecyclerView = binding.goalRecyclerView;
+        goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         updateUI(goalsViewModel.getGoals().getValue());
 
         FloatingActionButton createGoalButton = binding.createGoalButton;
@@ -61,7 +62,7 @@ public class GoalsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 CreateGoalDialog.newInstance(
-                        R.layout.dialog_create_goal,
+                        R.layout.dialog_generic_goal,
                         R.id.dialog_create_goal_accept_button,
                         R.id.dialog_create_goal_cancel_button
                 ).show(getParentFragmentManager(), "Create Goal");
@@ -294,7 +295,7 @@ public class GoalsFragment extends Fragment {
         @NonNull
         @Override
         public GoalHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            LayoutInflater layoutInflater = LayoutInflater.from(requireActivity());
 
             return new GoalHolder(layoutInflater, parent);
         }

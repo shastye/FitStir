@@ -1,43 +1,29 @@
-package com.fitstir.fitstirapp.ui.settings;
+package com.fitstir.fitstirapp.ui.settings.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSettingsBinding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.settings.dialogs.DeactivateAccountDialog;
+import com.fitstir.fitstirapp.ui.settings.dialogs.HardResetDialog;
+import com.fitstir.fitstirapp.ui.settings.dialogs.ResetApplicationDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.util.Objects;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -73,17 +59,17 @@ public class SettingsFragment extends Fragment {
 
         // Add additions here
 
-        TextView theme = root.findViewById(R.id.themeID);
-        TextView range = root.findViewById(R.id.rangeID);
-        TextView interval = root.findViewById(R.id.intervalID);
-        TextView unit = root.findViewById(R.id.unitID);
+        TextView theme = binding.themeID;
+        TextView range = binding.rangeID;
+        TextView interval = binding.intervalID;
+        TextView unit = binding.unitID;
 
         theme.setText(root.getResources().getStringArray(R.array.theme_array)[settingsViewModel.getThemeID().getValue()]);
         range.setText(root.getResources().getStringArray(R.array.range_array)[settingsViewModel.getRangeID().getValue()]);
         interval.setText(root.getResources().getStringArray(R.array.interval_array)[settingsViewModel.getIntervalID().getValue()]);
         unit.setText(root.getResources().getStringArray(R.array.unit_array)[settingsViewModel.getUnitID().getValue()]);
 
-        CardView editButton = root.findViewById(R.id.editbutton_cardView_settings);
+        CardView editButton = binding.editbuttonCardViewSettings;
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +77,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button resetButton = root.findViewById(R.id.reset_button);
+        Button resetButton = binding.resetButton;
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,13 +85,12 @@ public class SettingsFragment extends Fragment {
                         R.layout.dialog_generic_alert,
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
-                        R.id.dialog_generic_message,
                         "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }
         });
 
-        Button deactivateButton = root.findViewById(R.id.deactivate_button);
+        Button deactivateButton = binding.deactivateButton;
         deactivateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,13 +98,12 @@ public class SettingsFragment extends Fragment {
                         R.layout.dialog_generic_alert,
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
-                        R.id.dialog_generic_message,
                         "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }
         });
 
-        Button hardResetButton = root.findViewById(R.id.hard_reset_button);
+        Button hardResetButton = binding.hardResetButton;
         hardResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +111,6 @@ public class SettingsFragment extends Fragment {
                         R.layout.dialog_generic_alert,
                         R.id.dialog_generic_accept_button,
                         R.id.dialog_generic_cancel_button,
-                        R.id.dialog_generic_message,
                         "This action cannot be undone."
                 ).show(getParentFragmentManager(), "Reset Application");
             }

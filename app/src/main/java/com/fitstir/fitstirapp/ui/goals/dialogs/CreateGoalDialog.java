@@ -1,30 +1,27 @@
-package com.fitstir.fitstirapp.ui.goals;
+package com.fitstir.fitstirapp.ui.goals.dialogs;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
-import com.fitstir.fitstirapp.databinding.DialogCreateGoalBinding;
+import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.Tags;
+import com.fitstir.fitstirapp.ui.utility.classes.IGenericGoalDialog;
+import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
-import java.util.ArrayList;
-
-public class CreateGoalDialog extends IBasicAlertDialog {
+public class CreateGoalDialog extends IGenericGoalDialog {
 
     private GoalsViewModel goalsViewModel;
     private EditText titleEditText, valueEditText;
     private Spinner typeSpinner;
     private TextView unitTextView;
-    private final Tags.Workout_Type[] typeEnumArray = Tags.Workout_Type.values();
+    private final WorkoutTypes[] typeEnumArray = WorkoutTypes.values();
 
     public CreateGoalDialog() { }
 
@@ -47,7 +44,6 @@ public class CreateGoalDialog extends IBasicAlertDialog {
         goalsViewModel = new ViewModelProvider(requireActivity()).get(GoalsViewModel.class);
 
         assert getView() != null;
-        DialogCreateGoalBinding binding = DialogCreateGoalBinding.bind(getView());
 
         titleEditText = binding.dialogCreateGoalTitleEditText;
         String[] spinnerOptions = new String[typeEnumArray.length];

@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.settings;
+package com.fitstir.fitstirapp.ui.settings.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentProfileBinding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,15 +41,15 @@ public class ProfileFragment extends Fragment {
 
         // Add additions here
 
-        ImageView profileImage = root.findViewById(R.id.profile_image);
+        ImageView profileImage = binding.profileImage;
         profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
-        TextView name = root.findViewById(R.id.text_name);
-        TextView age = root.findViewById(R.id.text_age);
-        TextView height_ft = root.findViewById(R.id.text_height_ft);
-        TextView weight = root.findViewById(R.id.text_weight);
-        TextView email = root.findViewById(R.id.text_email);
-        TextView height_in = root.findViewById(R.id.text_height_in);
+        TextView name = binding.textName;
+        TextView age = binding.textAge;
+        TextView height_ft = binding.textHeightFt;
+        TextView height_in = binding.textHeightIn;
+        TextView weight = binding.textWeight;
+        TextView email = binding.textEmail;
 
         name.setText(settingsViewModel.getName().getValue());
         String tAge = settingsViewModel.getAge().getValue() + " years old";
@@ -89,10 +90,14 @@ public class ProfileFragment extends Fragment {
 
                         binding.textName.setText(fullName);
                         binding.textEmail.setText(email);
-                        binding.textAge.setText(age);
-                        binding.textHeightFt.setText(height_ft);
-                        binding.textHeightIn.setText(height_in);
-                        binding.textWeight.setText(weight);
+                        String tAge = settingsViewModel.getAge().getValue() + " years old";
+                        binding.textAge.setText(tAge);
+                        String tHeightFeet = settingsViewModel.getHeightInFeet().getValue() + " feet ";
+                        binding.textHeightFt.setText(tHeightFeet);
+                        String tHeightInches = settingsViewModel.getHeightInInches().getValue() + " inches";
+                        binding.textHeightIn.setText(tHeightInches);
+                        String tWeight = settingsViewModel.getWeight().getValue() + " lbs";
+                        binding.textWeight.setText(tWeight);
 
                     }
                 }
@@ -100,7 +105,7 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        CardView editButton = root.findViewById(R.id.editbutton_cardView_profile);
+        CardView editButton = binding.editbuttonCardViewProfile;
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

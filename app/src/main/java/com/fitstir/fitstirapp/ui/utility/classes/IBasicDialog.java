@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.utility;
+package com.fitstir.fitstirapp.ui.utility.classes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class IBasicAlertDialog extends DialogFragment {
+public class IBasicDialog extends DialogFragment {
 
     /*
      *
@@ -28,14 +28,14 @@ public class IBasicAlertDialog extends DialogFragment {
 
     protected int layoutID, acceptButtonID, cancelButtonID;
 
-    public IBasicAlertDialog() { }
+    public IBasicDialog() { }
 
-    public static IBasicAlertDialog newInstance(int _layoutID, int _acceptButtonID, int _cancelButtonID) {
-        IBasicAlertDialog frag = new IBasicAlertDialog();
+    public static IBasicDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID) {
+        IBasicDialog frag = new IBasicDialog();
         Bundle args = new Bundle();
-        args.putInt("layoutID", _layoutID);
-        args.putInt("acceptButtonID", _acceptButtonID);
-        args.putInt("cancelButtonID", _cancelButtonID);
+        args.putInt("layoutID", layoutID);
+        args.putInt("acceptButtonID", acceptButtonID);
+        args.putInt("cancelButtonID", cancelButtonID);
         frag.setArguments(args);
         return frag;
     }

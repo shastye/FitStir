@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.settings;
+package com.fitstir.fitstirapp.ui.settings.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,8 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditSettingsBinding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.settings.dialogs.ChangeThemeDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 
 public class EditSettingsFragment extends Fragment {
@@ -34,26 +36,26 @@ public class EditSettingsFragment extends Fragment {
 
         // Add additions here
 
-        Spinner themeSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.themeID_spinner, root.getResources().getStringArray(R.array.theme_array));
-        Spinner rangeSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.rangeID_spinner, root.getResources().getStringArray(R.array.range_array));
-        Spinner intervalSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.intervalID_spinner, root.getResources().getStringArray(R.array.interval_array));
-        Spinner unitSpinner = Methods.getSpinnerWithAdapter(getActivity(), root, R.id.unitsID_spinner, root.getResources().getStringArray(R.array.unit_array));
+        Spinner themeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.themeID_spinner, root.getResources().getStringArray(R.array.theme_array));
+        Spinner rangeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.rangeID_spinner, root.getResources().getStringArray(R.array.range_array));
+        Spinner intervalSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.intervalID_spinner, root.getResources().getStringArray(R.array.interval_array));
+        Spinner unitSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.unitsID_spinner, root.getResources().getStringArray(R.array.unit_array));
 
         themeSpinner.setSelection(settingsViewModel.getThemeID().getValue());
         rangeSpinner.setSelection(settingsViewModel.getRangeID().getValue());
         intervalSpinner.setSelection(settingsViewModel.getIntervalID().getValue());
         unitSpinner.setSelection(settingsViewModel.getUnitID().getValue());
 
-        ImageView themeIV = root.findViewById(R.id.theme_hint);
+        ImageView themeIV = binding.themeHint;
         themeIV.setTooltipText("This will change the theme of your entire application.");
-        ImageView rangeIV = root.findViewById(R.id.range_hint);
+        ImageView rangeIV = binding.rangeHint;
         rangeIV.setTooltipText("This will change how far back in time your goals will show data for.");
-        ImageView intervalIV = root.findViewById(R.id.interval_hint);
+        ImageView intervalIV = binding.intervalHint;
         intervalIV.setTooltipText("This will change the interval of date jumps for your goal's range.");
-        ImageView unitsIV = root.findViewById(R.id.units_hint);
+        ImageView unitsIV = binding.unitsHint;
         unitsIV.setTooltipText("This will change the units in which everything is measured.");
 
-        CardView saveButton = root.findViewById(R.id.savebutton_cardView_settings_edit);
+        CardView saveButton = binding.savebuttonCardViewSettingsEdit;
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

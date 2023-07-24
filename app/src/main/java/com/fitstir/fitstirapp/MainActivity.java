@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 import androidx.core.view.MenuProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -27,13 +27,13 @@ import androidx.navigation.ui.NavigationUiSaveStateControl;
 
 import com.fitstir.fitstirapp.databinding.ActivityMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
-import com.fitstir.fitstirapp.ui.utility.ResetTheme;
-import com.fitstir.fitstirapp.ui.utility.Tags;
+import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        BottomNavigationView navView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -97,14 +97,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.log_out_item:
                             FirebaseAuth.getInstance().signOut();
-
-                            Context context = getApplicationContext();
-                            Intent intent = getApplicationContext()
-                                    .getPackageManager()
-                                    .getLaunchIntentForPackage(context.getPackageName());
-                            Intent mainIntent = Intent.makeRestartActivityTask(intent.getComponent());
-                            context.startActivity(mainIntent);
-                            Runtime.getRuntime().exit(0);
+                            Methods.navigateToLogInActivity(getApplicationContext());
                             break;
                         default:
                             pageID = settingsViewModel.getPreviousPage().getValue();
@@ -125,11 +118,11 @@ public class MainActivity extends AppCompatActivity {
         });
         //
 
-        settings = getSharedPreferences(Tags.TIMED_NOTIFICATION_TAG, MODE_PRIVATE);
+        settings = getSharedPreferences(Constants.TIMED_NOTIFICATION_TAG, MODE_PRIVATE);
         editor = settings.edit();
 
         if (userAllowedNotifications) {
-            editor.putLong(Tags.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
+            editor.putLong(Constants.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
             editor.commit();
         }
     }
@@ -140,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager = getSystemService(NotificationManager.class);
 
-        for (int i = 0; i < Tags.NOTIFICATION_CHANNELS.size(); i++) {
-            String name = Tags.NOTIFICATION_CHANNELS.get(i).first;
-            String description = Tags.NOTIFICATION_CHANNELS.get(i).second;
+        for (int i = 0; i < getNotificationChannels().size(); i++) {
+            String name = getNotificationChannels().get(i).first;
+            String description = getNotificationChannels().get(i).second;
             int importance = NotificationManager.IMPORTANCE_LOW;
 
             NotificationChannel channel = new NotificationChannel(String.valueOf(i), name, importance);
@@ -171,9 +164,15 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
 
-        editor.putLong(Tags.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
+        editor.putLong(Constants.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
         editor.commit();
 
         startService(new Intent(this, CheckRecentRun.class));
+    }
+
+    private final ArrayList<Pair<String, String>> getNotificationChannels() {
+        return new ArrayList<Pair<String, String>>() {{
+            add(new Pair<String, String>("Reminders", "Reminders to come back."));
+        }};
     }
 }

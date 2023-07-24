@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.goals;
+package com.fitstir.fitstirapp.ui.goals.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
+import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
+import com.fitstir.fitstirapp.ui.goals.dialogs.DeleteGoalDialog;
+import com.fitstir.fitstirapp.ui.goals.dialogs.EditGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
@@ -66,7 +70,7 @@ public class ViewGoalFragment extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.edit_goal:
                                 EditGoalDialog.newInstance(
-                                        R.layout.dialog_create_goal,
+                                        R.layout.dialog_generic_goal,
                                         R.id.dialog_create_goal_accept_button,
                                         R.id.dialog_create_goal_cancel_button,
                                         ViewGoalFragment.this
@@ -77,7 +81,6 @@ public class ViewGoalFragment extends Fragment {
                                         R.layout.dialog_generic_alert,
                                         R.id.dialog_generic_accept_button,
                                         R.id.dialog_generic_cancel_button,
-                                        R.id.dialog_generic_message,
                                         "This action cannot be undone."
                                 ).show(getParentFragmentManager(), "Delete Goal");
                                 break;

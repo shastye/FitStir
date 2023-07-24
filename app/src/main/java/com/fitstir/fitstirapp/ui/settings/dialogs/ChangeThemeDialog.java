@@ -1,26 +1,23 @@
-package com.fitstir.fitstirapp.ui.settings;
+package com.fitstir.fitstirapp.ui.settings.dialogs;
 
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
-import com.fitstir.fitstirapp.ui.utility.IBasicAlertDialog;
-import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.ResetTheme;
+import com.fitstir.fitstirapp.databinding.DialogChangeThemeBinding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.utility.classes.IBasicDialog;
+import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
 
 import java.util.Objects;
-import java.util.Vector;
 
-public class ChangeThemeDialog extends IBasicAlertDialog {
+public class ChangeThemeDialog extends IBasicDialog {
     private int theme, range, interval, unit;
     private View root;
     private void setRoot(View view) { root = view; }
@@ -28,19 +25,19 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
 
     public ChangeThemeDialog() { }
 
-    public static ChangeThemeDialog newInstance(int _layoutID, int _acceptButtonID, int _cancelButtonID, int _themeID, int _rangeID, int _intervalID, int _unitID, View _root) {
+    public static ChangeThemeDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, int themeID, int rangeID, int intervalID, int unitID, View root) {
         ChangeThemeDialog  frag = new ChangeThemeDialog();
 
         Bundle args = new Bundle();
-        args.putInt("themeID", _themeID);
-        args.putInt("rangeID", _rangeID);
-        args.putInt("intervalID", _intervalID);
-        args.putInt("unitID", _unitID);
-        args.putInt("layoutID", _layoutID);
-        args.putInt("acceptButtonID", _acceptButtonID);
-        args.putInt("cancelButtonID", _cancelButtonID);
+        args.putInt("themeID", themeID);
+        args.putInt("rangeID", rangeID);
+        args.putInt("intervalID", intervalID);
+        args.putInt("unitID", unitID);
+        args.putInt("layoutID", layoutID);
+        args.putInt("acceptButtonID", acceptButtonID);
+        args.putInt("cancelButtonID", cancelButtonID);
         frag.setArguments(args);
-        frag.setRoot(_root);
+        frag.setRoot(root);
 
         return frag;
     }
@@ -50,6 +47,7 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         super.onStart();
 
         settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+        DialogChangeThemeBinding binding = DialogChangeThemeBinding.bind(requireView());
 
         assert getArguments() != null;
         theme = getArguments().getInt("themeID");
@@ -58,10 +56,10 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         unit = getArguments().getInt("unitID");
 
         assert getView() != null;
-        ImageView primaryColor = getView().findViewById(R.id.primary_color_image);
-        ImageView primaryVariantColor = getView().findViewById(R.id.primary_variant_image);
-        ImageView secondaryColor = getView().findViewById(R.id.secondary_color_image);
-        ImageView secondaryVariantColor = getView().findViewById(R.id.secondary_variant_image);
+        ImageView primaryColor = binding.primaryColorImage;
+        ImageView primaryVariantColor = binding.primaryVariantImage;
+        ImageView secondaryColor = binding.secondaryColorImage;
+        ImageView secondaryVariantColor = binding.secondaryVariantImage;
 
         int[] colors = new int[0];
         switch (theme) {
@@ -83,15 +81,15 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
                 break;
         }
 
-        Drawable background = ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.change_dialog_fragment_theme_color_background);
+        Drawable background = ContextCompat.getDrawable(Objects.requireNonNull(requireActivity()), R.drawable.change_dialog_fragment_theme_color_background);
         assert background != null;
-        background.setTint(ContextCompat.getColor(getActivity(), colors[0]));
+        background.setTint(ContextCompat.getColor(requireActivity(), colors[0]));
         primaryColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(getActivity(), colors[1]));
+        background.setTint(ContextCompat.getColor(requireActivity(), colors[1]));
         primaryVariantColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(getActivity(), colors[2]));
+        background.setTint(ContextCompat.getColor(requireActivity(), colors[2]));
         secondaryColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(getActivity(), colors[3]));
+        background.setTint(ContextCompat.getColor(requireActivity(), colors[3]));
         secondaryVariantColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
     }
 
@@ -102,7 +100,7 @@ public class ChangeThemeDialog extends IBasicAlertDialog {
         settingsViewModel.setIntervalID(interval);
         settingsViewModel.setUnitID(unit);
 
-        ResetTheme.changeToTheme(Objects.requireNonNull(getActivity()), theme);
+        ResetTheme.changeToTheme(requireActivity(), theme);
     }
 
     @Override

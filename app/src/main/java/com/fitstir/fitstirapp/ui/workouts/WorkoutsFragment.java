@@ -15,8 +15,10 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentWorkoutsBinding;
-import com.fitstir.fitstirapp.ui.utility.SectionGridAdapter;
-import com.fitstir.fitstirapp.ui.utility.Tags;
+import com.fitstir.fitstirapp.ui.utility.classes.SectionGridAdapter;
+import com.fitstir.fitstirapp.ui.utility.classes.SectionItem;
+
+import java.util.ArrayList;
 
 public class WorkoutsFragment extends Fragment {
 
@@ -35,31 +37,31 @@ public class WorkoutsFragment extends Fragment {
 
         // Addition Text Here
 
-        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(Tags.WORKOUTS_SECTION, root);
-        GridView grid = root.findViewById(R.id.workouts_grid_view);
+        SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(getWorkoutsSections(), root);
+        GridView grid = binding.workoutsGridView;
         grid.setAdapter(sectionGridAdapter);
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
-                switch(_position) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position) {
                     case 0:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_run_club);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_run_club);
                         break;
                     case 1:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_upper_body);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_upper_body);
                         break;
                     case 2:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_lower_body);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_lower_body);
                         break;
                     case 3:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_weight_lifting);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_weight_lifting);
                         break;
                     case 4:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_circuit_workouts);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_circuit_workouts);
                         break;
                     case 5:
-                        Navigation.findNavController(_view).navigate(R.id.action_navigation_workouts_to_navigation_yoga);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_yoga);
                         break;
                     default:
                         // TODO: Show error?
@@ -77,5 +79,18 @@ public class WorkoutsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+
+
+    private ArrayList<SectionItem> getWorkoutsSections() {
+        return new ArrayList<SectionItem>() {{
+            add(new SectionItem(R.drawable.ic_shoe_black_200dp, "Run Club"));
+            add(new SectionItem(R.drawable.ic_bicep_black_200dp, "Upper Body"));
+            add(new SectionItem(R.drawable.ic_legs_black_200dp, "Lower Body"));
+            add(new SectionItem(R.drawable.ic_lifting_black_200dp, "Weight Lifting"));
+            add(new SectionItem(R.drawable.ic_cir_black_200dp, "Circuit Workouts"));
+            add(new SectionItem(R.drawable.ic_yoga_black_200dp, "Yoga"));
+        }};
     }
 }
