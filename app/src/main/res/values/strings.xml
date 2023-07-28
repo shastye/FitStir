@@ -48,6 +48,53 @@
         <item>Imperial</item>
         <item>Metric</item>
     </string-array>
+
+
+    <!-- TODO: Turn into enums -->
+    <string-array name="api_nutrition_type">
+        <item>cooking</item>
+        <item>logging</item>
+    </string-array>
+    <string-array name="api_health">
+        <item>alcohol-free</item>
+        <item>celery-free</item>
+        <item>crustacean-free</item>
+        <item>dairy-free</item>
+        <item>egg-free</item>
+        <item>fish-free</item>
+        <item>fodmap-free</item>
+        <item>gluten-free</item>
+        <item>immuno-supportive</item>
+        <item>keto-friendly</item>
+        <item>kindey-friendly</item>
+        <item>kosher</item>
+        <item>low-fat-abs</item>
+        <item>low-potassium</item>
+        <item>low-sugar</item>
+        <item>lupine-free</item>
+        <item>mustard-free</item>
+        <item>no-oil-added</item>
+        <item>paleo</item>
+        <item>peanut-free</item>
+        <item>pescatarian</item>
+        <item>pork-free</item>
+        <item>red-meat-free</item>
+        <item>sesame-free</item>
+        <item>shellfish-free</item>
+        <item>soy-free</item>
+        <item>sugar-conscious</item>
+        <item>tree-nut-free</item>
+        <item>vegan</item>
+        <item>vegetarian</item>
+        <item>wheat-free</item>
+    </string-array>
+    <string-array name="api_category">
+        <item>generic-foods</item>
+        <item>generic-meals</item>
+        <item>packaged-foods</item>
+        <item>fast-foods</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

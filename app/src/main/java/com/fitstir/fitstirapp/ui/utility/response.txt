@@ -1,0 +1,1114 @@
+{
+  "text": "1 large egg",
+  parsed
+  "hints": [
+    {
+      food
+      measure[]
+    },
+    {
+      food
+      measure[]
+    },
+    {
+      "food": {
+        "foodId": "food_bh53an9br1otxqaorzqh8axt9gtf",
+        "label": "Large Eggs",
+        "knownAs": "Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 9,
+          "CHOCDF": 2
+        },
+        "brand": "The Kroger Co.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Eggs",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_a0a42e9bdmcsiablxszuvabooien",
+        "label": "Large Eggs",
+        "knownAs": "LARGE EGGS",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0,
+          "FIBTG": 0
+        },
+        "brand": "Safeway Inc.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "CONTAINS: EGGS.",
+        "image": "https://www.edamam.com/food-img/b9c/b9c26bcf7d3597633e89160f7a0ef111.jpg",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ],
+        "servingsPerContainer": 12
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_package",
+          "label": "Package",
+          "weight": 600
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_a313tv1bd8hg6nbhx3srgb8b90tx",
+        "label": "Large Eggs",
+        "knownAs": "LARGE EGGS",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0,
+          "FIBTG": 0
+        },
+        "brand": "Meijer, Inc.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "FRESH SHELL EGGS.",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ],
+        "servingsPerContainer": 8
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_package",
+          "label": "Package",
+          "weight": 400
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_biyyop6b6oj2f6and9n1lbk0y7y1",
+        "label": "Large Eggs",
+        "knownAs": "LARGE EGGS",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0
+        },
+        "brand": "First Light Egg Farms",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Large Egg",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_a8p11iobmkyt3da00u40lbr94c85",
+        "label": "Large Eggs",
+        "knownAs": "LARGE EGGS",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0
+        },
+        "brand": "First Light Egg Farms",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Large Egg",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_am5hafxaiorcacamqspnka6gcky5",
+        "label": "Large Eggs",
+        "knownAs": "LARGE EGGS",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0,
+          "FIBTG": 0
+        },
+        "brand": "Supervalu",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Eggs",
+        "image": "https://www.edamam.com/food-img/c7e/c7e96e053a544b8471ec5f71c2b0b2a4.jpg",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          }
+        ],
+        "servingsPerContainer": 18
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_package",
+          "label": "Package",
+          "weight": 900
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_bcnm13qasb1zlpa1xg5xqah8c6tw",
+        "label": "Kroger Large Eggs",
+        "knownAs": "Kroger Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0
+        },
+        "brand": "Kroger",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Egg",
+        "image": "https://www.edamam.com/food-img/640/640b160d91f4f06549928be395451763.png",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ],
+        "servingsPerContainer": 12
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_package",
+          "label": "Package",
+          "weight": 600
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_a4vwb7xagt9toib6ax2rjao2p1dv",
+        "label": "2 Large Eggs",
+        "knownAs": "2 Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 184.18367346938777,
+          "PROCNT": 11.224489795918368,
+          "FAT": 6.63265306122449,
+          "CHOCDF": 21.93877551020408,
+          "FIBTG": 2.5510204081632653
+        },
+        "brand": "Mimi's Cafe",
+        "category": "Fast foods",
+        "categoryLabel": "meal",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 196
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 196
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_a55wfyfat1oc0iap2e3f2bkerxns",
+        "label": "Two Large Eggs",
+        "knownAs": "Two Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 140.54054054054055,
+          "PROCNT": 12.612612612612613,
+          "FAT": 9.00900900900901,
+          "CHOCDF": 0.9009009009009009,
+          "FIBTG": 0
+        },
+        "brand": "Mimi's Cafe",
+        "category": "Fast foods",
+        "categoryLabel": "meal",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 111
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 111
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_a7ts6avbb4va76azubk4bazulnr1",
+        "label": "Extra Large Eggs",
+        "knownAs": "Extra Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 142.85714285714286,
+          "PROCNT": 12.5,
+          "FAT": 8.928571428571429,
+          "CHOCDF": 0
+        },
+        "brand": "Gravel Ridge Farms",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Eggs",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 56
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 56
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 56
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_ah17t5cbq26x6dbdyn00kbo0ma45",
+        "label": "Sunshine, Large Eggs",
+        "knownAs": "Sunshine, Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0
+        },
+        "brand": "Sunshine",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Eggs",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_apwdiw9a7zp87bbtd1au7a5buy4l",
+        "label": "12 Large Eggs",
+        "knownAs": "12 Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0,
+          "FIBTG": 0
+        },
+        "brand": "Supervalu, Inc.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Eggs",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_bln3k77b5543jnbflszbcbv0o1q3",
+        "label": "Grade a Large Eggs",
+        "knownAs": "Grade A Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 9,
+          "CHOCDF": 2
+        },
+        "brand": "Bruno's Supermarkets, Inc.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Large Eggs",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_b5wh7a2baoenlrb317e3mauu19n3",
+        "label": "Grade a Large Eggs",
+        "knownAs": "Grade A Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 9,
+          "CHOCDF": 2
+        },
+        "brand": "Bruno's Supermarkets, Inc.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Egg",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_b2t2hi7bo6byz9ar94x4jbtkcq7m",
+        "label": "Kroger Large Eggs",
+        "knownAs": "Kroger Large Eggs",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0
+        },
+        "brand": "Kroger",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "Egg",
+        "image": "https://www.edamam.com/food-img/640/640b160d91f4f06549928be395451763.png",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_adc2mt8bgiv2ssax2eb4aau151un",
+        "label": "Extra Large Eggs",
+        "knownAs": "EXTRA LARGE EGGS",
+        "nutrients": {
+          "ENERC_KCAL": 143,
+          "PROCNT": 12.5,
+          "FAT": 8.039999961853027,
+          "CHOCDF": 0
+        },
+        "brand": "Meijer, Inc.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "GRADE A EXTRA LARGE ORGANIC EGGS.",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 56
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          }
+        ],
+        "servingsPerContainer": 18
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 56
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 56
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_package",
+          "label": "Package",
+          "weight": 1008
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_ayqvk4hbfm9qe7akzctcqbxxw1p1",
+        "label": "Extra Large Eggs",
+        "knownAs": "EXTRA LARGE EGGS",
+        "nutrients": {
+          "ENERC_KCAL": 143,
+          "PROCNT": 12.5,
+          "FAT": 8.930000305175781,
+          "CHOCDF": 1.7899999618530273
+        },
+        "brand": "Publix Super Markets, Inc.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "EXTRA LARGE EGGS.",
+        "image": "https://www.edamam.com/food-img/975/9751327cac1c6388430209fbb4796e58.jpg",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 56
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          }
+        ],
+        "servingsPerContainer": 18
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 56
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 56
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_package",
+          "label": "Package",
+          "weight": 1008
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    },
+    {
+      "food": {
+        "foodId": "food_aifjwjga7abrueagz5bmbah0t25r",
+        "label": "12 Large Eggs",
+        "knownAs": "12 LARGE EGGS",
+        "nutrients": {
+          "ENERC_KCAL": 140,
+          "PROCNT": 12,
+          "FAT": 10,
+          "CHOCDF": 0,
+          "FIBTG": 0
+        },
+        "brand": "Safeway Inc.",
+        "category": "Packaged foods",
+        "categoryLabel": "food",
+        "foodContentsLabel": "EGGS.",
+        "servingSizes": [
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+            "label": "Egg",
+            "quantity": 1
+          },
+          {
+            "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+            "label": "Gram",
+            "quantity": 50
+          }
+        ]
+      },
+      "measures": [
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_egg",
+          "label": "Egg",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+          "label": "Serving",
+          "weight": 50
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_gram",
+          "label": "Gram",
+          "weight": 1
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_ounce",
+          "label": "Ounce",
+          "weight": 28.349523125
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_pound",
+          "label": "Pound",
+          "weight": 453.59237
+        },
+        {
+          "uri": "http://www.edamam.com/ontologies/edamam.owl#Measure_kilogram",
+          "label": "Kilogram",
+          "weight": 1000
+        }
+      ]
+    }
+  ],
+  "_links": {
+    "next": {
+      "title": "Next page",
+      "href": "https://api.edamam.com/api/food-database/v2/parser?session=40&app_id=ab4a541a&app_key=5435c61858cc52c36783f9f36fc2f1f2&ingr=1+large+egg&nutrition-type=logging"
+    }
+  }
+}

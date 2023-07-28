@@ -12,13 +12,21 @@ public class EdamamAPI_FoodSearch {
     private String responseHeader;
     private String responseBody;
 
-    public EdamamAPI_FoodSearch(int quantity, String unit, String ingredient, String nutritionType, String health, String calories, String category) {
-        String appKey = "5435c61858cc52c36783f9f36fc2f1f2";
-        String appID = "ab4a541a";
+    public EdamamAPI_FoodSearch(int quantity, String unit, String ingredient, String nutritionType, String health, String minCalories, String maxCalories, String category) {
+        String calories;
+        if (minCalories == "" && maxCalories == "") {
+            calories = "";
+        } else if (minCalories == "") {
+            calories = maxCalories;
+        } else if (maxCalories == "") {
+            calories = minCalories + "2%B";
+        } else {
+            calories = minCalories + "-" + maxCalories;
+        }
 
         String requestBody = "https://api.edamam.com/api/food-database/v2/parser?" +
-                "app_id=" + appID + "&" +
-                "app_key=" + appKey + "&" +
+                "app_id=" + Constants.APP_ID + "&" +
+                "app_key=" + Constants.APP_KEY + "&" +
 
                 "ingr=" + quantity + " " + unit + " " + ingredient + "&" +
                 "nutrition-type=" + nutritionType + "&" +
