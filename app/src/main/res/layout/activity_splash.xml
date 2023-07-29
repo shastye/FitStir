@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layoutDescription="@xml/activity_splash_scene"
     tools:context=".SplashActivity">
 
     <ImageView
         android:id="@+id/fit_float"
         android:layout_width="85dp"
         android:layout_height="45dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="688dp"
         android:src="@drawable/logo_fit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.006"
@@ -32,7 +33,7 @@
         android:id="@+id/fit_float3"
         android:layout_width="85dp"
         android:layout_height="45dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="384dp"
         android:src="@drawable/logo_fit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.668"
@@ -43,10 +44,10 @@
         android:id="@+id/fit2_float"
         android:layout_width="82dp"
         android:layout_height="33dp"
-        android:layout_marginTop="700dp"
+        android:layout_marginTop="644dp"
         android:src="@drawable/logo_fit2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintHorizontal_bias="0.24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -153,12 +154,13 @@
         android:id="@+id/stir_logoInvert_float2"
         android:layout_width="61dp"
         android:layout_height="37dp"
-        android:layout_marginBottom="712dp"
+        android:layout_marginBottom="416dp"
         android:src="@drawable/logo_stir_invert_upright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintHorizontal_bias="0.42"
         app:layout_constraintStart_toStartOf="parent" />
+
 
     <ImageView
         android:id="@+id/stir_logoInvert_float3"
@@ -172,7 +174,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
     <ImageView
         android:id="@+id/fit_logo"
         android:layout_width="85dp"
@@ -183,7 +184,6 @@
         app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ImageView
         android:id="@+id/stir_logo"
@@ -252,7 +252,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/stir_flipped_logoInvert_float"
+        android:id="@+id/stir_flipped_logo_float"
         android:layout_width="61dp"
         android:layout_height="37dp"
         android:layout_marginBottom="28dp"
@@ -263,7 +263,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/stir_flipped_logoInvert_float2"
+        android:id="@+id/stir_flipped_logo_float2"
         android:layout_width="61dp"
         android:layout_height="37dp"
         android:layout_marginBottom="68dp"
@@ -274,11 +274,44 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/stir_flipped_logoInvert_float3"
+        android:id="@+id/stir_flipped_logo_float3"
         android:layout_width="61dp"
         android:layout_height="37dp"
         android:layout_marginBottom="104dp"
         android:src="@drawable/logo_stir2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_flipped_logoInvert_float"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="104dp"
+        android:src="@drawable/logo_stir_invert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_flipped_logoInvert_float2"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="104dp"
+        android:src="@drawable/logo_stir_invert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_flipped_logoInvert_float3"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="104dp"
+        android:src="@drawable/logo_stir_invert"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.128"
@@ -320,10 +353,9 @@
         android:id="@+id/weight_end"
         android:layout_width="363dp"
         android:layout_height="127dp"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="188dp"
         android:src="@drawable/logo_weights"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -337,4 +369,6 @@
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
