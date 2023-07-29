@@ -21,13 +21,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private DatabaseReference reference;
-
     private FirebaseAuth auth;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -124,9 +125,5 @@ public class ProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-    public void editProfile()
-    {
-        //TODO: edit and save changes to firebase
 
-    }
 }
