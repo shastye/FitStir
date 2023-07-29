@@ -30,8 +30,15 @@ import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -50,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     public static boolean areNotificationsAllowed() { return userAllowedNotifications; }
 
     private SettingsViewModel settingsViewModel;
+    private GoogleSignInClient client;
+    private GoogleSignInOptions options;
 
 
     @Override
@@ -96,8 +105,13 @@ public class MainActivity extends AppCompatActivity {
                             pageID = R.id.navigation_settings;
                             break;
                         case R.id.log_out_item:
-                            FirebaseAuth.getInstance().signOut();
-                            Methods.navigateToLogInActivity(getApplicationContext());
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if(user != null){
+                                FirebaseAuth.getInstance().signOut();
+                                Methods.navigateToLogInActivity(getApplicationContext());
+                            }
+                            signOut();
+
                             break;
                         default:
                             pageID = settingsViewModel.getPreviousPage().getValue();
@@ -158,6 +172,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         return Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigateUp();
+    }
+
+    private void signOut() {
+        options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build();
+        client = GoogleSignIn.getClient(MainActivity.this, options);
+
+        client.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Methods.navigateToLogInActivity(getApplicationContext());
+            }
+        });
+
     }
 
     @Override
