@@ -76,7 +76,6 @@ public class LogInFragment extends Fragment {
         user_Password = root.findViewById(R.id.user_password);
 
 
-
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
