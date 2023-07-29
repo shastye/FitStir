@@ -7,10 +7,334 @@
     tools:context=".SplashActivity">
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src=""
-        />
+        android:id="@+id/fit_float"
+        android:layout_width="85dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/logo_fit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.006"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_float2"
+        android:layout_width="85dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/logo_fit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.739"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_float3"
+        android:layout_width="85dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/logo_fit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.668"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit2_float"
+        android:layout_width="82dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="700dp"
+        android:src="@drawable/logo_fit2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit2_float2"
+        android:layout_width="82dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="680dp"
+        android:src="@drawable/logo_fit2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit2_float3"
+        android:layout_width="82dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="628dp"
+        android:src="@drawable/logo_fit2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_logo_float"
+        android:layout_width="62dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/logo_stir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.365"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_logo_float2"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="704dp"
+        android:src="@drawable/logo_stir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_logo_float3"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="556dp"
+        android:src="@drawable/logo_stir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_logoInvert_float"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="568dp"
+        android:src="@drawable/logo_fit_invert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.365"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_logoInvert_float2"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="664dp"
+        android:src="@drawable/logo_fit_invert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.594"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_logoInvert_float3"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="624dp"
+        android:src="@drawable/logo_fit_invert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_logoInvert_float"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="308dp"
+        android:src="@drawable/logo_stir_invert_upright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_logoInvert_float2"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="712dp"
+        android:src="@drawable/logo_stir_invert_upright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_logoInvert_float3"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="708dp"
+        android:src="@drawable/logo_stir_invert_upright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
+
+    <ImageView
+        android:id="@+id/fit_logo"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/logo_fit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/stir_logo"
+        android:layout_width="91dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/logo_stir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.218"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_logo_flipped"
+        android:layout_width="73dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="700dp"
+        android:src="@drawable/logo_fit2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_logo_flipped"
+        android:layout_width="76dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="664dp"
+        android:src="@drawable/logo_stir2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.838"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_flipped_invertlogo_float"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="236dp"
+        android:src="@drawable/logo_fit_invert2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_flipped_invertlogo_float2"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="68dp"
+        android:src="@drawable/logo_fit_invert2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.234"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fit_flipped_invertlogo_float3"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/logo_fit_invert2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.622"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_flipped_logoInvert_float"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/logo_stir2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_flipped_logoInvert_float2"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="68dp"
+        android:src="@drawable/logo_stir2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/stir_flipped_logoInvert_float3"
+        android:layout_width="61dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="104dp"
+        android:src="@drawable/logo_stir2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/body"
+        android:layout_width="222dp"
+        android:layout_height="295dp"
+        android:layout_marginTop="216dp"
+        android:src="@drawable/logo_body"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/leaf"
+        android:layout_width="387dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="273.5dp"
+        android:src="@drawable/logo_leaf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/body_invert"
+        android:layout_width="358dp"
+        android:layout_height="343dp"
+        android:layout_marginTop="172dp"
+        android:src="@drawable/logo_body_invert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/weight_end"
+        android:layout_width="363dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="172dp"
+        android:src="@drawable/logo_weights"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/weight_start"
+        android:layout_width="363dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="172dp"
+        android:src="@drawable/logo_weights"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
