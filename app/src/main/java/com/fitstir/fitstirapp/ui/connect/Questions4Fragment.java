@@ -127,7 +127,7 @@ public class Questions4Fragment extends Fragment {
         Calendar today = Calendar.getInstance();
         int age = today.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
 
-        if(today.get(Calendar.DAY_OF_MONTH) < birth.get(Calendar.DAY_OF_MONTH)){
+        if(today.get(Calendar.DAY_OF_MONTH) > birth.get(Calendar.DAY_OF_MONTH)){
             age--;
         }
         return age;
