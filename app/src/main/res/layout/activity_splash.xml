@@ -343,7 +343,7 @@
         android:layout_width="358dp"
         android:layout_height="343dp"
         android:layout_marginTop="172dp"
-        android:src="@drawable/logo_body_invert"
+        android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
