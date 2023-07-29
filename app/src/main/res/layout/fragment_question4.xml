@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.connect.Questions4Fragment"
-    >
-    <ImageView
-        android:layout_width="450dp"
-        android:layout_height="323dp"
-        android:background="@drawable/backgroundzoomed"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.602"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+    tools:context=".ui.connect.Questions4Fragment">
 
     <ImageView
+        android:layout_width="362dp"
+        android:layout_height="261dp"
+        android:layout_marginTop="476dp"
+        android:background="@drawable/backgroundzoomed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.326"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="407dp"
         android:layout_height="255dp"
         android:background="@drawable/logo"
@@ -138,9 +138,9 @@
         android:layout_height="45dp"
         android:layout_marginTop="442dp"
         android:ems="10"
+        android:gravity="bottom"
         android:inputType="number"
         android:textSize="15sp"
-        android:gravity="bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.303"
         app:layout_constraintStart_toStartOf="parent"
@@ -239,8 +239,8 @@
         android:id="@+id/age_view"
         android:layout_width="41dp"
         android:layout_height="20dp"
-        android:layout_marginTop="568dp"
-        android:text="TextView"
+        android:layout_marginTop="564dp"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
@@ -248,13 +248,13 @@
 
     <ImageButton
         android:id="@+id/ib_calendar"
-        android:layout_width="33dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="556dp"
-        android:background="@color/white"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="560dp"
+        android:background="#00FFFFFF"
         android:src="@drawable/baseline_calendar_month_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -269,28 +269,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioButton
-        android:id="@+id/button_female"
-        android:layout_width="87dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="412dp"
-        android:text="Female"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.712"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <RadioButton
-        android:id="@+id/button_male"
-        android:layout_width="75dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="384dp"
-        android:text="Male"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.687"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <View
         android:id="@+id/divider1"
         android:layout_width="408dp"
@@ -302,5 +280,28 @@
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/group_btn"
+        android:layout_width="86dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="376dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <RadioButton
+            android:id="@+id/button_male"
+            android:layout_width="75dp"
+            android:layout_height="22dp"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/button_female"
+            android:layout_width="87dp"
+            android:layout_height="23dp"
+            android:text="Female" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
