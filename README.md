@@ -126,3 +126,4 @@ Acknowledgments
 * ['com.github.jrvansuita:PickImage:+'](https://github.com/jrvansuita/PickImage)
 * ['com.jjoe64:graphview:4.2.2'](https://github.com/jjoe64/GraphView/wiki#showcase-1)
 * [Edamam Food Database API](https://developer.edamam.com/food-database-api-docs#/)
+* ['com.google.code.gson:gson:2.10.1'](https://github.com/google/gson)https://github.com/google/gson)
