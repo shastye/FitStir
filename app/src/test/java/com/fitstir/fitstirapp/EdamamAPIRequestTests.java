@@ -7,7 +7,6 @@ import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.EdamamAPI_FoodSearch;
 import com.fitstir.fitstirapp.ui.utility.enums.CategoryOptions;
 import com.fitstir.fitstirapp.ui.utility.enums.HealthOptions;
 
-import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
 
-public class EdamamAPITests {
+public class EdamamAPIRequestTests {
     @Test
     public void validCodeReceived_onlyQuantityUnitIngredientAndNutritionType() {
         EdamamAPI_FoodSearch api = new EdamamAPI_FoodSearch(2, "large", "eggs", "cooking", "", "", "", "");
@@ -587,10 +586,5 @@ public class EdamamAPITests {
     @Test(expected = RuntimeException.class)
     public void RuntimeException_spaceForField() {
         EdamamAPI_FoodSearch api = new EdamamAPI_FoodSearch(2, "large", "eggs", "cooking", " ", "", "", CategoryOptions.FAST_FOODS.getKey());
-    }
-
-    @Test
-    public void validJSONObjectReturned() throws JSONException, IOException {
-
     }
 }
