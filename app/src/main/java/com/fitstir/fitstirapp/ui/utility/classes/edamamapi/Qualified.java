@@ -5,13 +5,10 @@ import java.util.Objects;
 
 public class Qualified {
     private ArrayList<Qualify> qualifiers;
-    private int weight;
+    private float weight;
 
-    public Qualified() {
-        setQualifiers(new ArrayList<>());
-        setWeight(0);
-    }
-    public Qualified(ArrayList<Qualify> qualifiers, int weight) {
+    public Qualified() { }
+    public Qualified(ArrayList<Qualify> qualifiers, float weight) {
         this.setQualifiers(qualifiers);
         this.setWeight(weight);
     }
@@ -32,9 +29,17 @@ public class Qualified {
         }
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"qualifiers\":" + qualifiers + "," +
+                "\"weight\":" + weight +
+                "}";
+    }
+
     public ArrayList<Qualify> getQualifiers() { return qualifiers; }
-    public int getWeight() { return weight; }
+    public float getWeight() { return weight; }
 
     public void setQualifiers(ArrayList<Qualify> qualifiers) { this.qualifiers = qualifiers; }
-    public void setWeight(int weight) { this.weight = weight; }
+    public void setWeight(float weight) { this.weight = weight; }
 }

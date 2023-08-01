@@ -1,5 +1,7 @@
 package com.fitstir.fitstirapp.ui.utility.classes.edamamapi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ public class EdamamAPI_FoodSearch {
     private final int responseCode;
     private final Headers responseHeader;
     private ResponseBody responseBody;
+    private FoodResponse foodResponse;
 
     public EdamamAPI_FoodSearch(int quantity, String unit, String ingredient, String nutritionType, String health, String minCalories, String maxCalories, String category) {
         String calories;
@@ -72,4 +75,9 @@ public class EdamamAPI_FoodSearch {
     public Headers getResponseHeader() { return this.responseHeader; }
     public ResponseBody getResponseBody() { return this.responseBody; }
     public String getResponseAsString() throws IOException { return new String(this.responseBody.bytes(), StandardCharsets.UTF_8); }
+    public FoodResponse getFoodResponse() throws IOException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        foodResponse = objectMapper.readValue(this.getResponseAsString(), FoodResponse.class);
+        return foodResponse;
+    }
 }

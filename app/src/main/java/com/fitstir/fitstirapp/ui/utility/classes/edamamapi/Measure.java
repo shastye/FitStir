@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Measure {
     private String uri;
     private String label;
-    private int weight;
+    private float weight;
     private ArrayList<Qualified> qualified;
 
     public Measure() {
@@ -14,13 +14,13 @@ public class Measure {
         this.weight = 0;
         this.qualified = new ArrayList<>();
     }
-    public Measure(String uri, String label, int weight) {
+    public Measure(String uri, String label, float weight) {
         this.uri = uri;
         this.label = label;
         this.weight = weight;
-        this.qualified = null;
+        this.qualified = new ArrayList<>();
     }
-    public Measure(String uri, String label, int weight, ArrayList<Qualified> qualified) {
+    public Measure(String uri, String label, float weight, ArrayList<Qualified> qualified) {
         this.uri = uri;
         this.label = label;
         this.weight = weight;
@@ -45,13 +45,30 @@ public class Measure {
         }
     }
 
+    @Override
+    public String toString() {
+        String string = "{" +
+                "\"uri\":\"" + uri + "\"," +
+                "\"label\":\"" + label + "\"," +
+                "\"weight\":" + weight + ",";
+
+        if (qualified != null && qualified.size() > 0) {
+            string += "\"qualified\":" + qualified + ",";
+        }
+
+        string = string.substring(0, string.length() - 1);
+        string += "}";
+
+        return string;
+    }
+
     public String getUri() { return uri; }
     public String getLabel() { return label; }
-    public int getWeight() { return weight; }
+    public float getWeight() { return weight; }
     public ArrayList<Qualified> getQualified() { return qualified; }
 
     public void setUri(String uri) { this.uri = uri; }
     public void setLabel(String label) { this.label = label; }
-    public void setWeight(int weight) { this.weight = weight; }
+    public void setWeight(float weight) { this.weight = weight; }
     public void setQualified(ArrayList<Qualified> qualified) { this.qualified = qualified; }
 }

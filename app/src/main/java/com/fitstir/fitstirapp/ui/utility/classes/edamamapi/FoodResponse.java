@@ -2,24 +2,34 @@ package com.fitstir.fitstirapp.ui.utility.classes.edamamapi;
 
 import java.util.ArrayList;
 
-public class EdamamAPI_FoodResponse {
+public class FoodResponse {
     private String text;
     private ArrayList<Parsed> parsed;
     private ArrayList<Hint> hints;
     private Link _links;
 
-    public EdamamAPI_FoodResponse() { }
+    public FoodResponse() { }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
-        } else if (!(o instanceof EdamamAPI_FoodResponse)) {
+        } else if (!(o instanceof FoodResponse)) {
             return false;
         } else {
-            EdamamAPI_FoodResponse that = (EdamamAPI_FoodResponse) o;
+            FoodResponse that = (FoodResponse) o;
             return text.equals(that.text) && parsed.equals(that.parsed) && hints.equals(that.hints) && _links.equals(that._links);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"text\":\"" + text + "\"," +
+                "\"parsed\":" + parsed + "," +
+                "\"hints\":" + hints + "," +
+                "\"_links\":" + _links +
+                "}";
     }
 
     public String getText() { return text; }

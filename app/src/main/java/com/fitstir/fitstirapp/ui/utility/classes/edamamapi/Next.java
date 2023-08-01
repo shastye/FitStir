@@ -6,10 +6,7 @@ public class Next {
     private String title;
     private String href;
 
-    public Next() {
-        title = "";
-        href = "";
-    }
+    public Next() { }
     public Next(String title, String href) {
         this.title = title;
         this.href = href;
@@ -29,6 +26,14 @@ public class Next {
             Next next = (Next) o;
             return (Objects.equals(this.title, next.title) && Objects.equals(this.href, next.href));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"title\":\"" + title + "\"," +
+                "\"href\":\"" + href + "\"" +
+                "}";
     }
 
     public String getTitle() { return this.title; }

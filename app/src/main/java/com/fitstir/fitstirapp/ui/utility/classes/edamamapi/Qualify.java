@@ -6,10 +6,7 @@ public class Qualify {
     private String uri;
     private String label;
 
-    public Qualify() {
-        this.uri = "";
-        this.label = "";
-    }
+    public Qualify() { }
     public Qualify(String uri, String label) {
         this.uri = uri;
         this.label = label;
@@ -29,6 +26,14 @@ public class Qualify {
             Qualify qualify = (Qualify) o;
             return (Objects.equals(this.uri, qualify.uri) && Objects.equals(this.label, qualify.label));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"uri\":\"" + uri + "\"," +
+                "\"label\":\"" + label + "\"" +
+                "}";
     }
 
     public String getUri() { return uri; }

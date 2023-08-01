@@ -21,6 +21,14 @@ public class Hint {
         }
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"food\":" + food + "," +
+                "\"measures\":" + measures +
+                "}";
+    }
+
     public Food getFood() { return food; }
     public ArrayList<Measure> getMeasures() { return measures; }
 

@@ -3,14 +3,10 @@ package com.fitstir.fitstirapp.ui.utility.classes.edamamapi;
 public class ServingSize {
     String uri;
     String label;
-    int quantity;
+    float quantity;
 
-    public ServingSize() {
-        this.uri = "";
-        this.label = "";
-        this.quantity = 0;
-    }
-    public ServingSize(String uri, String label, int quantity) {
+    public ServingSize() { }
+    public ServingSize(String uri, String label, float quantity) {
         this.uri = uri;
         this.label = label;
         this.quantity = quantity;
@@ -33,11 +29,20 @@ public class ServingSize {
         }
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"uri\":\"" + uri + "\"," +
+                "\"label\":\"" + label + "\"," +
+                "\"quantity\":" + quantity +
+                "}";
+    }
+
     public String getUri() { return uri; }
     public String getLabel() { return label; }
-    public int getQuantity() { return quantity; }
+    public float getQuantity() { return quantity; }
 
     public void setUri(String uri) { this.uri = uri; }
     public void setLabel(String label) { this.label = label; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setQuantity(float quantity) { this.quantity = quantity; }
 }

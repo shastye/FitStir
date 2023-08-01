@@ -6,9 +6,7 @@ public class Link {
 
     private Next next;
 
-    public Link() {
-        this.next = new Next();
-    }
+    public Link() { }
     public Link(Next next) {
         this.next = next;
     }
@@ -26,6 +24,13 @@ public class Link {
             Link link = (Link) o;
             return Objects.equals(this.next, link.next);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"next\":" + next +
+                "}";
     }
 
     public Next getNext() { return this.next; }

@@ -2,7 +2,7 @@ package com.fitstir.fitstirapp.ui.utility.classes.edamamapi;
 
 public class Parsed {
     private Food food;
-    private int quantity;
+    private float quantity;
     private Measure measure;
 
     public Parsed() { }
@@ -19,11 +19,20 @@ public class Parsed {
         }
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"food\":" + food + "," +
+                "\"quantity\":" + quantity + "," +
+                "\"measure\":" + measure +
+                "}";
+    }
+
     public Food getFood() { return food; }
-    public int getQuantity() { return quantity; }
+    public float getQuantity() { return quantity; }
     public Measure getMeasure() { return measure; }
 
     public void setFood(Food food) { this.food = food; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setQuantity(float quantity) { this.quantity = quantity; }
     public void setMeasure(Measure measure) { this.measure = measure; }
 }
