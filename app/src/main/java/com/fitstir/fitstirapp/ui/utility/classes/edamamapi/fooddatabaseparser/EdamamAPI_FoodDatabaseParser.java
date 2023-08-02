@@ -15,23 +15,52 @@ import okhttp3.ResponseBody;
 
 public class EdamamAPI_FoodDatabaseParser {
 
-    private final int responseCode;
-    private final Headers responseHeader;
+    private int responseCode;
+    private Headers responseHeader;
     private ResponseBody responseBody;
     private FoodResponse foodResponse;
 
-    public EdamamAPI_FoodDatabaseParser(int quantity, String unit, String ingredient, String nutritionType, String health, String minCalories, String maxCalories, String category) {
-        String calories;
-        if (minCalories == "" && maxCalories == "") {
-            calories = "";
-        } else if (minCalories == "") {
-            calories = maxCalories;
-        } else if (maxCalories == "") {
-            calories = minCalories + "%2B";
-        } else {
-            calories = minCalories + "-" + maxCalories;
-        }
+    private int quantity;
+    private String unit;
+    private String ingredient;
+    private String nutritionType;
+    private String health;
+    private String calories;
+    private String category;
 
+    public EdamamAPI_FoodDatabaseParser(int quantity, String unit, String ingredient, String nutritionType, String health, String minCalories, String maxCalories, String category) {
+        this.quantity = quantity;
+        this.unit = unit;
+        this.ingredient = ingredient;
+        this.nutritionType = nutritionType;
+        this.health = health;
+
+        String tCalories;
+        if (minCalories == "" && maxCalories == "") {
+            tCalories = "";
+        } else if (minCalories == "") {
+            tCalories = maxCalories;
+        } else if (maxCalories == "") {
+            tCalories = minCalories + "%2B";
+        } else {
+            tCalories = minCalories + "-" + maxCalories;
+        }
+        this.calories = tCalories;
+
+        this.category = category;
+    }
+
+    public int getResponseCode() { return this.responseCode; }
+    public Headers getResponseHeader() { return this.responseHeader; }
+    public ResponseBody getResponseBody() { return this.responseBody; }
+    public String getResponseAsString() throws IOException { return new String(this.responseBody.bytes(), StandardCharsets.UTF_8); }
+    public FoodResponse getFoodResponse() throws IOException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        foodResponse = objectMapper.readValue(this.getResponseAsString(), FoodResponse.class);
+        return foodResponse;
+    }
+
+    public void execute() {
         String requestBody = "https://api.edamam.com/api/food-database/v2/parser?" +
                 "app_id=" + Constants.APP_ID + "&" +
                 "app_key=" + Constants.APP_KEY + "&" +
@@ -41,8 +70,8 @@ public class EdamamAPI_FoodDatabaseParser {
         if (health != "") {
             requestBody += "&" + "health=" + health;
         }
-        if (calories != "") {
-            requestBody += "&" + "calories=" + calories;
+        if (this.calories != "") {
+            requestBody += "&" + "calories=" + this.calories;
         }
         if (category != "") {
             requestBody += "&" + "category=" + category;
@@ -69,15 +98,5 @@ public class EdamamAPI_FoodDatabaseParser {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public int getResponseCode() { return this.responseCode; }
-    public Headers getResponseHeader() { return this.responseHeader; }
-    public ResponseBody getResponseBody() { return this.responseBody; }
-    public String getResponseAsString() throws IOException { return new String(this.responseBody.bytes(), StandardCharsets.UTF_8); }
-    public FoodResponse getFoodResponse() throws IOException, JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        foodResponse = objectMapper.readValue(this.getResponseAsString(), FoodResponse.class);
-        return foodResponse;
     }
 }
