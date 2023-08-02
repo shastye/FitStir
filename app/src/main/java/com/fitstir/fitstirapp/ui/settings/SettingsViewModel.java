@@ -32,12 +32,12 @@ public class SettingsViewModel extends ViewModel {
 
     private final MutableLiveData<Integer> previousPage = new MutableLiveData<>(0);
     private final MutableLiveData<Bitmap> avatar = new MutableLiveData<>(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.profileimage_background));
-    private final MutableLiveData<String> name = new MutableLiveData<>("Sierra Clubb");
-    private final MutableLiveData<Integer> age = new MutableLiveData<>(26);
-    private final MutableLiveData<Integer> height_feet = new MutableLiveData<>(5);
-    private final MutableLiveData<Integer> height_inches = new MutableLiveData<>(2);
-    private final MutableLiveData<Integer> weight = new MutableLiveData<>(145);
-    private final MutableLiveData<String> email = new MutableLiveData<>("shastye.7x@gmail.com");
+    private final MutableLiveData<String> name = new MutableLiveData<>(" ");
+    private final MutableLiveData<Integer> age = new MutableLiveData<>(0 );
+    private final MutableLiveData<Integer> height_feet = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> height_inches = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> weight = new MutableLiveData<>(0);
+    private final MutableLiveData<String> email = new MutableLiveData<>(" ");
 
     private final MutableLiveData<Integer> themeID = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> rangeID = new MutableLiveData<>(0);
