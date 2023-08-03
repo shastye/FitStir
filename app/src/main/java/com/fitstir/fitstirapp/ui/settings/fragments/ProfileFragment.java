@@ -64,8 +64,7 @@ public class ProfileFragment extends Fragment {
         email.setText(settingsViewModel.getEmail().getValue());
 
 
-        
-        try {
+
             auth = FirebaseAuth.getInstance();
             String user = auth.getCurrentUser().getUid();
             reference =  FirebaseDatabase.getInstance().getReference("Users");
@@ -107,12 +106,6 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             });
-        }
-        catch(Exception NullPointerException) {
-            Toast.makeText(requireActivity(), "Refer to Google Account for Profile Details", Toast.LENGTH_SHORT).show();
-        }
-       
-
 
         CardView editButton = binding.editbuttonCardViewProfile;
         editButton.setOnClickListener(new View.OnClickListener() {

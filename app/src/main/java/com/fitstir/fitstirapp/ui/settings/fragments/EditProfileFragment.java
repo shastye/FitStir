@@ -176,7 +176,6 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         EditText email = binding.textEmailEdit;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String t_name = name.getText().toString();
         String t_age = age.getText().toString();
