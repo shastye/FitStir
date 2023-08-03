@@ -1,5 +1,7 @@
 package com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser;
 
+import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.Link;
+
 import java.util.ArrayList;
 
 public class FoodResponse {

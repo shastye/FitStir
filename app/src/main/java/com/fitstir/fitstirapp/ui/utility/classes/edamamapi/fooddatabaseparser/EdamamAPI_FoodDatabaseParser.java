@@ -28,7 +28,8 @@ public class EdamamAPI_FoodDatabaseParser {
     private String calories;
     private String category;
 
-    public EdamamAPI_FoodDatabaseParser(int quantity, String unit, String ingredient, String nutritionType, String health, String minCalories, String maxCalories, String category) {
+    public EdamamAPI_FoodDatabaseParser(int quantity, String unit, String ingredient, String nutritionType,
+                                        String health, String minCalories, String maxCalories, String category) {
         this.quantity = quantity;
         this.unit = unit;
         this.ingredient = ingredient;
@@ -62,8 +63,8 @@ public class EdamamAPI_FoodDatabaseParser {
 
     public void execute() {
         String requestBody = "https://api.edamam.com/api/food-database/v2/parser?" +
-                "app_id=" + Constants.APP_ID + "&" +
-                "app_key=" + Constants.APP_KEY + "&" +
+                "app_id=" + Constants.FOOD_DATA_BASE_PARSER.APP_ID + "&" +
+                "app_key=" + Constants.FOOD_DATA_BASE_PARSER.APP_KEY + "&" +
                 "ingr=" + quantity + "%20" + unit + "%20" + ingredient
                 + "&" + "nutrition-type=" + nutritionType;
 

@@ -1,17 +1,17 @@
-package com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser;
+package com.fitstir.fitstirapp.ui.utility.classes.edamamapi;
 
 import java.util.Objects;
 
-public class Next {
+public class Self {
     private String title;
     private String href;
 
-    public Next() { }
-    public Next(String title, String href) {
+    public Self() { }
+    public Self(String title, String href) {
         this.title = title;
         this.href = href;
     }
-    public Next(Next next) {
+    public Self(Self next) {
         this.title = next.title;
         this.href = next.href;
     }
@@ -20,10 +20,10 @@ public class Next {
     public boolean equals(Object o) {
         if (o == this) {
             return true;
-        } else if (!(o instanceof Next)) {
+        } else if (!(o instanceof Self)) {
             return false;
         } else {
-            Next next = (Next) o;
+            Self next = (Self) o;
             return (Objects.equals(this.title, next.title) && Objects.equals(this.href, next.href));
         }
     }
