@@ -1,5 +1,7 @@
 package com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ public class EdamamAPI_RecipesV2 {
     private int responseCode;
     private Headers responseHeader;
     private ResponseBody responseBody;
+    private RecipeResponse recipeResponse;
 
     private String toSearchFor; // api = q
     private String numIngredients; // api = ingr
@@ -99,6 +102,11 @@ public class EdamamAPI_RecipesV2 {
     public Headers getResponseHeader() { return this.responseHeader; }
     public ResponseBody getResponseBody() { return this.responseBody; }
     public String getResponseAsString() throws IOException { return new String(this.responseBody.bytes(), StandardCharsets.UTF_8); }
+    public RecipeResponse getRecipeResponse() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        recipeResponse = objectMapper.readValue(this.getResponseAsString(), RecipeResponse.class);
+        return recipeResponse;
+    }
 
     public void execute() {
         String requestBody = "https://api.edamam.com/api/recipes/v2?" +
