@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_question4_scene"
     tools:context=".ui.connect.Questions4Fragment">
 
     <ImageView
+        android:id="@+id/imageView5"
         android:layout_width="362dp"
         android:layout_height="261dp"
         android:layout_marginTop="476dp"
@@ -19,8 +21,8 @@
 
     <ImageView
         android:id="@+id/profile_image"
-        android:layout_width="158dp"
-        android:layout_height="147dp"
+        android:layout_width="134dp"
+        android:layout_height="124dp"
         android:layout_gravity="center"
         android:layout_marginTop="44dp"
         android:clickable="true"
@@ -42,10 +44,10 @@
 
     <ImageView
 
+        android:id="@+id/imageView6"
         android:layout_width="129dp"
         android:layout_height="82dp"
         android:src="@drawable/logo_stir"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
@@ -240,6 +242,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView11"
         android:layout_width="30dp"
         android:layout_height="18dp"
         android:layout_marginTop="568dp"
@@ -330,4 +333,4 @@
             android:text="Female" />
     </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
