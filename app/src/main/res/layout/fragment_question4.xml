@@ -16,13 +16,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="158dp"
+        android:layout_height="147dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="44dp"
+        android:clickable="true"
+        android:src="@drawable/logo_body"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="407dp"
-        android:layout_height="255dp"
-        android:background="@drawable/logo"
+        android:layout_width="127dp"
+        android:layout_height="81dp"
+        android:background="@drawable/logo_fit"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+
+        android:layout_width="129dp"
+        android:layout_height="82dp"
+        android:src="@drawable/logo_stir"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -289,7 +315,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.71"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:id="@+id/button_male"

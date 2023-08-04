@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.settings.fragments;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,17 +34,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EditProfileFragment extends Fragment implements IPickResult {
 
     private FragmentEditProfileBinding binding;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private Uri filePath;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,9 +75,11 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         EditText inches = binding.textHeightInchesEdit;
         EditText weight = binding.textWeightEdit;
         EditText email = binding.textEmailEdit;
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         name.setText(settingsViewModel.getName().getValue());
         age.setText(String.valueOf(settingsViewModel.getAge().getValue()));
@@ -79,7 +92,6 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 final Drawable warningIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.baseline_warning_amber_24);
                 assert warningIcon != null;
@@ -106,9 +118,6 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                                         settingsViewModel.setHeightInInches(Integer.parseInt(t_inches));
                                         settingsViewModel.setWeight(Integer.parseInt(t_weight));
                                         settingsViewModel.setEmail(t_email);
-
-
-
 
                                         Navigation.findNavController(root).navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
                                     } else if (t_email.isEmpty()) {
@@ -147,9 +156,22 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                                     ImageView profileImage = binding.profileImageEdit;
                                     profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
-                                    Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(getContext(), r.getError().getMessage(), Toast.LENGTH_LONG).show();
+                                    //Add image to database storage
+                                    filePath = Uri.fromFile(new File(r.getPath()));
+                                    StorageReference photo = storageReference.child("images/"+user.getUid());
+                                    UploadTask uploadTask = photo.putFile(filePath);
+                                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();
+                                            taskSnapshot.getMetadata();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getContext(), r.getError().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 }
                             }
                         })

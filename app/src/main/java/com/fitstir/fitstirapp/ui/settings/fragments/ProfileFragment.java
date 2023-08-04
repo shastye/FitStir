@@ -1,20 +1,18 @@
 package com.fitstir.fitstirapp.ui.settings.fragments;
 
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentProfileBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
@@ -25,12 +23,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private DatabaseReference reference;
     private FirebaseAuth auth;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
@@ -64,7 +62,7 @@ public class ProfileFragment extends Fragment {
         email.setText(settingsViewModel.getEmail().getValue());
 
 
-
+        try{
             auth = FirebaseAuth.getInstance();
             String user = auth.getCurrentUser().getUid();
             reference =  FirebaseDatabase.getInstance().getReference("Users");
@@ -83,6 +81,7 @@ public class ProfileFragment extends Fragment {
                             String height_ft = String.valueOf(snapshot.child("height_ft").getValue());
                             String height_in = String.valueOf(snapshot.child("height_in").getValue());
                             String weight = String.valueOf(snapshot.child("_Weight").getValue());
+
 
                             settingsViewModel.setName(fullName);
                             settingsViewModel.setEmail(email);
@@ -106,6 +105,11 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             });
+        }
+        catch(NullPointerException e){
+            Toast.makeText(requireActivity(),"Refer to Google to see Account Details", Toast.LENGTH_SHORT).show();
+        }
+
 
         CardView editButton = binding.editbuttonCardViewProfile;
         editButton.setOnClickListener(new View.OnClickListener() {
