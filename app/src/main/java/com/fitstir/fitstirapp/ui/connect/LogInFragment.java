@@ -59,7 +59,9 @@ public class LogInFragment extends Fragment {
     private EditText user_Email, user_Password;
     private GoogleSignInClient client;
     private GoogleSignInOptions options;
-    private SharedPreferences sharedPreferences;
+
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -75,7 +77,6 @@ public class LogInFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         user_Email = root.findViewById(R.id.username_log_in);
         user_Password = root.findViewById(R.id.user_password);
-        sharedPreferences = getActivity().getSharedPreferences("user_Login", Context.MODE_PRIVATE);
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -103,8 +104,6 @@ public class LogInFragment extends Fragment {
             }
         });
 
-
-
         Button logInButton = root.findViewById(R.id.button_log_in);
         logInButton.setOnClickListener(v -> {
 
@@ -122,10 +121,9 @@ public class LogInFragment extends Fragment {
 
             if(visible.getVisibility() == View.VISIBLE)
             {
-                visible.setVisibility(View.INVISIBLE);
+                visible.setVisibility(View.VISIBLE);
                 invisible.setVisibility(View.VISIBLE);
                 user_Password.setInputType(View.VISIBLE);
-
             }
         });
 
@@ -162,12 +160,22 @@ public class LogInFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+
+        //auto sign in previous google user unless logged out
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(requireActivity());
         if(account != null){
             Toast.makeText(requireActivity(),account.getDisplayName(), Toast.LENGTH_SHORT).show();
             Intent myIntent = new Intent(getActivity(), MainActivity.class);
             Objects.requireNonNull(getActivity()).startActivity(myIntent);
         }
+        //auto sign in previous fit-stir user unless logged out
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null)
+            {
+                Toast.makeText(requireActivity(),user.getEmail(), Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                Objects.requireNonNull(getActivity()).startActivity(myIntent);
+            }
     }
 
     @Override

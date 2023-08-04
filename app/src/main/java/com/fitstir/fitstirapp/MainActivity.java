@@ -30,9 +30,12 @@ import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -105,13 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             pageID = R.id.navigation_settings;
                             break;
                         case R.id.log_out_item:
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            if(user != null){
-                                FirebaseAuth.getInstance().signOut();
-                                Methods.navigateToLogInActivity(getApplicationContext());
-                            }
                             signOut();
-
                             break;
                         default:
                             pageID = settingsViewModel.getPreviousPage().getValue();
@@ -175,19 +172,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.web_client_id))
                 .requestEmail()
                 .build();
         client = GoogleSignIn.getClient(MainActivity.this, options);
 
-        client.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Methods.navigateToLogInActivity(getApplicationContext());
-            }
-        });
-
+        if(client != null || user != null){
+            auth.signOut();
+            Auth.GoogleSignInApi.signOut(client.asGoogleApiClient()).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(@NonNull Status status) {
+                            Methods.navigateToLogInActivity(getApplicationContext());
+                        }
+                    });
+            client.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Methods.navigateToLogInActivity(getApplicationContext());
+                }
+            });
+        }
+        else if (client == null && user == null) {
+            Methods.navigateToLogInActivity(getApplicationContext());
+        }
     }
 
     @Override
@@ -199,7 +210,6 @@ public class MainActivity extends AppCompatActivity {
 
         startService(new Intent(this, CheckRecentRun.class));
     }
-
     private final ArrayList<Pair<String, String>> getNotificationChannels() {
         return new ArrayList<Pair<String, String>>() {{
             add(new Pair<String, String>("Reminders", "Reminders to come back."));
