@@ -14,10 +14,11 @@
         android:layout_height="145dp"
         android:layout_marginTop="448dp"
         android:text="Tone Up -
-                                                These workouts are aimed at developing a physique with a large emphasis on musculature. In this context, the term toned implies leanness in the body (low levels of body fat)     "
+    These workouts are aimed at developing a physique with a large emphasis on musculature. In this context, the term toned implies leanness in the body (low levels of body fat)     "
         android:textAlignment="textStart"
         android:textAllCaps="true"
         android:textSize="12sp"
+        android:background="@color/soft_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,8 +30,9 @@
         android:layout_marginTop="296dp"
         android:text="Bulk Up -
 
-                     You will intentionally consume more calories than your body needs for a set period. These extra calories provide your body with the necessary fuel to boost muscle size and strength while weight training"
+    You will intentionally consume more calories than your body needs for a set period. These extra calories provide your body with the necessary fuel to boost muscle size and strength while weight training"
         android:textAlignment="textStart"
+        android:background="@color/soft_blue"
         android:textAllCaps="true"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,9 +44,10 @@
         android:layout_width="331dp"
         android:layout_height="112dp"
         android:layout_marginTop="172dp"
+        android:background="@color/soft_blue"
         android:text="Increase Strength -
 
-                            Will focus on lifting heavy(greater than 90% of your one-rep max. Lifting explosively and doing plyometrics"
+   Will focus on lifting heavy(greater than 90% of your one-rep max. Lifting explosively and doing plyometrics"
         android:textAlignment="textStart"
         android:textAllCaps="true"
         android:textSize="12sp"
@@ -58,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="676dp"
         android:text="Back"
+        android:background="@drawable/custom_color_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

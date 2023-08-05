@@ -59,6 +59,7 @@
         android:layout_marginTop="252dp"
         android:text="Tackling a new diet and weight loss can be tough. 28% of people give up because of lack of will power, another 27% lose motivation. Theres another 25% that have trouble finding time to workout and a shared 25% between the expenses of healither foods and having gym access. Every health journey comes with some bumps in the road. With this journey you can decrease anxiety, depression and boost your overall brain power. So keep pushing and welcome to FitStir where we help you bet the odds."
         android:textSize="17dp"
+
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,6 +72,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="556dp"
         android:text="Next"
+        android:background="@drawable/custom_color_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
