@@ -24,7 +24,7 @@ public class UpperBodyFragment extends Fragment {
         binding = FragmentUpperBodyBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textUpperBody;
+        //final TextView textView = binding.textUpperBody;
         //workoutsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here
