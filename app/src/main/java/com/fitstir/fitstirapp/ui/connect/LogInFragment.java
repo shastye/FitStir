@@ -1,33 +1,55 @@
 package com.fitstir.fitstirapp.ui.connect;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import com.fitstir.fitstirapp.ConnectActivity;
 import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentLogInBinding;
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.Objects;
+import java.util.TimerTask;
 
 public class LogInFragment extends Fragment {
 
@@ -35,6 +57,11 @@ public class LogInFragment extends Fragment {
     private ImageButton ForgotButton, visible, invisible;
     private FirebaseAuth auth;
     private EditText user_Email, user_Password;
+    private GoogleSignInClient client;
+    private GoogleSignInOptions options;
+
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,14 +70,39 @@ public class LogInFragment extends Fragment {
 
         binding = FragmentLogInBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
+
 
         // Addition Text Here
         auth = FirebaseAuth.getInstance();
         user_Email = root.findViewById(R.id.username_log_in);
         user_Password = root.findViewById(R.id.user_password);
 
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode() == RESULT_OK){
+                    Intent data = result.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    handleResult(task);
+                }
+            }
+        });
 
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
+        //google one tap sign in setup
+        options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build();
+        client = GoogleSignIn.getClient(this.requireContext(), options);
+        Button google = root.findViewById(R.id.button_google_signIn);
+        google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = client.getSignInIntent();
+                launcher.launch(intent);
+            }
+        });
 
         Button logInButton = root.findViewById(R.id.button_log_in);
         logInButton.setOnClickListener(v -> {
@@ -69,10 +121,9 @@ public class LogInFragment extends Fragment {
 
             if(visible.getVisibility() == View.VISIBLE)
             {
-                visible.setVisibility(View.INVISIBLE);
+                visible.setVisibility(View.VISIBLE);
                 invisible.setVisibility(View.VISIBLE);
                 user_Password.setInputType(View.VISIBLE);
-
             }
         });
 
@@ -85,11 +136,46 @@ public class LogInFragment extends Fragment {
                 user_Password.setTransformationMethod(new PasswordTransformationMethod());
             }
         });
-
-
         //End
-
         return root;
+    }
+
+    private void handleResult(Task<GoogleSignInAccount> task) {
+        task.addOnSuccessListener(new OnSuccessListener<GoogleSignInAccount>() {
+            @Override
+            public void onSuccess(GoogleSignInAccount googleSignInAccount) {
+                Toast.makeText(requireActivity(), googleSignInAccount.getDisplayName(), Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                Objects.requireNonNull(getActivity()).startActivity(myIntent);
+
+            }
+        }). addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(requireActivity(), e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        //auto sign in previous google user unless logged out
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(requireActivity());
+        if(account != null){
+            Toast.makeText(requireActivity(),account.getDisplayName(), Toast.LENGTH_SHORT).show();
+            Intent myIntent = new Intent(getActivity(), MainActivity.class);
+            Objects.requireNonNull(getActivity()).startActivity(myIntent);
+        }
+        //auto sign in previous fit-stir user unless logged out
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null)
+            {
+                Toast.makeText(requireActivity(),user.getEmail(), Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                Objects.requireNonNull(getActivity()).startActivity(myIntent);
+            }
     }
 
     @Override

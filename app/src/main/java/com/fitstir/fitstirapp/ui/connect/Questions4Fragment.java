@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestion4Binding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +54,7 @@ public class Questions4Fragment extends Fragment {
     private TextView age;
     private FragmentQuestion4Binding binding;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,14 +63,16 @@ public class Questions4Fragment extends Fragment {
 
         binding = FragmentQuestion4Binding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
-        //additional code here
 
+        //firebase integration
         database = FirebaseDatabase.getInstance();
         dataRef = database.getReference("Users");
         auth = FirebaseAuth.getInstance();
+
+        //additional code here
         fullName = root.findViewById(R.id.sign_up_full_name);
         setEmail = root.findViewById(R.id.set_email);
         setPassword = root.findViewById(R.id.set_password);
@@ -81,7 +85,7 @@ public class Questions4Fragment extends Fragment {
         age = root.findViewById(R.id.age_view);
         male = root.findViewById(R.id.button_male);
         female = root.findViewById(R.id.button_female);
-        auth = FirebaseAuth.getInstance();
+
 
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +103,6 @@ public class Questions4Fragment extends Fragment {
         Button submit = root.findViewById(R.id.button_submit);
         submit.setOnClickListener(v->{
             createUser();
-
         });
         return root;
     }
@@ -127,7 +130,7 @@ public class Questions4Fragment extends Fragment {
         Calendar today = Calendar.getInstance();
         int age = today.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
 
-        if(today.get(Calendar.DAY_OF_MONTH) < birth.get(Calendar.DAY_OF_MONTH)){
+        if(today.get(Calendar.DAY_OF_MONTH) > birth.get(Calendar.DAY_OF_MONTH)){
             age--;
         }
         return age;

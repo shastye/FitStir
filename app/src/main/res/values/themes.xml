@@ -24,7 +24,7 @@
 
 
     <!-- Base application theme. -->
-    <style name="Theme1" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme1" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/soft_blue</item>
         <item name="colorPrimaryVariant">@color/fuchsia</item>
@@ -34,7 +34,7 @@
         <item name="colorSecondaryVariant">@color/lime</item>
         <item name="colorOnSecondary">@color/off_white</item>
         <!-- Background image. -->
-        <item name="background">@drawable/background</item>
+        <item name="background">@drawable/background2</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Custom Bottom Navigation theme. -->

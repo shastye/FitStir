@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.settings.fragments;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -22,14 +23,36 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 public class EditProfileFragment extends Fragment implements IPickResult {
 
     private FragmentEditProfileBinding binding;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private Uri filePath;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +75,11 @@ public class EditProfileFragment extends Fragment implements IPickResult {
         EditText inches = binding.textHeightInchesEdit;
         EditText weight = binding.textWeightEdit;
         EditText email = binding.textEmailEdit;
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         name.setText(settingsViewModel.getName().getValue());
         age.setText(String.valueOf(settingsViewModel.getAge().getValue()));
@@ -77,7 +105,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                 String t_inches = inches.getText().toString();
                 String t_weight = weight.getText().toString();
                 String t_email = email.getText().toString();
-
+                String uid = user.getUid();
                 if (!t_name.isEmpty()) {
                     if (!t_age.isEmpty()) {
                         if (!t_feet.isEmpty()) {
@@ -128,9 +156,23 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                                     ImageView profileImage = binding.profileImageEdit;
                                     profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
 
-                                    Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(getContext(), r.getError().getMessage(), Toast.LENGTH_LONG).show();
+                                    //Add image to database storage
+                                    filePath = Uri.fromFile(new File(r.getPath()));
+                                    assert user != null;
+                                    StorageReference photo = storageReference.child("images/"+user.getUid());
+                                    UploadTask uploadTask = photo.putFile(filePath);
+                                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();
+                                            taskSnapshot.getMetadata();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getContext(), r.getError().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 }
                             }
                         })
@@ -147,8 +189,62 @@ public class EditProfileFragment extends Fragment implements IPickResult {
     public void onDestroyView() {
         super.onDestroyView();
 
-        // TODO: save to database
+        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
+        EditText name = binding.textNameEdit;
+        EditText age = binding.textAgeEdit;
+        EditText feet = binding.textHeightFeetEdit;
+        EditText inches = binding.textHeightInchesEdit;
+        EditText weight = binding.textWeightEdit;
+        EditText email = binding.textEmailEdit;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+        String t_name = name.getText().toString();
+        String t_age = age.getText().toString();
+        String t_feet = feet.getText().toString();
+        String t_inches = inches.getText().toString();
+        String t_weight = weight.getText().toString();
+        String t_email = email.getText().toString();
+        String uid = user.getUid();
+
+        final Map<String, Object> update = new HashMap<>();
+        update.put("fullname", t_name);
+        update.put("email", t_email);
+        update.put("height_ft", t_feet);
+        update.put("height_in", t_inches);
+        update.put("_Weight", t_weight);
+        update.put("Age", t_age);
+
+        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+
+                    String newName = name.getText().toString();
+                    String newEmail = email.getText().toString();
+                    String newFeet = feet.getText().toString();
+                    String newInches = inches.getText().toString();
+                    String newAge = age.getText().toString();
+                    String newWeight = weight.getText().toString();
+
+                    databaseReference.child(uid).updateChildren(update);
+                    settingsViewModel.setName(newName);
+                    settingsViewModel.setAge(Integer.parseInt(newAge));
+                    settingsViewModel.setHeightInFeet(Integer.parseInt(newFeet));
+                    settingsViewModel.setHeightInInches(Integer.parseInt(newInches));
+                    settingsViewModel.setWeight(Integer.parseInt(newWeight));
+                    settingsViewModel.setEmail(newEmail);
+                }
+                else {
+                    databaseReference.child(uid).setValue(update);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(),"Error while reading user data", Toast.LENGTH_SHORT).show();
+            }
+        });
         binding = null;
     }
 
