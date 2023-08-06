@@ -1,6 +1,9 @@
 package com.fitstir.fitstirapp.ui.settings.fragments;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +16,37 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentProfileBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private DatabaseReference reference;
     private FirebaseAuth auth;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+
+    private final long MEGA_BYTE = 200000 * 200000;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,8 +59,7 @@ public class ProfileFragment extends Fragment {
         settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
-        ImageView profileImage = binding.profileImage;
-        profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
+
 
         TextView name = binding.textName;
         TextView age = binding.textAge;
@@ -63,8 +81,30 @@ public class ProfileFragment extends Fragment {
 
 
         try{
+            //access firebase storage for profile pic
+            storage = FirebaseStorage.getInstance();
+            storageReference = storage.getReference();
+
             auth = FirebaseAuth.getInstance();
             String user = auth.getCurrentUser().getUid();
+            StorageReference photo = storageReference.child("images/"+user);
+            photo.getBytes(MEGA_BYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                   Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                   settingsViewModel.setAvatar(bitmap);
+                   ImageView profileImage = binding.profileImage;
+                   profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+
+
+
             reference =  FirebaseDatabase.getInstance().getReference("Users");
             reference.child(user).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override

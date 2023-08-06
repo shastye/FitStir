@@ -158,6 +158,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
 
                                     //Add image to database storage
                                     filePath = Uri.fromFile(new File(r.getPath()));
+                                    assert user != null;
                                     StorageReference photo = storageReference.child("images/"+user.getUid());
                                     UploadTask uploadTask = photo.putFile(filePath);
                                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
