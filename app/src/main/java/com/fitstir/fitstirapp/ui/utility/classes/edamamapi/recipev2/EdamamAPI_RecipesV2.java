@@ -7,6 +7,10 @@ import com.fitstir.fitstirapp.ui.utility.Constants;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -15,6 +19,10 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class EdamamAPI_RecipesV2 {
+    private OkHttpClient client;
+    private Request request;
+
+    private Response response;
     private int responseCode;
     private Headers responseHeader;
     private ResponseBody responseBody;
@@ -49,18 +57,28 @@ public class EdamamAPI_RecipesV2 {
         add("tags");
     }};
 
-    public EdamamAPI_RecipesV2(String toSearchFor, String minNumIngredients, String maxNumIngredients,
-                               String diet, String health, String cuisineType, String mealType,
-                               String dishType, String minCalories, String maxCalories, String minTime,
-                               String maxTime) {
+    public EdamamAPI_RecipesV2(
+            String toSearchFor,
+            String minNumIngredients,
+            String maxNumIngredients,
+            String diet,
+            String health,
+            String cuisineType,
+            String mealType,
+            String dishType,
+            String minCalories,
+            String maxCalories,
+            String minTime,
+            String maxTime
+    ) {
         this.toSearchFor = toSearchFor;
 
         String tNumIngredients;
-        if (minNumIngredients == "" && maxNumIngredients == "") {
+        if (minNumIngredients.equals("") && maxNumIngredients.equals("")) {
             tNumIngredients = "";
-        } else if (minNumIngredients == "") {
+        } else if (minNumIngredients.equals("")) {
             tNumIngredients = maxNumIngredients;
-        } else if (maxNumIngredients == "") {
+        } else if (maxNumIngredients.equals("")) {
             tNumIngredients = minNumIngredients + "%2B";
         } else {
             tNumIngredients = minNumIngredients + "-" + maxNumIngredients;
@@ -74,11 +92,11 @@ public class EdamamAPI_RecipesV2 {
         this.dishType = dishType;
 
         String tCalories;
-        if (minCalories == "" && maxCalories == "") {
+        if (minCalories.equals("") && maxCalories.equals("")) {
             tCalories = "";
-        } else if (minCalories == "") {
+        } else if (minCalories.equals("")) {
             tCalories = maxCalories;
-        } else if (maxCalories == "") {
+        } else if (maxCalories.equals("")) {
             tCalories = minCalories + "%2B";
         } else {
             tCalories = minCalories + "-" + maxCalories;
@@ -86,29 +104,16 @@ public class EdamamAPI_RecipesV2 {
         this.calories = tCalories;
 
         String tTime;
-        if (minTime == "" && maxTime == "") {
+        if (minTime.equals("") && maxTime.equals("")) {
             tTime = "";
-        } else if (minTime == "") {
+        } else if (minTime.equals("")) {
             tTime = maxTime;
-        } else if (maxTime == "") {
+        } else if (maxTime.equals("")) {
             tTime = minTime + "%2B";
         } else {
             tTime = minTime + "-" + maxTime;
         }
         this.time = tTime;
-    }
-
-    public int getResponseCode() { return this.responseCode; }
-    public Headers getResponseHeader() { return this.responseHeader; }
-    public ResponseBody getResponseBody() { return this.responseBody; }
-    public String getResponseAsString() throws IOException { return new String(this.responseBody.bytes(), StandardCharsets.UTF_8); }
-    public RecipeResponse getRecipeResponse() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        recipeResponse = objectMapper.readValue(this.getResponseAsString(), RecipeResponse.class);
-        return recipeResponse;
-    }
-
-    public void execute() {
         String requestBody = "https://api.edamam.com/api/recipes/v2?" +
                 "type=" + "public" + "&" +
                 "beta=" + "false" + "&" +
@@ -116,54 +121,105 @@ public class EdamamAPI_RecipesV2 {
                 "app_id=" + Constants.RECIPE_V2.APP_ID + "&" +
                 "app_key=" + Constants.RECIPE_V2.APP_KEY;
 
-        if (numIngredients != "") {
+        if (!numIngredients.equals("")) {
             requestBody += "&" + "ingr=" + numIngredients;
         }
 
         requestBody +=  "&" + "random=" + "false";
 
-        if (diet != "") {
+        if (!diet.equals("")) {
             requestBody += "&" + "diet=" + diet;
         }
-        if (health != "") {
+        if (!health.equals("")) {
             requestBody += "&" + "health=" + health;
         }
-        if (cuisineType != "") {
+        if (!cuisineType.equals("")) {
             requestBody += "&" + "cuisineType=" + cuisineType;
         }
-        if (mealType != "") {
+        if (!mealType.equals("")) {
             requestBody += "&" + "mealType=" + mealType;
         }
-        if (dishType != "") {
+        if (!dishType.equals("")) {
             requestBody += "&" + "dishType=" + dishType;
         }
-        if (calories != "") {
+        if (!calories.equals("")) {
             requestBody += "&" + "calories=" + calories;
         }
-        if (time != "") {
+        if (!time.equals("")) {
             requestBody += "&" + "time=" + time;
         }
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
+        client = new OkHttpClient();
+        request = new Request.Builder()
                 .url(requestBody)
                 .header("Accept", "application/json")
                 .header("Accept-Language", "en")
                 .build();
+    }
 
-        Response response;
-        try {
-            response = client.newCall(request).execute();
+    public int getResponseCode() { return this.responseCode; }
+    public Headers getResponseHeader() { return this.responseHeader; }
+    public ResponseBody getResponseBody() { return this.responseBody; }
+    public String getResponseAsString() throws IOException { return new String(this.responseBody.bytes(), StandardCharsets.UTF_8); }
+    public RecipeResponse getRecipeResponse() throws IOException {
+        return recipeResponse;
+    }
 
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected Code: " + response);
+    public Future<Response> getFutureResponse() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        return executor.submit(() -> {
+            try {
+                response = client.newCall(request).execute();
+
+                if (!response.isSuccessful()) {
+                    throw new IOException("Unexpected Code: " + response);
+                }
+
+                return response;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+        });
+    }
 
-            responseCode = response.code();
-            responseHeader = response.headers();
+    public Future<RecipeResponse> getFutureRecipe() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        return executor.submit(() -> {
+            ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            try {
+                recipeResponse = objectMapper.readValue(this.getResponseAsString(), RecipeResponse.class);
+                return recipeResponse;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
-            this.responseBody = response.body();
+    public void execute() {
+
+        Future<Response> responseFuture = getFutureResponse();
+        try {
+            this.response = responseFuture.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        responseCode = response.code();
+        responseHeader = response.headers();
+
+        responseBody = response.body();
+
+        /*ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try {
+            recipeResponse = objectMapper.readValue(this.getResponseAsString(), RecipeResponse.class);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
+
+        Future<RecipeResponse> recipeFuture = getFutureRecipe();
+        try {
+            recipeResponse = recipeFuture.get();
+        } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

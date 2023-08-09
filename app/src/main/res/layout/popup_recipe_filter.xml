@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/recipe_filter_background"
+        android:layout_width="350dp"
+        android:layout_height="330dp"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginTop="12dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.00">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/num_ingr_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
+                android:elevation="5dp"
+                android:text="Number of Ingredients:" />
+
+            <EditText
+                android:id="@+id/min_ingr"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/num_ingr_tv"
+                android:background="@android:drawable/editbox_background_normal"
+                android:elevation="5dp"
+                android:gravity="center_horizontal"
+                android:hint="min"
+                android:inputType="number"
+                android:textColorHint="@color/mid_grey"
+                android:textSize="12sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/num_ingr_dash_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_toEndOf="@id/min_ingr"
+                android:elevation="5dp"
+                android:text="-" />
+
+            <EditText
+                android:id="@+id/max_ingr"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/num_ingr_dash_tv"
+                android:background="@android:drawable/editbox_background_normal"
+                android:elevation="5dp"
+                android:gravity="center_horizontal"
+                android:hint="max"
+                android:inputType="number"
+                android:textColorHint="@color/mid_grey"
+                android:textSize="12sp"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:id="@+id/cal_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
+                android:elevation="5dp"
+                android:text="Number of Calories:" />
+
+            <EditText
+                android:id="@+id/min_cal"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="29.5dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/cal_tv"
+                android:background="@android:drawable/editbox_background_normal"
+                android:elevation="5dp"
+                android:gravity="center_horizontal"
+                android:hint="min"
+                android:inputType="number"
+                android:textColorHint="@color/mid_grey"
+                android:textSize="12sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/num_cal_dash_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_toEndOf="@id/min_cal"
+                android:elevation="5dp"
+                android:text="-" />
+
+            <EditText
+                android:id="@+id/max_cal"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/num_cal_dash_tv"
+                android:background="@android:drawable/editbox_background_normal"
+                android:elevation="5dp"
+                android:gravity="center_horizontal"
+                android:hint="max"
+                android:inputType="number"
+                android:textColorHint="@color/mid_grey"
+                android:textSize="12sp"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp">
+
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
+                android:elevation="5dp"
+                android:text="Amount of Time (in min):" />
+
+            <EditText
+                android:id="@+id/min_time"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/time_tv"
+                android:background="@android:drawable/editbox_background_normal"
+                android:elevation="5dp"
+                android:gravity="center_horizontal"
+                android:hint="min"
+                android:inputType="number"
+                android:textColorHint="@color/mid_grey"
+                android:textSize="12sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/num_time_dash_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_toEndOf="@id/min_time"
+                android:elevation="5dp"
+                android:text="-" />
+
+            <EditText
+                android:id="@+id/max_time"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/num_time_dash_tv"
+                android:background="@android:drawable/editbox_background_normal"
+                android:elevation="5dp"
+                android:gravity="center_horizontal"
+                android:hint="max"
+                android:inputType="number"
+                android:textColorHint="@color/mid_grey"
+                android:textSize="12sp"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp">
+
+            <TextView
+                android:id="@+id/diet_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:elevation="5dp"
+                android:text="Diet Type:" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/diet_spinner"
+                android:layout_width="100dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/diet_tv"
+                android:elevation="5dp"
+                android:inputType="number"
+                android:textColorHint="@color/black"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="165dp">
+
+            <TextView
+                android:id="@+id/health_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:elevation="5dp"
+                android:text="Health Type:" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/health_spinner"
+                android:layout_width="200dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/health_tv"
+                android:elevation="5dp"
+                android:inputType="number"
+                android:textColorHint="@color/black"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp">
+
+            <TextView
+                android:id="@+id/cuisine_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:elevation="5dp"
+                android:text="Cuisine Type:" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/cuisine_spinner"
+                android:layout_width="200dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/cuisine_tv"
+                android:elevation="5dp"
+                android:inputType="number"
+                android:textColorHint="@color/black"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="235dp">
+
+            <TextView
+                android:id="@+id/meal_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:elevation="5dp"
+                android:text="Meal Type:" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/meal_spinner"
+                android:layout_width="200dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:layout_toEndOf="@id/meal_tv"
+                android:elevation="5dp"
+                android:inputType="number"
+                android:textColorHint="@color/black"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="270dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/recipe_accept_button"
+                android:layout_width="90dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="?attr/colorOnPrimary"
+                android:textSize="12sp"
+                android:text="ACCEPT"
+                android:textColor="?attr/colorPrimaryVariant" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

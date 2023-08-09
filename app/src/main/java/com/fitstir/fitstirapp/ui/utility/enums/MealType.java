@@ -1,12 +1,13 @@
 package com.fitstir.fitstirapp.ui.utility.enums;
 
 public enum MealType {
-    BREAKFAST("Breakfast", 0, "breakfast"),
-    TEATIME("Tea Time", 1, "teatime"),
-    BRUNCH("Brunch", 2, "brunch"),
-    LUNCH("Lunch", 3, "lunch/dinner"),
-    SNACK("Snack", 4, "snack"),
-    DINNER("Dinner", 5, "lunch/dinner");
+    BLANK("", 0, ""),
+    BREAKFAST("Breakfast", 1, "breakfast"),
+    TEATIME("Tea Time", 2, "teatime"),
+    BRUNCH("Brunch", 3, "brunch"),
+    LUNCH("Lunch", 4, "lunch/dinner"),
+    SNACK("Snack", 5, "snack"),
+    DINNER("Dinner", 6, "lunch/dinner");
 
     private final String spinnerTitle;
     private final int value;

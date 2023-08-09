@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,5 +20,216 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
+
+    <RelativeLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.00">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+
+            <include layout="@layout/toolbar_search_recipe"/>
+            <include layout="@layout/toolbar_view_recipe"/>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recipe_search_response"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/recipe_main_background"
+            android:layout_width="405dp"
+            android:layout_height="210dp"
+            android:outlineProvider="none"
+            android:alpha="1.00"
+            android:elevation="0dp"
+            android:layout_marginTop="80dp"
+            app:cardCornerRadius="40dp"
+            app:cardBackgroundColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.00"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="395dp"
+            android:layout_height="200dp"
+            android:outlineProvider="none"
+            android:alpha="0.25"
+            android:elevation="0dp"
+            app:cardCornerRadius="36dp"
+            app:cardBackgroundColor="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toStartOf="@id/recipe_main_background"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/recipe_main_image"
+            android:layout_width="180dp"
+            android:layout_height="160dp"
+            android:elevation="2dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@color/mid_grey"
+            android:scaleType="centerCrop"
+            app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+            app:shapeAppearanceOverlay="@style/RoundedStart"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toStartOf="@id/recipe_main_background"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="1.00"/>
+
+        <TextView
+            android:id="@+id/recipe_main_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recipe Label"
+            android:elevation="4dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginTop="10dp"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toStartOf="@id/recipe_main_background"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"
+            app:layout_constraintVertical_bias="0.00"
+            app:layout_constraintHorizontal_bias="0.50"/>
+
+        <TextView
+            android:id="@+id/recipe_main_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recipe Source"
+            android:elevation="4dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toEndOf="@id/recipe_main_image"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"
+            app:layout_constraintVertical_bias="0.00"
+            app:layout_constraintHorizontal_bias="1.00"/>
+
+        <TextView
+            android:id="@+id/recipe_main_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recipe Calories"
+            android:elevation="4dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginTop="75dp"
+            android:layout_marginStart="10dp"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toEndOf="@id/recipe_main_image"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"
+            app:layout_constraintVertical_bias="0.00"
+            app:layout_constraintHorizontal_bias="0.00"/>
+
+        <TextView
+            android:id="@+id/recipe_main_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recipe Time"
+            android:elevation="4dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="10dp"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toEndOf="@id/recipe_main_image"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"
+            app:layout_constraintVertical_bias="0.00"
+            app:layout_constraintHorizontal_bias="0.00"/>
+
+        <TextView
+            android:id="@+id/recipe_main_yeild"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yield"
+            android:elevation="4dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginTop="125dp"
+            android:layout_marginStart="10dp"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toEndOf="@id/recipe_main_image"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"
+            app:layout_constraintVertical_bias="0.00"
+            app:layout_constraintHorizontal_bias="0.00"/>
+
+        <TextView
+            android:id="@+id/recipe_main_meal_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal Type"
+            android:elevation="4dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginTop="150dp"
+            android:layout_marginStart="10dp"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toEndOf="@id/recipe_main_image"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"
+            app:layout_constraintVertical_bias="0.00"
+            app:layout_constraintHorizontal_bias="0.00"/>
+
+        <TextView
+            android:id="@+id/recipe_main_cuisine_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cuisine Type"
+            android:elevation="4dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginTop="175dp"
+            android:layout_marginStart="10dp"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
+            app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
+            app:layout_constraintStart_toEndOf="@id/recipe_main_image"
+            app:layout_constraintTop_toTopOf="@id/recipe_main_background"
+            app:layout_constraintVertical_bias="0.00"
+            app:layout_constraintHorizontal_bias="0.00"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipe_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="470dp"
+            android:elevation="0dp"
+            android:paddingTop="80dp"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.00"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
