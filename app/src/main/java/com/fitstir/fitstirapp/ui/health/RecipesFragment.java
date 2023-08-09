@@ -3,17 +3,23 @@ package com.fitstir.fitstirapp.ui.health;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlendMode;
+import android.graphics.BlendModeColorFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,10 +27,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
@@ -50,20 +58,27 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class RecipesFragment extends Fragment {
+    private final int STANDARD_APPBAR = 0;
+    private final int SEARCH_APPBAR = 1;
+    private boolean isLoading;
+    private int appBarState;
 
     private FragmentRecipesBinding binding;
-    private static final int STANDARD_APPBAR = 0;
-    private static final int SEARCH_APPBAR = 1;
-    private int mAppBarState;
+    private View root;
+    private HealthViewModel healthViewModel;
+    private RecipeResponse response;
+    private ArrayList<Hit> hits;
+    private Hit firstHit;
+
+    private RecyclerView hitRecyclerView;
+    private HitAdapter hitAdapter;
+    private Parcelable recyclerViewState;
+
     private ConstraintLayout recipeResponse;
     private AppBarLayout viewRecipeBar, searchRecipeBar;
     private TextView labelRecipeBar, centerMessage;
     private EditText searchBar;
-    private View root;
-    private HealthViewModel healthViewModel;
-    private RecyclerView hitRecyclerView;
-    private HitAdapter hitAdapter;
-    private RecipeResponse response;
+    private CardView firstHitBackground;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +90,9 @@ public class RecipesFragment extends Fragment {
 
         // Addition Text Here
 
+        isLoading = false;
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
         viewRecipeBar = root.findViewById(R.id.recipe_view_toolbar);
         searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
@@ -84,6 +102,7 @@ public class RecipesFragment extends Fragment {
         centerMessage.setText("Search for a Recipe.");
         recipeResponse = binding.recipeSearchResponse;
         recipeResponse.setVisibility(View.INVISIBLE);
+        firstHitBackground = binding.recipeMainBackground;
 
         setAppBarState(STANDARD_APPBAR);
 
@@ -233,6 +252,14 @@ public class RecipesFragment extends Fragment {
             }
         });
 
+        firstHitBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                healthViewModel.setClickedRecipe(firstHit.getRecipe());
+                //Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
+            }
+        });
+
         // End
 
         return root;
@@ -245,7 +272,6 @@ public class RecipesFragment extends Fragment {
     }
 
     private void search() throws IOException, ExecutionException, InterruptedException {
-        // TODO: UPDATE ADAPTER AND DISPLAY RECIPES
         healthViewModel.setToSearchFor(searchBar.getText().toString());
 
         EdamamAPI_RecipesV2 api = new EdamamAPI_RecipesV2(
@@ -262,33 +288,40 @@ public class RecipesFragment extends Fragment {
                 healthViewModel.getMinTime().getValue(),
                 healthViewModel.getMaxTime().getValue()
         );
-
-        /*EdamamAPI_RecipesV2 api = new EdamamAPI_RecipesV2(
-                "chicken parm",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "120",
-                "150");*/
         api.execute();
 
         response = api.getRecipeResponse();
 
-        ArrayList<Hit> hits = response.getHits();
+        hits = response.getHits();
         if (hits.size() != 0) {
-            Hit firstHit = hits.get(0);
+            firstHit = hits.get(0);
             healthViewModel.setFirstRecipe(firstHit.getRecipe());
             hits.remove(firstHit);
 
             if (hits.size() != 0) {
                 hitRecyclerView = binding.recipeRecyclerView;
                 hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+
+                hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                    }
+
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+
+                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                        if (!isLoading) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == hits.size() - 1) {
+                                loadMore();
+                                isLoading = true;
+                            }
+                        }
+                    }
+                });
 
                 healthViewModel.setHits(hits);
                 updateUI(hits);
@@ -302,7 +335,8 @@ public class RecipesFragment extends Fragment {
             binding.recipeMainImage.setImageBitmap(getBitmapFromURL(firstHit.getRecipe().getImage()));
             binding.recipeMainLabel.setText(firstHit.getRecipe().getLabel());
             binding.recipeMainSource.setText(firstHit.getRecipe().getSource());
-            String tCal = (int) firstHit.getRecipe().getCalories() + " calories";
+            float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
+            String tCal = (int) tCalPerServing + " calories / serving";
             binding.recipeMainCalories.setText(tCal);
             String tTime = (int) firstHit.getRecipe().getTotalTime() + " minutes";
             binding.recipeMainTotalTime.setText(tTime);
@@ -317,9 +351,30 @@ public class RecipesFragment extends Fragment {
         }
     }
 
+    private void loadMore() {
+        hits.add(null);
+        hitAdapter.notifyItemInserted(hits.size() - 1);
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hits.remove(hits.size() - 1);
+                int scrollPosition = hits.size();
+                hitAdapter.notifyItemRemoved(scrollPosition);
+
+                response.loadMore();
+
+                hitAdapter.notifyDataSetChanged();
+                isLoading = false;
+            }
+        }, 2000);
+    }
+
     private void toggleToolBarState() {
         Log.d("RECIPE FRAGMENT", "toggleToolBarState: toggling AppBarState.");
-        if (mAppBarState == STANDARD_APPBAR) {
+        if (appBarState == STANDARD_APPBAR) {
             setAppBarState(SEARCH_APPBAR);
         } else {
             setAppBarState(STANDARD_APPBAR);
@@ -327,9 +382,9 @@ public class RecipesFragment extends Fragment {
     }
 
     private void setAppBarState(int state) {
-        mAppBarState = state;
+        appBarState = state;
 
-        if (mAppBarState == STANDARD_APPBAR) {
+        if (appBarState == STANDARD_APPBAR) {
             searchRecipeBar.setVisibility(View.GONE);
             viewRecipeBar.setVisibility(View.VISIBLE);
 
@@ -339,7 +394,7 @@ public class RecipesFragment extends Fragment {
             } catch (NullPointerException e) {
                 Log.d("RECIPE FRAGMENT", "setAppBaeState: NullPointerException: " + e);
             }
-        } else if (mAppBarState == SEARCH_APPBAR) {
+        } else if (appBarState == SEARCH_APPBAR) {
             viewRecipeBar.setVisibility(View.GONE);
             searchRecipeBar.setVisibility(View.VISIBLE);
 
@@ -375,8 +430,21 @@ public class RecipesFragment extends Fragment {
     }
 
     private void updateUI(ArrayList<Hit> hits) {
+        hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         hitAdapter = new HitAdapter(hits);
         hitRecyclerView.setAdapter(hitAdapter);
+    }
+
+    private class LoadHolder extends RecyclerView.ViewHolder {
+        private ProgressBar bar;
+
+        public LoadHolder(View view) {
+            super(view);
+
+            bar = itemView.findViewById(R.id.recipe_more_progress_bar);
+            int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
+            bar.getIndeterminateDrawable().setColorFilter(new BlendModeColorFilter(colorOnPrimary, BlendMode.SRC_ATOP));
+        }
     }
 
     private class HitHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -401,7 +469,8 @@ public class RecipesFragment extends Fragment {
             this.recipeImage.setImageBitmap(getBitmapFromURL(hit.getRecipe().getImage()));
             this.recipeLabel.setText(hit.getRecipe().getLabel());
             this.recipeSource.setText(hit.getRecipe().getSource());
-            String calories = String.valueOf((int) hit.getRecipe().getCalories()) + " calories";
+            float tCalPerServing = hit.getRecipe().getCalories() / hit.getRecipe().getYield();
+            String calories = (int) tCalPerServing + " calories";
             this.recipeCalories.setText(calories);
             String time = String.valueOf((int) hit.getRecipe().getTotalTime()) + " minutes";
             this.recipeTime.setText(time);
@@ -414,8 +483,10 @@ public class RecipesFragment extends Fragment {
         }
     }
 
-    private class HitAdapter extends RecyclerView.Adapter<HitHolder> {
+    private class HitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final ArrayList<Hit> hits;
+        private final int VIEW_TYPE_ITEM = 0;
+        private final int VIEW_TYPE_LOADING = 1;
 
         public HitAdapter(ArrayList<Hit> hits) {
             this.hits = hits;
@@ -423,15 +494,30 @@ public class RecipesFragment extends Fragment {
 
         @NonNull
         @Override
-        public HitHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(requireActivity());
-            return new HitHolder(layoutInflater, parent);
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            if (viewType == VIEW_TYPE_ITEM) {
+                LayoutInflater layoutInflater = LayoutInflater.from(requireActivity());
+                return new HitHolder(layoutInflater, parent);
+            } else {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_loading_recipe_grid, parent, false);
+                return new LoadHolder(view);
+            }
         }
 
         @Override
-        public void onBindViewHolder(@NonNull HitHolder holder, int position) {
-            Hit hit = this.hits.get(position);
-            holder.bind(hit);
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+            if (holder instanceof HitHolder) {
+                Hit hit = this.hits.get(position);
+                ((HitHolder) holder).bind(hit);
+            } else if (holder instanceof LoadHolder) {
+                holder = ((LoadHolder) holder);
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return hits.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
         }
 
         @Override

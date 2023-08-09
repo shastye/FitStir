@@ -83,4 +83,9 @@
         <item name="cornerSizeBottomRight">16dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
+
+    <style name="ColorOnPrimaryProgressBarColor">
+        <item name="colorAccent">?attr/colorOnPrimary</item>
+    </style>
+
 </resources>

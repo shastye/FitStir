@@ -157,6 +157,15 @@ public class EdamamAPI_RecipesV2 {
                 .build();
     }
 
+    public EdamamAPI_RecipesV2(String nextHref) {
+        client = new OkHttpClient();
+        request = new Request.Builder()
+                .url(nextHref)
+                .header("Accept", "application/json")
+                .header("Accept-Languagae", "en")
+                .build();
+    }
+
     public int getResponseCode() { return this.responseCode; }
     public Headers getResponseHeader() { return this.responseHeader; }
     public ResponseBody getResponseBody() { return this.responseBody; }

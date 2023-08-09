@@ -1,7 +1,9 @@
 package com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2;
 
 import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.Link;
+import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.Next;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -47,5 +49,30 @@ public class RecipeResponse {
     public void setTo(int to) { this.to = to; }
     public void setCount(int count) { this.count = count; }
     public void set_links(Link _links) { this._links = _links; }
-    public void setHits(ArrayList<Hit> hits) { this.hits = hits; } 
+    public void setHits(ArrayList<Hit> hits) { this.hits = hits; }
+
+    public void loadMore() {
+        if (this._links.getNext() != null) {
+            Next next = _links.getNext();
+
+            EdamamAPI_RecipesV2 api = new EdamamAPI_RecipesV2(next.getHref());
+            api.execute();
+
+            RecipeResponse temp;
+            try {
+                temp = api.getRecipeResponse();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (temp != null) {
+                this.setTo(temp.getTo());
+                this.set_links(temp.get_links());
+
+                for (int i = 0; i < temp.getHits().size(); i++) {
+                    this.getHits().add(temp.getHits().get(i));
+                }
+            }
+        }
+    }
 }
