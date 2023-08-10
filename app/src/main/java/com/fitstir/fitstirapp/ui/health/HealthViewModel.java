@@ -26,7 +26,9 @@ public class HealthViewModel extends ViewModel {
 
     private final MutableLiveData<ArrayList<Hit>> hits = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Recipe> clickedRecipe = new MutableLiveData<>(new Recipe());
-    private final MutableLiveData<Recipe> firstRecipe = new MutableLiveData<>(new Recipe());
+    private final MutableLiveData<Hit> firstHit = new MutableLiveData<>(new Hit());
+
+    private final MutableLiveData<Boolean> isBacking = new MutableLiveData<>(false);
 
 
     public HealthViewModel() {
@@ -78,8 +80,11 @@ public class HealthViewModel extends ViewModel {
     public MutableLiveData<Recipe> getClickedRecipe() {
         return clickedRecipe;
     }
-    public MutableLiveData<Recipe> getFirstRecipe() {
-        return firstRecipe;
+    public MutableLiveData<Hit> getFirstHit() {
+        return firstHit;
+    }
+    public MutableLiveData<Boolean> getIsBacking() {
+        return isBacking;
     }
 
     public void setMinIngr(String minIngr) { this.minIngr.setValue(minIngr); }
@@ -101,7 +106,10 @@ public class HealthViewModel extends ViewModel {
     public void setClickedRecipe(Recipe recipe) {
         this.clickedRecipe.setValue(recipe);
     }
-    public void setFirstRecipe(Recipe recipe) {
-        this.firstRecipe.setValue(recipe);
+    public void setFirstHit(Hit hit) {
+        this.firstHit.setValue(hit);
+    }
+    public void setIsBacking(boolean isBacking) {
+        this.isBacking.setValue(isBacking);
     }
 }

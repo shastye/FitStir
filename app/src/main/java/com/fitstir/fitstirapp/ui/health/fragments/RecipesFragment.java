@@ -31,6 +31,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,7 +80,6 @@ public class RecipesFragment extends Fragment {
     private AppBarLayout viewRecipeBar, searchRecipeBar;
     private TextView labelRecipeBar, centerMessage;
     private EditText searchBar;
-    private CardView firstHitBackground;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -97,13 +97,22 @@ public class RecipesFragment extends Fragment {
         viewRecipeBar = root.findViewById(R.id.recipe_view_toolbar);
         searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
-        labelRecipeBar.setText("");
         centerMessage = binding.textRecipes;
-        centerMessage.setVisibility(View.VISIBLE);
         centerMessage.setText("Search for a Recipe.");
         recipeResponse = binding.recipeSearchResponse;
-        recipeResponse.setVisibility(View.INVISIBLE);
-        firstHitBackground = binding.recipeMainBackground;
+        CardView firstHitBackground = binding.recipeMainBackground;
+
+        if (healthViewModel.getHits().getValue() == null || healthViewModel.getHits().getValue().equals(new ArrayList<>())) {
+            labelRecipeBar.setText("");
+            centerMessage.setVisibility(View.VISIBLE);
+            recipeResponse.setVisibility(View.INVISIBLE);
+        } else {
+            try {
+                search();
+            } catch (IOException | ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         setAppBarState(STANDARD_APPBAR);
 
@@ -257,7 +266,7 @@ public class RecipesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 healthViewModel.setClickedRecipe(firstHit.getRecipe());
-                //Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
+                Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
             }
         });
 
@@ -294,10 +303,13 @@ public class RecipesFragment extends Fragment {
         response = api.getRecipeResponse();
 
         hits = response.getHits();
+        healthViewModel.setHits(hits);
+
         if (hits.size() != 0) {
             firstHit = hits.get(0);
-            healthViewModel.setFirstRecipe(firstHit.getRecipe());
+            healthViewModel.setFirstHit(firstHit);
             hits.remove(firstHit);
+            healthViewModel.setHits(hits);
 
             if (hits.size() != 0) {
                 hitRecyclerView = binding.recipeRecyclerView;
@@ -324,7 +336,6 @@ public class RecipesFragment extends Fragment {
                     }
                 });
 
-                healthViewModel.setHits(hits);
                 updateUI(hits);
             }
 
@@ -480,7 +491,7 @@ public class RecipesFragment extends Fragment {
         @Override
         public void onClick(View v) {
             healthViewModel.setClickedRecipe(hit.getRecipe());
-            //Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
+            Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
         }
     }
 

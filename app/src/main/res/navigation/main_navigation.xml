@@ -113,7 +113,11 @@
         android:id="@+id/navigation_recipes"
         android:name="com.fitstir.fitstirapp.ui.health.fragments.RecipesFragment"
         android:label="Recipes"
-        tools:layout="@layout/fragment_recipes" />
+        tools:layout="@layout/fragment_recipes" >
+        <action
+            android:id="@+id/action_navigation_recipes_to_navigation_view_recipe"
+            app:destination="@id/navigation_view_recipe" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_find_dietitian"
@@ -196,4 +200,10 @@
         android:name="com.fitstir.fitstirapp.ui.goals.fragments.ViewGoalFragment"
         android:label="View Goal"
         tools:layout="@layout/fragment_view_goal" />
+
+    <fragment
+        android:id="@+id/navigation_view_recipe"
+        android:name="com.fitstir.fitstirapp.ui.health.fragments.ViewRecipeFragment"
+        android:label="Recipe"
+        tools:layout="@layout/fragment_view_recipe" />
 </navigation>
