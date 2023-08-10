@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.health;
+package com.fitstir.fitstirapp.ui.health.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentHealthBinding;
+import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.SectionGridAdapter;
 import com.fitstir.fitstirapp.ui.utility.classes.SectionItem;
 

@@ -68,7 +68,7 @@
 
     <fragment
         android:id="@+id/navigation_health"
-        android:name="com.fitstir.fitstirapp.ui.health.HealthFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.fragments.HealthFragment"
         android:label="Health"
         tools:layout="@layout/fragment_health" >
         <action
@@ -93,37 +93,37 @@
 
     <fragment
         android:id="@+id/navigation_calorie_tracker"
-        android:name="com.fitstir.fitstirapp.ui.health.CalorieTrackerFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.fragments.CalorieTrackerFragment"
         android:label="Calorie Tracker"
         tools:layout="@layout/fragment_calorie_tracker" />
 
     <fragment
         android:id="@+id/navigation_food_guide"
-        android:name="com.fitstir.fitstirapp.ui.health.FoodGuideFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.fragments.FoodGuideFragment"
         android:label="Food Guide"
         tools:layout="@layout/fragment_food_guide" />
 
     <fragment
         android:id="@+id/navigation_weight_loss"
-        android:name="com.fitstir.fitstirapp.ui.health.WeightLossFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.fragments.WeightLossFragment"
         android:label="Weight Loss"
         tools:layout="@layout/fragment_weight_loss" />
 
     <fragment
         android:id="@+id/navigation_recipes"
-        android:name="com.fitstir.fitstirapp.ui.health.RecipesFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.fragments.RecipesFragment"
         android:label="Recipes"
         tools:layout="@layout/fragment_recipes" />
 
     <fragment
         android:id="@+id/navigation_find_dietitian"
-        android:name="com.fitstir.fitstirapp.ui.health.FindDietitianFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.fragments.FindDietitianFragment"
         android:label="Find Dietitian"
         tools:layout="@layout/fragment_find_dietitian" />
 
     <fragment
         android:id="@+id/navigation_diary"
-        android:name="com.fitstir.fitstirapp.ui.health.DiaryFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.fragments.DiaryFragment"
         android:label="Diary"
         tools:layout="@layout/fragment_diary" />
 

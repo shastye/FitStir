@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.health;
+package com.fitstir.fitstirapp.ui.health.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -37,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRecipesBinding;
+import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2.EdamamAPI_RecipesV2;
 import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2.Hit;
