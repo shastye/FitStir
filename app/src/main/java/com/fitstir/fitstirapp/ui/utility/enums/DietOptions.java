@@ -1,12 +1,13 @@
 package com.fitstir.fitstirapp.ui.utility.enums;
 
 public enum DietOptions {
-    BALANCED("Balanced", 0, "balanced"),
-    HIGH_FIBER("High Fiber", 1, "high-fiber"),
-    HIGH_PROTEIN("High Protein", 2, "high-protein"),
-    LOW_CARB("Low Carb", 3, "low-carb"),
-    LOW_FAT("Low Fat", 4, "low-fat"),
-    LOW_SODIUM("Low Sodium", 5, "low-sodium");
+    BLANK("", 0, ""),
+    BALANCED("Balanced", 1, "balanced"),
+    HIGH_FIBER("High Fiber", 2, "high-fiber"),
+    HIGH_PROTEIN("High Protein", 3, "high-protein"),
+    LOW_CARB("Low Carb", 4, "low-carb"),
+    LOW_FAT("Low Fat", 5, "low-fat"),
+    LOW_SODIUM("Low Sodium", 6, "low-sodium");
 
     private final String spinnerTitle;
     private final int value;

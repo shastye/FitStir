@@ -3,6 +3,8 @@ package com.fitstir.fitstirapp.ui.utility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,6 +13,15 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 
 import com.fitstir.fitstirapp.R;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Methods {
     @NonNull
@@ -36,6 +47,32 @@ public class Methods {
         TypedValue value = new TypedValue();
         context.getTheme().resolveAttribute(R_attr_color, value, true);
         return value.data;
+    }
+
+    public static Bitmap getBitmapFromURL(String url) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        Future<Bitmap> bitmapFuture = executor.submit(() -> {
+            try {
+                URL urlConnection = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+
+                return myBitmap;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        try {
+            return bitmapFuture.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

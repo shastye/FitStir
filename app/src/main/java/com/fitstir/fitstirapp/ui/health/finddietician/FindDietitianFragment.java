@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.health;
+package com.fitstir.fitstirapp.ui.health.finddietician;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.databinding.FragmentFindDietitianBinding;
+import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 
 public class FindDietitianFragment extends Fragment {
 

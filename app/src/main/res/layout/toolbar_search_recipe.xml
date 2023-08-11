@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/recipe_search_toolbar"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/grey_border_bottom"
+        android:backgroundTint="?attr/colorPrimary">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/recipe_toolbar_back_arrow_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_back_arrow_24dp"
+                    android:tint="?attr/colorOnPrimary"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="3dp"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/recipe_toolbar_search_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/recipe_toolbar_back_arrow_icon"
+                    android:layout_toStartOf="@+id/recipe_toolbar_filter_icon"
+                    android:background="@null"
+                    android:hint="Search Recipe"
+                    android:minHeight="32dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textColorHint="?attr/colorOnPrimary"
+                    android:textSize="20sp"
+                    android:maxLines="1"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/recipe_toolbar_filter_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_filter_black_24dp"
+                    android:tint="?attr/colorOnPrimary"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="3dp"/>
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+</merge>
