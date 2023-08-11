@@ -215,15 +215,7 @@ public class EdamamAPI_RecipesV2 {
 
         responseCode = response.code();
         responseHeader = response.headers();
-
         responseBody = response.body();
-
-        /*ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        try {
-            recipeResponse = objectMapper.readValue(this.getResponseAsString(), RecipeResponse.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
 
         Future<RecipeResponse> recipeFuture = getFutureRecipe();
         try {

@@ -83,6 +83,8 @@ public class RecipesFragment extends Fragment {
 
         // Addition Text Here
 
+        // TODO: Put api logo on both pages
+
         isLoading = false;
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
@@ -100,6 +102,8 @@ public class RecipesFragment extends Fragment {
             recipeResponse.setVisibility(View.INVISIBLE);
         } else {
             try {
+                // TODO: Use already stored value for hits instead of rerunning the api search
+
                 search();
             } catch (IOException | ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
