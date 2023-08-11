@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.health.fragments;
+package com.fitstir.fitstirapp.ui.health;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

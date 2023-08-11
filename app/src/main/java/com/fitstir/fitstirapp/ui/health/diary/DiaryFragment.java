@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.health.fragments;
+package com.fitstir.fitstirapp.ui.health.diary;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.databinding.FragmentWeightLossBinding;
+import com.fitstir.fitstirapp.databinding.FragmentDiaryBinding;
 import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 
-public class WeightLossFragment extends Fragment {
+public class DiaryFragment extends Fragment {
 
-    private FragmentWeightLossBinding binding;
+    private FragmentDiaryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HealthViewModel healthViewModel =
                 new ViewModelProvider(this).get(HealthViewModel.class);
 
-        binding = FragmentWeightLossBinding.inflate(inflater, container, false);
+        binding = FragmentDiaryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textWeightLoss;
+        final TextView textView = binding.textDiary;
         //healthViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here

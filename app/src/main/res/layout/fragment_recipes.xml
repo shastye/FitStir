@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.health.fragments.RecipesFragment">
+    tools:context=".ui.health.recipes.RecipesFragment">
 
     <TextView
         android:id="@+id/text_recipes"

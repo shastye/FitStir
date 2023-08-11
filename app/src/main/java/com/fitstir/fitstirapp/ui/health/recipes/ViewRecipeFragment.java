@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.health.fragments;
+package com.fitstir.fitstirapp.ui.health.recipes;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
