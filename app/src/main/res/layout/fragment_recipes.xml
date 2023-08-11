@@ -44,7 +44,7 @@
 
 
             <include layout="@layout/toolbar_search_recipe"/>
-            <include layout="@layout/toolbar_view_recipe"/>
+            <include layout="@layout/toolbar_view_recipe_search"/>
 
 
         </RelativeLayout>
@@ -98,7 +98,7 @@
             android:src="@color/mid_grey"
             android:scaleType="centerCrop"
             app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
-            app:shapeAppearanceOverlay="@style/RoundedStart"
+            app:shapeAppearanceOverlay="@style/RoundedBottomLeft"
             app:layout_constraintBottom_toBottomOf="@id/recipe_main_background"
             app:layout_constraintEnd_toEndOf="@id/recipe_main_background"
             app:layout_constraintStart_toStartOf="@id/recipe_main_background"

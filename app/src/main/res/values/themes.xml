@@ -70,18 +70,18 @@
         <item name="cornerSizeTopRight">36dp</item>
     </style>
 
-    <style name="RoundedStart" parent="">
+    <style name="RoundedBottomLeft" parent="">
         <item name="cornerSizeBottomLeft">36dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeTopRight">0dp</item>
     </style>
 
-    <style name="RoundedBottomAndStart" parent="">
-        <item name="cornerSizeTopRight">4dp</item>
-        <item name="cornerSizeTopLeft">8dp</item>
-        <item name="cornerSizeBottomRight">16dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
+    <style name="RoundedBottom" parent="">
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">36dp</item>
+        <item name="cornerSizeBottomLeft">36dp</item>
     </style>
 
     <style name="ColorOnPrimaryProgressBarColor">

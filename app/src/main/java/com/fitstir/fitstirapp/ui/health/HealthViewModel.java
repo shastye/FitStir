@@ -28,16 +28,38 @@ public class HealthViewModel extends ViewModel {
     private final MutableLiveData<Recipe> clickedRecipe = new MutableLiveData<>(new Recipe());
     private final MutableLiveData<Hit> firstHit = new MutableLiveData<>(new Hit());
 
-    private final MutableLiveData<Boolean> isBacking = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> isLiked = new MutableLiveData<>(false);
+    private final MutableLiveData<String> instructionsList;
 
 
     public HealthViewModel() {
         mText = new MutableLiveData<>();
         getText().setValue("Search for an item.");
+
+        instructionsList = new MutableLiveData<>();
+        instructionsList.setValue(
+            "*** These are generic instructions ***\n\n\n" +
+            "\u2460 Preheat oven to 350\u00B0F.\n\n" +
+            "\u2461 Prepare the marinade:\n" +
+                "Whisk together the lime rind, lime juice, oil, ginger, and jalapeno.\n" +
+                "Set aside a teaspoon of the mixture.\n\n" +
+            "\u2462 Place salmon steaks into a dish just large enough to hold them.\n\n" +
+            "\u2463 Pour remaining marinade mixture over salmon and turn to coat.\n\n" +
+            "\u2464 Marinate at room temperature for 15 minutes, turning once.\n" +
+                "(Do not marinate longer than 30 minutes or salmon will become mushy.)\n\n" +
+            "\u2465 Bake for 15 minutes.\n" +
+                "Turn oven to broil and broil for 3-4 minutes.\n" +
+                "(Fish should flake easily with a fork.)\n\n" +
+            "\u2466 Remove to platter and spoon reserved marinade over salmon.\n\n" +
+            "\u2467 Serve immediately.\n\n\n"
+        );
     }
 
     public MutableLiveData<String> getText() {
         return mText;
+    }
+    public MutableLiveData<String> getInstructionsList() {
+        return instructionsList;
     }
 
 
@@ -83,8 +105,8 @@ public class HealthViewModel extends ViewModel {
     public MutableLiveData<Hit> getFirstHit() {
         return firstHit;
     }
-    public MutableLiveData<Boolean> getIsBacking() {
-        return isBacking;
+    public MutableLiveData<Boolean> getIsLiked() {
+        return isLiked;
     }
 
     public void setMinIngr(String minIngr) { this.minIngr.setValue(minIngr); }
@@ -109,7 +131,7 @@ public class HealthViewModel extends ViewModel {
     public void setFirstHit(Hit hit) {
         this.firstHit.setValue(hit);
     }
-    public void setIsBacking(boolean isBacking) {
-        this.isBacking.setValue(isBacking);
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked.setValue(isLiked);
     }
 }

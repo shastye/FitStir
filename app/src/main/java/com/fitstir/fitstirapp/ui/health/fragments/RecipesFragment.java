@@ -282,6 +282,12 @@ public class RecipesFragment extends Fragment {
     }
 
     private void search() throws IOException, ExecutionException, InterruptedException {
+        viewRecipeBar = root.findViewById(R.id.recipe_view_toolbar);
+        searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
+        labelRecipeBar = root.findViewById(R.id.recipe_search_label);
+        centerMessage = binding.textRecipes;
+        recipeResponse = binding.recipeSearchResponse;
+
         healthViewModel.setToSearchFor(searchBar.getText().toString());
 
         EdamamAPI_RecipesV2 api = new EdamamAPI_RecipesV2(
@@ -481,11 +487,21 @@ public class RecipesFragment extends Fragment {
             this.recipeImage.setImageBitmap(getBitmapFromURL(hit.getRecipe().getImage()));
             this.recipeLabel.setText(hit.getRecipe().getLabel());
             this.recipeSource.setText(hit.getRecipe().getSource());
-            float tCalPerServing = hit.getRecipe().getCalories() / hit.getRecipe().getYield();
-            String calories = (int) tCalPerServing + " calories";
-            this.recipeCalories.setText(calories);
-            String time = String.valueOf((int) hit.getRecipe().getTotalTime()) + " minutes";
-            this.recipeTime.setText(time);
+
+            if (hit.getRecipe().getCalories() != 0.0f) {
+                float tCalPerServing = hit.getRecipe().getCalories() / hit.getRecipe().getYield();
+                String calories = (int) tCalPerServing + " calories";
+                this.recipeCalories.setText(calories);
+            } else {
+                this.recipeCalories.setVisibility(View.GONE);
+            }
+
+            if (hit.getRecipe().getTotalTime() != 0.0f) {
+                String time = String.valueOf((int) hit.getRecipe().getTotalTime()) + " minutes";
+                this.recipeTime.setText(time);
+            } else {
+                this.recipeTime.setVisibility(View.GONE);
+            }
         }
 
         @Override
