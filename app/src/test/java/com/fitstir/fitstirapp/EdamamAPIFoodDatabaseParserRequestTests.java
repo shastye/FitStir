@@ -4,10 +4,10 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.EdamamAPI_FoodDatabaseParser;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.FoodResponse;
-import com.fitstir.fitstirapp.ui.utility.enums.CategoryOptions;
-import com.fitstir.fitstirapp.ui.utility.enums.HealthOptions;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.EdamamAPI_FoodDatabaseParser;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.FoodResponse;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.CategoryOptions;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.HealthOptions;
 
 import org.junit.Test;
 

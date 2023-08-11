@@ -1,6 +1,6 @@
-package com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser;
+package com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser;
 
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.Link;
+import com.fitstir.fitstirapp.ui.health.edamamapi.Link;
 
 import java.util.ArrayList;
 

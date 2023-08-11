@@ -3,8 +3,8 @@ package com.fitstir.fitstirapp.ui.health;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2.Hit;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2.Recipe;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 
 import java.util.ArrayList;
 

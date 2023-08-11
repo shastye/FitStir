@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2.EdamamAPI_RecipesV2;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2.RecipeResponse;
-import com.fitstir.fitstirapp.ui.utility.enums.CuisineType;
-import com.fitstir.fitstirapp.ui.utility.enums.DietOptions;
-import com.fitstir.fitstirapp.ui.utility.enums.DishType;
-import com.fitstir.fitstirapp.ui.utility.enums.HealthOptions;
-import com.fitstir.fitstirapp.ui.utility.enums.MealType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.EdamamAPI_RecipesV2;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.RecipeResponse;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.CuisineType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.DietOptions;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.DishType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.HealthOptions;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
 
 import org.junit.Test;
 

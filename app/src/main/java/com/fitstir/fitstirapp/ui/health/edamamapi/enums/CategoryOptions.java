@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.utility.enums;
+package com.fitstir.fitstirapp.ui.health.edamamapi.enums;
 
 public enum CategoryOptions {
     GENERIC_FOODS("Generic Foods", 0, "generic-foods"),

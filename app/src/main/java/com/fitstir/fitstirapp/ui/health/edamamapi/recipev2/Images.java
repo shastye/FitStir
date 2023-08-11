@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2;
+package com.fitstir.fitstirapp.ui.health.edamamapi.recipev2;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -18,7 +18,7 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewRecipeBinding;
 import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2.Recipe;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;

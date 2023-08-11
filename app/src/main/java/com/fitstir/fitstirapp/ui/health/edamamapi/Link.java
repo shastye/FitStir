@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.utility.classes.edamamapi;
+package com.fitstir.fitstirapp.ui.health.edamamapi;
 
 import java.util.Objects;
 

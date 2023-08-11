@@ -1,17 +1,17 @@
-package com.fitstir.fitstirapp.ui.utility.classes.edamamapi;
+package com.fitstir.fitstirapp.ui.health.edamamapi;
 
 import java.util.Objects;
 
-public class Self {
+public class Next {
     private String title;
     private String href;
 
-    public Self() { }
-    public Self(String title, String href) {
+    public Next() { }
+    public Next(String title, String href) {
         this.title = title;
         this.href = href;
     }
-    public Self(Self next) {
+    public Next(Next next) {
         this.title = next.title;
         this.href = next.href;
     }
@@ -20,10 +20,10 @@ public class Self {
     public boolean equals(Object o) {
         if (o == this) {
             return true;
-        } else if (!(o instanceof Self)) {
+        } else if (!(o instanceof Next)) {
             return false;
         } else {
-            Self next = (Self) o;
+            Next next = (Next) o;
             return (Objects.equals(this.title, next.title) && Objects.equals(this.href, next.href));
         }
     }

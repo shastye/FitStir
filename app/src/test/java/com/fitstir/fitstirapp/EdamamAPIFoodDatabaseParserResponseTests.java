@@ -5,17 +5,17 @@ import static org.junit.Assert.assertTrue;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.FoodResponse;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.Food;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.Hint;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.Link;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.Measure;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.Next;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.Nutrients;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.Parsed;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.Qualified;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.Qualify;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser.ServingSize;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.FoodResponse;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Food;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
+import com.fitstir.fitstirapp.ui.health.edamamapi.Link;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Measure;
+import com.fitstir.fitstirapp.ui.health.edamamapi.Next;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Qualified;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Qualify;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.ServingSize;
 
 import org.junit.Test;
 

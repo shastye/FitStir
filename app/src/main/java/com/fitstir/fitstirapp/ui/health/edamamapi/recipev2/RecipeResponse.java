@@ -1,7 +1,7 @@
-package com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2;
+package com.fitstir.fitstirapp.ui.health.edamamapi.recipev2;
 
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.Link;
-import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.Next;
+import com.fitstir.fitstirapp.ui.health.edamamapi.Link;
+import com.fitstir.fitstirapp.ui.health.edamamapi.Next;
 
 import java.io.IOException;
 import java.util.ArrayList;

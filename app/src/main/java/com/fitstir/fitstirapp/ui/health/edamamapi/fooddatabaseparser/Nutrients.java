@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.utility.classes.edamamapi.fooddatabaseparser;
+package com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
