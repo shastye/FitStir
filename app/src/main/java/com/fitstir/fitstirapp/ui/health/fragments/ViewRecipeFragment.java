@@ -19,6 +19,7 @@ import com.fitstir.fitstirapp.databinding.FragmentViewRecipeBinding;
 import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.edamamapi.recipev2.Recipe;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,10 @@ public class ViewRecipeFragment extends Fragment {
 
         TextView recipeName = root.findViewById(R.id.recipe_view_label);
         recipeName.setText(clickedRecipe.getLabel());
+
+
+        ShapeableImageView recipeImage = binding.viewRecipeImage;
+        recipeImage.setImageBitmap(Methods.getBitmapFromURL(clickedRecipe.getImage()));
 
 
         TextView time = binding.viewRecipeTime;
@@ -205,11 +210,15 @@ public class ViewRecipeFragment extends Fragment {
             printedIngr.append((char) (0x2460 + i));
             printedIngr.append("  ");
             printedIngr.append(ingrList.get(i));
-            printedIngr.append("\n\n");
+            if (i != ingrList.size() - 1) {
+                printedIngr.append("\n\n");
+            }
         }
         ingredients.setText(printedIngr.toString());
 
         instructions.setText(healthViewModel.getInstructionsList().getValue());
+
+        // For if we buy the feature that allows this
         /*ArrayList<String> instrList = clickedRecipe.getInstructionLines();
         StringBuilder printedInstr = new StringBuilder();
         for (int i = 0; i < ingrList.size(); i++) {

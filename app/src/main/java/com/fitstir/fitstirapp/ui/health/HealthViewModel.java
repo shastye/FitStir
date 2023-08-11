@@ -51,7 +51,7 @@ public class HealthViewModel extends ViewModel {
                 "Turn oven to broil and broil for 3-4 minutes.\n" +
                 "(Fish should flake easily with a fork.)\n\n" +
             "\u2466 Remove to platter and spoon reserved marinade over salmon.\n\n" +
-            "\u2467 Serve immediately.\n\n\n"
+            "\u2467 Serve immediately."
         );
     }
 

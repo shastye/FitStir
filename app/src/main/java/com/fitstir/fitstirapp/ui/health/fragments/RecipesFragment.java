@@ -1,8 +1,6 @@
 package com.fitstir.fitstirapp.ui.health.fragments;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
 import android.os.Bundle;
@@ -50,14 +48,8 @@ import com.fitstir.fitstirapp.ui.utility.enums.MealType;
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class RecipesFragment extends Fragment {
     private final int STANDARD_APPBAR = 0;
@@ -350,7 +342,7 @@ public class RecipesFragment extends Fragment {
             centerMessage.setVisibility(View.INVISIBLE);
             recipeResponse.setVisibility(View.VISIBLE);
 
-            binding.recipeMainImage.setImageBitmap(getBitmapFromURL(firstHit.getRecipe().getImage()));
+            binding.recipeMainImage.setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
             binding.recipeMainLabel.setText(firstHit.getRecipe().getLabel());
             binding.recipeMainSource.setText(firstHit.getRecipe().getSource());
             float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
@@ -421,32 +413,6 @@ public class RecipesFragment extends Fragment {
         }
     }
 
-    private Bitmap getBitmapFromURL(String url) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-
-        Future<Bitmap> bitmapFuture = executor.submit(() -> {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-
-                return myBitmap;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        try {
-            return bitmapFuture.get();
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private void updateUI(ArrayList<Hit> hits) {
         hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         hitAdapter = new HitAdapter(hits);
@@ -484,7 +450,7 @@ public class RecipesFragment extends Fragment {
         public void bind(Hit hit) {
             this.hit = hit;
 
-            this.recipeImage.setImageBitmap(getBitmapFromURL(hit.getRecipe().getImage()));
+            this.recipeImage.setImageBitmap(Methods.getBitmapFromURL(hit.getRecipe().getImage()));
             this.recipeLabel.setText(hit.getRecipe().getLabel());
             this.recipeSource.setText(hit.getRecipe().getSource());
 
