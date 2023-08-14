@@ -7,6 +7,7 @@
     tools:context=".ui.workouts.UpperBodyFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/upper_Body_RV"
         android:layout_width="409dp"
         android:layout_height="729dp"
         app:layout_constraintEnd_toEndOf="parent"

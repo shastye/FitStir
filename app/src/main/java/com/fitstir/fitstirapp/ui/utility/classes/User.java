@@ -21,8 +21,6 @@ public class User {
         void onCallback(User value);
     }
 
-
-
     private String name, email, password, sex;
     private Integer heightFt, heightIn, weight, weightGoal, age, themeID, intervalID, rangeID, unitID;
     private List<Goal> goals;
