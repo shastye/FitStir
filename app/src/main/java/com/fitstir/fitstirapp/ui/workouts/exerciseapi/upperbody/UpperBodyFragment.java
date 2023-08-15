@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts;
+package com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentUpperBodyBinding;
+import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
+import com.fitstir.fitstirapp.ui.workouts.exerciseapi.RecyclerViewInterface;
 import com.fitstir.fitstirapp.ui.workouts.exerciseapi.UpperBodyAdapter;
 import com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody.UpperBodyApi;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UpperBodyFragment extends Fragment {
+public class UpperBodyFragment extends Fragment implements RecyclerViewInterface {
 
     private FragmentUpperBodyBinding binding;
     private RecyclerView workouts_RV;
@@ -53,7 +55,7 @@ public class UpperBodyFragment extends Fragment {
         workouts_RV.setItemAnimator(new DefaultItemAnimator());
         workouts_RV.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
 
-        viewAdapter = new UpperBodyAdapter(this.getActivity(), upperBodyApiArrayList);
+        viewAdapter = new UpperBodyAdapter(this.getActivity(), upperBodyApiArrayList, this);
 
         workouts_RV.setAdapter(viewAdapter);
         
@@ -91,5 +93,10 @@ public class UpperBodyFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }

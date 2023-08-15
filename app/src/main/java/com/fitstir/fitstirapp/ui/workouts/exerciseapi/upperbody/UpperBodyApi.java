@@ -1,5 +1,11 @@
 package com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody;
 
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+
+import com.fitstir.fitstirapp.R;
+
 public class UpperBodyApi {
     String bodyPart;
     String equipment;
@@ -7,6 +13,15 @@ public class UpperBodyApi {
     String target;
     String directions;
     String gifURL;
+    String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getBodyPart() {
         return bodyPart;
@@ -58,13 +73,14 @@ public class UpperBodyApi {
 
     public UpperBodyApi(){}
 
-    public UpperBodyApi(String bodyPart, String equipment, String exercise, String target, String directions, String gifURL) {
+    public UpperBodyApi(String bodyPart, String equipment, String exercise, String target, String directions, String gifURL, String image) {
         this.bodyPart = bodyPart;
         this.equipment = equipment;
         this.exercise = exercise;
         this.target = target;
         this.directions = directions;
         this.gifURL = gifURL;
+        this.image = image;
     }
 
 

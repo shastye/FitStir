@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.workouts.UpperBodyFragment">
+    tools:context=".ui.workouts.exerciseapi.upperbody.UpperBodyFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upper_Body_RV"

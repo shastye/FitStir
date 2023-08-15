@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/navigation_upper_body"
-        android:name="com.fitstir.fitstirapp.ui.workouts.UpperBodyFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody.UpperBodyFragment"
         android:label="Upper Body"
         tools:layout="@layout/fragment_upper_body" />
 
