@@ -46,7 +46,15 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.RecipeResponse;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,7 +113,27 @@ public class RecipesFragment extends Fragment {
         setAppBarState(STANDARD_APPBAR);
 
         if (healthViewModel.getHits().getValue() == null || healthViewModel.getHits().getValue().equals(new ArrayList<>())) {
-            setRecViewState(LIKED_RECVIEW);
+            FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+            assert authUser != null;
+
+            DatabaseReference thisUser = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(authUser.getUid());
+            thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserProfileData value = snapshot.getValue(UserProfileData.class);
+                    healthViewModel.setThisUser(value);
+                    healthViewModel.setLikedRecipes(value.getLikedRecipes());
+
+                    setRecViewState(LIKED_RECVIEW);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    throw error.toException();
+                }
+            });
         } else {
             setRecViewState(SEARCH_RECVIEW);
             updateUI();

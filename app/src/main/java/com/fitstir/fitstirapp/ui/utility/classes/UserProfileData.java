@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.utility.classes;
 
 import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
 import java.util.ArrayList;
@@ -9,9 +10,18 @@ import java.util.List;
 
 public class UserProfileData {
 
-    String fullname,email, password,sex;
+    String fullname, email, password, sex;
     Integer height_ft,height_in, weight, goal_weight, age, themeID, intervalID, rangeID, unitID;
     ArrayList<Goal> goals;
+    ArrayList<Recipe> likedRecipes;
+
+    public ArrayList<Recipe> getLikedRecipes() {
+        return likedRecipes;
+    }
+
+    public void setLikedRecipes(ArrayList<Recipe> likedRecipes) {
+        this.likedRecipes = likedRecipes;
+    }
 
     public List<Goal> getGoals() {
         return goals;
@@ -131,6 +141,7 @@ public class UserProfileData {
     public UserProfileData(){
         this.goals = new ArrayList<>();
         goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, 0));
+        this.likedRecipes = new ArrayList<>();
     }
     public UserProfileData(String fullname, String email, String password,String sex,  Integer height_ft, Integer height_in, Integer weight, Integer goal_weight, Integer age) {
         this.fullname = fullname;

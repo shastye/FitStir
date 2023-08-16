@@ -17,9 +17,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewRecipeBinding;
 import com.fitstir.fitstirapp.ui.health.HealthViewModel;
-import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -288,6 +293,17 @@ public class ViewRecipeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        UserProfileData user = healthViewModel.getThisUser().getValue();
+        user.setLikedRecipes(healthViewModel.getLikedRecipes().getValue());
+        healthViewModel.setThisUser(user);
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(authUser.getUid());
+        userReference.setValue(healthViewModel.getThisUser().getValue());
+
         binding = null;
     }
 }
