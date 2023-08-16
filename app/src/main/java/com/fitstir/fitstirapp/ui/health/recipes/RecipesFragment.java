@@ -103,13 +103,7 @@ public class RecipesFragment extends Fragment {
             centerMessage.setVisibility(View.VISIBLE);
             recipeResponse.setVisibility(View.INVISIBLE);
         } else {
-            try {
-                // TODO: Use already stored value for hits instead of rerunning the api search
-
-                search();
-            } catch (IOException | ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            updateUI();
         }
 
         setAppBarState(STANDARD_APPBAR);
@@ -308,7 +302,7 @@ public class RecipesFragment extends Fragment {
             hits.remove(firstHit);
             healthViewModel.setHits(hits);
 
-            updateUI(hits);
+            updateUI();
         } else {
             centerMessage.setVisibility(View.VISIBLE);
             centerMessage.setText("No result found.\n\nTry broadening your search.");
@@ -367,11 +361,12 @@ public class RecipesFragment extends Fragment {
         }
     }
 
-    private void updateUI(ArrayList<Hit> hits) {
-        if (hits.size() != 0) {
+    private void updateUI() {
+        ArrayList<Hit> hits = healthViewModel.getHits().getValue();
+
+        if (hits != null && hits.size() != 0) {
             hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
             hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
-
             hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -392,6 +387,10 @@ public class RecipesFragment extends Fragment {
                     }
                 }
             });
+
+            hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+            hitAdapter = new HitAdapter(hits);
+            hitRecyclerView.setAdapter(hitAdapter);
         }
 
         setAppBarState(STANDARD_APPBAR);
@@ -414,10 +413,6 @@ public class RecipesFragment extends Fragment {
         ((TextView) root.findViewById(R.id.recipe_main_yeild)).setText(tYield);
         ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
         ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
-
-        hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-        hitAdapter = new HitAdapter(hits);
-        hitRecyclerView.setAdapter(hitAdapter);
 
         //likedAdapter = new RecipeAdapter(recipes);
         //likedRecyclerView.setAdapter(likedAdapter);
