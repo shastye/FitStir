@@ -19,15 +19,17 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentProfileBinding;
+import com.fitstir.fitstirapp.ui.connect.UserProfileData;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -53,24 +55,52 @@ public class ProfileFragment extends Fragment {
 
         // Add additions here
 
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
 
-        TextView name = binding.textName;
-        TextView age = binding.textAge;
-        TextView height_ft = binding.textHeightFt;
-        TextView height_in = binding.textHeightIn;
-        TextView weight = binding.textWeight;
-        TextView email = binding.textEmail;
+        DatabaseReference thisUser = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(authUser.getUid());
+        thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserProfileData value = snapshot.getValue(UserProfileData.class);
+                settingsViewModel.setThisUser(value);
 
-        name.setText(settingsViewModel.getName().getValue());
-        String tAge = settingsViewModel.getAge().getValue() + " years old";
-        age.setText(tAge);
-        String tHeightFeet = settingsViewModel.getHeightInFeet().getValue() + " feet ";
-        height_ft.setText(tHeightFeet);
-        String tHeightInches = settingsViewModel.getHeightInInches().getValue() + " inches";
-        height_in.setText(tHeightInches);
-        String tWeight = settingsViewModel.getWeight().getValue() + " lbs";
-        weight.setText(tWeight);
-        email.setText(settingsViewModel.getEmail().getValue());
+                settingsViewModel.setName(value.getFullname());
+                settingsViewModel.setAge(value.getAge());
+                settingsViewModel.setHeightInFeet(value.getHeight_ft());
+                settingsViewModel.setHeightInInches(value.getHeight_in());
+                settingsViewModel.setWeight(value.get_Weight());
+                settingsViewModel.setEmail(value.getEmail());
+
+                TextView name = binding.textName;
+                TextView age = binding.textAge;
+                TextView height_ft = binding.textHeightFt;
+                TextView height_in = binding.textHeightIn;
+                TextView weight = binding.textWeight;
+                TextView email = binding.textEmail;
+
+                name.setText(settingsViewModel.getName().getValue());
+                String tAge = settingsViewModel.getAge().getValue() + " years old";
+                age.setText(tAge);
+                String tHeightFeet = settingsViewModel.getHeightInFeet().getValue() + " feet ";
+                height_ft.setText(tHeightFeet);
+                String tHeightInches = settingsViewModel.getHeightInInches().getValue() + " inches";
+                height_in.setText(tHeightInches);
+                String tWeight = settingsViewModel.getWeight().getValue() + " lbs";
+                weight.setText(tWeight);
+                email.setText(settingsViewModel.getEmail().getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+
+
+
 
 
         try{
@@ -98,7 +128,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-            reference =  FirebaseDatabase.getInstance().getReference("Users");
+            /*reference =  FirebaseDatabase.getInstance().getReference("Users");
             reference.child(user).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -137,7 +167,7 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 }
-            });
+            });*/
         }
         catch(NullPointerException e){
             Toast.makeText(requireActivity(),"Refer to Google to see Account Details", Toast.LENGTH_SHORT).show();

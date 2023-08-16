@@ -21,19 +21,15 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
+import com.fitstir.fitstirapp.ui.connect.UserProfileData;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -43,8 +39,6 @@ import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 public class EditProfileFragment extends Fragment implements IPickResult {
 
@@ -191,7 +185,22 @@ public class EditProfileFragment extends Fragment implements IPickResult {
 
         SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
-        EditText name = binding.textNameEdit;
+        UserProfileData user = settingsViewModel.getThisUser().getValue();
+        user.setFullname(settingsViewModel.getName().getValue());
+        user.setAge(settingsViewModel.getAge().getValue());
+        user.setHeight_ft(settingsViewModel.getHeightInFeet().getValue());
+        user.setHeight_in(settingsViewModel.getHeightInInches().getValue());
+        user.set_Weight(settingsViewModel.getWeight().getValue());
+        user.setEmail(settingsViewModel.getEmail().getValue());
+        settingsViewModel.setThisUser(user);
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(authUser.getUid());
+        userReference.setValue(settingsViewModel.getThisUser().getValue());
+
+        /*EditText name = binding.textNameEdit;
         EditText age = binding.textAgeEdit;
         EditText feet = binding.textHeightFeetEdit;
         EditText inches = binding.textHeightInchesEdit;
@@ -244,7 +253,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getActivity(),"Error while reading user data", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         binding = null;
     }
 
