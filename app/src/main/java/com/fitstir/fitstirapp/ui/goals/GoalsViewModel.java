@@ -3,7 +3,7 @@ package com.fitstir.fitstirapp.ui.goals;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.fitstir.fitstirapp.ui.connect.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
 import java.util.ArrayList;

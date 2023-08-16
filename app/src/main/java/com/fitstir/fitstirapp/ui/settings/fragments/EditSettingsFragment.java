@@ -16,7 +16,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditSettingsBinding;
-import com.fitstir.fitstirapp.ui.connect.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.settings.dialogs.ChangeThemeDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;

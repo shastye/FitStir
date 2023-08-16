@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fitstir.fitstirapp.R;
-import com.fitstir.fitstirapp.ui.connect.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

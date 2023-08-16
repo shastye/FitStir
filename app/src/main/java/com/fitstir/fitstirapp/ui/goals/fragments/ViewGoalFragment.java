@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewGoalBinding;
-import com.fitstir.fitstirapp.ui.connect.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.goals.dialogs.DeleteGoalDialog;

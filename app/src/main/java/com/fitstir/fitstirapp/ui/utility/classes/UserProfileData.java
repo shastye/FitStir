@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.connect;
+package com.fitstir.fitstirapp.ui.utility.classes;
 
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentGoalsBinding;
-import com.fitstir.fitstirapp.ui.connect.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.goals.dialogs.CreateGoalDialog;

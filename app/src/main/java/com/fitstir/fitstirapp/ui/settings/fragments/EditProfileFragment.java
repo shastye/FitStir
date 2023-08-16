@@ -21,7 +21,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditProfileBinding;
-import com.fitstir.fitstirapp.ui.connect.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.android.gms.tasks.OnFailureListener;
