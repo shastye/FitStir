@@ -280,13 +280,6 @@ public class RecipesFragment extends Fragment {
     }
 
     private void search() throws IOException, ExecutionException, InterruptedException {
-        viewRecipeBar = root.findViewById(R.id.recipe_view_toolbar);
-        searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
-        labelRecipeBar = root.findViewById(R.id.recipe_search_label);
-        centerMessage = binding.textRecipes;
-        recipeResponse = root.findViewById(R.id.recipe_search_response);
-
-        healthViewModel.setToSearchFor(searchBar.getText().toString());
 
         EdamamAPI_RecipesV2 api = new EdamamAPI_RecipesV2(
                 healthViewModel.getToSearchFor().getValue(),
@@ -315,52 +308,7 @@ public class RecipesFragment extends Fragment {
             hits.remove(firstHit);
             healthViewModel.setHits(hits);
 
-            if (hits.size() != 0) {
-                hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
-                hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
-
-                hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                    }
-
-                    @Override
-                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-
-                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                        if (!isLoading) {
-                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == hits.size() - 1) {
-                                loadMore();
-                                isLoading = true;
-                            }
-                        }
-                    }
-                });
-
-                updateUI(hits);
-            }
-
-            setAppBarState(STANDARD_APPBAR);
-            labelRecipeBar.setText(searchBar.getText().toString());
-            centerMessage.setVisibility(View.INVISIBLE);
-            recipeResponse.setVisibility(View.VISIBLE);
-
-            ((ImageView) root.findViewById(R.id.recipe_main_image)).setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
-            ((TextView) root.findViewById(R.id.recipe_main_label)).setText(firstHit.getRecipe().getLabel());
-            ((TextView) root.findViewById(R.id.recipe_main_source)).setText(firstHit.getRecipe().getSource());
-            float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
-            String tCal = (int) tCalPerServing + " calories / serving";
-            ((TextView) root.findViewById(R.id.recipe_main_calories)).setText(tCal);
-            String tTime = (int) firstHit.getRecipe().getTotalTime() + " minutes";
-            ((TextView) root.findViewById(R.id.recipe_main_total_time)).setText(tTime);
-            String tYield = (int) firstHit.getRecipe().getYield() + " servings";
-            ((TextView) root.findViewById(R.id.recipe_main_yeild)).setText(tYield);
-            ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
-            ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
-
+            updateUI(hits);
         } else {
             centerMessage.setVisibility(View.VISIBLE);
             centerMessage.setText("No result found.\n\nTry broadening your search.");
@@ -420,6 +368,53 @@ public class RecipesFragment extends Fragment {
     }
 
     private void updateUI(ArrayList<Hit> hits) {
+        if (hits.size() != 0) {
+            hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
+            hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+
+            hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                    if (!isLoading) {
+                        if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == hits.size() - 1) {
+                            loadMore();
+                            isLoading = true;
+                        }
+                    }
+                }
+            });
+        }
+
+        setAppBarState(STANDARD_APPBAR);
+
+        labelRecipeBar.setText(healthViewModel.getToSearchFor().getValue());
+        centerMessage.setVisibility(View.INVISIBLE);
+        recipeResponse.setVisibility(View.VISIBLE);
+
+        Hit firstHit = healthViewModel.getFirstHit().getValue();
+
+        ((ImageView) root.findViewById(R.id.recipe_main_image)).setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
+        ((TextView) root.findViewById(R.id.recipe_main_label)).setText(firstHit.getRecipe().getLabel());
+        ((TextView) root.findViewById(R.id.recipe_main_source)).setText(firstHit.getRecipe().getSource());
+        float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
+        String tCal = (int) tCalPerServing + " calories / serving";
+        ((TextView) root.findViewById(R.id.recipe_main_calories)).setText(tCal);
+        String tTime = (int) firstHit.getRecipe().getTotalTime() + " minutes";
+        ((TextView) root.findViewById(R.id.recipe_main_total_time)).setText(tTime);
+        String tYield = (int) firstHit.getRecipe().getYield() + " servings";
+        ((TextView) root.findViewById(R.id.recipe_main_yeild)).setText(tYield);
+        ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
+        ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
+
         hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         hitAdapter = new HitAdapter(hits);
         hitRecyclerView.setAdapter(hitAdapter);
