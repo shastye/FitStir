@@ -15,7 +15,9 @@
             android:id="@+id/liked_recipe_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="0dp"/>
+            android:elevation="0dp"
+            android:paddingTop="80dp"
+            android:clipToPadding="false"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

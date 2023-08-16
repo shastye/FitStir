@@ -383,8 +383,12 @@ public class RecipesFragment extends Fragment {
             recipeResponse_CL.setVisibility(View.GONE);
             likedRecipes_CL.setVisibility(View.VISIBLE);
 
-            centerMessage.setVisibility(View.VISIBLE);
-            centerMessage.setText("No liked recipes yet.\n\nSearch to find one you like!");
+            ArrayList<Recipe> recipes = healthViewModel.getLikedRecipes().getValue();
+            if (recipes == null || recipes.size() == 0) {
+                centerMessage.setVisibility(View.VISIBLE);
+                centerMessage.setText("No liked recipes yet.\n\nSearch to find one you like!");
+            }
+
             labelRecipeBar.setText("Liked Recipes");
 
             backArrow2.setVisibility(View.GONE);
