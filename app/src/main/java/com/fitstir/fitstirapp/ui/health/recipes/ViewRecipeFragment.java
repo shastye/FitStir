@@ -28,6 +28,7 @@ public class ViewRecipeFragment extends Fragment {
     private HealthViewModel healthViewModel;
     private FragmentViewRecipeBinding binding;
     private Recipe clickedRecipe;
+    private ValueAnimator buttonColorAnimator = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -235,16 +236,30 @@ public class ViewRecipeFragment extends Fragment {
         int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
 
         ImageView likeButton = root.findViewById(R.id.recipe_toolbar_heart_icon);
-        likeButton.setColorFilter(colorOnPrimary);
+
+        if (healthViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
+            likeButton.setColorFilter(colorPrimaryVariant);
+
+            buttonColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorOnPrimary, colorPrimaryVariant);
+            buttonColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(@NonNull ValueAnimator animation) {
+                    likeButton.setColorFilter((int) animation.getAnimatedValue());
+                }
+            });
+            buttonColorAnimator.start();
+        } else {
+            likeButton.setColorFilter(colorOnPrimary);
+            buttonColorAnimator = null;
+        }
+
         likeButton.setOnClickListener(new View.OnClickListener() {
-            ValueAnimator buttonColorAnimator = null;
             @Override
             public void onClick(View v) {
                 if (buttonColorAnimator != null) {
                     buttonColorAnimator.reverse();
                     buttonColorAnimator = null;
 
-                    //healthViewModel.setIsLiked(false);
                     healthViewModel.getLikedRecipes().getValue().remove(clickedRecipe);
                 } else {
                     buttonColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorOnPrimary, colorPrimaryVariant);
@@ -256,8 +271,9 @@ public class ViewRecipeFragment extends Fragment {
                     });
                     buttonColorAnimator.start();
 
-                    //healthViewModel.setIsLiked(true);
-                    healthViewModel.getLikedRecipes().getValue().add(clickedRecipe);
+                    if (!healthViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
+                        healthViewModel.getLikedRecipes().getValue().add(clickedRecipe);
+                    }
                 }
             }
         });
