@@ -66,14 +66,16 @@ public class RecipesFragment extends Fragment {
     private ArrayList<Hit> hits;
     private Hit firstHit;
 
-    private RecyclerView hitRecyclerView;
+    private RecyclerView hitRecyclerView, likedRecyclerView;
     private HitAdapter hitAdapter;
+    private RecipeAdapter likedAdapter;
     private Parcelable recyclerViewState;
 
-    private ConstraintLayout recipeResponse;
+    private ConstraintLayout recipeResponse_CL, likedRecipes_CL;
     private AppBarLayout viewRecipeBar, searchRecipeBar;
     private TextView labelRecipeBar, centerMessage;
     private EditText searchBar;
+    private AppCompatImageView backArrow2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -95,18 +97,19 @@ public class RecipesFragment extends Fragment {
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
         centerMessage = binding.textRecipes;
         centerMessage.setText("Search for a Recipe.");
-        recipeResponse = root.findViewById(R.id.recipe_search_response);
-        CardView firstHitBackground = root.findViewById(R.id.recipe_main_background);
+        recipeResponse_CL = root.findViewById(R.id.recipe_search_response);
+        likedRecipes_CL = root.findViewById(R.id.liked_recipes);
+        backArrow2 = root.findViewById(R.id.recipe_toolbar_back_arrow_icon);
 
-        if (healthViewModel.getHits().getValue() == null || healthViewModel.getHits().getValue().equals(new ArrayList<>())) {
-            labelRecipeBar.setText("");
-            centerMessage.setVisibility(View.VISIBLE);
-            recipeResponse.setVisibility(View.INVISIBLE);
-        } else {
-            updateUI();
-        }
 
         setAppBarState(STANDARD_APPBAR);
+
+        if (healthViewModel.getHits().getValue() == null || healthViewModel.getHits().getValue().equals(new ArrayList<>())) {
+            setRecViewState(LIKED_RECVIEW);
+        } else {
+            setRecViewState(SEARCH_RECVIEW);
+            updateUI();
+        }
 
         AppCompatImageView searchRecipe = root.findViewById(R.id.recipe_toolbar_search_icon);
         searchRecipe.setOnClickListener(new View.OnClickListener() {
@@ -116,11 +119,18 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        AppCompatImageView backArrow = root.findViewById(R.id.recipe_toolbar_back_arrow_icon);
+        AppCompatImageView backArrow = root.findViewById(R.id.recipe_search_toolbar_back_arrow_icon);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleToolBarState();
+            }
+        });
+
+        backArrow2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRecViewState(LIKED_RECVIEW);
             }
         });
 
@@ -202,6 +212,7 @@ public class RecipesFragment extends Fragment {
                             healthViewModel.setToSearchFor(searchBar.getText().toString());
                             try {
                                 search();
+                                setRecViewState(SEARCH_RECVIEW);
                             } catch (IOException | ExecutionException | InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -223,6 +234,7 @@ public class RecipesFragment extends Fragment {
                             healthViewModel.setToSearchFor(searchBar.getText().toString());
                             try {
                                 search();
+                                setRecViewState(SEARCH_RECVIEW);
                             } catch (IOException | ExecutionException | InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -244,6 +256,7 @@ public class RecipesFragment extends Fragment {
                         healthViewModel.setToSearchFor(searchBar.getText().toString());
                         try {
                             search();
+                            setRecViewState(SEARCH_RECVIEW);
                         } catch (IOException | ExecutionException | InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -254,6 +267,8 @@ public class RecipesFragment extends Fragment {
             }
         });
 
+
+        CardView firstHitBackground = root.findViewById(R.id.recipe_main_background);
         firstHitBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -361,9 +376,33 @@ public class RecipesFragment extends Fragment {
         }
     }
 
-    private void updateUI() {
-        ArrayList<Hit> hits = healthViewModel.getHits().getValue();
+    private void setRecViewState(int state) {
+        recViewState = state;
 
+        if (recViewState == LIKED_RECVIEW) {
+            recipeResponse_CL.setVisibility(View.GONE);
+            likedRecipes_CL.setVisibility(View.VISIBLE);
+
+            centerMessage.setVisibility(View.VISIBLE);
+            centerMessage.setText("No liked recipes yet.\n\nSearch to find one you like!");
+            labelRecipeBar.setText("Liked Recipes");
+
+            backArrow2.setVisibility(View.GONE);
+        } else if (recViewState == SEARCH_RECVIEW) {
+            recipeResponse_CL.setVisibility(View.VISIBLE);
+            likedRecipes_CL.setVisibility(View.GONE);
+
+            centerMessage.setVisibility(View.GONE);
+            labelRecipeBar.setText(healthViewModel.getToSearchFor().getValue());
+
+            backArrow2.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updateUI() {
+        setAppBarState(STANDARD_APPBAR);
+
+        ArrayList<Hit> hits = healthViewModel.getHits().getValue();
         if (hits != null && hits.size() != 0) {
             hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
             hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
@@ -393,11 +432,9 @@ public class RecipesFragment extends Fragment {
             hitRecyclerView.setAdapter(hitAdapter);
         }
 
-        setAppBarState(STANDARD_APPBAR);
-
-        labelRecipeBar.setText(healthViewModel.getToSearchFor().getValue());
-        centerMessage.setVisibility(View.INVISIBLE);
-        recipeResponse.setVisibility(View.VISIBLE);
+        //labelRecipeBar.setText(healthViewModel.getToSearchFor().getValue());
+        //centerMessage.setVisibility(View.INVISIBLE);
+        //recipeResponse_CL.setVisibility(View.VISIBLE);
 
         Hit firstHit = healthViewModel.getFirstHit().getValue();
 
@@ -414,8 +451,15 @@ public class RecipesFragment extends Fragment {
         ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
         ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
 
-        //likedAdapter = new RecipeAdapter(recipes);
-        //likedRecyclerView.setAdapter(likedAdapter);
+
+        ArrayList<Recipe> likedRecipes = healthViewModel.getLikedRecipes().getValue();
+
+        if (likedRecipes != null && likedRecipes.size() != 0) {
+            likedRecyclerView = root.findViewById(R.id.liked_recipe_recycler_view);
+            likedRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+            likedAdapter = new RecipeAdapter(likedRecipes);
+            likedRecyclerView.setAdapter(likedAdapter);
+        }
     }
 
     private class LoadHolder extends RecyclerView.ViewHolder {
