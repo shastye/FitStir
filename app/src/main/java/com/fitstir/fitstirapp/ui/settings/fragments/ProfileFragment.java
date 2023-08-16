@@ -58,10 +58,10 @@ public class ProfileFragment extends Fragment {
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
 
-        DatabaseReference thisUser = FirebaseDatabase.getInstance()
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
                 .getReference("Users")
                 .child(authUser.getUid());
-        thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserProfileData value = snapshot.getValue(UserProfileData.class);

@@ -200,60 +200,6 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                 .child(authUser.getUid());
         userReference.setValue(settingsViewModel.getThisUser().getValue());
 
-        /*EditText name = binding.textNameEdit;
-        EditText age = binding.textAgeEdit;
-        EditText feet = binding.textHeightFeetEdit;
-        EditText inches = binding.textHeightInchesEdit;
-        EditText weight = binding.textWeightEdit;
-        EditText email = binding.textEmailEdit;
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
-        String t_name = name.getText().toString();
-        String t_age = age.getText().toString();
-        String t_feet = feet.getText().toString();
-        String t_inches = inches.getText().toString();
-        String t_weight = weight.getText().toString();
-        String t_email = email.getText().toString();
-        String uid = user.getUid();
-
-        final Map<String, Object> update = new HashMap<>();
-        update.put("fullname", t_name);
-        update.put("email", t_email);
-        update.put("height_ft", t_feet);
-        update.put("height_in", t_inches);
-        update.put("_Weight", t_weight);
-        update.put("Age", t_age);
-
-        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-
-                    String newName = name.getText().toString();
-                    String newEmail = email.getText().toString();
-                    String newFeet = feet.getText().toString();
-                    String newInches = inches.getText().toString();
-                    String newAge = age.getText().toString();
-                    String newWeight = weight.getText().toString();
-
-                    databaseReference.child(uid).updateChildren(update);
-                    settingsViewModel.setName(newName);
-                    settingsViewModel.setAge(Integer.parseInt(newAge));
-                    settingsViewModel.setHeightInFeet(Integer.parseInt(newFeet));
-                    settingsViewModel.setHeightInInches(Integer.parseInt(newInches));
-                    settingsViewModel.setWeight(Integer.parseInt(newWeight));
-                    settingsViewModel.setEmail(newEmail);
-                }
-                else {
-                    databaseReference.child(uid).setValue(update);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(),"Error while reading user data", Toast.LENGTH_SHORT).show();
-            }
-        });*/
         binding = null;
     }
 

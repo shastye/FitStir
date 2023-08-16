@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSettingsBinding;
+import com.fitstir.fitstirapp.ui.connect.UserProfileData;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.settings.dialogs.DeactivateAccountDialog;
 import com.fitstir.fitstirapp.ui.settings.dialogs.HardResetDialog;
@@ -23,6 +24,11 @@ import com.fitstir.fitstirapp.ui.settings.dialogs.ResetApplicationDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -59,15 +65,34 @@ public class SettingsFragment extends Fragment {
 
         // Add additions here
 
-        TextView theme = binding.themeID;
-        TextView range = binding.rangeID;
-        TextView interval = binding.intervalID;
-        TextView unit = binding.unitID;
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
 
-        theme.setText(root.getResources().getStringArray(R.array.theme_array)[settingsViewModel.getThemeID().getValue()]);
-        range.setText(root.getResources().getStringArray(R.array.range_array)[settingsViewModel.getRangeID().getValue()]);
-        interval.setText(root.getResources().getStringArray(R.array.interval_array)[settingsViewModel.getIntervalID().getValue()]);
-        unit.setText(root.getResources().getStringArray(R.array.unit_array)[settingsViewModel.getUnitID().getValue()]);
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(authUser.getUid());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserProfileData value = snapshot.getValue(UserProfileData.class);
+                settingsViewModel.setThisUser(value);
+
+                TextView theme = binding.themeID;
+                TextView range = binding.rangeID;
+                TextView interval = binding.intervalID;
+                TextView unit = binding.unitID;
+
+                theme.setText(root.getResources().getStringArray(R.array.theme_array)[settingsViewModel.getThemeID().getValue()]);
+                range.setText(root.getResources().getStringArray(R.array.range_array)[settingsViewModel.getRangeID().getValue()]);
+                interval.setText(root.getResources().getStringArray(R.array.interval_array)[settingsViewModel.getIntervalID().getValue()]);
+                unit.setText(root.getResources().getStringArray(R.array.unit_array)[settingsViewModel.getUnitID().getValue()]);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
 
         CardView editButton = binding.editbuttonCardViewSettings;
         editButton.setOnClickListener(new View.OnClickListener() {

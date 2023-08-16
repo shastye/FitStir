@@ -3,8 +3,39 @@ package com.fitstir.fitstirapp.ui.connect;
 public class UserProfileData {
 
     String fullname,email, password,sex;
-    Integer height_ft,height_in, weight, goal_weight, age;
+    Integer height_ft,height_in, weight, goal_weight, age, themeID, intervalID, rangeID, unitID;
 
+    public Integer getThemeID() {
+        return themeID;
+    }
+
+    public void setThemeID(Integer themeID) {
+        this.themeID = themeID;
+    }
+
+    public Integer getIntervalID() {
+        return intervalID;
+    }
+
+    public void setIntervalID(Integer intervalID) {
+        this.intervalID = intervalID;
+    }
+
+    public Integer getRangeID() {
+        return rangeID;
+    }
+
+    public void setRangeID(Integer rangeID) {
+        this.rangeID = rangeID;
+    }
+
+    public Integer getUnitID() {
+        return unitID;
+    }
+
+    public void setUnitID(Integer unitID) {
+        this.unitID = unitID;
+    }
 
     public String getFullname() {
         return fullname;
