@@ -244,7 +244,8 @@ public class ViewRecipeFragment extends Fragment {
                     buttonColorAnimator.reverse();
                     buttonColorAnimator = null;
 
-                    healthViewModel.setIsLiked(false);
+                    //healthViewModel.setIsLiked(false);
+                    healthViewModel.getLikedRecipes().getValue().remove(clickedRecipe);
                 } else {
                     buttonColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorOnPrimary, colorPrimaryVariant);
                     buttonColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -255,7 +256,8 @@ public class ViewRecipeFragment extends Fragment {
                     });
                     buttonColorAnimator.start();
 
-                    healthViewModel.setIsLiked(true);
+                    //healthViewModel.setIsLiked(true);
+                    healthViewModel.getLikedRecipes().getValue().add(clickedRecipe);
                 }
             }
         });

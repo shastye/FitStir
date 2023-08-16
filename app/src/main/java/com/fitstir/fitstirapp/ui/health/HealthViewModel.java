@@ -28,7 +28,9 @@ public class HealthViewModel extends ViewModel {
     private final MutableLiveData<Recipe> clickedRecipe = new MutableLiveData<>(new Recipe());
     private final MutableLiveData<Hit> firstHit = new MutableLiveData<>(new Hit());
 
-    private final MutableLiveData<Boolean> isLiked = new MutableLiveData<>(false);
+    //private final MutableLiveData<Boolean> isLiked = new MutableLiveData<>(false);
+    private final MutableLiveData<ArrayList<Recipe>> likedRecipes = new MutableLiveData<>(new ArrayList<>());
+
     private final MutableLiveData<String> instructionsList;
 
 
@@ -105,8 +107,11 @@ public class HealthViewModel extends ViewModel {
     public MutableLiveData<Hit> getFirstHit() {
         return firstHit;
     }
-    public MutableLiveData<Boolean> getIsLiked() {
-        return isLiked;
+    //public MutableLiveData<Boolean> getIsLiked() {
+    //    return isLiked;
+    //}
+    public MutableLiveData<ArrayList<Recipe>> getLikedRecipes() {
+        return likedRecipes;
     }
 
     public void setMinIngr(String minIngr) { this.minIngr.setValue(minIngr); }
@@ -131,7 +136,10 @@ public class HealthViewModel extends ViewModel {
     public void setFirstHit(Hit hit) {
         this.firstHit.setValue(hit);
     }
-    public void setIsLiked(boolean isLiked) {
-        this.isLiked.setValue(isLiked);
+    //public void setIsLiked(boolean isLiked) {
+    //    this.isLiked.setValue(isLiked);
+    //}
+    public void setLikedRecipes(ArrayList<Recipe> likedRecipes) {
+        this.likedRecipes.setValue(likedRecipes);
     }
 }

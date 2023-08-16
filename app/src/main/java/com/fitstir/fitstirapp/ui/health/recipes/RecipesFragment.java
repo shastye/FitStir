@@ -37,14 +37,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRecipesBinding;
 import com.fitstir.fitstirapp.ui.health.HealthViewModel;
-import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.EdamamAPI_RecipesV2;
-import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
-import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.RecipeResponse;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.CuisineType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.DietOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.HealthOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.EdamamAPI_RecipesV2;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.RecipeResponse;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.io.IOException;
@@ -52,10 +53,11 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class RecipesFragment extends Fragment {
-    private final int STANDARD_APPBAR = 0;
-    private final int SEARCH_APPBAR = 1;
+    private final int STANDARD_APPBAR = 0, SEARCH_APPBAR = 1;
+    private final int LIKED_RECVIEW = 0, SEARCH_RECVIEW = 1;
     private boolean isLoading;
     private int appBarState;
+    private int recViewState;
 
     private FragmentRecipesBinding binding;
     private View root;
@@ -93,8 +95,8 @@ public class RecipesFragment extends Fragment {
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
         centerMessage = binding.textRecipes;
         centerMessage.setText("Search for a Recipe.");
-        recipeResponse = binding.recipeSearchResponse;
-        CardView firstHitBackground = binding.recipeMainBackground;
+        recipeResponse = root.findViewById(R.id.recipe_search_response);
+        CardView firstHitBackground = root.findViewById(R.id.recipe_main_background);
 
         if (healthViewModel.getHits().getValue() == null || healthViewModel.getHits().getValue().equals(new ArrayList<>())) {
             labelRecipeBar.setText("");
@@ -282,7 +284,7 @@ public class RecipesFragment extends Fragment {
         searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
         centerMessage = binding.textRecipes;
-        recipeResponse = binding.recipeSearchResponse;
+        recipeResponse = root.findViewById(R.id.recipe_search_response);
 
         healthViewModel.setToSearchFor(searchBar.getText().toString());
 
@@ -314,7 +316,7 @@ public class RecipesFragment extends Fragment {
             healthViewModel.setHits(hits);
 
             if (hits.size() != 0) {
-                hitRecyclerView = binding.recipeRecyclerView;
+                hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
                 hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
 
                 hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -346,18 +348,18 @@ public class RecipesFragment extends Fragment {
             centerMessage.setVisibility(View.INVISIBLE);
             recipeResponse.setVisibility(View.VISIBLE);
 
-            binding.recipeMainImage.setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
-            binding.recipeMainLabel.setText(firstHit.getRecipe().getLabel());
-            binding.recipeMainSource.setText(firstHit.getRecipe().getSource());
+            ((ImageView) root.findViewById(R.id.recipe_main_image)).setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
+            ((TextView) root.findViewById(R.id.recipe_main_label)).setText(firstHit.getRecipe().getLabel());
+            ((TextView) root.findViewById(R.id.recipe_main_source)).setText(firstHit.getRecipe().getSource());
             float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
             String tCal = (int) tCalPerServing + " calories / serving";
-            binding.recipeMainCalories.setText(tCal);
+            ((TextView) root.findViewById(R.id.recipe_main_calories)).setText(tCal);
             String tTime = (int) firstHit.getRecipe().getTotalTime() + " minutes";
-            binding.recipeMainTotalTime.setText(tTime);
+            ((TextView) root.findViewById(R.id.recipe_main_total_time)).setText(tTime);
             String tYield = (int) firstHit.getRecipe().getYield() + " servings";
-            binding.recipeMainYeild.setText(tYield);
-            binding.recipeMainMealType.setText(firstHit.getRecipe().getMealType().get(0));
-            binding.recipeMainCuisineType.setText(firstHit.getRecipe().getCuisineType().get(0));
+            ((TextView) root.findViewById(R.id.recipe_main_yeild)).setText(tYield);
+            ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
+            ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
 
         } else {
             centerMessage.setVisibility(View.VISIBLE);
@@ -406,7 +408,7 @@ public class RecipesFragment extends Fragment {
             try {
                 im.hideSoftInputFromWindow(root.getWindowToken(), 0); // make keyboard hide
             } catch (NullPointerException e) {
-                Log.d("RECIPE FRAGMENT", "setAppBaeState: NullPointerException: " + e);
+                Log.d("RECIPE FRAGMENT", "setAppBarState: NullPointerException: " + e);
             }
         } else if (appBarState == SEARCH_APPBAR) {
             viewRecipeBar.setVisibility(View.GONE);
@@ -421,6 +423,9 @@ public class RecipesFragment extends Fragment {
         hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         hitAdapter = new HitAdapter(hits);
         hitRecyclerView.setAdapter(hitAdapter);
+
+        //likedAdapter = new RecipeAdapter(recipes);
+        //likedRecyclerView.setAdapter(likedAdapter);
     }
 
     private class LoadHolder extends RecyclerView.ViewHolder {
@@ -521,6 +526,78 @@ public class RecipesFragment extends Fragment {
         @Override
         public int getItemCount() {
             return hits.size();
+        }
+    }
+
+    private class RecipeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private Recipe recipe;
+        private final ImageView recipeImage;
+        private final TextView recipeLabel, recipeSource, recipeCalories, recipeTime;
+
+        public RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.layout_recipe_grid, parent, false));
+            itemView.setOnClickListener(this);
+
+            recipeImage = itemView.findViewById(R.id.layout_recipe_image);
+            recipeLabel = itemView.findViewById(R.id.layout_recipe_label);
+            recipeSource = itemView.findViewById(R.id.layout_recipe_source);
+            recipeCalories = itemView.findViewById(R.id.layout_recipe_calories);
+            recipeTime = itemView.findViewById(R.id.layout_recipe_total_time);
+        }
+
+        public void bind(Recipe recipe) {
+            this.recipe = recipe;
+
+            this.recipeImage.setImageBitmap(Methods.getBitmapFromURL(recipe.getImage()));
+            this.recipeLabel.setText(recipe.getLabel());
+            this.recipeSource.setText(recipe.getSource());
+
+            if (recipe.getCalories() != 0.0f) {
+                float tCalPerServing = recipe.getCalories() / recipe.getYield();
+                String calories = (int) tCalPerServing + " calories";
+                this.recipeCalories.setText(calories);
+            } else {
+                this.recipeCalories.setVisibility(View.GONE);
+            }
+
+            if (recipe.getTotalTime() != 0.0f) {
+                String time = String.valueOf((int) recipe.getTotalTime()) + " minutes";
+                this.recipeTime.setText(time);
+            } else {
+                this.recipeTime.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            healthViewModel.setClickedRecipe(recipe);
+            Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
+        }
+    }
+
+    private class RecipeAdapter extends RecyclerView.Adapter<RecipeHolder> {
+        private final ArrayList<Recipe> recipes;
+
+        public RecipeAdapter(ArrayList<Recipe> recipes) {
+            this.recipes = recipes;
+        }
+
+        @NonNull
+        @Override
+        public RecipeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(requireActivity());
+            return new RecipeHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecipeHolder holder, int position) {
+            Recipe recipe = this.recipes.get(position);
+            holder.bind(recipe);
+        }
+
+        @Override
+        public int getItemCount() {
+            return this.recipes.size();
         }
     }
 }
