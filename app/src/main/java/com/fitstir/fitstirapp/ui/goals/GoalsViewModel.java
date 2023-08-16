@@ -1,9 +1,9 @@
 package com.fitstir.fitstirapp.ui.goals;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.fitstir.fitstirapp.ui.connect.UserProfileData;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
 import java.util.ArrayList;
@@ -19,15 +19,18 @@ public class GoalsViewModel extends ViewModel {
     }});
     private final MutableLiveData<Integer> goalRange = new MutableLiveData<Integer>(30); // TODO: Get from settings in days
 
+    private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
+
     public GoalsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is goals fragment");
     }
 
     public MutableLiveData<String> getText() { return this.mText; }
-    public LiveData<Goal> getClickedGoal() { return clickedGoal; }
-    public LiveData<ArrayList<Goal>> getGoals() { return goals; }
-    public LiveData<Integer> getGoalRange() { return goalRange; }
+    public MutableLiveData<Goal> getClickedGoal() { return clickedGoal; }
+    public MutableLiveData<ArrayList<Goal>> getGoals() { return goals; }
+    public MutableLiveData<Integer> getGoalRange() { return goalRange; }
+    public MutableLiveData<UserProfileData> getThisUser() { return thisUser; }
 
     public void setClickedGoal(Goal goal) { clickedGoal.setValue(goal); }
     public void addGoal(Goal goal) {
@@ -43,6 +46,8 @@ public class GoalsViewModel extends ViewModel {
         goals.setValue(temp);
     }
     public void setGoalRange(int range) { goalRange.setValue(range); }
+    public void setGoals(ArrayList<Goal> goals) { this.goals.setValue(goals); }
+    public void setThisUser(UserProfileData user) { this.thisUser.setValue(user); }
 
     private Goal getGenericGoal(int goalNum) {
         Goal g;

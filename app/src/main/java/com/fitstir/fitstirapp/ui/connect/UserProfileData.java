@@ -1,9 +1,25 @@
 package com.fitstir.fitstirapp.ui.connect;
 
+import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 public class UserProfileData {
 
     String fullname,email, password,sex;
     Integer height_ft,height_in, weight, goal_weight, age, themeID, intervalID, rangeID, unitID;
+    ArrayList<Goal> goals;
+
+    public List<Goal> getGoals() {
+        return goals;
+    }
+
+    public void setGoals(ArrayList<Goal> goals) {
+        this.goals = goals;
+    }
 
     public Integer getThemeID() {
         return themeID;
@@ -83,6 +99,7 @@ public class UserProfileData {
 
     public void set_Weight(Integer weight) {
         this.weight = weight;
+        this.goals.get(0).addData(Calendar.getInstance().getTime(), weight);
     }
 
     public Integer getGoal_weight() {
@@ -91,6 +108,7 @@ public class UserProfileData {
 
     public void setGoal_weight(Integer goal_weight) {
         this.goal_weight = goal_weight;
+        this.goals.get(0).setValue(goal_weight);
     }
 
     public Integer getAge() {
@@ -107,8 +125,12 @@ public class UserProfileData {
     public void setSex(String sex) {
         this.sex = sex;
     }
-    public UserProfileData(){
 
+
+
+    public UserProfileData(){
+        this.goals = new ArrayList<>();
+        goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, 0));
     }
     public UserProfileData(String fullname, String email, String password,String sex,  Integer height_ft, Integer height_in, Integer weight, Integer goal_weight, Integer age) {
         this.fullname = fullname;
@@ -121,6 +143,8 @@ public class UserProfileData {
         this.age = age;
         this.sex = sex;
 
+        goals = new ArrayList<>();
+        goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, goal_weight));
     }
 
 
