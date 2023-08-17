@@ -49,6 +49,8 @@
             <include layout="@layout/included_recipe_search_response"/>
             <include layout="@layout/included_recipe_view_liked"/>
 
+            <include layout="@layout/included_generic_progress_bar"/>
+
 
         </RelativeLayout>
     </RelativeLayout>

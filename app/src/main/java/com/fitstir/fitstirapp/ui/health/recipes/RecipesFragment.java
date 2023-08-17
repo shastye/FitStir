@@ -79,7 +79,7 @@ public class RecipesFragment extends Fragment {
     private RecipeAdapter likedAdapter;
     private Parcelable recyclerViewState;
 
-    private ConstraintLayout recipeResponse_CL, likedRecipes_CL;
+    private ConstraintLayout recipeResponse_CL, likedRecipes_CL, loadingScreen_CL;
     private AppBarLayout viewRecipeBar, searchRecipeBar;
     private TextView labelRecipeBar, centerMessage;
     private EditText searchBar;
@@ -104,13 +104,15 @@ public class RecipesFragment extends Fragment {
         searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
         centerMessage = binding.textRecipes;
-        centerMessage.setText("Search for a Recipe.");
         recipeResponse_CL = root.findViewById(R.id.recipe_search_response);
         likedRecipes_CL = root.findViewById(R.id.liked_recipes);
+        loadingScreen_CL = root.findViewById(R.id.generic_loading_screen);
         backArrow2 = root.findViewById(R.id.recipe_toolbar_back_arrow_icon);
 
-
+        loadingScreen_CL.setVisibility(View.GONE);
         setAppBarState(STANDARD_APPBAR);
+        setRecViewState(LIKED_RECVIEW);
+        centerMessage.setVisibility(View.INVISIBLE);
 
         if (healthViewModel.getHits().getValue() == null || healthViewModel.getHits().getValue().equals(new ArrayList<>())) {
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -119,6 +121,9 @@ public class RecipesFragment extends Fragment {
             DatabaseReference thisUser = FirebaseDatabase.getInstance()
                     .getReference("Users")
                     .child(authUser.getUid());
+
+            loadingScreen_CL.setVisibility(View.VISIBLE);
+
             thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -126,7 +131,12 @@ public class RecipesFragment extends Fragment {
                     healthViewModel.setThisUser(value);
                     healthViewModel.setLikedRecipes(value.getLikedRecipes());
 
-                    setRecViewState(LIKED_RECVIEW);
+                    if (value.getLikedRecipes() != null || value.getLikedRecipes().size() != 0) {
+                        setRecViewState(LIKED_RECVIEW);
+                        updateUI();
+                    }
+
+                    loadingScreen_CL.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -159,6 +169,7 @@ public class RecipesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setRecViewState(LIKED_RECVIEW);
+                updateUI();
             }
         });
 
@@ -241,6 +252,7 @@ public class RecipesFragment extends Fragment {
                             try {
                                 search();
                                 setRecViewState(SEARCH_RECVIEW);
+                                updateUI();
                             } catch (IOException | ExecutionException | InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -263,6 +275,7 @@ public class RecipesFragment extends Fragment {
                             try {
                                 search();
                                 setRecViewState(SEARCH_RECVIEW);
+                                updateUI();
                             } catch (IOException | ExecutionException | InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -285,6 +298,7 @@ public class RecipesFragment extends Fragment {
                         try {
                             search();
                             setRecViewState(SEARCH_RECVIEW);
+                            updateUI();
                         } catch (IOException | ExecutionException | InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -434,63 +448,59 @@ public class RecipesFragment extends Fragment {
     private void updateUI() {
         setAppBarState(STANDARD_APPBAR);
 
-        ArrayList<Hit> hits = healthViewModel.getHits().getValue();
-        if (hits != null && hits.size() != 0) {
-            hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
-            hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
-            hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                }
+        if (recViewState == SEARCH_RECVIEW) {
+            ArrayList<Hit> hits = healthViewModel.getHits().getValue();
+            if (hits != null && hits.size() != 0) {
+                hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
+                hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+                hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                    }
 
-                @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
 
-                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-                    if (!isLoading) {
-                        if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == hits.size() - 1) {
-                            loadMore();
-                            isLoading = true;
+                        if (!isLoading) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == hits.size() - 1) {
+                                loadMore();
+                                isLoading = true;
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-            hitAdapter = new HitAdapter(hits);
-            hitRecyclerView.setAdapter(hitAdapter);
-        }
+                hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+                hitAdapter = new HitAdapter(hits);
+                hitRecyclerView.setAdapter(hitAdapter);
+            }
 
-        //labelRecipeBar.setText(healthViewModel.getToSearchFor().getValue());
-        //centerMessage.setVisibility(View.INVISIBLE);
-        //recipeResponse_CL.setVisibility(View.VISIBLE);
+            Hit firstHit = healthViewModel.getFirstHit().getValue();
 
-        Hit firstHit = healthViewModel.getFirstHit().getValue();
-
-        ((ImageView) root.findViewById(R.id.recipe_main_image)).setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
-        ((TextView) root.findViewById(R.id.recipe_main_label)).setText(firstHit.getRecipe().getLabel());
-        ((TextView) root.findViewById(R.id.recipe_main_source)).setText(firstHit.getRecipe().getSource());
-        float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
-        String tCal = (int) tCalPerServing + " calories / serving";
-        ((TextView) root.findViewById(R.id.recipe_main_calories)).setText(tCal);
-        String tTime = (int) firstHit.getRecipe().getTotalTime() + " minutes";
-        ((TextView) root.findViewById(R.id.recipe_main_total_time)).setText(tTime);
-        String tYield = (int) firstHit.getRecipe().getYield() + " servings";
-        ((TextView) root.findViewById(R.id.recipe_main_yeild)).setText(tYield);
-        ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
-        ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
-
-
-        ArrayList<Recipe> likedRecipes = healthViewModel.getLikedRecipes().getValue();
-
-        if (likedRecipes != null && likedRecipes.size() != 0) {
-            likedRecyclerView = root.findViewById(R.id.liked_recipe_recycler_view);
-            likedRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
-            likedAdapter = new RecipeAdapter(likedRecipes);
-            likedRecyclerView.setAdapter(likedAdapter);
+            ((ImageView) root.findViewById(R.id.recipe_main_image)).setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
+            ((TextView) root.findViewById(R.id.recipe_main_label)).setText(firstHit.getRecipe().getLabel());
+            ((TextView) root.findViewById(R.id.recipe_main_source)).setText(firstHit.getRecipe().getSource());
+            float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
+            String tCal = (int) tCalPerServing + " calories / serving";
+            ((TextView) root.findViewById(R.id.recipe_main_calories)).setText(tCal);
+            String tTime = (int) firstHit.getRecipe().getTotalTime() + " minutes";
+            ((TextView) root.findViewById(R.id.recipe_main_total_time)).setText(tTime);
+            String tYield = (int) firstHit.getRecipe().getYield() + " servings";
+            ((TextView) root.findViewById(R.id.recipe_main_yeild)).setText(tYield);
+            ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
+            ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
+        } else if (recViewState == LIKED_RECVIEW) {
+            ArrayList<Recipe> likedRecipes = healthViewModel.getLikedRecipes().getValue();
+            if (likedRecipes != null && likedRecipes.size() != 0) {
+                likedRecyclerView = root.findViewById(R.id.liked_recipe_recycler_view);
+                likedRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+                likedAdapter = new RecipeAdapter(likedRecipes);
+                likedRecyclerView.setAdapter(likedAdapter);
+            }
         }
     }
 
