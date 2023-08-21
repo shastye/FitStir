@@ -95,8 +95,6 @@ public class RecipesFragment extends Fragment {
 
         // Addition Text Here
 
-        // TODO: Put api logo on both pages
-
         isLoading = false;
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 

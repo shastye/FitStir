@@ -17,7 +17,7 @@ public class GoalsViewModel extends ViewModel {
         add(getGenericGoal(0));
         add(getGenericGoal(1));
     }});
-    private final MutableLiveData<Integer> goalRange = new MutableLiveData<Integer>(30); // TODO: Get from settings in days
+    private final MutableLiveData<Integer> goalRange = new MutableLiveData<Integer>(30);
 
     private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
 

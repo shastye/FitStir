@@ -59,7 +59,6 @@ public class GoalsFragment extends Fragment {
 
         // Addition Text Here
 
-        //GoalsViewModel.goals =  // TODO: Get from database
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
 
