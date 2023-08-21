@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewRecipeBinding;
-import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
@@ -31,24 +30,24 @@ import java.util.ArrayList;
 
 public class ViewRecipeFragment extends Fragment {
 
-    private HealthViewModel healthViewModel;
+    private RecipesViewModel recipesViewModel;
     private FragmentViewRecipeBinding binding;
     private Recipe clickedRecipe;
     private ValueAnimator buttonColorAnimator = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        healthViewModel = new ViewModelProvider(requireActivity()).get(HealthViewModel.class);
+        recipesViewModel = new ViewModelProvider(requireActivity()).get(RecipesViewModel.class);
 
         binding = FragmentViewRecipeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textViewRecipe;
-        //healthViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        //recipesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here
 
-        clickedRecipe = healthViewModel.getClickedRecipe().getValue();
+        clickedRecipe = recipesViewModel.getClickedRecipe().getValue();
 
         TextView recipeName = root.findViewById(R.id.recipe_view_label);
         recipeName.setText(clickedRecipe.getLabel());
@@ -56,13 +55,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ShapeableImageView recipeImage = binding.viewRecipeImage;
 
-        Bitmap temp = null;
-        if (clickedRecipe.getImageBitmapData() != null && clickedRecipe.getImageBitmapData().length() != 0) {
-            temp = Methods.getBitmapFromString(clickedRecipe.getImageBitmapData());
-        } else {
-            temp = Methods.getBitmapFromURL(clickedRecipe.getImage());
-            clickedRecipe.setImageBitmapData(Methods.getStringFromBitmap(temp));
-        }
+        Bitmap temp = Methods.getBitmapFromString(clickedRecipe.getImageBitmapData());
         recipeImage.setImageBitmap(temp);
 
         TextView time = binding.viewRecipeTime;
@@ -230,7 +223,7 @@ public class ViewRecipeFragment extends Fragment {
         }
         ingredients.setText(printedIngr.toString());
 
-        instructions.setText(healthViewModel.getInstructionsList().getValue());
+        instructions.setText(recipesViewModel.getInstructionsList().getValue());
 
         // For if we buy the feature that allows this
         /*ArrayList<String> instrList = clickedRecipe.getInstructionLines();
@@ -250,7 +243,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ImageView likeButton = root.findViewById(R.id.recipe_toolbar_heart_icon);
 
-        if (healthViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
+        if (recipesViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
             likeButton.setColorFilter(colorPrimaryVariant);
 
             buttonColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorOnPrimary, colorPrimaryVariant);
@@ -273,7 +266,7 @@ public class ViewRecipeFragment extends Fragment {
                     buttonColorAnimator.reverse();
                     buttonColorAnimator = null;
 
-                    healthViewModel.getLikedRecipes().getValue().remove(clickedRecipe);
+                    recipesViewModel.getLikedRecipes().getValue().remove(clickedRecipe);
                 } else {
                     buttonColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorOnPrimary, colorPrimaryVariant);
                     buttonColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -284,8 +277,8 @@ public class ViewRecipeFragment extends Fragment {
                     });
                     buttonColorAnimator.start();
 
-                    if (!healthViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
-                        healthViewModel.getLikedRecipes().getValue().add(clickedRecipe);
+                    if (!recipesViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
+                        recipesViewModel.getLikedRecipes().getValue().add(clickedRecipe);
                     }
                 }
             }
@@ -302,15 +295,15 @@ public class ViewRecipeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        UserProfileData user = healthViewModel.getThisUser().getValue();
-        user.setLikedRecipes(healthViewModel.getLikedRecipes().getValue());
-        healthViewModel.setThisUser(user);
+        UserProfileData user = recipesViewModel.getThisUser().getValue();
+        user.setLikedRecipes(recipesViewModel.getLikedRecipes().getValue());
+        recipesViewModel.setThisUser(user);
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
         DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
                 .child(authUser.getUid());
-        userReference.setValue(healthViewModel.getThisUser().getValue());
+        userReference.setValue(recipesViewModel.getThisUser().getValue());
 
         binding = null;
     }

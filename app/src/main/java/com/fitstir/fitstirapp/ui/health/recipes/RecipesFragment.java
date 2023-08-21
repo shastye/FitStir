@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.health.recipes;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
 import android.os.Bundle;
@@ -36,7 +37,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRecipesBinding;
-import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.CuisineType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.DietOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.HealthOptions;
@@ -69,7 +69,7 @@ public class RecipesFragment extends Fragment {
 
     private FragmentRecipesBinding binding;
     private View root;
-    private HealthViewModel healthViewModel;
+    private RecipesViewModel recipesViewModel;
     private RecipeResponse response;
     private ArrayList<Hit> hits;
     private Hit firstHit;
@@ -87,7 +87,7 @@ public class RecipesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        healthViewModel = new ViewModelProvider(requireActivity()).get(HealthViewModel.class);
+        recipesViewModel = new ViewModelProvider(requireActivity()).get(RecipesViewModel.class);
 
         binding = FragmentRecipesBinding.inflate(inflater, container, false);
         root = binding.getRoot();
@@ -112,7 +112,7 @@ public class RecipesFragment extends Fragment {
         setRecViewState(LIKED_RECVIEW);
         centerMessage.setVisibility(View.INVISIBLE);
 
-        if (healthViewModel.getHits().getValue() == null || healthViewModel.getHits().getValue().equals(new ArrayList<>())) {
+        if (recipesViewModel.getHits().getValue() == null || recipesViewModel.getHits().getValue().equals(new ArrayList<>())) {
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
             assert authUser != null;
 
@@ -126,8 +126,8 @@ public class RecipesFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserProfileData value = snapshot.getValue(UserProfileData.class);
-                    healthViewModel.setThisUser(value);
-                    healthViewModel.setLikedRecipes(value.getLikedRecipes());
+                    recipesViewModel.setThisUser(value);
+                    recipesViewModel.setLikedRecipes(value.getLikedRecipes());
 
                     if (value.getLikedRecipes() != null || value.getLikedRecipes().size() != 0) {
                         setRecViewState(LIKED_RECVIEW);
@@ -211,17 +211,17 @@ public class RecipesFragment extends Fragment {
 
 
 
-                min_ingr.setText(healthViewModel.getMinIngr().getValue());
-                max_ingr.setText(healthViewModel.getMaxIngr().getValue());
-                min_cal.setText(healthViewModel.getMinCal().getValue());
-                max_cal.setText(healthViewModel.getMaxCal().getValue());
-                min_time.setText(healthViewModel.getMinTime().getValue());
-                max_time.setText(healthViewModel.getMaxTime().getValue());
+                min_ingr.setText(recipesViewModel.getMinIngr().getValue());
+                max_ingr.setText(recipesViewModel.getMaxIngr().getValue());
+                min_cal.setText(recipesViewModel.getMinCal().getValue());
+                max_cal.setText(recipesViewModel.getMaxCal().getValue());
+                min_time.setText(recipesViewModel.getMinTime().getValue());
+                max_time.setText(recipesViewModel.getMaxTime().getValue());
 
-                diet.setSelection(healthViewModel.getDietType().getValue());
-                health.setSelection(healthViewModel.getHealthType().getValue());
-                cuisine.setSelection(healthViewModel.getCuisineType().getValue());
-                meal.setSelection(healthViewModel.getMealType().getValue());
+                diet.setSelection(recipesViewModel.getDietType().getValue());
+                health.setSelection(recipesViewModel.getHealthType().getValue());
+                cuisine.setSelection(recipesViewModel.getCuisineType().getValue());
+                meal.setSelection(recipesViewModel.getMealType().getValue());
 
                 popupWindow.showAsDropDown(filter, 0,0);
 
@@ -231,22 +231,22 @@ public class RecipesFragment extends Fragment {
                 accept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        healthViewModel.setMinIngr(min_ingr.getText().toString().trim());
-                        healthViewModel.setMaxIngr(max_ingr.getText().toString().trim());
-                        healthViewModel.setMinCal(min_cal.getText().toString().trim());
-                        healthViewModel.setMaxCal(max_cal.getText().toString().trim());
-                        healthViewModel.setMinTime(min_time.getText().toString().trim());
-                        healthViewModel.setMaxTime(max_time.getText().toString().trim());
+                        recipesViewModel.setMinIngr(min_ingr.getText().toString().trim());
+                        recipesViewModel.setMaxIngr(max_ingr.getText().toString().trim());
+                        recipesViewModel.setMinCal(min_cal.getText().toString().trim());
+                        recipesViewModel.setMaxCal(max_cal.getText().toString().trim());
+                        recipesViewModel.setMinTime(min_time.getText().toString().trim());
+                        recipesViewModel.setMaxTime(max_time.getText().toString().trim());
 
-                        healthViewModel.setDietType(diet.getSelectedItemPosition());
-                        healthViewModel.setHealthType(health.getSelectedItemPosition());
-                        healthViewModel.setCuisineType(cuisine.getSelectedItemPosition());
-                        healthViewModel.setMealType(meal.getSelectedItemPosition());
+                        recipesViewModel.setDietType(diet.getSelectedItemPosition());
+                        recipesViewModel.setHealthType(health.getSelectedItemPosition());
+                        recipesViewModel.setCuisineType(cuisine.getSelectedItemPosition());
+                        recipesViewModel.setMealType(meal.getSelectedItemPosition());
 
                         popupWindow.dismiss();
 
                         if (searchBar != null && !searchBar.getText().toString().equals("")) {
-                            healthViewModel.setToSearchFor(searchBar.getText().toString());
+                            recipesViewModel.setToSearchFor(searchBar.getText().toString());
                             try {
                                 search();
                                 setRecViewState(SEARCH_RECVIEW);
@@ -269,7 +269,7 @@ public class RecipesFragment extends Fragment {
                     if(keyCode == KeyEvent.KEYCODE_ENTER)
                     {
                         if (!searchBar.getText().toString().equals("")) {
-                            healthViewModel.setToSearchFor(searchBar.getText().toString());
+                            recipesViewModel.setToSearchFor(searchBar.getText().toString());
                             try {
                                 search();
                                 setRecViewState(SEARCH_RECVIEW);
@@ -292,7 +292,7 @@ public class RecipesFragment extends Fragment {
                 if(actionId == KeyEvent.KEYCODE_CALL)
                 {
                     if (!searchBar.getText().toString().equals("")) {
-                        healthViewModel.setToSearchFor(searchBar.getText().toString());
+                        recipesViewModel.setToSearchFor(searchBar.getText().toString());
                         try {
                             search();
                             setRecViewState(SEARCH_RECVIEW);
@@ -312,7 +312,7 @@ public class RecipesFragment extends Fragment {
         firstHitBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                healthViewModel.setClickedRecipe(firstHit.getRecipe());
+                recipesViewModel.setClickedRecipe(firstHit.getRecipe());
                 Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
             }
         });
@@ -331,31 +331,31 @@ public class RecipesFragment extends Fragment {
     private void search() throws IOException, ExecutionException, InterruptedException {
 
         EdamamAPI_RecipesV2 api = new EdamamAPI_RecipesV2(
-                healthViewModel.getToSearchFor().getValue(),
-                healthViewModel.getMinIngr().getValue(),
-                healthViewModel.getMaxIngr().getValue(),
-                DietOptions.values()[healthViewModel.getDietType().getValue()].getKey(),
-                HealthOptions.values()[healthViewModel.getHealthType().getValue()].getKey(),
-                CuisineType.values()[healthViewModel.getCuisineType().getValue()].getKey(),
-                MealType.values()[healthViewModel.getMealType().getValue()].getKey(),
+                recipesViewModel.getToSearchFor().getValue(),
+                recipesViewModel.getMinIngr().getValue(),
+                recipesViewModel.getMaxIngr().getValue(),
+                DietOptions.values()[recipesViewModel.getDietType().getValue()].getKey(),
+                HealthOptions.values()[recipesViewModel.getHealthType().getValue()].getKey(),
+                CuisineType.values()[recipesViewModel.getCuisineType().getValue()].getKey(),
+                MealType.values()[recipesViewModel.getMealType().getValue()].getKey(),
                 "",
-                healthViewModel.getMinCal().getValue(),
-                healthViewModel.getMaxCal().getValue(),
-                healthViewModel.getMinTime().getValue(),
-                healthViewModel.getMaxTime().getValue()
+                recipesViewModel.getMinCal().getValue(),
+                recipesViewModel.getMaxCal().getValue(),
+                recipesViewModel.getMinTime().getValue(),
+                recipesViewModel.getMaxTime().getValue()
         );
         api.execute();
 
         response = api.getRecipeResponse();
 
         hits = response.getHits();
-        healthViewModel.setHits(hits);
+        recipesViewModel.setHits(hits);
 
         if (hits.size() != 0) {
             firstHit = hits.get(0);
-            healthViewModel.setFirstHit(firstHit);
+            recipesViewModel.setFirstHit(firstHit);
             hits.remove(firstHit);
-            healthViewModel.setHits(hits);
+            recipesViewModel.setHits(hits);
 
             updateUI();
         } else {
@@ -423,7 +423,7 @@ public class RecipesFragment extends Fragment {
             recipeResponse_CL.setVisibility(View.GONE);
             likedRecipes_CL.setVisibility(View.VISIBLE);
 
-            ArrayList<Recipe> recipes = healthViewModel.getLikedRecipes().getValue();
+            ArrayList<Recipe> recipes = recipesViewModel.getLikedRecipes().getValue();
             if (recipes == null || recipes.size() == 0) {
                 centerMessage.setVisibility(View.VISIBLE);
                 centerMessage.setText("No liked recipes yet.\n\nSearch to find one you like!");
@@ -437,7 +437,7 @@ public class RecipesFragment extends Fragment {
             likedRecipes_CL.setVisibility(View.GONE);
 
             centerMessage.setVisibility(View.GONE);
-            labelRecipeBar.setText(healthViewModel.getToSearchFor().getValue());
+            labelRecipeBar.setText(recipesViewModel.getToSearchFor().getValue());
 
             backArrow2.setVisibility(View.VISIBLE);
         }
@@ -447,7 +447,7 @@ public class RecipesFragment extends Fragment {
         setAppBarState(STANDARD_APPBAR);
 
         if (recViewState == SEARCH_RECVIEW) {
-            ArrayList<Hit> hits = healthViewModel.getHits().getValue();
+            ArrayList<Hit> hits = recipesViewModel.getHits().getValue();
             if (hits != null && hits.size() != 0) {
                 hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
                 hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
@@ -477,9 +477,12 @@ public class RecipesFragment extends Fragment {
                 hitRecyclerView.setAdapter(hitAdapter);
             }
 
-            Hit firstHit = healthViewModel.getFirstHit().getValue();
+            Hit firstHit = recipesViewModel.getFirstHit().getValue();
 
-            ((ImageView) root.findViewById(R.id.recipe_main_image)).setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
+            Bitmap temp = Methods.getBitmapFromURL(firstHit.getRecipe().getImage());
+            firstHit.getRecipe().setImageBitmapData(Methods.getStringFromBitmap(temp));
+            ((ImageView) root.findViewById(R.id.recipe_main_image)).setImageBitmap(temp);
+
             ((TextView) root.findViewById(R.id.recipe_main_label)).setText(firstHit.getRecipe().getLabel());
             ((TextView) root.findViewById(R.id.recipe_main_source)).setText(firstHit.getRecipe().getSource());
             float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
@@ -492,7 +495,7 @@ public class RecipesFragment extends Fragment {
             ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
             ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
         } else if (recViewState == LIKED_RECVIEW) {
-            ArrayList<Recipe> likedRecipes = healthViewModel.getLikedRecipes().getValue();
+            ArrayList<Recipe> likedRecipes = recipesViewModel.getLikedRecipes().getValue();
             if (likedRecipes != null && likedRecipes.size() != 0) {
                 likedRecyclerView = root.findViewById(R.id.liked_recipe_recycler_view);
                 likedRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
@@ -533,7 +536,10 @@ public class RecipesFragment extends Fragment {
         public void bind(Hit hit) {
             this.hit = hit;
 
-            this.recipeImage.setImageBitmap(Methods.getBitmapFromURL(hit.getRecipe().getImage()));
+            Bitmap temp = Methods.getBitmapFromURL(hit.getRecipe().getImage());
+            hit.getRecipe().setImageBitmapData(Methods.getStringFromBitmap(temp));
+            this.recipeImage.setImageBitmap(temp);
+
             this.recipeLabel.setText(hit.getRecipe().getLabel());
             this.recipeSource.setText(hit.getRecipe().getSource());
 
@@ -555,7 +561,7 @@ public class RecipesFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            healthViewModel.setClickedRecipe(hit.getRecipe());
+            recipesViewModel.setClickedRecipe(hit.getRecipe());
             Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
         }
     }
@@ -622,7 +628,7 @@ public class RecipesFragment extends Fragment {
         public void bind(Recipe recipe) {
             this.recipe = recipe;
 
-            this.recipeImage.setImageBitmap(Methods.getBitmapFromURL(recipe.getImage()));
+            this.recipeImage.setImageBitmap(Methods.getBitmapFromString(recipe.getImageBitmapData()));
             this.recipeLabel.setText(recipe.getLabel());
             this.recipeSource.setText(recipe.getSource());
 
@@ -644,7 +650,7 @@ public class RecipesFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            healthViewModel.setClickedRecipe(recipe);
+            recipesViewModel.setClickedRecipe(recipe);
             Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
         }
     }
