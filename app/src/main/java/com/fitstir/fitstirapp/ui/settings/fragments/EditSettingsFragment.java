@@ -16,9 +16,14 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentEditSettingsBinding;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.settings.dialogs.ChangeThemeDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class EditSettingsFragment extends Fragment {
 
@@ -94,7 +99,20 @@ public class EditSettingsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        // TODO: save to database
+        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
+        UserProfileData user = settingsViewModel.getThisUser().getValue();
+        user.setThemeID(settingsViewModel.getThemeID().getValue());
+        user.setIntervalID(settingsViewModel.getIntervalID().getValue());
+        user.setRangeID(settingsViewModel.getRangeID().getValue());
+        user.setUnitID(settingsViewModel.getUnitID().getValue());
+        settingsViewModel.setThisUser(user);
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(authUser.getUid());
+        userReference.setValue(settingsViewModel.getThisUser().getValue());
 
         binding = null;
     }

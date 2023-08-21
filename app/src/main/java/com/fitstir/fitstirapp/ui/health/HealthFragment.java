@@ -15,7 +15,6 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentHealthBinding;
-import com.fitstir.fitstirapp.ui.health.HealthViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.SectionGridAdapter;
 import com.fitstir.fitstirapp.ui.utility.classes.SectionItem;
 
@@ -65,7 +64,6 @@ public class HealthFragment extends Fragment {
                         Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_diary);
                         break;
                     default:
-                        // TODO: Show error?
                         break;
                 }
             }

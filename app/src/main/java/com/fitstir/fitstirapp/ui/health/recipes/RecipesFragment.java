@@ -37,25 +37,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRecipesBinding;
 import com.fitstir.fitstirapp.ui.health.HealthViewModel;
-import com.fitstir.fitstirapp.ui.utility.Methods;
-import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.EdamamAPI_RecipesV2;
-import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
-import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.RecipeResponse;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.CuisineType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.DietOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.HealthOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.EdamamAPI_RecipesV2;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.RecipeResponse;
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class RecipesFragment extends Fragment {
-    private final int STANDARD_APPBAR = 0;
-    private final int SEARCH_APPBAR = 1;
+    private final int STANDARD_APPBAR = 0, SEARCH_APPBAR = 1;
+    private final int LIKED_RECVIEW = 0, SEARCH_RECVIEW = 1;
     private boolean isLoading;
     private int appBarState;
+    private int recViewState;
 
     private FragmentRecipesBinding binding;
     private View root;
@@ -64,14 +74,16 @@ public class RecipesFragment extends Fragment {
     private ArrayList<Hit> hits;
     private Hit firstHit;
 
-    private RecyclerView hitRecyclerView;
+    private RecyclerView hitRecyclerView, likedRecyclerView;
     private HitAdapter hitAdapter;
+    private RecipeAdapter likedAdapter;
     private Parcelable recyclerViewState;
 
-    private ConstraintLayout recipeResponse;
+    private ConstraintLayout recipeResponse_CL, likedRecipes_CL, loadingScreen_CL;
     private AppBarLayout viewRecipeBar, searchRecipeBar;
     private TextView labelRecipeBar, centerMessage;
     private EditText searchBar;
+    private AppCompatImageView backArrow2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -83,8 +95,6 @@ public class RecipesFragment extends Fragment {
 
         // Addition Text Here
 
-        // TODO: Put api logo on both pages
-
         isLoading = false;
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
@@ -92,25 +102,50 @@ public class RecipesFragment extends Fragment {
         searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
         centerMessage = binding.textRecipes;
-        centerMessage.setText("Search for a Recipe.");
-        recipeResponse = binding.recipeSearchResponse;
-        CardView firstHitBackground = binding.recipeMainBackground;
+        recipeResponse_CL = root.findViewById(R.id.recipe_search_response);
+        likedRecipes_CL = root.findViewById(R.id.liked_recipes);
+        loadingScreen_CL = root.findViewById(R.id.generic_loading_screen);
+        backArrow2 = root.findViewById(R.id.recipe_toolbar_back_arrow_icon);
+
+        loadingScreen_CL.setVisibility(View.GONE);
+        setAppBarState(STANDARD_APPBAR);
+        setRecViewState(LIKED_RECVIEW);
+        centerMessage.setVisibility(View.INVISIBLE);
 
         if (healthViewModel.getHits().getValue() == null || healthViewModel.getHits().getValue().equals(new ArrayList<>())) {
-            labelRecipeBar.setText("");
-            centerMessage.setVisibility(View.VISIBLE);
-            recipeResponse.setVisibility(View.INVISIBLE);
+            FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+            assert authUser != null;
+
+            DatabaseReference thisUser = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(authUser.getUid());
+
+            loadingScreen_CL.setVisibility(View.VISIBLE);
+
+            thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserProfileData value = snapshot.getValue(UserProfileData.class);
+                    healthViewModel.setThisUser(value);
+                    healthViewModel.setLikedRecipes(value.getLikedRecipes());
+
+                    if (value.getLikedRecipes() != null || value.getLikedRecipes().size() != 0) {
+                        setRecViewState(LIKED_RECVIEW);
+                        updateUI();
+                    }
+
+                    loadingScreen_CL.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    throw error.toException();
+                }
+            });
         } else {
-            try {
-                // TODO: Use already stored value for hits instead of rerunning the api search
-
-                search();
-            } catch (IOException | ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            setRecViewState(SEARCH_RECVIEW);
+            updateUI();
         }
-
-        setAppBarState(STANDARD_APPBAR);
 
         AppCompatImageView searchRecipe = root.findViewById(R.id.recipe_toolbar_search_icon);
         searchRecipe.setOnClickListener(new View.OnClickListener() {
@@ -120,11 +155,19 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        AppCompatImageView backArrow = root.findViewById(R.id.recipe_toolbar_back_arrow_icon);
+        AppCompatImageView backArrow = root.findViewById(R.id.recipe_search_toolbar_back_arrow_icon);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleToolBarState();
+            }
+        });
+
+        backArrow2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRecViewState(LIKED_RECVIEW);
+                updateUI();
             }
         });
 
@@ -206,6 +249,8 @@ public class RecipesFragment extends Fragment {
                             healthViewModel.setToSearchFor(searchBar.getText().toString());
                             try {
                                 search();
+                                setRecViewState(SEARCH_RECVIEW);
+                                updateUI();
                             } catch (IOException | ExecutionException | InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -227,6 +272,8 @@ public class RecipesFragment extends Fragment {
                             healthViewModel.setToSearchFor(searchBar.getText().toString());
                             try {
                                 search();
+                                setRecViewState(SEARCH_RECVIEW);
+                                updateUI();
                             } catch (IOException | ExecutionException | InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -248,6 +295,8 @@ public class RecipesFragment extends Fragment {
                         healthViewModel.setToSearchFor(searchBar.getText().toString());
                         try {
                             search();
+                            setRecViewState(SEARCH_RECVIEW);
+                            updateUI();
                         } catch (IOException | ExecutionException | InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -258,6 +307,8 @@ public class RecipesFragment extends Fragment {
             }
         });
 
+
+        CardView firstHitBackground = root.findViewById(R.id.recipe_main_background);
         firstHitBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,13 +329,6 @@ public class RecipesFragment extends Fragment {
     }
 
     private void search() throws IOException, ExecutionException, InterruptedException {
-        viewRecipeBar = root.findViewById(R.id.recipe_view_toolbar);
-        searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
-        labelRecipeBar = root.findViewById(R.id.recipe_search_label);
-        centerMessage = binding.textRecipes;
-        recipeResponse = binding.recipeSearchResponse;
-
-        healthViewModel.setToSearchFor(searchBar.getText().toString());
 
         EdamamAPI_RecipesV2 api = new EdamamAPI_RecipesV2(
                 healthViewModel.getToSearchFor().getValue(),
@@ -313,52 +357,7 @@ public class RecipesFragment extends Fragment {
             hits.remove(firstHit);
             healthViewModel.setHits(hits);
 
-            if (hits.size() != 0) {
-                hitRecyclerView = binding.recipeRecyclerView;
-                hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
-
-                hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                    }
-
-                    @Override
-                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-
-                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                        if (!isLoading) {
-                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == hits.size() - 1) {
-                                loadMore();
-                                isLoading = true;
-                            }
-                        }
-                    }
-                });
-
-                updateUI(hits);
-            }
-
-            setAppBarState(STANDARD_APPBAR);
-            labelRecipeBar.setText(searchBar.getText().toString());
-            centerMessage.setVisibility(View.INVISIBLE);
-            recipeResponse.setVisibility(View.VISIBLE);
-
-            binding.recipeMainImage.setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
-            binding.recipeMainLabel.setText(firstHit.getRecipe().getLabel());
-            binding.recipeMainSource.setText(firstHit.getRecipe().getSource());
-            float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
-            String tCal = (int) tCalPerServing + " calories / serving";
-            binding.recipeMainCalories.setText(tCal);
-            String tTime = (int) firstHit.getRecipe().getTotalTime() + " minutes";
-            binding.recipeMainTotalTime.setText(tTime);
-            String tYield = (int) firstHit.getRecipe().getYield() + " servings";
-            binding.recipeMainYeild.setText(tYield);
-            binding.recipeMainMealType.setText(firstHit.getRecipe().getMealType().get(0));
-            binding.recipeMainCuisineType.setText(firstHit.getRecipe().getCuisineType().get(0));
-
+            updateUI();
         } else {
             centerMessage.setVisibility(View.VISIBLE);
             centerMessage.setText("No result found.\n\nTry broadening your search.");
@@ -406,7 +405,7 @@ public class RecipesFragment extends Fragment {
             try {
                 im.hideSoftInputFromWindow(root.getWindowToken(), 0); // make keyboard hide
             } catch (NullPointerException e) {
-                Log.d("RECIPE FRAGMENT", "setAppBaeState: NullPointerException: " + e);
+                Log.d("RECIPE FRAGMENT", "setAppBarState: NullPointerException: " + e);
             }
         } else if (appBarState == SEARCH_APPBAR) {
             viewRecipeBar.setVisibility(View.GONE);
@@ -417,10 +416,90 @@ public class RecipesFragment extends Fragment {
         }
     }
 
-    private void updateUI(ArrayList<Hit> hits) {
-        hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-        hitAdapter = new HitAdapter(hits);
-        hitRecyclerView.setAdapter(hitAdapter);
+    private void setRecViewState(int state) {
+        recViewState = state;
+
+        if (recViewState == LIKED_RECVIEW) {
+            recipeResponse_CL.setVisibility(View.GONE);
+            likedRecipes_CL.setVisibility(View.VISIBLE);
+
+            ArrayList<Recipe> recipes = healthViewModel.getLikedRecipes().getValue();
+            if (recipes == null || recipes.size() == 0) {
+                centerMessage.setVisibility(View.VISIBLE);
+                centerMessage.setText("No liked recipes yet.\n\nSearch to find one you like!");
+            }
+
+            labelRecipeBar.setText("Liked Recipes");
+
+            backArrow2.setVisibility(View.GONE);
+        } else if (recViewState == SEARCH_RECVIEW) {
+            recipeResponse_CL.setVisibility(View.VISIBLE);
+            likedRecipes_CL.setVisibility(View.GONE);
+
+            centerMessage.setVisibility(View.GONE);
+            labelRecipeBar.setText(healthViewModel.getToSearchFor().getValue());
+
+            backArrow2.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updateUI() {
+        setAppBarState(STANDARD_APPBAR);
+
+        if (recViewState == SEARCH_RECVIEW) {
+            ArrayList<Hit> hits = healthViewModel.getHits().getValue();
+            if (hits != null && hits.size() != 0) {
+                hitRecyclerView = root.findViewById(R.id.recipe_recycler_view);
+                hitRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+                hitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                    }
+
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+
+                        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                        if (!isLoading) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == hits.size() - 1) {
+                                loadMore();
+                                isLoading = true;
+                            }
+                        }
+                    }
+                });
+
+                hitRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+                hitAdapter = new HitAdapter(hits);
+                hitRecyclerView.setAdapter(hitAdapter);
+            }
+
+            Hit firstHit = healthViewModel.getFirstHit().getValue();
+
+            ((ImageView) root.findViewById(R.id.recipe_main_image)).setImageBitmap(Methods.getBitmapFromURL(firstHit.getRecipe().getImage()));
+            ((TextView) root.findViewById(R.id.recipe_main_label)).setText(firstHit.getRecipe().getLabel());
+            ((TextView) root.findViewById(R.id.recipe_main_source)).setText(firstHit.getRecipe().getSource());
+            float tCalPerServing = firstHit.getRecipe().getCalories() / firstHit.getRecipe().getYield();
+            String tCal = (int) tCalPerServing + " calories / serving";
+            ((TextView) root.findViewById(R.id.recipe_main_calories)).setText(tCal);
+            String tTime = (int) firstHit.getRecipe().getTotalTime() + " minutes";
+            ((TextView) root.findViewById(R.id.recipe_main_total_time)).setText(tTime);
+            String tYield = (int) firstHit.getRecipe().getYield() + " servings";
+            ((TextView) root.findViewById(R.id.recipe_main_yeild)).setText(tYield);
+            ((TextView) root.findViewById(R.id.recipe_main_meal_type)).setText(firstHit.getRecipe().getMealType().get(0));
+            ((TextView) root.findViewById(R.id.recipe_main_cuisine_type)).setText(firstHit.getRecipe().getCuisineType().get(0));
+        } else if (recViewState == LIKED_RECVIEW) {
+            ArrayList<Recipe> likedRecipes = healthViewModel.getLikedRecipes().getValue();
+            if (likedRecipes != null && likedRecipes.size() != 0) {
+                likedRecyclerView = root.findViewById(R.id.liked_recipe_recycler_view);
+                likedRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+                likedAdapter = new RecipeAdapter(likedRecipes);
+                likedRecyclerView.setAdapter(likedAdapter);
+            }
+        }
     }
 
     private class LoadHolder extends RecyclerView.ViewHolder {
@@ -521,6 +600,78 @@ public class RecipesFragment extends Fragment {
         @Override
         public int getItemCount() {
             return hits.size();
+        }
+    }
+
+    private class RecipeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private Recipe recipe;
+        private final ImageView recipeImage;
+        private final TextView recipeLabel, recipeSource, recipeCalories, recipeTime;
+
+        public RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.layout_recipe_grid, parent, false));
+            itemView.setOnClickListener(this);
+
+            recipeImage = itemView.findViewById(R.id.layout_recipe_image);
+            recipeLabel = itemView.findViewById(R.id.layout_recipe_label);
+            recipeSource = itemView.findViewById(R.id.layout_recipe_source);
+            recipeCalories = itemView.findViewById(R.id.layout_recipe_calories);
+            recipeTime = itemView.findViewById(R.id.layout_recipe_total_time);
+        }
+
+        public void bind(Recipe recipe) {
+            this.recipe = recipe;
+
+            this.recipeImage.setImageBitmap(Methods.getBitmapFromURL(recipe.getImage()));
+            this.recipeLabel.setText(recipe.getLabel());
+            this.recipeSource.setText(recipe.getSource());
+
+            if (recipe.getCalories() != 0.0f) {
+                float tCalPerServing = recipe.getCalories() / recipe.getYield();
+                String calories = (int) tCalPerServing + " calories";
+                this.recipeCalories.setText(calories);
+            } else {
+                this.recipeCalories.setVisibility(View.GONE);
+            }
+
+            if (recipe.getTotalTime() != 0.0f) {
+                String time = String.valueOf((int) recipe.getTotalTime()) + " minutes";
+                this.recipeTime.setText(time);
+            } else {
+                this.recipeTime.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            healthViewModel.setClickedRecipe(recipe);
+            Navigation.findNavController(v).navigate(R.id.action_navigation_recipes_to_navigation_view_recipe);
+        }
+    }
+
+    private class RecipeAdapter extends RecyclerView.Adapter<RecipeHolder> {
+        private final ArrayList<Recipe> recipes;
+
+        public RecipeAdapter(ArrayList<Recipe> recipes) {
+            this.recipes = recipes;
+        }
+
+        @NonNull
+        @Override
+        public RecipeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(requireActivity());
+            return new RecipeHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecipeHolder holder, int position) {
+            Recipe recipe = this.recipes.get(position);
+            holder.bind(recipe);
+        }
+
+        @Override
+        public int getItemCount() {
+            return this.recipes.size();
         }
     }
 }

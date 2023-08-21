@@ -3,6 +3,7 @@ package com.fitstir.fitstirapp.ui.health;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 
@@ -27,9 +28,10 @@ public class HealthViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<Hit>> hits = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Recipe> clickedRecipe = new MutableLiveData<>(new Recipe());
     private final MutableLiveData<Hit> firstHit = new MutableLiveData<>(new Hit());
+    private final MutableLiveData<ArrayList<Recipe>> likedRecipes = new MutableLiveData<>(new ArrayList<>());
 
-    private final MutableLiveData<Boolean> isLiked = new MutableLiveData<>(false);
     private final MutableLiveData<String> instructionsList;
+    private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
 
 
     public HealthViewModel() {
@@ -105,8 +107,12 @@ public class HealthViewModel extends ViewModel {
     public MutableLiveData<Hit> getFirstHit() {
         return firstHit;
     }
-    public MutableLiveData<Boolean> getIsLiked() {
-        return isLiked;
+    public MutableLiveData<ArrayList<Recipe>> getLikedRecipes() {
+        return likedRecipes;
+    }
+
+    public MutableLiveData<UserProfileData> getThisUser() {
+        return thisUser;
     }
 
     public void setMinIngr(String minIngr) { this.minIngr.setValue(minIngr); }
@@ -131,7 +137,10 @@ public class HealthViewModel extends ViewModel {
     public void setFirstHit(Hit hit) {
         this.firstHit.setValue(hit);
     }
-    public void setIsLiked(boolean isLiked) {
-        this.isLiked.setValue(isLiked);
+    public void setLikedRecipes(ArrayList<Recipe> likedRecipes) {
+        this.likedRecipes.setValue(likedRecipes);
+    }
+    public void setThisUser(UserProfileData user) {
+        this.thisUser.setValue(user);
     }
 }

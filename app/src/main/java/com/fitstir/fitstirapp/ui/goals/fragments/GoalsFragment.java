@@ -16,11 +16,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentGoalsBinding;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.goals.dialogs.CreateGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -51,11 +59,58 @@ public class GoalsFragment extends Fragment {
 
         // Addition Text Here
 
-        //GoalsViewModel.goals =  // TODO: Get from database
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
 
-        goalRecyclerView = binding.goalRecyclerView;
-        goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        updateUI(goalsViewModel.getGoals().getValue());
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(authUser.getUid());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserProfileData value = snapshot.getValue(UserProfileData.class);
+                goalsViewModel.setThisUser(value);
+                goalsViewModel.setGoals((ArrayList<Goal>) value.getGoals());
+
+                int tRange = 0;
+                switch (value.getRangeID()) {
+                    case 0:
+                        tRange = 7;
+                        break;
+                    case 1:
+                        tRange = 14;
+                        break;
+                    case 2:
+                        tRange = 30;
+                        break;
+                    case 3:
+                        tRange = 91;
+                        break;
+                    case 4:
+                        tRange = 182;
+                        break;
+                    case 5:
+                        tRange = 273;
+                        break;
+                    case 6:
+                        tRange = 365;
+                        break;
+                    default:
+                        tRange = 30;
+                        break;
+                }
+                goalsViewModel.setGoalRange(tRange);
+
+                goalRecyclerView = binding.goalRecyclerView;
+                goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                updateUI(goalsViewModel.getGoals().getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
 
         FloatingActionButton createGoalButton = binding.createGoalButton;
         createGoalButton.setOnClickListener(new View.OnClickListener() {
@@ -76,9 +131,6 @@ public class GoalsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        // TODO: Save to database
-
         binding = null;
     }
 

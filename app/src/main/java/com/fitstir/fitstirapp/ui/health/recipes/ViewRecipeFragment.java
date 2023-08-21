@@ -2,6 +2,7 @@ package com.fitstir.fitstirapp.ui.health.recipes;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewRecipeBinding;
 import com.fitstir.fitstirapp.ui.health.HealthViewModel;
-import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -28,6 +34,7 @@ public class ViewRecipeFragment extends Fragment {
     private HealthViewModel healthViewModel;
     private FragmentViewRecipeBinding binding;
     private Recipe clickedRecipe;
+    private ValueAnimator buttonColorAnimator = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,8 +55,15 @@ public class ViewRecipeFragment extends Fragment {
 
 
         ShapeableImageView recipeImage = binding.viewRecipeImage;
-        recipeImage.setImageBitmap(Methods.getBitmapFromURL(clickedRecipe.getImage()));
 
+        Bitmap temp = null;
+        if (clickedRecipe.getImageBitmapData() != null && clickedRecipe.getImageBitmapData().length() != 0) {
+            temp = Methods.getBitmapFromString(clickedRecipe.getImageBitmapData());
+        } else {
+            temp = Methods.getBitmapFromURL(clickedRecipe.getImage());
+            clickedRecipe.setImageBitmapData(Methods.getStringFromBitmap(temp));
+        }
+        recipeImage.setImageBitmap(temp);
 
         TextView time = binding.viewRecipeTime;
         TextView calories = binding.viewRecipeCal;
@@ -94,7 +108,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> dietList = clickedRecipe.getDietLabels();
         StringBuilder printedDiet = new StringBuilder();
-        if (dietList.size() == 0) {
+        if (dietList == null || dietList.size() == 0) {
             dietRow.setVisibility(View.GONE);
         } else if (dietList.size() == 1) {
             printedDiet.append(dietList.get(0));
@@ -116,7 +130,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> healthList = clickedRecipe.getHealthLabels();
         StringBuilder printedHealth = new StringBuilder();
-        if (healthList.size() == 0) {
+        if (healthList == null || healthList.size() == 0) {
             healthRow.setVisibility(View.GONE);
         } else if (healthList.size() == 1) {
             printedHealth.append(healthList.get(0));
@@ -138,7 +152,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> cuisineList = clickedRecipe.getCuisineType();
         StringBuilder printedCuisine = new StringBuilder();
-        if (cuisineList.size() == 0) {
+        if (cuisineList == null || cuisineList.size() == 0) {
             cuisRow.setVisibility(View.GONE);
         } else if (cuisineList.size() == 1) {
             printedCuisine.append(cuisineList.get(0));
@@ -160,7 +174,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> dishList = clickedRecipe.getDishType();
         StringBuilder printedDish = new StringBuilder();
-        if (dishList.size() == 0) {
+        if (dishList == null || dishList.size() == 0) {
             dishRow.setVisibility(View.GONE);
         } else if (dishList.size() == 1) {
             printedDish.append(dishList.get(0));
@@ -182,7 +196,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> mealList = clickedRecipe.getMealType();
         StringBuilder printedMeal = new StringBuilder();
-        if (mealList.size() == 0) {
+        if (mealList == null || mealList.size() == 0) {
             mealRow.setVisibility(View.GONE);
         } else if (mealList.size() == 1) {
             printedMeal.append(mealList.get(0));
@@ -235,16 +249,31 @@ public class ViewRecipeFragment extends Fragment {
         int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
 
         ImageView likeButton = root.findViewById(R.id.recipe_toolbar_heart_icon);
-        likeButton.setColorFilter(colorOnPrimary);
+
+        if (healthViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
+            likeButton.setColorFilter(colorPrimaryVariant);
+
+            buttonColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorOnPrimary, colorPrimaryVariant);
+            buttonColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(@NonNull ValueAnimator animation) {
+                    likeButton.setColorFilter((int) animation.getAnimatedValue());
+                }
+            });
+            buttonColorAnimator.start();
+        } else {
+            likeButton.setColorFilter(colorOnPrimary);
+            buttonColorAnimator = null;
+        }
+
         likeButton.setOnClickListener(new View.OnClickListener() {
-            ValueAnimator buttonColorAnimator = null;
             @Override
             public void onClick(View v) {
                 if (buttonColorAnimator != null) {
                     buttonColorAnimator.reverse();
                     buttonColorAnimator = null;
 
-                    healthViewModel.setIsLiked(false);
+                    healthViewModel.getLikedRecipes().getValue().remove(clickedRecipe);
                 } else {
                     buttonColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorOnPrimary, colorPrimaryVariant);
                     buttonColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -255,7 +284,9 @@ public class ViewRecipeFragment extends Fragment {
                     });
                     buttonColorAnimator.start();
 
-                    healthViewModel.setIsLiked(true);
+                    if (!healthViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
+                        healthViewModel.getLikedRecipes().getValue().add(clickedRecipe);
+                    }
                 }
             }
         });
@@ -270,6 +301,17 @@ public class ViewRecipeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        UserProfileData user = healthViewModel.getThisUser().getValue();
+        user.setLikedRecipes(healthViewModel.getLikedRecipes().getValue());
+        healthViewModel.setThisUser(user);
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(authUser.getUid());
+        userReference.setValue(healthViewModel.getThisUser().getValue());
+
         binding = null;
     }
 }

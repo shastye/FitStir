@@ -24,6 +24,7 @@ import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestion4Binding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;

@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,6 +45,8 @@ public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<Integer> intervalID = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> unitID = new MutableLiveData<>(0);
 
+    private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
+
     public SettingsViewModel() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = "Error: No user logged in...\nContact customer support.";
@@ -71,6 +74,7 @@ public class SettingsViewModel extends ViewModel {
     public LiveData<Integer> getRangeID() { return rangeID; }
     public LiveData<Integer> getIntervalID() { return intervalID; }
     public LiveData<Integer> getUnitID() { return unitID; }
+    public MutableLiveData<UserProfileData> getThisUser() { return thisUser; }
 
     public void setPreviousPage(int previousPage) { this.previousPage.setValue(previousPage); }
     public void setAvatar(Bitmap avatar) { this.avatar.setValue(avatar); }
@@ -87,6 +91,7 @@ public class SettingsViewModel extends ViewModel {
     public void setRangeID(int rangeID) { this.rangeID.setValue(rangeID); }
     public void setIntervalID(int intervalID) { this.intervalID.setValue(intervalID); }
     public void setUnitID(int unitID) { this.unitID.setValue(unitID); }
+    public void setThisUser(UserProfileData user) { this.thisUser.setValue(user); }
 
 
 

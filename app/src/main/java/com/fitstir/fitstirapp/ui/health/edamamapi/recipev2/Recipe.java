@@ -9,6 +9,7 @@ public class Recipe {
     private String uri;
     private String label;
     private String image;
+    private String imageBitmapData;
     private Images images;
     private String source;
     private String url;
@@ -83,6 +84,7 @@ public class Recipe {
     public ArrayList<String> getMealType() { return mealType; }
     public ArrayList<String> getDishType() { return dishType; }
     public ArrayList<String> getTags() { return tags; }
+    public String getImageBitmapData() { return imageBitmapData; }
 
     public void setUri(String uri) { this.uri = uri; }
     public void setLabel(String label) { this.label = label; }
@@ -100,4 +102,5 @@ public class Recipe {
     public void setMealType(ArrayList<String> mealType) { this.mealType = mealType; }
     public void setDishType(ArrayList<String> dishType) { this.dishType = dishType; }
     public void setTags(ArrayList<String> tags) { this.tags = tags; }
+    public void setImageBitmapData(String imageBitmapData) { this.imageBitmapData = imageBitmapData; }
 }
