@@ -2,6 +2,7 @@ package com.fitstir.fitstirapp.ui.health.recipes;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,8 +55,15 @@ public class ViewRecipeFragment extends Fragment {
 
 
         ShapeableImageView recipeImage = binding.viewRecipeImage;
-        recipeImage.setImageBitmap(Methods.getBitmapFromURL(clickedRecipe.getImage()));
 
+        Bitmap temp = null;
+        if (clickedRecipe.getImageBitmapData() != null && clickedRecipe.getImageBitmapData().length() != 0) {
+            temp = Methods.getBitmapFromString(clickedRecipe.getImageBitmapData());
+        } else {
+            temp = Methods.getBitmapFromURL(clickedRecipe.getImage());
+            clickedRecipe.setImageBitmapData(Methods.getStringFromBitmap(temp));
+        }
+        recipeImage.setImageBitmap(temp);
 
         TextView time = binding.viewRecipeTime;
         TextView calories = binding.viewRecipeCal;
@@ -100,7 +108,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> dietList = clickedRecipe.getDietLabels();
         StringBuilder printedDiet = new StringBuilder();
-        if (dietList.size() == 0) {
+        if (dietList == null || dietList.size() == 0) {
             dietRow.setVisibility(View.GONE);
         } else if (dietList.size() == 1) {
             printedDiet.append(dietList.get(0));
@@ -122,7 +130,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> healthList = clickedRecipe.getHealthLabels();
         StringBuilder printedHealth = new StringBuilder();
-        if (healthList.size() == 0) {
+        if (healthList == null || healthList.size() == 0) {
             healthRow.setVisibility(View.GONE);
         } else if (healthList.size() == 1) {
             printedHealth.append(healthList.get(0));
@@ -144,7 +152,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> cuisineList = clickedRecipe.getCuisineType();
         StringBuilder printedCuisine = new StringBuilder();
-        if (cuisineList.size() == 0) {
+        if (cuisineList == null || cuisineList.size() == 0) {
             cuisRow.setVisibility(View.GONE);
         } else if (cuisineList.size() == 1) {
             printedCuisine.append(cuisineList.get(0));
@@ -166,7 +174,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> dishList = clickedRecipe.getDishType();
         StringBuilder printedDish = new StringBuilder();
-        if (dishList.size() == 0) {
+        if (dishList == null || dishList.size() == 0) {
             dishRow.setVisibility(View.GONE);
         } else if (dishList.size() == 1) {
             printedDish.append(dishList.get(0));
@@ -188,7 +196,7 @@ public class ViewRecipeFragment extends Fragment {
 
         ArrayList<String> mealList = clickedRecipe.getMealType();
         StringBuilder printedMeal = new StringBuilder();
-        if (mealList.size() == 0) {
+        if (mealList == null || mealList.size() == 0) {
             mealRow.setVisibility(View.GONE);
         } else if (mealList.size() == 1) {
             printedMeal.append(mealList.get(0));

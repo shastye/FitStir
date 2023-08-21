@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 
 import com.fitstir.fitstirapp.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -75,7 +77,17 @@ public class Methods {
         }
     }
 
+    public static String getStringFromBitmap(Bitmap image) {
+        Bitmap immagex = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.PNG, 90, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+        return imageEncoded;
+    }
 
-
-
+    public static Bitmap getBitmapFromString(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
 }
