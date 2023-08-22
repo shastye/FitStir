@@ -64,7 +64,6 @@ public class WorkoutsFragment extends Fragment {
                         Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_yoga);
                         break;
                     default:
-                        // TODO: Show error?
                         break;
                 }
             }

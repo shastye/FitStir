@@ -9,11 +9,16 @@ import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.IGenericGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateGoalDialog extends IGenericGoalDialog {
 
@@ -80,6 +85,16 @@ public class CreateGoalDialog extends IGenericGoalDialog {
         //       add data to goal
 
         goalsViewModel.addGoal(thisGoal);
+
+        UserProfileData user = goalsViewModel.getThisUser().getValue();
+        user.setGoals(goalsViewModel.getGoals().getValue());
+        goalsViewModel.setThisUser(user);
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(authUser.getUid());
+        userReference.setValue(goalsViewModel.getThisUser().getValue());
     }
 
     @Override

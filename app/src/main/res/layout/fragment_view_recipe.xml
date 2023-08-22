@@ -21,8 +21,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:background="@color/light_grey"
+        android:foreground="@drawable/edamam_badge_transparent"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="5dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.00"
+        app:layout_constraintHorizontal_bias="1.00"/>
+
     <RelativeLayout
-        android:id="@+id/toolbar_view_layout"
+        android:id="@+id/view_recipe_includes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="10dp"
@@ -38,7 +54,7 @@
             android:gravity="center_vertical">
 
 
-            <include layout="@layout/toolbar_view_recipe"/>
+            <include layout="@layout/included_view_recipe_toolbar"/>
 
 
         </RelativeLayout>
@@ -352,7 +368,7 @@
         app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
         app:shapeAppearanceOverlay="@style/RoundedBottom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_view_layout"
+        app:layout_constraintTop_toBottomOf="@id/view_recipe_includes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.00" />

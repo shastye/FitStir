@@ -1,7 +1,5 @@
 package com.fitstir.fitstirapp.ui.goals;
 
-import androidx.core.util.Pair;
-
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -15,7 +13,7 @@ public class Goal {
     private WorkoutTypes type;
     private String unit;
     private int value;
-    private ArrayList<Pair<Date, Double>> data;
+    private ArrayList<GoalDataPair> data;
     private final String id;
 
     private Date minDate;
@@ -53,7 +51,7 @@ public class Goal {
     }
 
     public void addData(Date date, double value) {
-        Pair<Date, Double> data = new Pair<>(date, value);
+        GoalDataPair  data = new GoalDataPair (date, value);
 
         if (this.data.size() == 0) {
             this.maxDate = data.first;
@@ -82,7 +80,7 @@ public class Goal {
     public WorkoutTypes getType() { return this.type; }
     public String getUnit() { return this.unit; }
     public int getValue() { return this.value; }
-    public ArrayList<Pair<Date, Double>> getData() { return this.data; }
+    public ArrayList<GoalDataPair> getData() { return this.data; }
     public Date getMaxDate() { return this.maxDate; }
     public Date getMinDate() { return this.minDate; }
     public String getID() { return id; }
@@ -90,5 +88,5 @@ public class Goal {
     public void setName(String name) { this.name = name; }
     public void setType(WorkoutTypes type) { this.type = type; }
     public void setValue(int value) { this.value = value; }
-    public void setData(ArrayList<Pair<Date, Double>> data) { this.data = new ArrayList<>(data); }
+    public void setData(ArrayList<GoalDataPair> data) { this.data = new ArrayList<>(data); }
 }

@@ -18,7 +18,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/recipe_toolbar_back_arrow_icon"
+                    android:id="@+id/recipe_search_toolbar_back_arrow_icon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_back_arrow_24dp"
@@ -30,7 +30,7 @@
                     android:id="@+id/recipe_toolbar_search_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/recipe_toolbar_back_arrow_icon"
+                    android:layout_toEndOf="@id/recipe_search_toolbar_back_arrow_icon"
                     android:layout_toStartOf="@+id/recipe_toolbar_filter_icon"
                     android:background="@null"
                     android:hint="Search Recipe"
