@@ -36,8 +36,7 @@ public class EditSettingsFragment extends Fragment {
         binding = FragmentEditSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textUserIdSettingsEdit;
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
 
         // Add additions here
 

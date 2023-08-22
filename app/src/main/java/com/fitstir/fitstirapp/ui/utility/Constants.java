@@ -17,4 +17,12 @@ public class Constants {
         public static final String APP_ID = "456d7882";
         public static final String APP_KEY = "772e2aed7f585b9eeacffbfaacf59de6";
     }
+
+    public static final class WORKOUT_BODYPART{
+
+        public  static final String UPPER_BODY = "UpperBody";
+        public static final String LOWER_BODY = "LowerBody";
+        public static final String WEIGHT_LIFTING = "Weights";
+        public static final String CIRCUIT_TRAINING = "CircuitTraining";
+    }
 }

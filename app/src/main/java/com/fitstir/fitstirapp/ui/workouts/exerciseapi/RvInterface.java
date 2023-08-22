@@ -1,6 +1,5 @@
 package com.fitstir.fitstirapp.ui.workouts.exerciseapi;
 
-public interface RecyclerViewInterface {
-
+public interface RvInterface {
     void onItemClick(int position);
 }

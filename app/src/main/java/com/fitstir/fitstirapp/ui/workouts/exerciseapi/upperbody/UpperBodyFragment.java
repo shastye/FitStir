@@ -1,51 +1,51 @@
 package com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentUpperBodyBinding;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.RecyclerViewInterface;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.UpperBodyAdapter;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody.UpperBodyApi;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.fitstir.fitstirapp.ui.workouts.exerciseapi.RvInterface;
+import com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment;
+import com.fitstir.fitstirapp.ui.workouts.exerciseapi.WorkoutApi;
+import com.fitstir.fitstirapp.ui.workouts.exerciseapi.workoutAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class UpperBodyFragment extends Fragment implements RecyclerViewInterface {
+public class UpperBodyFragment extends Fragment implements RvInterface {
 
     private FragmentUpperBodyBinding binding;
     private RecyclerView workouts_RV;
     private FirebaseFirestore db;
-    private UpperBodyAdapter viewAdapter;
-    private ArrayList<UpperBodyApi> upperBodyApiArrayList;
+    private workoutAdapter viewAdapter;
+    private ArrayList<WorkoutApi> upperBodyApiArrayList;
+    private WorkoutApi upperBody;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        WorkoutsViewModel workoutsViewModel =
-                new ViewModelProvider(this).get(WorkoutsViewModel.class);
+        WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
 
         binding = FragmentUpperBodyBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        
         // Addition Text Here
         db = FirebaseFirestore.getInstance();
         upperBodyApiArrayList = new ArrayList<>();
@@ -55,38 +55,17 @@ public class UpperBodyFragment extends Fragment implements RecyclerViewInterface
         workouts_RV.setItemAnimator(new DefaultItemAnimator());
         workouts_RV.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
 
-        viewAdapter = new UpperBodyAdapter(this.getActivity(), upperBodyApiArrayList, this);
+        viewAdapter = new workoutAdapter(this.getActivity(), upperBodyApiArrayList, this);
 
         workouts_RV.setAdapter(viewAdapter);
-        
-        fetchWorkouts();
+        upperBody = new WorkoutApi();
+        upperBody.fetchData(db,upperBodyApiArrayList, Constants.WORKOUT_BODYPART.UPPER_BODY, viewAdapter);
+
+
 
         // End
 
         return root;
-    }
-    private void fetchWorkouts() {
-        db.collection("UpperBody").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(!queryDocumentSnapshots.isEmpty()){
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for(DocumentSnapshot d : list){
-                                UpperBodyApi upperBodyApi = d.toObject(UpperBodyApi.class);
-                                upperBodyApiArrayList.add(upperBodyApi);
-                            }
-                            viewAdapter.notifyDataSetChanged();
-                        }else{
-                            Toast.makeText(requireActivity(), "No data found in Database", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(requireActivity(), "Error getting data", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     @Override
@@ -97,6 +76,28 @@ public class UpperBodyFragment extends Fragment implements RecyclerViewInterface
 
     @Override
     public void onItemClick(int position) {
+     WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
+
+      String exerciseName = upperBodyApiArrayList.get(position).getExercise().trim();
+      String bodyPart = upperBodyApiArrayList.get(position).getBodyPart().trim();
+      String instructions = upperBodyApiArrayList.get(position).getDirections().trim();
+      String target = upperBodyApiArrayList.get(position).getTarget().trim();
+      String image = upperBodyApiArrayList.get(position).getImage().trim();
+      String gif = upperBodyApiArrayList.get(position).getGifURL().trim();
+      String equipment = upperBodyApiArrayList.get(position).getEquipment().trim();
+
+      workoutsViewModel.setExercise(exerciseName);
+      workoutsViewModel.setBodyPart(bodyPart);
+      workoutsViewModel.setDirections(instructions);
+      workoutsViewModel.setTarget(target);
+      workoutsViewModel.setImage(image);
+      workoutsViewModel.setGifURL(gif);
+      workoutsViewModel.setEquipment(equipment);
+
+      Fragment fragment = new ViewWorkoutFragment();
+      FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+      fm.replace(R.id.container, fragment).commit();
+
 
     }
 }

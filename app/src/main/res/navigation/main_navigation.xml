@@ -40,19 +40,31 @@
         android:id="@+id/navigation_upper_body"
         android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody.UpperBodyFragment"
         android:label="Upper Body"
-        tools:layout="@layout/fragment_upper_body" />
+        tools:layout="@layout/fragment_upper_body" >
+        <action
+            android:id="@+id/action_navigation_upper_body_to_viewWorkoutFragment"
+            app:destination="@id/viewWorkoutFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_lower_body"
-        android:name="com.fitstir.fitstirapp.ui.workouts.LowerBodyFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.lowerbody.LowerBodyFragment"
         android:label="Lower Body"
-        tools:layout="@layout/fragment_lower_body" />
+        tools:layout="@layout/fragment_lower_body" >
+        <action
+            android:id="@+id/action_navigation_lower_body_to_viewWorkoutFragment"
+            app:destination="@id/viewWorkoutFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_weight_lifting"
-        android:name="com.fitstir.fitstirapp.ui.workouts.WeightLiftingFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.WeightLiftingFragment"
         android:label="Weight Lifting"
-        tools:layout="@layout/fragment_weight_lifting" />
+        tools:layout="@layout/fragment_weight_lifting" >
+        <action
+            android:id="@+id/action_navigation_weight_lifting_to_viewWorkoutFragment"
+            app:destination="@id/viewWorkoutFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_circuit_workouts"
@@ -206,4 +218,9 @@
         android:name="com.fitstir.fitstirapp.ui.health.recipes.ViewRecipeFragment"
         android:label="Recipe"
         tools:layout="@layout/fragment_view_recipe" />
+    <fragment
+        android:id="@+id/viewWorkoutFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment"
+        android:label="fragment_view_workout"
+        tools:layout="@layout/fragment_view_workout" />
 </navigation>
