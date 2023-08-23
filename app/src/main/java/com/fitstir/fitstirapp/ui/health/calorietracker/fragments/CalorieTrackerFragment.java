@@ -33,6 +33,7 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -232,6 +233,14 @@ public class CalorieTrackerFragment extends Fragment {
                     }
                 });
                 popupWindow.showAtLocation(dateSelectorButton, Gravity.TOP, 0,425);
+            }
+        });
+
+        FloatingActionButton searchButton = binding.calorieTrackerSearchButton;
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_calorie_tracker_to_navigation_calorie_tracker_search);
             }
         });
 
