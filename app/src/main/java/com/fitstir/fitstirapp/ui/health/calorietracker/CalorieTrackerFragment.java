@@ -12,18 +12,30 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentCalorieTrackerBinding;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CalorieTrackerFragment extends Fragment {
 
     private FragmentCalorieTrackerBinding binding;
     private CalorieTrackerViewModel calorieTrackerViewModel;
+
+    private RecyclerView dataRecyclerView;
+    private DataAdapter dataAdapter;
+    private TextView dateName, goalCalTextView, usedCalTextView, remainingCalTextView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,13 +44,19 @@ public class CalorieTrackerFragment extends Fragment {
         binding = FragmentCalorieTrackerBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textCalorieTracker;
-        //recipesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
         // Addition Text Here
 
-        TextView dateName = root.findViewById(R.id.calendar_date_label);
-        dateName.setText(calorieTrackerViewModel.getDateString().getValue());
+        dateName = root.findViewById(R.id.calendar_date_label);
+
+        dataRecyclerView = binding.dataRecyclerView;
+        dataRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+
+        goalCalTextView = binding.ctgoalGoalAmount;
+        usedCalTextView = binding.ctgoalUsedAmount;
+        remainingCalTextView = binding.ctgoalRemainingAmount;
+
+        updateUI();
+
 
 
 
@@ -103,7 +121,6 @@ public class CalorieTrackerFragment extends Fragment {
                             dateString[0] += " " + dayOfMonth + ", " + year;
                         }
 
-                        dateName.setText(dateString[0]);
                         selectedDate.set(year, month, dayOfMonth);
                     }
                 });
@@ -111,8 +128,10 @@ public class CalorieTrackerFragment extends Fragment {
                 popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
+                        dateName.setText(dateString[0]);
                         calorieTrackerViewModel.setSelectedDate(selectedDate);
                         calorieTrackerViewModel.setDateString(dateString[0]);
+                        updateUI();
                     }
                 });
                 popupWindow.showAtLocation(dateSelectorButton, Gravity.TOP, 0,425);
@@ -129,5 +148,159 @@ public class CalorieTrackerFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        calorieTrackerViewModel.setSelectedDate(Calendar.getInstance());
+        calorieTrackerViewModel.setDateString("Today");
+        updateUI();
+    }
+
+    private void updateUI() {
+        dateName.setText(calorieTrackerViewModel.getDateString().getValue());
+
+        ArrayList<DataTuple> dataArray = calorieTrackerViewModel.getGenericData(); // TODO: CHANGE TO ACTUAL DATA FROM VIEWMODEL
+        ArrayList<DataTuple> used = new ArrayList<>();
+        int dayCalSum = 0;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            Calendar cal = calorieTrackerViewModel.getSelectedDate().getValue();
+
+            if (dataArray.get(i).isDate(cal.getTime())) {
+                used.add(dataArray.get(i));
+                dayCalSum += dataArray.get(i).getItem().getFood().getNutrients().getENERC_KCAL();
+            }
+        }
+
+        dataAdapter = new DataAdapter(used);
+        dataRecyclerView.setAdapter(dataAdapter);
+
+        int goal = 2000; // TODO: CHANGE TO ACTUAL DATA FROM VIEWMODEL
+        goalCalTextView.setText(String.valueOf(goal));
+        usedCalTextView.setText(String.valueOf(dayCalSum));
+        int remaining = goal - dayCalSum;
+        remainingCalTextView.setText(String.valueOf(remaining));
+    }
+
+    private class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ArrayList<DataTuple> data;
+        private final TextView labelTextView, nutrientsTextView, caloriesTextView;
+        private LinearLayoutCompat dataLinearLayout;
+
+        public DataHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.layout_calorie_tracker_meal_section, parent, false));
+            itemView.setOnClickListener(this);
+
+            labelTextView = itemView.findViewById(R.id.meal_section_label);
+            nutrientsTextView = itemView.findViewById(R.id.meal_section_big_3);
+            caloriesTextView = itemView.findViewById(R.id.meal_section_calories);
+            dataLinearLayout = itemView.findViewById(R.id.meal_section_item_ll);
+            dataLinearLayout.removeAllViews();
+        }
+
+        public void bind(ArrayList<DataTuple> data, int position) {
+            this.data = data;
+
+            switch (position) {
+                case 0:
+                    this.labelTextView.setText("Breakfast");
+                    break;
+                case 1:
+                    this.labelTextView.setText("Tea Time");
+                    break;
+                case 2:
+                    this.labelTextView.setText("Brunch");
+                    break;
+                case 3:
+                    this.labelTextView.setText("Lunch");
+                    break;
+                case 4:
+                    this.labelTextView.setText("Snack");
+                    break;
+                case 5:
+                    this.labelTextView.setText("Dinner");
+                    break;
+            }
+
+
+            float calSum = 0, carbSum = 0, fatSum = 0, protSum = 0;
+            for (int i = 0; i < data.size(); i++) {
+                Parsed parsed = data.get(i).getItem();
+                Nutrients nutr = parsed.getFood().getNutrients();
+                calSum += nutr.getENERC_KCAL();
+                carbSum += nutr.getCHOCDF();
+                protSum += nutr.getPROCNT();
+                fatSum += nutr.getFAT();
+
+                View view = LayoutInflater.from(requireActivity()).inflate(R.layout.layout_calorie_tracker_data_section, null);
+                TextView dataLabelTextView = view.findViewById(R.id.data_section_label);
+                TextView dataUnitsTextView = view.findViewById(R.id.data_section_units);
+                TextView dataCaloriesTextView = view.findViewById(R.id.data_section_calories);
+
+                dataLabelTextView.setText(parsed.getFood().getLabel());
+                String tUnits = parsed.getQuantity() + " " + parsed.getMeasure().getLabel();
+                dataUnitsTextView.setText(tUnits);
+                dataCaloriesTextView.setText(String.valueOf(parsed.getFood().getNutrients().getENERC_KCAL()));
+
+                this.dataLinearLayout.addView(view);
+            }
+
+            String tNutr = "Carbs " + carbSum + "g \u22C5 Fat " + fatSum + "g \u22c5 Protein " + protSum + "g";
+            this.nutrientsTextView.setText(tNutr);
+            this.caloriesTextView.setText(String.valueOf((int)calSum));
+        }
+
+        @Override
+        public void onClick(View v) {
+            //caloriesTextView.setClickedData(data);
+            //Navigation.findNavController(v).navigate(R.id.action_navigation_goals_to_navigation_view_goal);
+        }
+    }
+
+    private class DataAdapter extends RecyclerView.Adapter<DataHolder> {
+        private ArrayList<Pair<Integer, ArrayList<DataTuple>>> usedDataArray;
+
+        public DataAdapter(ArrayList<DataTuple> dataArray) {
+            ArrayList<ArrayList<DataTuple>> sectionedData = new ArrayList<>();
+            for (int i = 0; i < 6; i++) {
+                sectionedData.add(new ArrayList<>());
+            }
+
+            for (int i = 0; i < dataArray.size(); i++) {
+                for (int j = 0; j < MealType.values().length; j++) {
+                    if (dataArray.get(i).getMealType().equals(MealType.values()[j].getSpinnerTitle())) {
+                        sectionedData.get(j - 1).add(dataArray.get(i));
+                    }
+                }
+            }
+
+            ArrayList<Pair<Integer, ArrayList<DataTuple>>> toShow = new ArrayList<>();
+            for (int i = 0; i < sectionedData.size(); i++) {
+                if (sectionedData.get(i).size() != 0) {
+                    toShow.add(new Pair<>(i, sectionedData.get(i)));
+                }
+            }
+            usedDataArray = toShow;
+        }
+
+        @NonNull
+        @Override
+        public DataHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(requireActivity());
+            return new DataHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull DataHolder holder, int position) {
+            Pair<Integer, ArrayList<DataTuple>> data = this.usedDataArray.get(position);
+            holder.bind(data.second, data.first);
+        }
+
+        @Override
+        public int getItemCount() {
+            return usedDataArray.size();
+        }
     }
 }
