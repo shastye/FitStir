@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/data_section_calorie_tracker_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:layout_margin="10dp" >
+    android:layout_margin="5dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Eggs"
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:textColor="?attr/colorPrimary"/>
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="2 large"
             android:textColor="?attr/colorPrimary"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="140 cal"
-        android:textSize="28sp"
+        android:textSize="20sp"
         android:layout_centerVertical="true"
         android:textColor="?attr/colorPrimary"
         android:layout_alignParentEnd="true" />
