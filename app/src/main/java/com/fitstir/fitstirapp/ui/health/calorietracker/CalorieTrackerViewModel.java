@@ -21,6 +21,11 @@ public class CalorieTrackerViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<DataTuple>> calorieTrackerData = new MutableLiveData<>(new ArrayList<DataTuple>());
     private final MutableLiveData<Integer> calorieTrackerGoal = new MutableLiveData<>(2000);
     private final MutableLiveData<Integer> suggestedGoal = new MutableLiveData<>(2000);
+    private final MutableLiveData<ArrayList<DataTuple>> clickedArray = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<Float> calorieSum = new MutableLiveData<>(0.0f);
+    private final MutableLiveData<Float> carbSum = new MutableLiveData<>(0.0f);
+    private final MutableLiveData<Float> fatSum = new MutableLiveData<>(0.0f);
+    private final MutableLiveData<Float> proteinSum = new MutableLiveData<>(0.0f);
 
 
 
@@ -76,6 +81,29 @@ public class CalorieTrackerViewModel extends ViewModel {
     public void setSuggestedGoal(int goal) {
         suggestedGoal.setValue(goal);
     }
+
+    public MutableLiveData<ArrayList<DataTuple>> getClickedArray() {
+        return clickedArray;
+    }
+    public void setClickedArray(ArrayList<DataTuple> data) {
+        this.clickedArray.setValue(data);
+    }
+
+    public MutableLiveData<Float> getCalorieSum() { return calorieSum; }
+    public void setCalorieSum(float sum) { this.calorieSum.setValue(sum); }
+
+    public MutableLiveData<Float> getCarbSum() { return carbSum; }
+    public void setCarbSum(float sum) { this.carbSum.setValue(sum); }
+
+    public MutableLiveData<Float> getFatSum() { return fatSum; }
+    public void setFatSum(float sum) { this.fatSum.setValue(sum); }
+
+    public MutableLiveData<Float> getProteinSum() { return proteinSum; }
+    public void setProteinSum(float sum) { this.proteinSum.setValue(sum); }
+
+
+
+
 
     public ArrayList<DataTuple> getGenericData() {
         ArrayList<DataTuple> data = new ArrayList<DataTuple>();

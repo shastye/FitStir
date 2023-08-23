@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,7 @@ public class CalorieTrackerFragment extends Fragment {
     private ShapeableImageView goalBackgroundView;
     private LinearLayoutCompat goalInfoView;
     private AppBarLayout dateToolbar;
+    private ImageButton moreButton;
 
     private boolean isLoading;
 
@@ -130,7 +132,7 @@ public class CalorieTrackerFragment extends Fragment {
 
 
 
-        ImageButton moreButton = binding.calgoalMoreButton;
+        moreButton = binding.calgoalMoreButton;
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,6 +270,18 @@ public class CalorieTrackerFragment extends Fragment {
     }
 
     private void updateUI() {
+        if (calorieTrackerViewModel.getDateString().getValue().equals("Today")) {
+            moreButton.setVisibility(View.VISIBLE);
+            moreButton.setClickable(true);
+
+            // show create button
+        } else {
+            moreButton.setVisibility(View.INVISIBLE);
+            moreButton.setClickable(false);
+
+            // hide create button
+        }
+
         dateName.setText(calorieTrackerViewModel.getDateString().getValue());
 
         ArrayList<DataTuple> dataArray = calorieTrackerViewModel.getCalorieTrackerData().getValue();
@@ -297,6 +311,7 @@ public class CalorieTrackerFragment extends Fragment {
         private ArrayList<DataTuple> data;
         private final TextView labelTextView, nutrientsTextView, caloriesTextView;
         private LinearLayoutCompat dataLinearLayout;
+        private float calSum = 0, carbSum = 0, fatSum = 0, protSum = 0;
 
         public DataHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.layout_calorie_tracker_meal_section, parent, false));
@@ -305,7 +320,7 @@ public class CalorieTrackerFragment extends Fragment {
             labelTextView = itemView.findViewById(R.id.meal_section_label);
             nutrientsTextView = itemView.findViewById(R.id.meal_section_big_3);
             caloriesTextView = itemView.findViewById(R.id.meal_section_calories);
-            dataLinearLayout = itemView.findViewById(R.id.meal_section_item_ll);
+            dataLinearLayout = itemView.findViewById(R.id.meal_section_item_rv);
             dataLinearLayout.removeAllViews();
         }
 
@@ -333,8 +348,10 @@ public class CalorieTrackerFragment extends Fragment {
                     break;
             }
 
-
-            float calSum = 0, carbSum = 0, fatSum = 0, protSum = 0;
+            calSum = 0;
+            carbSum = 0;
+            fatSum = 0;
+            protSum = 0;
             for (int i = 0; i < data.size(); i++) {
                 Parsed parsed = data.get(i).getItem();
                 Nutrients nutr = parsed.getFood().getNutrients();
@@ -363,8 +380,13 @@ public class CalorieTrackerFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            //caloriesTextView.setClickedData(data);
-            //Navigation.findNavController(v).navigate(R.id.action_navigation_goals_to_navigation_view_goal);
+            calorieTrackerViewModel.setClickedArray(data);
+            calorieTrackerViewModel.setCalorieSum(calSum);
+            calorieTrackerViewModel.setCarbSum(carbSum);
+            calorieTrackerViewModel.setFatSum(fatSum);
+            calorieTrackerViewModel.setProteinSum(protSum);
+
+            Navigation.findNavController(v).navigate(R.id.action_navigation_calorie_tracker_to_navigation_view_calorie_tracker_meal);
         }
     }
 
