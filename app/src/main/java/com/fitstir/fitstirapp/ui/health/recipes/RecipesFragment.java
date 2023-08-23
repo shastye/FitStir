@@ -113,7 +113,7 @@ public class RecipesFragment extends Fragment {
         setRecViewState(LIKED_RECVIEW);
         centerMessage.setVisibility(View.INVISIBLE);
 
-        AppCompatSpinner unusedSpinner = root.findViewById(R.id.toolbar_search_spinner);
+        AppCompatSpinner unusedSpinner = root.findViewById(R.id.toolbar_search_rl);
         unusedSpinner.setVisibility(View.GONE);
 
         if (recipesViewModel.getHits().getValue() == null || recipesViewModel.getHits().getValue().equals(new ArrayList<>())) {

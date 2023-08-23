@@ -53,7 +53,7 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/toolbar_search_spinner2"
+                        android:id="@+id/toolbar_search_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignEnd="@+id/dropdown_button"
