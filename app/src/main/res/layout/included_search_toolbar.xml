@@ -46,7 +46,7 @@
                     android:id="@+id/recipe_toolbar_filter_icon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_filter_black_24dp"
+                    android:src="@drawable/ic_filter_black_200dp"
                     android:tint="?attr/colorOnPrimary"
                     android:layout_alignParentRight="true"
                     android:layout_marginStart="15dp"
