@@ -23,7 +23,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validCodeReceived_onlyQuantityUnitIngredientAndNutritionType() {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "", "");
         api.execute();
 
         int code = api.getResponseCode();
@@ -33,7 +33,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validHeaderReceived_onlyQuantityUnitIngredientAndNutritionType() {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "", "");
         api.execute();
 
         Headers header = api.getResponseHeader();
@@ -57,7 +57,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validBodyReceived_onlyQuantityUnitIngredientAndNutritionType() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "", "");
         api.execute();
 
         ResponseBody body = api.getResponseBody();
@@ -108,7 +108,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validStringReceivedFromStringMethod_onlyQuantityUnitIngredientAndNutritionType() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "", "");
         api.execute();
 
         String actual = api.getResponseAsString();
@@ -156,7 +156,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_HEALTH_ALCOHOLFREE() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", HealthOptions.ALCOHOL_FREE.getKey(), "", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", HealthOptions.ALCOHOL_FREE.getKey(), "", "", "");
         api.execute();
 
         String expectedBody = "{" +
@@ -205,7 +205,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_HEALTH_CELERYFREE() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", HealthOptions.CELERY_FREE.getKey(), "", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", HealthOptions.CELERY_FREE.getKey(), "", "", "");
         api.execute();
 
         String expectedBody = "{" +
@@ -254,7 +254,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_HEALTH_KETOFRIENDLY() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", HealthOptions.KETO_FRIENDLY.getKey(), "", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", HealthOptions.KETO_FRIENDLY.getKey(), "", "", "");
         api.execute();
 
         String expectedBody = "{" +
@@ -291,7 +291,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_MINCALORIES_100() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "100", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "100", "", "");
         api.execute();
 
         String expectedBody = "{" +
@@ -340,7 +340,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_MINCALORIES_10() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "10", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "10", "", "");
         api.execute();
 
         String expectedBody = "{" +
@@ -389,7 +389,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_MAXCALORIES_200() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "200", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "200", "");
         api.execute();
 
         String expectedBody =
@@ -445,7 +445,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_MAXCALORIES_20() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "20", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "20", "");
         api.execute();
 
         String expectedBody = "{" +
@@ -475,7 +475,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_MINCALORIES_100_MAXCALORIES_200() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "100", "200", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "100", "200", "");
         api.execute();
 
         String expectedBody = "{" +
@@ -524,7 +524,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_CATEGORY_GENERICFOODS() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "", CategoryOptions.GENERIC_FOODS.getKey());
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "", CategoryOptions.GENERIC_FOODS.getKey());
         api.execute();
 
         String expectedBody = "{" +
@@ -573,7 +573,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test
     public void validResponses_onlyQuantityUnitIngredientAndNutritionType_CATEGORY_FASTFOODS() throws IOException {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "", CategoryOptions.FAST_FOODS.getKey());
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "", CategoryOptions.FAST_FOODS.getKey());
         api.execute();
 
         String expectedBody = "{" +
@@ -603,7 +603,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
 
     @Test(expected = RuntimeException.class)
     public void RuntimeException_spaceForField() {
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", " ", "", "", CategoryOptions.FAST_FOODS.getKey());
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", " ", "", "", CategoryOptions.FAST_FOODS.getKey());
         api.execute();
     }
 
@@ -612,7 +612,7 @@ public class EdamamAPIFoodDatabaseParserRequestTests {
         ObjectMapper objectMapper = new ObjectMapper();
         FoodResponse expected = objectMapper.readValue(FOODRESPONSE, FoodResponse.class);
 
-        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser(2, "large", "eggs", "cooking", "", "", "", "");
+        EdamamAPI_FoodDatabaseParser api = new EdamamAPI_FoodDatabaseParser("2", "large", "eggs", "cooking", "", "", "", "");
         api.execute();
 
         FoodResponse actual = api.getFoodResponse();
