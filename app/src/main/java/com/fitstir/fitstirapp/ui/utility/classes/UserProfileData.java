@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.utility.classes;
 
 import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.health.calorietracker.DataTuple;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 
@@ -11,9 +12,29 @@ import java.util.List;
 public class UserProfileData {
 
     String fullname, email, password, sex;
-    Integer height_ft,height_in, weight, goal_weight, age, themeID, intervalID, rangeID, unitID;
+    Integer height_ft,height_in, weight, goal_weight, age, themeID, intervalID, rangeID, unitID, calorieTrackerGoal;
     ArrayList<Goal> goals;
     ArrayList<Recipe> likedRecipes;
+    ArrayList<DataTuple> calorieTrackerData;
+
+
+
+
+    public Integer getCalorieTrackerGoal() {
+        return calorieTrackerGoal;
+    }
+
+    public void setCalorieTrackerGoal(Integer calorieTrackerGoal) {
+        this.calorieTrackerGoal = calorieTrackerGoal;
+    }
+
+    public ArrayList<DataTuple> getCalorieTrackerData() {
+        return calorieTrackerData;
+    }
+
+    public void setCalorieTrackerData(ArrayList<DataTuple> calorieTrackerData) {
+        this.calorieTrackerData = calorieTrackerData;
+    }
 
     public ArrayList<Recipe> getLikedRecipes() {
         return likedRecipes;
@@ -142,8 +163,11 @@ public class UserProfileData {
         this.goals = new ArrayList<>();
         goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, 0));
         this.likedRecipes = new ArrayList<>();
+        this.calorieTrackerData = new ArrayList<>();
     }
-    public UserProfileData(String fullname, String email, String password,String sex,  Integer height_ft, Integer height_in, Integer weight, Integer goal_weight, Integer age) {
+    public UserProfileData(String fullname, String email, String password,String sex,
+                           Integer height_ft, Integer height_in, Integer weight,
+                           Integer goal_weight, Integer age) {
         this.fullname = fullname;
         this.email = email;
         this.password = password;
@@ -156,6 +180,8 @@ public class UserProfileData {
 
         goals = new ArrayList<>();
         goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, goal_weight));
+        this.likedRecipes = new ArrayList<>();
+        this.calorieTrackerData = new ArrayList<>();
     }
 
 

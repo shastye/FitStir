@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DataTuple {
+
     private Date date;
     private String mealType;
     private Parsed item;
@@ -28,6 +29,12 @@ public class DataTuple {
     }
 
 
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
+    }
     public String getMealType() {
         return mealType;
     }

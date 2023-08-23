@@ -38,6 +38,7 @@
             android:gravity="center_vertical">
 
             <include layout="@layout/included_calendar_toolbar"/>
+            <include layout="@layout/included_generic_loading_popup"/>
 
         </RelativeLayout>
     </RelativeLayout>
@@ -51,12 +52,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calorie_tracker_includes"
+        app:layout_constraintTop_toTopOf="@+id/calorie_tracker_includes"
         app:layout_constraintVertical_bias="0.00"
+        android:layout_marginTop="50dp"
         app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
         app:shapeAppearanceOverlay="@style/RoundedBottom" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ctgoal_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -107,7 +110,7 @@
                     android:id="@+id/ctgoal_goal_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2,000"
+                    android:text=""
                     android:textSize="28sp"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"/>
@@ -140,7 +143,7 @@
                     android:id="@+id/ctgoal_used_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1,777"
+                    android:text=""
                     android:textSize="28sp"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"/>
@@ -173,7 +176,7 @@
                     android:id="@+id/ctgoal_remaining_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="223"
+                    android:text=""
                     android:textSize="28sp"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"/>

@@ -19,6 +19,7 @@ public class CalorieTrackerViewModel extends ViewModel {
     private final MutableLiveData<Calendar> selectedDate = new MutableLiveData<>(Calendar.getInstance()); //set to today initially
     private final MutableLiveData<String> dateString = new MutableLiveData<>("Today");
     private final MutableLiveData<ArrayList<DataTuple>> calorieTrackerData = new MutableLiveData<>(new ArrayList<DataTuple>());
+    private final MutableLiveData<Integer> calorieTrackerGoal = new MutableLiveData<>(2000);
 
 
 
@@ -61,6 +62,12 @@ public class CalorieTrackerViewModel extends ViewModel {
         dateString.setValue(dateAsString);
     }
 
+    public MutableLiveData<Integer> getCalorieTrackerGoal() {
+        return calorieTrackerGoal;
+    }
+    public void setCalorieTrackerGoal(int value) {
+        this.calorieTrackerGoal.setValue(value);
+    }
 
     public ArrayList<DataTuple> getGenericData() {
         ArrayList<DataTuple> data = new ArrayList<DataTuple>();

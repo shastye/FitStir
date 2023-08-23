@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +25,16 @@ import com.fitstir.fitstirapp.databinding.FragmentCalorieTrackerBinding;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,9 +44,15 @@ public class CalorieTrackerFragment extends Fragment {
     private FragmentCalorieTrackerBinding binding;
     private CalorieTrackerViewModel calorieTrackerViewModel;
 
+    private ConstraintLayout loadingPopupView;
     private RecyclerView dataRecyclerView;
     private DataAdapter dataAdapter;
     private TextView dateName, goalCalTextView, usedCalTextView, remainingCalTextView;
+    private ShapeableImageView goalBackgroundView;
+    private LinearLayoutCompat goalInfoView;
+    private AppBarLayout dateToolbar;
+
+    private boolean isLoading;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +72,41 @@ public class CalorieTrackerFragment extends Fragment {
         usedCalTextView = binding.ctgoalUsedAmount;
         remainingCalTextView = binding.ctgoalRemainingAmount;
 
-        updateUI();
+        loadingPopupView = root.findViewById(R.id.generic_loading_screen);
+        goalBackgroundView = root.findViewById(R.id.ctgoal_background);
+        goalInfoView = root.findViewById(R.id.ctgoal_info);
+        dateToolbar = root.findViewById(R.id.calendar_toolbar);
+        isLoading = false;
+
+
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference thisUser = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(authUser.getUid());
+
+        toggleLoadingScreen();
+        thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserProfileData value = snapshot.getValue(UserProfileData.class);
+                calorieTrackerViewModel.setThisUser(value);
+                calorieTrackerViewModel.setCalorieTrackerData(value.getCalorieTrackerData());
+
+                if (value.getCalorieTrackerData() != null || value.getCalorieTrackerData().size() != 0) {
+                    //calorieTrackerViewModel.setCalorieTrackerData(calorieTrackerViewModel.getGenericData());
+                    updateUI();
+                }
+
+                toggleLoadingScreen();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
 
 
 
@@ -132,6 +183,18 @@ public class CalorieTrackerFragment extends Fragment {
                         calorieTrackerViewModel.setSelectedDate(selectedDate);
                         calorieTrackerViewModel.setDateString(dateString[0]);
                         updateUI();
+
+                        //UserProfileData user = calorieTrackerViewModel.getThisUser().getValue();
+                        //user.setCalorieTrackerData(calorieTrackerViewModel.getCalorieTrackerData().getValue());
+                        //calorieTrackerViewModel.setThisUser(user);
+
+                        //FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+                        //assert authUser != null;
+                        //DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
+                        //        .child(authUser.getUid());
+                        //userReference.setValue(calorieTrackerViewModel.getThisUser().getValue());
+
+
                     }
                 });
                 popupWindow.showAtLocation(dateSelectorButton, Gravity.TOP, 0,425);
@@ -150,18 +213,28 @@ public class CalorieTrackerFragment extends Fragment {
         binding = null;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        calorieTrackerViewModel.setSelectedDate(Calendar.getInstance());
-        calorieTrackerViewModel.setDateString("Today");
-        updateUI();
+    private void toggleLoadingScreen() {
+        if (isLoading) {
+            loadingPopupView.setVisibility(View.GONE);
+            goalBackgroundView.setVisibility(View.VISIBLE);
+            goalInfoView.setVisibility(View.VISIBLE);
+            dateToolbar.setVisibility(View.VISIBLE);
+
+            isLoading = false;
+        } else {
+            loadingPopupView.setVisibility(View.VISIBLE);
+            goalBackgroundView.setVisibility(View.GONE);
+            goalInfoView.setVisibility(View.GONE);
+            dateToolbar.setVisibility(View.GONE);
+
+            isLoading = true;
+        }
     }
 
     private void updateUI() {
         dateName.setText(calorieTrackerViewModel.getDateString().getValue());
 
-        ArrayList<DataTuple> dataArray = calorieTrackerViewModel.getGenericData(); // TODO: CHANGE TO ACTUAL DATA FROM VIEWMODEL
+        ArrayList<DataTuple> dataArray = calorieTrackerViewModel.getCalorieTrackerData().getValue();
         ArrayList<DataTuple> used = new ArrayList<>();
         int dayCalSum = 0;
 
