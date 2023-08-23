@@ -85,8 +85,6 @@ public class EdamamAPI_FoodDatabaseParser {
     public ResponseBody getResponseBody() { return this.responseBody; }
     public String getResponseAsString() throws IOException { return new String(this.responseBody.bytes(), StandardCharsets.UTF_8); }
     public FoodResponse getFoodResponse() throws IOException, JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        foodResponse = objectMapper.readValue(this.getResponseAsString(), FoodResponse.class);
         return foodResponse;
     }
 

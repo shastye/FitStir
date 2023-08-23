@@ -1,10 +1,11 @@
 package com.fitstir.fitstirapp.ui.health.edamamapi.enums;
 
 public enum CategoryOptions {
-    GENERIC_FOODS("Generic Foods", 0, "generic-foods"),
-    PACKAGED_FOODS("Packaged Foods", 1, "packaged-foods"),
-    GENERIC_MEALS("Generic Meals", 2, "generic-meals"),
-    FAST_FOODS("Fast Foods", 3, "fast-foods");
+    BLANK("", 0, ""),
+    GENERIC_FOODS("Generic Foods", 1, "generic-foods"),
+    PACKAGED_FOODS("Packaged Foods", 2, "packaged-foods"),
+    GENERIC_MEALS("Generic Meals", 3, "generic-meals"),
+    FAST_FOODS("Fast Foods", 4, "fast-foods");
 
     private final String spinnerTitle;
     private final int value;

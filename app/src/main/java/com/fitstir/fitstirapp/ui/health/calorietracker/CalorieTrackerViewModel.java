@@ -8,6 +8,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.FoodResponse;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 
 import java.util.ArrayList;
@@ -26,6 +30,25 @@ public class CalorieTrackerViewModel extends ViewModel {
     private final MutableLiveData<Float> carbSum = new MutableLiveData<>(0.0f);
     private final MutableLiveData<Float> fatSum = new MutableLiveData<>(0.0f);
     private final MutableLiveData<Float> proteinSum = new MutableLiveData<>(0.0f);
+
+    private final MutableLiveData<String> toSearchFor = new MutableLiveData<>("");
+    private final MutableLiveData<String> minIngr = new MutableLiveData<>("");
+    private final MutableLiveData<String> maxIngr = new MutableLiveData<>("");
+    private final MutableLiveData<String> minCal = new MutableLiveData<>("");
+    private final MutableLiveData<String> maxCal = new MutableLiveData<>("");
+    private final MutableLiveData<String> minTime = new MutableLiveData<>("");
+    private final MutableLiveData<String> maxTime = new MutableLiveData<>("");
+    private final MutableLiveData<Integer> dietType = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> healthType = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> cuisineType = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> mealType = new MutableLiveData<>(0);
+    private final MutableLiveData<ArrayList<Hit>> hits = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<Recipe> clickedRecipe = new MutableLiveData<>(new Recipe());
+    private final MutableLiveData<Integer> nutritionType = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> categoryType = new MutableLiveData<>(0);
+    private final MutableLiveData<Parsed> clickedParsed = new MutableLiveData<>(new Parsed());
+    private final MutableLiveData<ArrayList<Parsed>> parsed = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<Hint>> hints = new MutableLiveData<>(new ArrayList<>());
 
 
 
@@ -102,6 +125,90 @@ public class CalorieTrackerViewModel extends ViewModel {
     public void setProteinSum(float sum) { this.proteinSum.setValue(sum); }
 
 
+    public void setMinIngr(String minIngr) { this.minIngr.setValue(minIngr); }
+    public void setMaxIngr(String maxIngr) { this.maxIngr.setValue(maxIngr); }
+    public void setMinCal(String minCal) { this.minCal.setValue(minCal); }
+    public void setMaxCal(String maxCal) { this.maxCal.setValue(maxCal); }
+    public void setMinTime(String minTime) { this.minTime.setValue(minTime); }
+    public void setMaxTime(String maxTime) { this.maxTime.setValue(maxTime); }
+    public void setDietType(Integer dietType) { this.dietType.setValue(dietType); }
+    public void setHealthType(Integer healthType) { this.healthType.setValue(healthType); }
+    public void setCuisineType(Integer cuisineType) { this.cuisineType.setValue(cuisineType); }
+    public void setMealType(Integer mealType) { this.mealType.setValue(mealType); }
+    public void setToSearchFor(String toSearchFor) {
+        this.toSearchFor.setValue(toSearchFor);
+    }
+    public void setHits(ArrayList<Hit> hits) {
+        this.hits.setValue(hits);
+    }
+    public void setClickedRecipe(Recipe recipe) {
+        this.clickedRecipe.setValue(recipe);
+    }
+    public MutableLiveData<String> getMinIngr() {
+        return minIngr;
+    }
+    public MutableLiveData<String> getMaxIngr() {
+        return maxIngr;
+    }
+    public MutableLiveData<String> getMinCal() {
+        return minCal;
+    }
+    public MutableLiveData<String> getMaxCal() {
+        return maxCal;
+    }
+    public MutableLiveData<String> getMinTime() {
+        return minTime;
+    }
+    public MutableLiveData<String> getMaxTime() {
+        return maxTime;
+    }
+    public MutableLiveData<Integer> getDietType() {
+        return dietType;
+    }
+    public MutableLiveData<Integer> getHealthType() {
+        return healthType;
+    }
+    public MutableLiveData<Integer> getCuisineType() {
+        return cuisineType;
+    }
+    public MutableLiveData<Integer> getMealType() {
+        return mealType;
+    }
+    public MutableLiveData<String> getToSearchFor() {
+        return toSearchFor;
+    }
+    public MutableLiveData<ArrayList<Hit>> getHits() {
+        return hits;
+    }
+    public MutableLiveData<Recipe> getClickedRecipe() {
+        return clickedRecipe;
+    }
+    public void setNutritionType(Integer nutritionType) { this.nutritionType.setValue(nutritionType); }
+    public void setCategoryType(Integer categoryType) { this.categoryType.setValue(categoryType); }
+    public MutableLiveData<Integer> getNutritionType() {
+        return nutritionType;
+    }
+    public MutableLiveData<Integer> getCategoryType() {
+        return categoryType;
+    }
+    public void setClickedParsed(Parsed parsed) {
+        this.clickedParsed.setValue(parsed);
+    }
+    public MutableLiveData<Parsed> getClickedParsed() {
+        return clickedParsed;
+    }
+    public void setParsed(ArrayList<Parsed> parsed) {
+        this.parsed.setValue(parsed);
+    }
+    public void setHints(ArrayList<Hint> hints) {
+        this.hints.setValue(hints);
+    }
+    public MutableLiveData<ArrayList<Hint>> getHints() {
+        return hints;
+    }
+    public MutableLiveData<ArrayList<Parsed>> getParsed() {
+        return parsed;
+    }
 
 
 
