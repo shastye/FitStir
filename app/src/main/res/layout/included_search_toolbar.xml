@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/recipe_search_toolbar"
+        android:id="@+id/search_toolbar"
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:background="@drawable/grey_border_bottom"
@@ -18,7 +19,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/recipe_search_toolbar_back_arrow_icon"
+                    android:id="@+id/search_toolbar_back_arrow_icon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_back_arrow_24dp"
@@ -27,13 +28,14 @@
                     android:layout_marginTop="3dp"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/recipe_toolbar_search_edit_text"
+                    android:id="@+id/toolbar_search_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/recipe_search_toolbar_back_arrow_icon"
-                    android:layout_toStartOf="@+id/recipe_toolbar_filter_icon"
+                    android:layout_toStartOf="@id/toolbar_search_rl"
+                    android:layout_toEndOf="@id/search_toolbar_back_arrow_icon"
+                    android:layout_marginEnd="15dp"
                     android:background="@null"
-                    android:hint="Search Recipe"
+                    android:hint="Search"
                     android:minHeight="32dp"
                     android:textColor="?attr/colorOnPrimary"
                     android:textColorHint="?attr/colorOnPrimary"
@@ -42,13 +44,46 @@
                     android:inputType="text"
                     android:imeOptions="actionNext"/>
 
+                <RelativeLayout
+                    android:id="@+id/toolbar_search_rl"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/spinner_outline"
+                    android:layout_toStartOf="@id/toolbar_filter_icon"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/toolbar_search_spinner2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignEnd="@+id/dropdown_button"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/app_name"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="textStart" />
+
+                    <ImageView
+                        android:id="@+id/dropdown_button"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/spinner_dropdown_button"
+                        app:tint="?attr/colorPrimaryVariant"/>
+                </RelativeLayout>
+
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/recipe_toolbar_filter_icon"
+                    android:id="@+id/toolbar_filter_icon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_filter_black_200dp"
                     android:tint="?attr/colorOnPrimary"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="3dp"/>

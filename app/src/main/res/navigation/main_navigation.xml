@@ -99,6 +99,9 @@
         <action
             android:id="@+id/action_navigation_calorie_tracker_to_navigation_view_calorie_tracker_meal"
             app:destination="@id/navigation_view_calorie_tracker_meal" />
+        <action
+            android:id="@+id/action_navigation_calorie_tracker_to_navigation_calorie_tracker_search"
+            app:destination="@id/navigation_calorie_tracker_search" />
     </fragment>
 
     <fragment
@@ -208,12 +211,18 @@
     <fragment
         android:id="@+id/navigation_view_recipe"
         android:name="com.fitstir.fitstirapp.ui.health.recipes.ViewRecipeFragment"
-        android:label="Recipe"
+        android:label="View Recipe"
         tools:layout="@layout/fragment_view_recipe" />
 
     <fragment
         android:id="@+id/navigation_view_calorie_tracker_meal"
         android:name="com.fitstir.fitstirapp.ui.health.calorietracker.fragments.ViewCalorieTrackerMealFragment"
-        android:label="Meal"
+        android:label="View Meal"
         tools:layout="@layout/fragment_view_calorie_tracker_meal" />
+
+    <fragment
+        android:id="@+id/navigation_calorie_tracker_search"
+        android:name="com.fitstir.fitstirapp.ui.health.calorietracker.fragments.CalorieTrackerSearchFragment"
+        android:label="Search for an Item"
+        tools:layout="@layout/fragment_calorie_tracker_search" />
 </navigation>

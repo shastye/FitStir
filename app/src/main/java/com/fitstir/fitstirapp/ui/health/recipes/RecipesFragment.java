@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -99,7 +100,7 @@ public class RecipesFragment extends Fragment {
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
         viewRecipeBar = root.findViewById(R.id.recipe_view_toolbar);
-        searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
+        searchRecipeBar = root.findViewById(R.id.search_toolbar);
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
         centerMessage = binding.textRecipes;
         recipeResponse_CL = root.findViewById(R.id.recipe_search_response);
@@ -111,6 +112,9 @@ public class RecipesFragment extends Fragment {
         setAppBarState(STANDARD_APPBAR);
         setRecViewState(LIKED_RECVIEW);
         centerMessage.setVisibility(View.INVISIBLE);
+
+        AppCompatSpinner unusedSpinner = root.findViewById(R.id.toolbar_search_spinner);
+        unusedSpinner.setVisibility(View.GONE);
 
         if (recipesViewModel.getHits().getValue() == null || recipesViewModel.getHits().getValue().equals(new ArrayList<>())) {
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -155,7 +159,7 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        AppCompatImageView backArrow = root.findViewById(R.id.recipe_search_toolbar_back_arrow_icon);
+        AppCompatImageView backArrow = root.findViewById(R.id.search_toolbar_back_arrow_icon);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +175,7 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        AppCompatImageView filter = root.findViewById(R.id.recipe_toolbar_filter_icon);
+        AppCompatImageView filter = root.findViewById(R.id.toolbar_filter_icon);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,7 +264,7 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        searchBar = root.findViewById(R.id.recipe_toolbar_search_edit_text);
+        searchBar = root.findViewById(R.id.toolbar_search_edit_text);
         searchBar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

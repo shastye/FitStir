@@ -20,7 +20,7 @@ public class EdamamAPI_FoodDatabaseParser {
     private ResponseBody responseBody;
     private FoodResponse foodResponse;
 
-    private int quantity;
+    private String quantity;
     private String unit;
     private String ingredient;
     private String nutritionType;
@@ -28,7 +28,7 @@ public class EdamamAPI_FoodDatabaseParser {
     private String calories;
     private String category;
 
-    public EdamamAPI_FoodDatabaseParser(int quantity, String unit, String ingredient, String nutritionType,
+    public EdamamAPI_FoodDatabaseParser(String quantity, String unit, String ingredient, String nutritionType,
                                         String health, String minCalories, String maxCalories, String category) {
         this.quantity = quantity;
         this.unit = unit;

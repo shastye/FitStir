@@ -17,7 +17,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:text="This is the recipes section."
-        android:background="@drawable/view_recipe_section_background"
+        android:background="@drawable/rounded_a80_section_background"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:textColor="?attr/colorOnPrimary"
         android:padding="20dp"
