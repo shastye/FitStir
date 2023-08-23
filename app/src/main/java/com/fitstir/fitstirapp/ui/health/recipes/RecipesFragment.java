@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,7 +27,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -113,7 +113,7 @@ public class RecipesFragment extends Fragment {
         setRecViewState(LIKED_RECVIEW);
         centerMessage.setVisibility(View.INVISIBLE);
 
-        AppCompatSpinner unusedSpinner = root.findViewById(R.id.toolbar_search_rl);
+        RelativeLayout unusedSpinner = root.findViewById(R.id.toolbar_search_rl);
         unusedSpinner.setVisibility(View.GONE);
 
         if (recipesViewModel.getHits().getValue() == null || recipesViewModel.getHits().getValue().equals(new ArrayList<>())) {
