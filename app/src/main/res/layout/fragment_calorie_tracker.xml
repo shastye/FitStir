@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.health.calorietracker.CalorieTrackerFragment">
+    tools:context=".ui.health.calorietracker.fragments.CalorieTrackerFragment">
 
     <TextView
         android:id="@+id/text_calorie_tracker"
@@ -84,6 +84,7 @@
                 android:layout_marginTop="8dp"/>
 
             <ImageButton
+                android:id="@+id/calgoal_more_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/ic_options_200dp"

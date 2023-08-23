@@ -1,11 +1,13 @@
-package com.fitstir.fitstirapp.ui.health.calorietracker;
+package com.fitstir.fitstirapp.ui.health.calorietracker.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -22,6 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentCalorieTrackerBinding;
+import com.fitstir.fitstirapp.ui.health.calorietracker.CalorieTrackerViewModel;
+import com.fitstir.fitstirapp.ui.health.calorietracker.DataTuple;
+import com.fitstir.fitstirapp.ui.health.calorietracker.dialogs.ChangeCalorieGoalDialog;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
@@ -93,11 +98,26 @@ public class CalorieTrackerFragment extends Fragment {
                 UserProfileData value = snapshot.getValue(UserProfileData.class);
                 calorieTrackerViewModel.setThisUser(value);
                 calorieTrackerViewModel.setCalorieTrackerData(value.getCalorieTrackerData());
+                calorieTrackerViewModel.setCalorieTrackerGoal(value.getCalorieTrackerGoal());
 
                 if (value.getCalorieTrackerData() != null || value.getCalorieTrackerData().size() != 0) {
                     //calorieTrackerViewModel.setCalorieTrackerData(calorieTrackerViewModel.getGenericData());
                     updateUI();
                 }
+
+                float weight = (float) value.get_Weight();
+                weight /= 2.2f;
+                String sex = value.getSex();
+                float sexMod = 0.0f;
+                if (sex.equals("female")) {
+                    sexMod = 0.9f;
+                } else {
+                    sexMod = 1.0f;
+                }
+                float leanMod = 0.85f;
+                float actMod = 1.3f;
+                float suggestedCal = weight * sexMod * 24 * leanMod * actMod;
+                calorieTrackerViewModel.setSuggestedGoal((int) suggestedCal);
 
                 toggleLoadingScreen();
             }
@@ -110,7 +130,19 @@ public class CalorieTrackerFragment extends Fragment {
 
 
 
-
+        ImageButton moreButton = binding.calgoalMoreButton;
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeCalorieGoalDialog dialog = ChangeCalorieGoalDialog.newInstance(
+                        R.layout.dialog_change_calorie_goal,
+                        R.id.dialog_calgoal_accept_button,
+                        R.id.dialog_calgoal_cancel_button,
+                        calorieTrackerViewModel.getCalorieTrackerGoal().getValue()
+                );
+                dialog.showNow(getChildFragmentManager(), "Change Calorie Goal");
+            }
+        });
 
         AppCompatImageView dateSelectorButton = root.findViewById(R.id.calendar_toolbar_dropdown_button);
         dateSelectorButton.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +245,10 @@ public class CalorieTrackerFragment extends Fragment {
         binding = null;
     }
 
+    public void onDismiss(DialogInterface dialog) {
+        updateUI();
+    }
+
     private void toggleLoadingScreen() {
         if (isLoading) {
             loadingPopupView.setVisibility(View.GONE);
@@ -250,7 +286,7 @@ public class CalorieTrackerFragment extends Fragment {
         dataAdapter = new DataAdapter(used);
         dataRecyclerView.setAdapter(dataAdapter);
 
-        int goal = 2000; // TODO: CHANGE TO ACTUAL DATA FROM VIEWMODEL
+        int goal = calorieTrackerViewModel.getCalorieTrackerGoal().getValue();
         goalCalTextView.setText(String.valueOf(goal));
         usedCalTextView.setText(String.valueOf(dayCalSum));
         int remaining = goal - dayCalSum;

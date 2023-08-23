@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/navigation_calorie_tracker"
-        android:name="com.fitstir.fitstirapp.ui.health.calorietracker.CalorieTrackerFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.calorietracker.fragments.CalorieTrackerFragment"
         android:label="Calorie Tracker"
         tools:layout="@layout/fragment_calorie_tracker" />
 
