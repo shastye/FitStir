@@ -115,6 +115,8 @@ public class CalorieTrackerFragment extends Fragment {
                 calorieTrackerViewModel.setThisUser(value);
                 calorieTrackerViewModel.setCalorieTrackerGoal(value.getCalorieTrackerGoal());
 
+
+
                 float weight = (float) value.get_Weight();
                 weight /= 2.2f;
                 String sex = value.getSex();
@@ -132,7 +134,7 @@ public class CalorieTrackerFragment extends Fragment {
 
 
                 DatabaseReference listRef = FirebaseDatabase.getInstance()
-                        .getReference("CalorieTrackingData");
+                        .getReference("CalorieTrackingData").child(stringUserID);
                 listRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -148,9 +150,6 @@ public class CalorieTrackerFragment extends Fragment {
 
                             String resultID = (String) kid.get("resultID");
                             info.setResultID(resultID);
-
-                            String userID = (String) kid.get("userID");
-                            info.setUserID(userID);
 
                             Calendar cal = Calendar.getInstance();
                             HashMap<String, Object> calInfo = (HashMap<String, Object>) kid.get("date");
@@ -192,18 +191,8 @@ public class CalorieTrackerFragment extends Fragment {
                             data.add(info);
                         }
 
-                        ArrayList<ResponseInfo> userData = new ArrayList<>();
-                        for (int i = 0; i < data.size(); i++) {
-                            if (data.get(i).getUserID().equals(stringUserID)) {
-                                userData.add(data.get(i));
-                            }
-                        }
-
-                        calorieTrackerViewModel.setCalorieTrackerData(userData);
-
-                        if (calorieTrackerViewModel.getCalorieTrackerData() != null || calorieTrackerViewModel.getCalorieTrackerData().getValue().size() != 0) {
-                            updateUI();
-                        }
+                        calorieTrackerViewModel.setCalorieTrackerData(data);
+                        updateUI();
 
                         toggleLoadingScreen();
                     }
@@ -468,7 +457,7 @@ public class CalorieTrackerFragment extends Fragment {
                     dataLabelTextView.setText(parsed.getFood().getLabel());
                     String tUnits = (parsed.getQuantity() * amount) + " " + parsed.getMeasure().getLabel();
                     dataUnitsTextView.setText(tUnits);
-                    dataCaloriesTextView.setText(String.valueOf((int) parsed.getFood().getNutrients().getENERC_KCAL() * amount));
+                    dataCaloriesTextView.setText(String.valueOf((int) (parsed.getFood().getNutrients().getENERC_KCAL() * amount)));
                 } else if (data.get(i).getItem() instanceof Hint) {
                     hint = (Hint) data.get(i).getItem();
                     int servings = (int) hint.getFood().getServingsPerContainer();
@@ -483,7 +472,7 @@ public class CalorieTrackerFragment extends Fragment {
                     dataLabelTextView.setText(hint.getFood().getLabel());
                     String tUnits = data.get(i).getQuantity() + " " + hint.getMeasures().get(0).getLabel();
                     dataUnitsTextView.setText(tUnits);
-                    dataCaloriesTextView.setText(String.valueOf((int) hint.getFood().getNutrients().getENERC_KCAL() / servings * amount));
+                    dataCaloriesTextView.setText(String.valueOf((int) (hint.getFood().getNutrients().getENERC_KCAL() / servings * amount)));
                 } else if (data.get(i).getItem() instanceof Hit) {
                     hit = (Hit) data.get(i).getItem();
                     int servings = (int) hit.getRecipe().getYield();
@@ -498,7 +487,7 @@ public class CalorieTrackerFragment extends Fragment {
                     dataLabelTextView.setText(hit.getRecipe().getLabel());
                     String tUnits = amount + " serving(s)";
                     dataUnitsTextView.setText(tUnits);
-                    dataCaloriesTextView.setText(String.valueOf((int) (hit.getNutrients().getENERC_KCAL().getQuantity() / servings * amount)));
+                    dataCaloriesTextView.setText(String.valueOf((int) (hit.getRecipe().getCalories() / servings * amount)));
                 }
 
                 this.dataLinearLayout.addView(view);

@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ViewCalorieTrackerMealFragment extends Fragment {
@@ -38,6 +39,9 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
     private TextView mealLabelTextView, mealNutrTextView, mealCalTextView;
 
 
+    private DecimalFormat decimalFormat;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         calorieTrackerViewModel = new ViewModelProvider(requireActivity()).get(CalorieTrackerViewModel.class);
@@ -47,13 +51,17 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         // ADDITIONS HERE
 
+        decimalFormat = new DecimalFormat("####.#");
+
         ArrayList<ResponseInfo> data = calorieTrackerViewModel.getClickedArray().getValue();
         float calSum = calorieTrackerViewModel.getCalorieSum().getValue();
         float carbSum = calorieTrackerViewModel.getCarbSum().getValue();
         float fatSum = calorieTrackerViewModel.getFatSum().getValue();
         float protSum = calorieTrackerViewModel.getProteinSum().getValue();
 
-        String tNutr = "Carbs " + carbSum + "g \u22C5 Fat " + fatSum + "g \u22c5 Protein " + protSum + "g";
+        String tNutr = "Carbs " + decimalFormat.format(carbSum) + "g \u22C5 " +
+                "Fat " + decimalFormat.format(fatSum) + "g \u22c5 " +
+                "Protein " + decimalFormat.format(protSum) + "g";
 
         mealDataRecyclerView = binding.mealSectionItemRv;
         mealDataRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
@@ -64,7 +72,7 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         mealLabelTextView.setText(data.get(0).getMealType());
         mealNutrTextView.setText(tNutr);
-        mealCalTextView.setText(String.valueOf(calSum));
+        mealCalTextView.setText(String.valueOf((int) calSum));
 
         // Hide dropdown button on toolbar and show correct date
         root.findViewById(R.id.calendar_toolbar_dropdown_button).setVisibility(View.GONE);
@@ -90,13 +98,12 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
-        DatabaseReference dataReference = FirebaseDatabase.getInstance().getReference("CalorieTrackingData");
+        DatabaseReference dataReference = FirebaseDatabase.getInstance().getReference("CalorieTrackingData").child(authUser.getUid());
 
         for (int i = 0; i < data.size(); i++) {
             DatabaseReference dataID = dataReference.child(data.get(i).getResultID());
 
             dataID.child("resultID").setValue(data.get(i).getResultID());
-            dataID.child("userID").setValue(data.get(i).getUserID());
             dataID.child("date").setValue(data.get(i).getDate());
             dataID.child("mealType").setValue(data.get(i).getMealType());
             dataID.child("quantity").setValue(data.get(i).getQuantity());
@@ -151,19 +158,25 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
                 dataLabelTextView.setText(parsed.getFood().getLabel());
                 String tUnits = (parsed.getQuantity() * amount) + " " + parsed.getMeasure().getLabel();
                 dataUnitsTextView.setText(tUnits);
+                dataCalTextView.setText(String.valueOf((int) (parsed.getFood().getNutrients().getENERC_KCAL() * amount)));
             } else if (data.getItem() instanceof Hint) {
                 hint = (Hint) data.getItem();
+                int servings = (int) hint.getFood().getServingsPerContainer();
+                int amount = data.getQuantity();
 
                 dataLabelTextView.setText(hint.getFood().getLabel());
-                String tUnits = data.getQuantity() + " " + hint.getMeasures().get(0).getLabel();
+                String tUnits = amount + " " + hint.getMeasures().get(0).getLabel();
                 dataUnitsTextView.setText(tUnits);
+                dataCalTextView.setText(String.valueOf((int) (hint.getFood().getNutrients().getENERC_KCAL() / servings * amount)));
             } else if (data.getItem() instanceof Hit) {
                 hit = (Hit) data.getItem();
                 int amount = data.getQuantity();
+                int servings = (int) hit.getRecipe().getYield();
 
                 dataLabelTextView.setText(hit.getRecipe().getLabel());
                 String tUnits = amount + " serving(s)";
                 dataUnitsTextView.setText(tUnits);
+                dataCalTextView.setText(String.valueOf((int) (hit.getRecipe().getCalories() / servings * amount)));
             }
         }
 

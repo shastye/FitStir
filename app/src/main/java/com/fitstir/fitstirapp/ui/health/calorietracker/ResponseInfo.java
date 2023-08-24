@@ -9,7 +9,6 @@ import java.util.Calendar;
 
 public class ResponseInfo {
 
-    private String userID;
     private String resultID;
     private Calendar date;
     private String mealType;
@@ -18,7 +17,6 @@ public class ResponseInfo {
 
 
     public ResponseInfo() {
-        this.userID = "";
         this.date = Calendar.getInstance();
         this.mealType = "";
         this.item = new Parsed();
@@ -27,7 +25,6 @@ public class ResponseInfo {
         this.resultID = RandomStringUtils.randomAlphanumeric(24); // ID is 24 characters long
     }
     public ResponseInfo(Calendar date) {
-        this.userID = "";
         this.date = date;
         this.mealType = "";
         this.item = new Parsed();
@@ -36,7 +33,6 @@ public class ResponseInfo {
         this.resultID = RandomStringUtils.randomAlphanumeric(24); // ID is 24 characters long
     }
     public ResponseInfo(Calendar date, String mealType, ISearchResult item, int quantity) {
-        this.userID = "";
         this.date = date;
         this.mealType = mealType;
         this.item = item;
@@ -46,12 +42,6 @@ public class ResponseInfo {
     }
 
 
-    public String getUserID() {
-        return userID;
-    }
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
     public Calendar getDate() {
         return date;
     }
