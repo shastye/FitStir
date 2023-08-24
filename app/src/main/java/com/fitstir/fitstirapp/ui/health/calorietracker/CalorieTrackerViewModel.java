@@ -22,10 +22,10 @@ public class CalorieTrackerViewModel extends ViewModel {
     private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
     private final MutableLiveData<Calendar> selectedDate = new MutableLiveData<>(Calendar.getInstance()); //set to today initially
     private final MutableLiveData<String> dateString = new MutableLiveData<>("Today");
-    private final MutableLiveData<ArrayList<DataTuple>> calorieTrackerData = new MutableLiveData<>(new ArrayList<DataTuple>());
+    private final MutableLiveData<ArrayList<ResponseInfo>> calorieTrackerData = new MutableLiveData<>(new ArrayList<ResponseInfo>());
     private final MutableLiveData<Integer> calorieTrackerGoal = new MutableLiveData<>(2000);
     private final MutableLiveData<Integer> suggestedGoal = new MutableLiveData<>(2000);
-    private final MutableLiveData<ArrayList<DataTuple>> clickedArray = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<ResponseInfo>> clickedArray = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Float> calorieSum = new MutableLiveData<>(0.0f);
     private final MutableLiveData<Float> carbSum = new MutableLiveData<>(0.0f);
     private final MutableLiveData<Float> fatSum = new MutableLiveData<>(0.0f);
@@ -77,10 +77,10 @@ public class CalorieTrackerViewModel extends ViewModel {
         selectedDate.setValue(calendar);
     }
 
-    public MutableLiveData<ArrayList<DataTuple>> getCalorieTrackerData() {
+    public MutableLiveData<ArrayList<ResponseInfo>> getCalorieTrackerData() {
         return calorieTrackerData;
     }
-    public void setCalorieTrackerData(ArrayList<DataTuple> data) {
+    public void setCalorieTrackerData(ArrayList<ResponseInfo> data) {
         calorieTrackerData.setValue(data);
     }
 
@@ -105,10 +105,10 @@ public class CalorieTrackerViewModel extends ViewModel {
         suggestedGoal.setValue(goal);
     }
 
-    public MutableLiveData<ArrayList<DataTuple>> getClickedArray() {
+    public MutableLiveData<ArrayList<ResponseInfo>> getClickedArray() {
         return clickedArray;
     }
-    public void setClickedArray(ArrayList<DataTuple> data) {
+    public void setClickedArray(ArrayList<ResponseInfo> data) {
         this.clickedArray.setValue(data);
     }
 
@@ -212,8 +212,8 @@ public class CalorieTrackerViewModel extends ViewModel {
 
 
 
-    public ArrayList<DataTuple> getGenericData() {
-        ArrayList<DataTuple> data = new ArrayList<DataTuple>();
+    public ArrayList<ResponseInfo> getGenericData() {
+        ArrayList<ResponseInfo> data = new ArrayList<ResponseInfo>();
 
         String R1 = "{\"text\":\"2 large eggs\"," +
                 "\"parsed\":" +
@@ -250,19 +250,19 @@ public class CalorieTrackerViewModel extends ViewModel {
         }
 
         Calendar cal = Calendar.getInstance(); // TODAY
-        DataTuple t1 = new DataTuple(cal.getTime(), MealType.SNACK.getSpinnerTitle(), fr1.getParsed().get(0));
-        DataTuple t2 = new DataTuple(cal.getTime(), MealType.DINNER.getSpinnerTitle(), fr1.getParsed().get(0));
-        DataTuple t3 = new DataTuple(cal.getTime(), MealType.BREAKFAST.getSpinnerTitle(), fr1.getParsed().get(0));
-        DataTuple t7 = new DataTuple(cal.getTime(), MealType.BREAKFAST.getSpinnerTitle(), fr1.getParsed().get(0));
+        ResponseInfo t1 = new ResponseInfo(cal, MealType.SNACK.getSpinnerTitle(), fr1.getParsed().get(0), 1);
+        ResponseInfo t2 = new ResponseInfo(cal, MealType.DINNER.getSpinnerTitle(), fr1.getParsed().get(0), 1);
+        ResponseInfo t3 = new ResponseInfo(cal, MealType.BREAKFAST.getSpinnerTitle(), fr1.getParsed().get(0), 1);
+        ResponseInfo t7 = new ResponseInfo(cal, MealType.BREAKFAST.getSpinnerTitle(), fr1.getParsed().get(0), 1);
         data.add(t1);
         data.add(t2);
         data.add(t3);
         data.add(t7);
 
         cal.add(Calendar.DATE, -1); // YESTERDAY
-        DataTuple t4 = new DataTuple(cal.getTime(), MealType.SNACK.getSpinnerTitle(), fr1.getParsed().get(0));
-        DataTuple t5 = new DataTuple(cal.getTime(), MealType.DINNER.getSpinnerTitle(), fr1.getParsed().get(0));
-        DataTuple t6 = new DataTuple(cal.getTime(), MealType.BREAKFAST.getSpinnerTitle(), fr1.getParsed().get(0));
+        ResponseInfo t4 = new ResponseInfo(cal, MealType.SNACK.getSpinnerTitle(), fr1.getParsed().get(0), 1);
+        ResponseInfo t5 = new ResponseInfo(cal, MealType.DINNER.getSpinnerTitle(), fr1.getParsed().get(0), 1);
+        ResponseInfo t6 = new ResponseInfo(cal, MealType.BREAKFAST.getSpinnerTitle(), fr1.getParsed().get(0), 1);
         data.add(t4);
         data.add(t5);
         data.add(t6);

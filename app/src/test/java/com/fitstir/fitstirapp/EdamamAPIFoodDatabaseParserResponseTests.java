@@ -90,9 +90,11 @@ public class EdamamAPIFoodDatabaseParserResponseTests {
             "," +
             "\"measures\":" +
             "[" +
-                "{\"uri\":\"http://www.edamam.com/ontologies/edamam.owl#Measure_serving\",\"label\":\"Serving\",\"weight\":50" +
+                "{" +
+                    "\"uri\":\"http://www.edamam.com/ontologies/edamam.owl#Measure_serving\",\"label\":\"Serving\",\"weight\":50" +
                 "}," +
-                "{\"uri\":\"http://www.edamam.com/ontologies/edamam.owl#Measure_unit\",\"label\":\"Whole\",\"weight\":43,\"qualified\":[" +
+                "{" +
+                    "\"uri\":\"http://www.edamam.com/ontologies/edamam.owl#Measure_unit\",\"label\":\"Whole\",\"weight\":43,\"qualified\":[" +
                         "{" +
                             "\"qualifiers\":" +
                             "[" +

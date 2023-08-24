@@ -15,9 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewCalorieTrackerMealBinding;
 import com.fitstir.fitstirapp.ui.health.calorietracker.CalorieTrackerViewModel;
-import com.fitstir.fitstirapp.ui.health.calorietracker.DataTuple;
+import com.fitstir.fitstirapp.ui.health.calorietracker.ResponseInfo;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ViewCalorieTrackerMealFragment extends Fragment {
@@ -39,7 +47,7 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         // ADDITIONS HERE
 
-        ArrayList<DataTuple> data = calorieTrackerViewModel.getClickedArray().getValue();
+        ArrayList<ResponseInfo> data = calorieTrackerViewModel.getClickedArray().getValue();
         float calSum = calorieTrackerViewModel.getCalorieSum().getValue();
         float carbSum = calorieTrackerViewModel.getCarbSum().getValue();
         float fatSum = calorieTrackerViewModel.getFatSum().getValue();
@@ -72,17 +80,52 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        UserProfileData user = calorieTrackerViewModel.getThisUser().getValue();
+        assert user != null;
+        user.setCalorieTrackerGoal(calorieTrackerViewModel.getCalorieTrackerGoal().getValue());
+        calorieTrackerViewModel.setThisUser(user);
+
+        ArrayList<ResponseInfo> data = calorieTrackerViewModel.getCalorieTrackerData().getValue();
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference dataReference = FirebaseDatabase.getInstance().getReference("CalorieTrackingData");
+
+        for (int i = 0; i < data.size(); i++) {
+            DatabaseReference dataID = dataReference.child(data.get(i).getResultID());
+
+            dataID.child("resultID").setValue(data.get(i).getResultID());
+            dataID.child("userID").setValue(data.get(i).getUserID());
+            dataID.child("date").setValue(data.get(i).getDate());
+            dataID.child("mealType").setValue(data.get(i).getMealType());
+            dataID.child("quantity").setValue(data.get(i).getQuantity());
+
+            DatabaseReference itemRef = dataID.child("item");
+            if (data.get(i).getItem() instanceof Parsed) {
+                itemRef.child("food").setValue(((Parsed) data.get(i).getItem().getItem()).getFood());
+                itemRef.child("quantity").setValue(((Parsed) data.get(i).getItem().getItem()).getQuantity());
+                itemRef.child("measure").setValue(((Parsed) data.get(i).getItem().getItem()).getMeasure());
+            } else if (data.get(i).getItem() instanceof Hint) {
+                itemRef.child("food").setValue(((Hint) data.get(i).getItem().getItem()).getFood());
+                itemRef.child("measures").setValue(((Hint) data.get(i).getItem().getItem()).getMeasures());
+            } else if (data.get(i).getItem() instanceof Hit) {
+                itemRef.child("recipe").setValue(((Hit) data.get(i).getItem().getItem()).getRecipe());
+                itemRef.child("_links").setValue(((Hit) data.get(i).getItem().getItem()).get_links());
+            }
+        }
+
         binding = null;
     }
 
     private void updateUI() {
-        ArrayList<DataTuple> data = calorieTrackerViewModel.getClickedArray().getValue();
+        ArrayList<ResponseInfo> data = calorieTrackerViewModel.getClickedArray().getValue();
         mealAdapter = new MealAdapter(data);
         mealDataRecyclerView.setAdapter(mealAdapter);
     }
 
     private class MealHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private DataTuple data;
+        private ResponseInfo data;
         private final TextView dataLabelTextView, dataUnitsTextView, dataCalTextView;
 
         public MealHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -94,15 +137,34 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
             dataCalTextView = itemView.findViewById(R.id.data_section_calories);
         }
 
-        public void bind(DataTuple data) {
+        public void bind(ResponseInfo data) throws IOException {
             this.data = data;
 
-            Parsed parsed = data.getItem();
+            Parsed parsed = new Parsed();
+            Hint hint = new Hint();
+            Hit hit = new Hit();
 
-            dataLabelTextView.setText(parsed.getFood().getLabel());
-            String tUnits = parsed.getQuantity() + " " + parsed.getMeasure().getLabel();
-            dataUnitsTextView.setText(tUnits);
-            dataCalTextView.setText(String.valueOf(parsed.getFood().getNutrients().getENERC_KCAL()));
+            if (data.getItem() instanceof Parsed) {
+                parsed = (Parsed) data.getItem();
+                int amount = data.getQuantity();
+
+                dataLabelTextView.setText(parsed.getFood().getLabel());
+                String tUnits = (parsed.getQuantity() * amount) + " " + parsed.getMeasure().getLabel();
+                dataUnitsTextView.setText(tUnits);
+            } else if (data.getItem() instanceof Hint) {
+                hint = (Hint) data.getItem();
+
+                dataLabelTextView.setText(hint.getFood().getLabel());
+                String tUnits = data.getQuantity() + " " + hint.getMeasures().get(0).getLabel();
+                dataUnitsTextView.setText(tUnits);
+            } else if (data.getItem() instanceof Hit) {
+                hit = (Hit) data.getItem();
+                int amount = data.getQuantity();
+
+                dataLabelTextView.setText(hit.getRecipe().getLabel());
+                String tUnits = amount + " serving(s)";
+                dataUnitsTextView.setText(tUnits);
+            }
         }
 
         @Override
@@ -112,9 +174,9 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
     }
 
     private class MealAdapter extends RecyclerView.Adapter<MealHolder> {
-        private final ArrayList<DataTuple> dataArray;
+        private final ArrayList<ResponseInfo> dataArray;
 
-        public MealAdapter(ArrayList<DataTuple> dataArray) {
+        public MealAdapter(ArrayList<ResponseInfo> dataArray) {
             this.dataArray = dataArray;
         }
 
@@ -127,8 +189,12 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MealHolder holder, int position) {
-            DataTuple data = this.dataArray.get(position);
-            holder.bind(data);
+            ResponseInfo data = this.dataArray.get(position);
+            try {
+                holder.bind(data);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
