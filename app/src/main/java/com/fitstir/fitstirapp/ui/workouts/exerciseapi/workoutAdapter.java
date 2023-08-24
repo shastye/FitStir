@@ -42,14 +42,10 @@ public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHold
         holder.target.setText(body.getTarget());
         holder.equipment.setText(body.getEquipment());
         holder.bodyPart.setText(body.getBodyPart());
-        holder.directions.setText(body.getDirections());
 
         Glide.with(context)
                 .load(body.getImage())
                 .into(holder.image);
-        Glide.with(context)
-                .load(body.getGifURL())
-                .into(holder.gifImage);
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,16 +64,14 @@ public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView name, bodyPart, equipment, target, directions;
-        private ImageView image, gifImage;
+        private TextView name, bodyPart, equipment, target;
+        private ImageView image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvTitle);
             bodyPart = itemView.findViewById(R.id.tvBodyPart);
             equipment = itemView.findViewById(R.id.tvEquipment);
             target = itemView.findViewById(R.id.tvTarget);
-            directions = itemView.findViewById(R.id.tvDirections);
-            gifImage = itemView.findViewById(R.id.tvGifImage);
             image = itemView.findViewById(R.id.tvImage);
 
         }

@@ -6,11 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.workouts.exerciseapi.lowerbody.LowerBodyFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lower_Body_RV"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+    <SearchView
+        android:id="@+id/searchView_Lowerbody"
+        android:layout_width="349dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/searchview_border"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lower_Body_RV"
+        android:layout_width="409dp"
+        android:layout_height="685dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView_Lowerbody" />
 </androidx.constraintlayout.widget.ConstraintLayout>

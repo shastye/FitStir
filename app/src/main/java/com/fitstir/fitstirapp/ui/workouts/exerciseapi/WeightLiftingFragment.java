@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -68,5 +69,11 @@ public class WeightLiftingFragment extends Fragment implements RvInterface {
     @Override
     public void onItemClick(int position) {
 
+        WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
+        workoutApi.getWorkoutClicked(position,weights,workoutsViewModel);
+
+        Fragment fragment = new ViewWorkoutFragment();
+        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+        fm.replace(R.id.container, fragment).commit();
     }
 }

@@ -7,9 +7,6 @@ import androidx.lifecycle.ViewModel;
 public class WorkoutsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
-
-
-
     private final MutableLiveData<String> exercise = new MutableLiveData<>(" ");
     private final MutableLiveData<String> bodyPart = new MutableLiveData<>(" ");
     private final MutableLiveData<String> target = new MutableLiveData<>(" ");

@@ -60,9 +60,6 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
         workouts_RV.setAdapter(viewAdapter);
         upperBody = new WorkoutApi();
         upperBody.fetchData(db,upperBodyApiArrayList, Constants.WORKOUT_BODYPART.UPPER_BODY, viewAdapter);
-
-
-
         // End
 
         return root;
@@ -77,27 +74,10 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
     @Override
     public void onItemClick(int position) {
      WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
-
-      String exerciseName = upperBodyApiArrayList.get(position).getExercise().trim();
-      String bodyPart = upperBodyApiArrayList.get(position).getBodyPart().trim();
-      String instructions = upperBodyApiArrayList.get(position).getDirections().trim();
-      String target = upperBodyApiArrayList.get(position).getTarget().trim();
-      String image = upperBodyApiArrayList.get(position).getImage().trim();
-      String gif = upperBodyApiArrayList.get(position).getGifURL().trim();
-      String equipment = upperBodyApiArrayList.get(position).getEquipment().trim();
-
-      workoutsViewModel.setExercise(exerciseName);
-      workoutsViewModel.setBodyPart(bodyPart);
-      workoutsViewModel.setDirections(instructions);
-      workoutsViewModel.setTarget(target);
-      workoutsViewModel.setImage(image);
-      workoutsViewModel.setGifURL(gif);
-      workoutsViewModel.setEquipment(equipment);
+     upperBody.getWorkoutClicked(position,upperBodyApiArrayList,workoutsViewModel);
 
       Fragment fragment = new ViewWorkoutFragment();
       FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
       fm.replace(R.id.container, fragment).commit();
-
-
     }
 }

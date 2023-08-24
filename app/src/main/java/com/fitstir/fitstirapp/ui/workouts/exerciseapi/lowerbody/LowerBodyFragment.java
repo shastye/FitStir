@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -19,6 +20,7 @@ import com.fitstir.fitstirapp.databinding.FragmentLowerBodyBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
 import com.fitstir.fitstirapp.ui.workouts.exerciseapi.RvInterface;
+import com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment;
 import com.fitstir.fitstirapp.ui.workouts.exerciseapi.WorkoutApi;
 import com.fitstir.fitstirapp.ui.workouts.exerciseapi.workoutAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,9 +57,7 @@ public class LowerBodyFragment extends Fragment implements RvInterface {
         recyclerView.setAdapter(adapter);
         lowerBody.fetchData(db,lowerBodyArrayList, Constants.WORKOUT_BODYPART.LOWER_BODY,adapter);
 
-
         // End
-
         return root;
     }
 
@@ -69,6 +69,11 @@ public class LowerBodyFragment extends Fragment implements RvInterface {
 
     @Override
     public void onItemClick(int position) {
+        WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
+        lowerBody.getWorkoutClicked(position,lowerBodyArrayList, workoutsViewModel );
 
+        Fragment fragment = new ViewWorkoutFragment();
+        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+        fm.replace(R.id.container, fragment).commit();
     }
 }

@@ -3,7 +3,14 @@ package com.fitstir.fitstirapp.ui.workouts.exerciseapi;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStore;
 
+import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -114,6 +121,25 @@ public class WorkoutApi {
                         Log.e("error while loading",e.toString());
                     }
                 });
+    }
+    public void getWorkoutClicked(int position, ArrayList<WorkoutApi> list, WorkoutsViewModel workoutsViewModel){
+
+        String exerciseName = list.get(position).getExercise().trim();
+        String bodyPart = list.get(position).getBodyPart().trim();
+        String instructions = list.get(position).getDirections().trim();
+        String target = list.get(position).getTarget().trim();
+        String image = list.get(position).getImage().trim();
+        String gif = list.get(position).getGifURL().trim();
+        String equipment = list.get(position).getEquipment().trim();
+
+        workoutsViewModel.setExercise(exerciseName);
+        workoutsViewModel.setBodyPart(bodyPart);
+        workoutsViewModel.setDirections(instructions);
+        workoutsViewModel.setTarget(target);
+        workoutsViewModel.setImage(image);
+        workoutsViewModel.setGifURL(gif);
+        workoutsViewModel.setEquipment(equipment);
+
     }
 
 
