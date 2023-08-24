@@ -3,6 +3,7 @@ package com.fitstir.fitstirapp.ui.health.calorietracker.fragments;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -24,6 +26,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentCalorieTrackerSearchBinding;
@@ -43,6 +47,7 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.RecipeResponse;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -59,7 +64,13 @@ public class CalorieTrackerSearchFragment extends Fragment {
     private AppCompatImageView filterButton;
     private EditText searchBar;
 
+    private RecyclerView searchRecyclerView;
+    private Parcelable recyclerViewState;
+    private RecipeAdapter recipeAdapter;
+
     private boolean isRecipeSearch;
+    private boolean isLoading;
+    private DecimalFormat decimalFormat;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +85,11 @@ public class CalorieTrackerSearchFragment extends Fragment {
 
         root.findViewById(R.id.search_toolbar_back_arrow_icon).setVisibility(View.GONE);
         isRecipeSearch = false;
+        isLoading = false;
+        decimalFormat = new DecimalFormat("####.#");
+
+        searchRecyclerView = root.findViewById(R.id.search_response_rv);
+        searchRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
 
         SearchOptions[] searchOptions = SearchOptions.values();
         String[] searchOptionsStrings = new String[searchOptions.length];
@@ -317,7 +333,7 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 try {
                     search();
                     // TODO: Do the update
-                    //updateUI();
+                    updateUI();
                 } catch (IOException | ExecutionException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -407,6 +423,88 @@ public class CalorieTrackerSearchFragment extends Fragment {
         }
 
         // TODO: Do the update
-        //updateUI();
+        updateUI();
+    }
+
+    private void updateUI() {
+        if (isRecipeSearch) {
+            ArrayList<Hit> hits = calorieTrackerViewModel.getHits().getValue();
+            if (hits != null && hits.size() != 0) {
+                searchRecyclerView = root.findViewById(R.id.search_response_rv);
+                searchRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+
+                searchRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+                recipeAdapter = new CalorieTrackerSearchFragment.RecipeAdapter(hits);
+                searchRecyclerView.setAdapter(recipeAdapter);
+            }
+        } else {
+
+        }
+    }
+
+    private class RecipeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private Hit recipe;
+        private final ImageView recipeImage;
+        private final TextView recipeLabel, recipeCalories;
+
+        public RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.layout_recipe_calorietracker_grid, parent, false));
+            itemView.setOnClickListener(this);
+
+            recipeImage = itemView.findViewById(R.id.layout_recipe_image);
+            recipeLabel = itemView.findViewById(R.id.layout_recipe_label);
+            recipeCalories = itemView.findViewById(R.id.layout_recipe_calories);
+        }
+
+        public void bind(Hit recipe) throws IOException {
+            this.recipe = recipe;
+
+            this.recipeImage.setImageBitmap(Methods.getBitmapFromURL(recipe.getRecipe().getImage()));
+
+            this.recipeLabel.setText(recipe.getRecipe().getLabel());
+
+            if (recipe.getRecipe().getCalories() != 0.0f) {
+                float tCalPerServing = recipe.getRecipe().getCalories() / recipe.getRecipe().getYield();
+                String calories = (int) tCalPerServing + " calories";
+                this.recipeCalories.setText(calories);
+            } else {
+                this.recipeCalories.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+    private class RecipeAdapter extends RecyclerView.Adapter<CalorieTrackerSearchFragment.RecipeHolder> {
+        private final ArrayList<Hit> recipes;
+
+        public RecipeAdapter(ArrayList<Hit> recipes) {
+            this.recipes = recipes;
+        }
+
+        @NonNull
+        @Override
+        public CalorieTrackerSearchFragment.RecipeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(requireActivity());
+            return new CalorieTrackerSearchFragment.RecipeHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull CalorieTrackerSearchFragment.RecipeHolder holder, int position) {
+            Hit recipe = this.recipes.get(position);
+            try {
+                holder.bind(recipe);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return this.recipes.size();
+        }
     }
 }
