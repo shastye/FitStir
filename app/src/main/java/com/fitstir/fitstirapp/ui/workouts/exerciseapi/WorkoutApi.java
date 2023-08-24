@@ -3,13 +3,7 @@ package com.fitstir.fitstirapp.ui.workouts.exerciseapi;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStore;
 
-import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -97,8 +91,8 @@ public class WorkoutApi {
         this.image = image;
     }
 
-    public void fetchData(FirebaseFirestore db, ArrayList<WorkoutApi> arrayList, String string, workoutAdapter adapter){
-        db = FirebaseFirestore.getInstance();
+    public void fetchData(ArrayList<WorkoutApi> arrayList, String string, workoutAdapter adapter){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(string).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -140,6 +134,22 @@ public class WorkoutApi {
         workoutsViewModel.setGifURL(gif);
         workoutsViewModel.setEquipment(equipment);
 
+    }
+    public ArrayList searchList(String text, ArrayList<WorkoutApi> workoutApiArrayList, workoutAdapter viewAdapter) {
+
+        ArrayList<WorkoutApi> filter = new ArrayList<>();
+        for(WorkoutApi workouts : workoutApiArrayList){
+            if(workouts.getExercise().toLowerCase().contains(text.toLowerCase()) || workouts.getTarget().toLowerCase().contains(text.toLowerCase()) ){
+                filter.add(workouts);
+            }
+        }
+        if(filter.isEmpty()){
+            Log.e("error","No data found" );
+        }
+        else{
+            viewAdapter.setFilterList(filter);
+        }
+        return filter;
     }
 
 

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,13 +26,13 @@ import java.util.ArrayList;
 
 public class WeightLiftingFragment extends Fragment implements RvInterface {
 
-    private RvInterface rvInterface;
     private FragmentWeightLiftingBinding binding;
-    private FirebaseFirestore db;
     private RecyclerView recyclerView;
     private WorkoutApi workoutApi;
     private workoutAdapter workoutAdapter;
     private ArrayList<WorkoutApi> weights;
+    private ArrayList<WorkoutApi> filtered;
+    private SearchView searchView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -42,17 +42,35 @@ public class WeightLiftingFragment extends Fragment implements RvInterface {
         View root = binding.getRoot();
 
         // Addition Text Here
-        db = FirebaseFirestore.getInstance();
-        weights = new ArrayList<>();
-        workoutApi = new WorkoutApi();
-        workoutAdapter = new workoutAdapter(getActivity(),weights,this);
-        recyclerView = root.findViewById(R.id.weights_RV);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        searchView = root.findViewById(R.id.searchView_Upperbody);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-        recyclerView.setAdapter(workoutAdapter);
-        workoutApi.fetchData(db,weights, Constants.WORKOUT_BODYPART.WEIGHT_LIFTING,workoutAdapter);
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filtered = workoutApi.searchList(newText, weights, workoutAdapter);
+                return true;
+            }
+        });
+
+
+        {//recyclerview setup
+            weights = new ArrayList<>();
+            workoutApi = new WorkoutApi();
+            workoutAdapter = new workoutAdapter(getActivity(),weights,this);
+            recyclerView = root.findViewById(R.id.weights_RV);
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+
+            recyclerView.setAdapter(workoutAdapter);
+            workoutApi.fetchData(weights, Constants.WORKOUT_BODYPART.WEIGHT_LIFTING,workoutAdapter);
+        }
+
 
 
         // End
@@ -68,12 +86,21 @@ public class WeightLiftingFragment extends Fragment implements RvInterface {
 
     @Override
     public void onItemClick(int position) {
-
         WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
-        workoutApi.getWorkoutClicked(position,weights,workoutsViewModel);
 
-        Fragment fragment = new ViewWorkoutFragment();
-        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-        fm.replace(R.id.container, fragment).commit();
+        try {
+            if (filtered.size() >= 1) {
+                workoutApi.getWorkoutClicked(position,filtered,workoutsViewModel);
+                Fragment fragment = new ViewWorkoutFragment();
+                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                fm.replace(R.id.container, fragment).commit();
+            }
+        }catch (NullPointerException e){
+            workoutApi.getWorkoutClicked(position,weights,workoutsViewModel);
+            Fragment fragment = new ViewWorkoutFragment();
+            FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+            fm.replace(R.id.container, fragment).commit();
+        }
+
     }
 }

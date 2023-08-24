@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
 import java.util.ArrayList;
+import java.util.List;
 
 public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHolder>{
     private ArrayList<WorkoutApi> apiList;
     private Context context;
-
     private RvInterface rvInterface;
 
     public workoutAdapter(Context context, ArrayList<WorkoutApi> workout_List, RvInterface rvInterface)
@@ -25,6 +25,10 @@ public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHold
         this.rvInterface = rvInterface;
     }
 
+    public void setFilterList(ArrayList<WorkoutApi> filtered){
+        this.apiList = filtered;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
