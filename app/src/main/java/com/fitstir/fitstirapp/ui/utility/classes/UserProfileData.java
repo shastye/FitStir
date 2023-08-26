@@ -24,7 +24,6 @@ public class UserProfileData {
     Integer height_ft, height_in, weight, goal_weight, age,
             themeID, intervalID, rangeID, unitID,
             calorieTrackerGoal;
-    ArrayList<Recipe> likedRecipes;
 
 
 
@@ -34,14 +33,6 @@ public class UserProfileData {
 
     public void setCalorieTrackerGoal(Integer calorieTrackerGoal) {
         this.calorieTrackerGoal = calorieTrackerGoal;
-    }
-
-    public ArrayList<Recipe> getLikedRecipes() {
-        return likedRecipes;
-    }
-
-    public void setLikedRecipes(ArrayList<Recipe> likedRecipes) {
-        this.likedRecipes = likedRecipes;
     }
 
     public Integer getThemeID() {
@@ -235,8 +226,6 @@ public class UserProfileData {
         unitID = 0;
 
         calorieTrackerGoal = 2000;
-
-        this.likedRecipes = new ArrayList<>();
     }
     public UserProfileData(String fullname, String email, String password,String sex,
                            Integer height_ft, Integer height_in, Integer weight,
@@ -257,8 +246,6 @@ public class UserProfileData {
         unitID = 0;
 
         calorieTrackerGoal = 2000;
-
-        this.likedRecipes = new ArrayList<>();
     }
 
 

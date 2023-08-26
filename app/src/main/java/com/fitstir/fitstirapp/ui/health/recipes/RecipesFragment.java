@@ -120,20 +120,33 @@ public class RecipesFragment extends Fragment {
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
             assert authUser != null;
 
-            DatabaseReference thisUser = FirebaseDatabase.getInstance()
-                    .getReference("Users")
+            //DatabaseReference thisUser = FirebaseDatabase.getInstance()
+            //        .getReference("Users")
+            //        .child(authUser.getUid());
+            DatabaseReference listRef = FirebaseDatabase.getInstance()
+                    .getReference("LikedRecipesData")
                     .child(authUser.getUid());
 
             loadingScreen_CL.setVisibility(View.VISIBLE);
 
-            thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            /*thisUser*/listRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserProfileData value = snapshot.getValue(UserProfileData.class);
                     recipesViewModel.setThisUser(value);
-                    recipesViewModel.setLikedRecipes(value.getLikedRecipes());
+                    //recipesViewModel.setLikedRecipes(value.getLikedRecipes());
 
-                    if (value.getLikedRecipes() != null || value.getLikedRecipes().size() != 0) {
+                    ArrayList<Recipe> likedRecipes = new ArrayList<>();
+                    Iterable<DataSnapshot> children = snapshot.getChildren();
+
+                    for (DataSnapshot child : children) {
+                        Recipe recipe = child.getValue(Recipe.class);
+                        likedRecipes.add(recipe);
+                    }
+
+                    recipesViewModel.setLikedRecipes(likedRecipes);
+
+                    if (likedRecipes.size() != 0) {
                         setRecViewState(LIKED_RECVIEW);
                         updateUI();
                     }

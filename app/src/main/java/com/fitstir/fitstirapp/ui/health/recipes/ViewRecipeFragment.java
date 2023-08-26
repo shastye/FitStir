@@ -266,7 +266,22 @@ public class ViewRecipeFragment extends Fragment {
                     buttonColorAnimator.reverse();
                     buttonColorAnimator = null;
 
+                    Recipe clickedRecipe = recipesViewModel.getClickedRecipe().getValue();
+                    String id = clickedRecipe.getUri();
+                    int index = id.indexOf("recipe_");
+                    if (index != -1) {
+                        index += 7;
+                        id = id.substring(index);
+                    }
+
                     recipesViewModel.getLikedRecipes().getValue().remove(clickedRecipe);
+
+                    FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseDatabase.getInstance()
+                            .getReference("LikedRecipesData")
+                            .child(authUser.getUid())
+                            .child(id)
+                            .removeValue();
                 } else {
                     buttonColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorOnPrimary, colorPrimaryVariant);
                     buttonColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -278,7 +293,23 @@ public class ViewRecipeFragment extends Fragment {
                     buttonColorAnimator.start();
 
                     if (!recipesViewModel.getLikedRecipes().getValue().contains(clickedRecipe)) {
+
+                        Recipe clickedRecipe = recipesViewModel.getClickedRecipe().getValue();
+                        String id = clickedRecipe.getUri();
+                        int index = id.indexOf("recipe_");
+                        if (index != -1) {
+                            index += 7;
+                            id = id.substring(index);
+                        }
+
                         recipesViewModel.getLikedRecipes().getValue().add(clickedRecipe);
+
+                        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+                        FirebaseDatabase.getInstance()
+                                .getReference("LikedRecipesData")
+                                .child(authUser.getUid())
+                                .child(id)
+                                .setValue(clickedRecipe);
                     }
                 }
             }
@@ -294,17 +325,6 @@ public class ViewRecipeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        UserProfileData user = recipesViewModel.getThisUser().getValue();
-        user.setLikedRecipes(recipesViewModel.getLikedRecipes().getValue());
-        recipesViewModel.setThisUser(user);
-
-        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert authUser != null;
-        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
-                .child(authUser.getUid());
-        userReference.setValue(recipesViewModel.getThisUser().getValue());
-
         binding = null;
     }
 }
