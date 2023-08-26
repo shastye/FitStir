@@ -42,7 +42,7 @@ public class WeightLiftingFragment extends Fragment implements RvInterface {
         View root = binding.getRoot();
 
         // Addition Text Here
-        searchView = root.findViewById(R.id.searchView_Upperbody);
+        searchView = root.findViewById(R.id.searchView_Weights);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

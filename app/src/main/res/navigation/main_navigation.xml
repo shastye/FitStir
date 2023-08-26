@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_workouts">
+    app:startDestination="@id/navigation_workouts">
 
     <fragment
         android:id="@+id/navigation_workouts"
@@ -68,7 +68,7 @@
 
     <fragment
         android:id="@+id/navigation_circuit_workouts"
-        android:name="com.fitstir.fitstirapp.ui.workouts.CircuitWorkoutsFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits.CircuitWorkoutsFragment"
         android:label="Circuit Workouts"
         tools:layout="@layout/fragment_circuit_workouts" />
 
@@ -222,5 +222,15 @@
         android:id="@+id/viewWorkoutFragment"
         android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment"
         android:label="fragment_view_workout"
-        tools:layout="@layout/fragment_view_workout" />
+        tools:layout="@layout/fragment_view_workout" >
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_navigation_upper_body"
+            app:destination="@id/navigation_upper_body" />
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_navigation_weight_lifting"
+            app:destination="@id/navigation_weight_lifting" />
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_navigation_lower_body"
+            app:destination="@id/navigation_lower_body" />
+    </fragment>
 </navigation>

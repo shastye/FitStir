@@ -14,6 +14,15 @@ public class WorkoutsViewModel extends ViewModel {
     private final MutableLiveData<String> image = new MutableLiveData<>(" ");
     private final MutableLiveData<String> gifURL = new MutableLiveData<>(" ");
     private final MutableLiveData<String> equipment = new MutableLiveData<>(" ");
+    private final MutableLiveData<Integer> sets = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> reps = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> duration = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> calBurned = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> totalBurned = new MutableLiveData<>(0);
+    private final MutableLiveData<String> mapImage = new MutableLiveData<>(" ");
+    public MutableLiveData<Integer> getTotalBurned() {return totalBurned;}
+    public MutableLiveData<String> getMapImage() {return mapImage;}
+
     public LiveData<String> getText() { return mText;}
     public MutableLiveData<String> getTarget() { return target;}
     public MutableLiveData<String> getDirections() { return directions;}
@@ -22,12 +31,21 @@ public class WorkoutsViewModel extends ViewModel {
     public MutableLiveData<String> getEquipment() { return equipment;}
     public MutableLiveData<String> getBodyPart() { return bodyPart;}
     public MutableLiveData<String> getExercise() { return exercise;}
-
+    public MutableLiveData<Integer> getSets() {return sets;}
+    public MutableLiveData<Integer> getReps() {return reps;}
+    public MutableLiveData<Integer> getDuration() {return duration;}
+    public MutableLiveData<Integer> getCalBurned() {return calBurned;}
 
     public WorkoutsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("");
     }
+
+    public void setSets(int set){this.sets.setValue(set);}
+    public void setReps(int rep){this.reps.setValue(rep);}
+    public void setDuration(int time){this.duration.setValue(time);}
+    public void setCalBurned(int cal){this.calBurned.setValue(cal);}
+
     public void setBodyPart(String body){this.bodyPart.setValue(body);}
     public void setTarget(String target){this.target.setValue(target);}
     public void setDirections(String directions){this.directions.setValue(directions);}

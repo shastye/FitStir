@@ -4,14 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
 import java.util.ArrayList;
-import java.util.List;
 
 public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHolder>{
     private ArrayList<WorkoutApi> apiList;
@@ -46,6 +47,7 @@ public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHold
         holder.target.setText(body.getTarget());
         holder.equipment.setText(body.getEquipment());
         holder.bodyPart.setText(body.getBodyPart());
+        holder.cardView.startAnimation(AnimationUtils.loadAnimation(holder.cardView.getContext(), R.anim.anim_recyclerview));
 
         Glide.with(context)
                 .load(body.getImage())
@@ -59,7 +61,6 @@ public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHold
                 }
             }
         });
-
     }
 
     @Override
@@ -70,8 +71,10 @@ public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView name, bodyPart, equipment, target;
         private ImageView image;
+        private CardView cardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardView = itemView.findViewById(R.id.cardView);
             name = itemView.findViewById(R.id.tvTitle);
             bodyPart = itemView.findViewById(R.id.tvBodyPart);
             equipment = itemView.findViewById(R.id.tvEquipment);

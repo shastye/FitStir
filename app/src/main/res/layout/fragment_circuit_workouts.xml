@@ -4,20 +4,382 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.workouts.CircuitWorkoutsFragment">
+    android:background="@drawable/background2"
+    tools:context=".ui.workouts.exerciseapi.circuits.CircuitWorkoutsFragment">
 
-    <TextView
-        android:id="@+id/text_circuit_workouts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="@string/circuit_workouts_intro"
+
+    <ImageButton
+        android:id="@+id/circuit_Beginner"
+        android:layout_width="221dp"
+        android:layout_height="75dp"
+        android:background="@drawable/buttonquestion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.082">
+
+    </ImageButton>
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#1 Beginner Circuit"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Beginner"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Beginner"
+        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Beginner"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Beginner"
+        app:layout_constraintVertical_bias="0.428" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(3) Exercises"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Beginner"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Beginner"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Beginner"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Beginner"
+        app:layout_constraintVertical_bias="0.866" />
+
+    <ImageButton
+        android:id="@+id/circuit_Toner"
+        android:layout_width="221dp"
+        android:layout_height="75dp"
+        android:background="@drawable/buttonquestion_intense"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.222">
+
+    </ImageButton>
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#2 Toner Circuit"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Toner"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Toner"
+        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Toner"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Toner"
+        app:layout_constraintVertical_bias="0.438" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(3) Exercises"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Toner"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Toner"
+        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Toner"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Toner"
+        app:layout_constraintVertical_bias="0.854" />
+
+    <ImageButton
+        android:id="@+id/circuit_Active"
+        android:layout_width="221dp"
+        android:layout_height="75dp"
+        android:background="@drawable/buttonquestion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.355">
+
+    </ImageButton>
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#3 Active Circuit"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Active"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Active"
+        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Active"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Active"
+        app:layout_constraintVertical_bias="0.438" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(3) Exercises"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Active"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Active"
+        app:layout_constraintHorizontal_bias="0.916"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Active"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Active"
+        app:layout_constraintVertical_bias="0.822" />
+
+    <ImageButton
+        android:id="@+id/circuit_Beach_Body"
+        android:layout_width="221dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttonquestion_intense"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circuit_Active">
+    </ImageButton>
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#4 Beach Body Circuit"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Beach_Body"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Beach_Body"
+        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Beach_Body"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Beach_Body"
+        app:layout_constraintVertical_bias="0.438" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(4) Exercises"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Beach_Body"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Beach_Body"
+        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Beach_Body"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Beach_Body"
+        app:layout_constraintVertical_bias="0.854" />
+
+    <ImageButton
+        android:id="@+id/circuit_Expected_Mother"
+        android:layout_width="221dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/buttonquestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circuit_Beach_Body">
+
+    </ImageButton>
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#5 Mom Bootcamp Circuit"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintVertical_bias="0.446" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(3) Exercises"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintHorizontal_bias="0.916"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintVertical_bias="0.838" />
+
+    <ImageButton
+        android:id="@+id/circuit_Warrior"
+        android:layout_width="221dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/buttonquestion_intense"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circuit_Expected_Mother">
+
+    </ImageButton>
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#6 Warrior Circuit"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Warrior"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Warrior"
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Warrior"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Warrior"
+        app:layout_constraintVertical_bias="0.458" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(5) Exercises"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_Warrior"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Warrior"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toStartOf="@+id/circuit_Warrior"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Warrior"
+        app:layout_constraintVertical_bias="0.854" />
+
+    <ImageButton
+        android:id="@+id/circuit_FitStir"
+        android:layout_width="221dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/circuit_final"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circuit_Warrior">
+
+    </ImageButton>
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#7 FitStir Challenge Circuit"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_FitStir"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_FitStir"
+        app:layout_constraintStart_toStartOf="@+id/circuit_FitStir"
+        app:layout_constraintTop_toTopOf="@+id/circuit_FitStir"
+        app:layout_constraintVertical_bias="0.636" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(6) Exercises"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circuit_FitStir"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_FitStir"
+        app:layout_constraintStart_toStartOf="@+id/circuit_FitStir"
+        app:layout_constraintTop_toTopOf="@+id/circuit_FitStir"
+        app:layout_constraintVertical_bias="0.887" />
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/one_bar_easy"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Beginner"
+        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Beginner" />
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/moderate"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Toner"
+        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Toner" />
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/moderate"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Active"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Active" />
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/one_bar_easy"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Beginner"
+        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Beginner" />
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/one_bar_easy"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Beginner"
+        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Beginner" />
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/active"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Beach_Body"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Beach_Body"/>
+
+    <ImageView
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+
+        android:background="@drawable/moderate"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Expected_Mother"
+        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintStart_toEndOf="@+id/textView19"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Expected_Mother" />
+
+    <ImageView
+        android:layout_width="41dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="12dp"
+
+        android:background="@drawable/intense"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_Warrior"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toEndOf="@+id/textView20"
+        app:layout_constraintTop_toTopOf="@+id/circuit_Warrior" />
+
+    <ImageView
+        android:layout_width="46dp"
+        android:layout_height="32dp"
+        android:background="@drawable/fullbars"
+        app:layout_constraintBottom_toTopOf="@+id/textView21"
+        app:layout_constraintEnd_toEndOf="@+id/circuit_FitStir"
+        app:layout_constraintStart_toStartOf="@+id/circuit_FitStir"
+        app:layout_constraintTop_toTopOf="@+id/circuit_FitStir" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
