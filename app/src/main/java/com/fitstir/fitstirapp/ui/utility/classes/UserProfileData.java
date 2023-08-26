@@ -11,7 +11,9 @@ import java.util.List;
 public class UserProfileData {
 
     String fullname, email, password, sex;
-    Integer height_ft,height_in, weight, goal_weight, age, themeID, intervalID, rangeID, unitID, calorieTrackerGoal;
+    Integer height_ft, height_in, weight, goal_weight, age,
+            themeID, intervalID, rangeID, unitID,
+            calorieTrackerGoal;
     ArrayList<Goal> goals;
     ArrayList<Recipe> likedRecipes;
 
@@ -148,7 +150,24 @@ public class UserProfileData {
 
 
 
-    public UserProfileData(){
+    public UserProfileData() {
+        fullname = "";
+        email = "";
+        password = "";
+        sex = "";
+        height_ft = 0;
+        height_in = 0;
+        weight = 0;
+        goal_weight = 0;
+        age = 0;
+
+        themeID = 0;
+        intervalID = 0;
+        rangeID = 2;
+        unitID = 0;
+
+        calorieTrackerGoal = 2000;
+
         this.goals = new ArrayList<>();
         goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, 0));
         this.likedRecipes = new ArrayList<>();
@@ -165,6 +184,13 @@ public class UserProfileData {
         this.goal_weight = goal_weight;
         this.age = age;
         this.sex = sex;
+
+        themeID = 0;
+        intervalID = 0;
+        rangeID = 2;
+        unitID = 0;
+
+        calorieTrackerGoal = 2000;
 
         goals = new ArrayList<>();
         goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, goal_weight));
