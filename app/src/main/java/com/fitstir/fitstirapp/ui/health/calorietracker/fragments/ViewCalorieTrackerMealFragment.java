@@ -98,7 +98,8 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
-        DatabaseReference dataReference = FirebaseDatabase.getInstance().getReference("CalorieTrackingData").child(authUser.getUid());
+        DatabaseReference dataReference = FirebaseDatabase.getInstance().
+                getReference("CalorieTrackingData").child(authUser.getUid());
 
         for (int i = 0; i < data.size(); i++) {
             DatabaseReference dataID = dataReference.child(data.get(i).getResultID());

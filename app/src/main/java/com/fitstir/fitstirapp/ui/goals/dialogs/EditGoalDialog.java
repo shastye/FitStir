@@ -7,11 +7,16 @@ import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.goals.fragments.ViewGoalFragment;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.IGenericGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class EditGoalDialog extends IGenericGoalDialog {
 
@@ -48,6 +53,7 @@ public class EditGoalDialog extends IGenericGoalDialog {
 
         titleEditText = binding.dialogCreateGoalTitleEditText;
         titleEditText.setText(goalsViewModel.getClickedGoal().getValue().getName());
+        titleEditText.setEnabled(false);
 
         String[] spinnerOptions = new String[typeEnumArray.length];
         for (int i = 0; i < typeEnumArray.length; i++) {
@@ -71,9 +77,21 @@ public class EditGoalDialog extends IGenericGoalDialog {
 
         int value = Integer.parseInt(strValue);
 
-        int index = goalsViewModel.getGoals().getValue().indexOf(goalsViewModel.getClickedGoal().getValue());
+        Goal clickedGoal = goalsViewModel.getClickedGoal().getValue();
+        int index = goalsViewModel.getGoals().getValue().indexOf(clickedGoal);
         goalsViewModel.getGoals().getValue().get(index).setName(title);
         goalsViewModel.getGoals().getValue().get(index).setValue(value);
+
+        if (clickedGoal.getName().equals("Weight Goal")) {
+            goalsViewModel.getThisUser().getValue().setGoal_weight(value);
+
+            FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(authUser.getUid())
+                    .child("goal_weight")
+                    .setValue(value);
+        }
 
         baseFragment.bind();
     }

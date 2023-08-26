@@ -70,7 +70,7 @@ public class GoalsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserProfileData value = snapshot.getValue(UserProfileData.class);
                 goalsViewModel.setThisUser(value);
-                goalsViewModel.setGoals((ArrayList<Goal>) value.getGoals());
+                //goalsViewModel.setGoals((ArrayList<Goal>) value.getGoals());
 
                 int tRange = 0;
                 switch (value.getRangeID()) {
@@ -101,9 +101,36 @@ public class GoalsFragment extends Fragment {
                 }
                 goalsViewModel.setGoalRange(tRange);
 
+
+
                 goalRecyclerView = binding.goalRecyclerView;
                 goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                updateUI(goalsViewModel.getGoals().getValue());
+                //updateUI(goalsViewModel.getGoals().getValue());
+
+                DatabaseReference goalsRef = FirebaseDatabase.getInstance()
+                        .getReference("GoalsData").child(authUser.getUid());
+                goalsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Iterable<DataSnapshot> children = snapshot.getChildren();
+                        ArrayList<Goal> goals = new ArrayList<>();
+
+                        for (DataSnapshot child : children) {
+                            Goal goal = child.getValue(Goal.class);
+                            goals.add(goal);
+                        }
+
+                        goalsViewModel.setGoals(goals);
+                        goalRecyclerView = binding.goalRecyclerView;
+                        goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                        updateUI(goals);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        throw error.toException();
+                    }
+                });
             }
 
             @Override
