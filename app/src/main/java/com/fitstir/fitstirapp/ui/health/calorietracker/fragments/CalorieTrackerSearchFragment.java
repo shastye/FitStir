@@ -448,7 +448,7 @@ public class CalorieTrackerSearchFragment extends Fragment {
         private final TextView recipeLabel, recipeCalories;
 
         public RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.layout_recipe_calorietracker_grid, parent, false));
+            super(inflater.inflate(R.layout.layout_calorie_tracker_search_grid, parent, false));
             itemView.setOnClickListener(this);
 
             recipeImage = itemView.findViewById(R.id.layout_recipe_image);
