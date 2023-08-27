@@ -47,6 +47,7 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.NutritionType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.SearchOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.EdamamAPI_FoodDatabaseParser;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Food;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.FoodResponse;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
@@ -82,6 +83,7 @@ public class CalorieTrackerSearchFragment extends Fragment {
     private FoodResponse foodResponse;
     private ArrayList<ResponseInfo> calorieTrackingData;
     private ArrayList<Recipe> likedRecipeData;
+    private ArrayList<Food> likedFoodData;
 
     private AppCompatSpinner searchOptionsSpinner;
     private AppCompatImageView filterButton;
@@ -115,6 +117,7 @@ public class CalorieTrackerSearchFragment extends Fragment {
         decimalFormat = new DecimalFormat("####.#");
         calorieTrackingData = new ArrayList<>();
         likedRecipeData = new ArrayList<>();
+        likedFoodData = new ArrayList<>();
 
 
 
@@ -199,8 +202,17 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 Iterable<DataSnapshot> children = snapshot.getChildren();
 
                 for (DataSnapshot child : children) {
-                    Recipe kid = child.getValue(Recipe.class);
-                    likedRecipeData.add(kid);
+                    Map<String, Object> kid = (Map<String, Object>) child.getValue();
+                    String bitmapString = (String) kid.get("imageBitmapData");
+                    String foodIdString = (String) kid.get("foodId");
+
+                    if (bitmapString != null && !bitmapString.equals("")) {
+                        Recipe recipe = child.getValue(Recipe.class);
+                        likedRecipeData.add(recipe);
+                    } else if (foodIdString != null && !foodIdString.equals("")) {
+                        Food food = child.getValue(Food.class);
+                        likedFoodData.add(food);
+                    }
                 }
             }
 
@@ -564,8 +576,8 @@ public class CalorieTrackerSearchFragment extends Fragment {
         searchRecyclerView = root.findViewById(R.id.search_response_rv);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
+        ArrayList<ResponseInfo> responses = new ArrayList<>(0);
         if (isRecipeSearch) {
-            ArrayList<ResponseInfo> responses = new ArrayList<>(0);
             ArrayList<Hit> hits = calorieTrackerViewModel.getHits().getValue();
 
             for (Hit hit : hits) {
@@ -579,7 +591,24 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 searchRecyclerView.setAdapter(recipeAdapter);
             }
         } else {
+            ArrayList<Parsed> parseds = calorieTrackerViewModel.getParsed().getValue();
+            ArrayList<Hint> hints = calorieTrackerViewModel.getHints().getValue();
 
+            for (Parsed parsed : parseds) {
+                ResponseInfo info = new ResponseInfo(Calendar.getInstance(), "Breakfast", parsed, 1);
+                responses.add(info);
+            }
+
+            for (Hint hint : hints) {
+                ResponseInfo info = new ResponseInfo(Calendar.getInstance(), "Breakfast", hint, 1);
+                responses.add(info);
+            }
+
+            if (responses.size() != 0) {
+                searchRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+                recipeAdapter = new CalorieTrackerSearchFragment.RecipeAdapter(responses);
+                searchRecyclerView.setAdapter(recipeAdapter);
+            }
         }
     }
 
@@ -824,9 +853,14 @@ public class CalorieTrackerSearchFragment extends Fragment {
 
 
             boolean isFav = false;
-            if (isRecipeSearch) {
+            if (result instanceof Parsed) {
+                isFav = likedFoodData.contains(((Parsed) result).getFood());
+            } else if (result instanceof Hint) {
+                isFav = likedFoodData.contains(((Hint) result).getFood());
+            } else if (result instanceof Hit) {
                 isFav = likedRecipeData.contains(((Hit) result).getRecipe());
             }
+
             boolean isAdded = calorieTrackingData.contains(response);
 
 
