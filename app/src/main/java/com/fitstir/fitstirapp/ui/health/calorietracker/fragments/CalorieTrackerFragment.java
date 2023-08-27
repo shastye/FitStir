@@ -158,7 +158,12 @@ public class CalorieTrackerFragment extends Fragment {
                             int year = Math.toIntExact((long) calInfo.get("weekYear"));
                             int month = Math.toIntExact(dateInfo.get("month"));
                             int day = Math.toIntExact(dateInfo.get("date"));
-                            cal.set(year, month, day);
+                            int hour = Math.toIntExact(dateInfo.get("hours"));
+                            int minutes = Math.toIntExact(dateInfo.get("minutes"));
+                            int seconds = Math.toIntExact(dateInfo.get("seconds"));
+                            int milliseconds = Math.toIntExact(dateInfo.get("seconds"));
+                            cal.set(year, month, day, hour, minutes, seconds);
+                            cal.set(Calendar.MILLISECOND, milliseconds);
                             info.setDate(cal);
 
                             String mealType = (String) kid.get("mealType");
@@ -446,13 +451,14 @@ public class CalorieTrackerFragment extends Fragment {
 
                 if (data.get(i).getItem() instanceof Parsed) {
                     parsed = (Parsed) data.get(i).getItem();
+                    int servings = (int) parsed.getFood().getServingsPerContainer();
                     int amount = data.get(i).getQuantity();
 
                     Nutrients nutr = parsed.getFood().getNutrients();
-                    calSum += nutr.getENERC_KCAL();
-                    carbSum += nutr.getCHOCDF();
-                    protSum += nutr.getPROCNT();
-                    fatSum += nutr.getFAT();
+                    calSum += nutr.getENERC_KCAL() / servings;
+                    carbSum += nutr.getCHOCDF() / servings * amount;
+                    protSum += nutr.getPROCNT() / servings * amount;
+                    fatSum += nutr.getFAT() / servings * amount;
 
                     dataLabelTextView.setText(parsed.getFood().getLabel());
                     String tUnits = (parsed.getQuantity() * amount) + " " + parsed.getMeasure().getLabel();

@@ -24,41 +24,26 @@
 
 
             <include layout="@layout/included_search_toolbar"/>
+            <include layout="@layout/included_generic_loading_popup"/>
 
 
         </RelativeLayout>
     </RelativeLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_response_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/rounded_a80_section_background"
+        android:layout_marginStart="10dp"
+        android:paddingTop="70dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        app:divider="@drawable/empty_short_divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_recipe_includes">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_response_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical"
-            app:divider="@drawable/empty_short_divider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:showDividers="middle" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:showDividers="middle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

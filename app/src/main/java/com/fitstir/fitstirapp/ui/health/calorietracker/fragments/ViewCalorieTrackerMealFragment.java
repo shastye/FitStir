@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ViewCalorieTrackerMealFragment extends Fragment {
 
@@ -96,15 +97,55 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         ArrayList<ResponseInfo> data = calorieTrackerViewModel.getCalorieTrackerData().getValue();
 
+
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
         DatabaseReference dataReference = FirebaseDatabase.getInstance().
                 getReference("CalorieTrackingData").child(authUser.getUid());
 
         for (int i = 0; i < data.size(); i++) {
-            DatabaseReference dataID = dataReference.child(data.get(i).getResultID());
+            String id = "";
+            if (data.get(i).getItem() instanceof Parsed) {
+                id = ((Parsed) data.get(i).getItem()).getFood().getFoodId();
+                int index = id.indexOf("food_");
+                if (index != -1) {
+                    index += 5;
+                    id = id.substring(index);
+                }
+            } else if (data.get(i).getItem() instanceof Hint) {
+               id = ((Hint) data.get(i).getItem()).getFood().getFoodId();
+                int index = id.indexOf("food_");
+                if (index != -1) {
+                    index += 5;
+                    id = id.substring(index);
+                }
+            } else if (data.get(i).getItem() instanceof Hit) {
+                id = ((Hit) data.get(i).getItem()).getRecipe().getUri();
+                int index = id.indexOf("recipe_");
+                if (index != -1) {
+                    index += 7;
+                    id = id.substring(index);
+                }
+            }
 
-            dataID.child("resultID").setValue(data.get(i).getResultID());
+            String collID = id + "&&&&&";
+            Calendar dataDate = data.get(i).getDate();
+            collID += dataDate.get(Calendar.YEAR);
+            collID += "-";
+            collID += dataDate.get(Calendar.MONTH);
+            collID += "-";
+            collID += dataDate.get(Calendar.DATE);
+            collID += "*";
+            collID += dataDate.get(Calendar.HOUR_OF_DAY);
+            collID += "-";
+            collID += dataDate.get(Calendar.MINUTE);
+            collID += "-";
+            collID += dataDate.get(Calendar.SECOND);
+            collID += "-";
+            collID += dataDate.get(Calendar.MILLISECOND);
+
+            DatabaseReference dataID = dataReference.child(collID);
+            dataID.child("resultID").setValue(id);
             dataID.child("date").setValue(data.get(i).getDate());
             dataID.child("mealType").setValue(data.get(i).getMealType());
             dataID.child("quantity").setValue(data.get(i).getQuantity());
