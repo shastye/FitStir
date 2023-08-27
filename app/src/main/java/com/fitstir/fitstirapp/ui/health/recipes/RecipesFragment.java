@@ -42,6 +42,7 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.enums.CuisineType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.DietOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.HealthOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Food;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.EdamamAPI_RecipesV2;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
@@ -59,6 +60,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class RecipesFragment extends Fragment {
@@ -132,16 +134,21 @@ public class RecipesFragment extends Fragment {
             /*thisUser*/listRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserProfileData value = snapshot.getValue(UserProfileData.class);
-                    recipesViewModel.setThisUser(value);
+                    //UserProfileData value = snapshot.getValue(UserProfileData.class);
+                    //recipesViewModel.setThisUser(value);
                     //recipesViewModel.setLikedRecipes(value.getLikedRecipes());
 
                     ArrayList<Recipe> likedRecipes = new ArrayList<>();
                     Iterable<DataSnapshot> children = snapshot.getChildren();
 
                     for (DataSnapshot child : children) {
-                        Recipe recipe = child.getValue(Recipe.class);
-                        likedRecipes.add(recipe);
+                        Map<String, Object> kid = (Map<String, Object>) child.getValue();
+                        String bitmapString = (String) kid.get("imageBitmapData");
+
+                        if (bitmapString != null && !bitmapString.equals("")) {
+                            Recipe recipe = child.getValue(Recipe.class);
+                            likedRecipes.add(recipe);
+                        }
                     }
 
                     recipesViewModel.setLikedRecipes(likedRecipes);
