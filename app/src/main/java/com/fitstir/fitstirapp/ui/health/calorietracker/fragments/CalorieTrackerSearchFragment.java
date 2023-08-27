@@ -711,14 +711,13 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 }
             });
             addButton = itemView.findViewById(R.id.add_search_response);
+            addButton.setChecked(false);
             addButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        //addButton.setButtonTintList(ColorStateList.valueOf(colorPrimaryVariant));
                         setAddState(SAVE);
                     } else {
-                        //addButton.setButtonTintList(ColorStateList.valueOf(colorOnPrimary));
                         setAddState(REMOVE);
                     }
                 }

@@ -117,7 +117,7 @@
             android:layout_alignParentEnd="true"
             android:button="@android:color/transparent"
             android:background="@drawable/custom_checkbox_checkmark"
-            android:backgroundTint="?attr/colorOnPrimary" />
+            android:backgroundTint="@color/custom_checkbox_checkmark" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
