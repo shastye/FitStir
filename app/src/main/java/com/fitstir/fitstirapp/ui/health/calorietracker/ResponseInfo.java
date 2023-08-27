@@ -1,11 +1,12 @@
 package com.fitstir.fitstirapp.ui.health.calorietracker;
 
 import com.fitstir.fitstirapp.ui.health.edamamapi.ISearchResult;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
-
-import org.apache.commons.lang3.RandomStringUtils;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class ResponseInfo {
 
@@ -21,16 +22,14 @@ public class ResponseInfo {
         this.mealType = "";
         this.item = new Parsed();
         this.quantity = 0;
-
-        this.resultID = RandomStringUtils.randomAlphanumeric(24); // ID is 24 characters long
+        this.resultID = "";
     }
     public ResponseInfo(Calendar date) {
         this.date = date;
         this.mealType = "";
         this.item = new Parsed();
         this.quantity = 0;
-
-        this.resultID = RandomStringUtils.randomAlphanumeric(24); // ID is 24 characters long
+        this.resultID = "";
     }
     public ResponseInfo(Calendar date, String mealType, ISearchResult item, int quantity) {
         this.date = date;
@@ -38,9 +37,72 @@ public class ResponseInfo {
         this.item = item;
         this.quantity = quantity;
 
-        this.resultID = RandomStringUtils.randomAlphanumeric(24); // ID is 24 characters long
+        String id = "";
+        if (item instanceof Parsed) {
+            id = ((Parsed) item).getFood().getFoodId();
+            int index = id.indexOf("food_");
+            if (index != -1) {
+                index += 5;
+                id = id.substring(index);
+            }
+        } else if (item instanceof Hint) {
+            id = ((Hint) item).getFood().getFoodId();
+            int index = id.indexOf("food_");
+            if (index != -1) {
+                index += 5;
+                id = id.substring(index);
+            }
+        } else if (item instanceof Hit) {
+            id = ((Hit) item).getRecipe().getUri();
+            int index = id.indexOf("recipe_");
+            if (index != -1) {
+                index += 7;
+                id = id.substring(index);
+            }
+        }
+
+        String collID = id + "&&&&&";
+        collID += date.get(Calendar.YEAR);
+        collID += "-";
+        collID += date.get(Calendar.MONTH);
+        collID += "-";
+        collID += date.get(Calendar.DATE);
+        collID += "*";
+        collID += date.get(Calendar.HOUR_OF_DAY);
+        collID += "-";
+        collID += date.get(Calendar.MINUTE);
+        collID += "-";
+        collID += date.get(Calendar.SECOND);
+        collID += "-";
+        collID += date.get(Calendar.MILLISECOND);
+        this.resultID = collID;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof ResponseInfo)) {
+            return false;
+        } else {
+            // TODO: Edit to be specific to meal time
+            ResponseInfo that = (ResponseInfo) o;
+
+            //boolean b1 = quantity == that.quantity;
+            boolean b1 = isDate(that.date);
+
+            int thisIndex = resultID.indexOf("&&&&&");
+            String thisID = resultID.substring(0, thisIndex);
+            int thatIndex = that.resultID.indexOf("&&&&&");
+            String thatID = that.resultID.substring(0, thatIndex);
+            boolean b2 = Objects.equals(thisID, thatID);
+
+            //boolean b4 = Objects.equals(mealType, that.mealType);
+            boolean b3 = Objects.equals(item, that.item);
+
+            return b1 && b2 && b3;
+        }
+    }
 
     public Calendar getDate() {
         return date;
