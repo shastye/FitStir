@@ -49,6 +49,13 @@ public class ViewWorkoutFragment extends Fragment {
                 .load(workoutsViewModel.getGifURL().getValue())
                 .into(image);
 
+
         return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

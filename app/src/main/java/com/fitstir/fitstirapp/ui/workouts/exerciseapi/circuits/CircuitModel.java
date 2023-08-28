@@ -15,46 +15,45 @@ import java.util.List;
 
 public class CircuitModel {
     private String exercise;
-    private Integer duration;
-    private Integer sets;
-    private Integer reps;
-    private Integer calBurned;
+    private int duration;
+    private int sets;
+    private int reps;
+    private int calBurn;
     private String directions;
     private String gif;
     private String mapImage;
-    private Integer totalBurn;
+    private int totalBurn;
 
 
     public String getGif() {
         return gif;
     }
     public String getMapImage() {return mapImage;}
-    public Integer getTotalBurn() {return totalBurn;}
+    public int getTotalBurn() {return totalBurn;}
     public String getExercise() {
         return exercise;
     }
-    public Integer getDuration() {
+    public int getDuration() {
         return duration;
     }
-    public Integer getReps() {
+    public int getReps() {
         return reps;
     }
     public String getDirections() {
         return directions;
     }
-    public Integer getCalBurned() {
-        return calBurned;
-    }
-    public Integer getSets() {
+    public int getCalBurned() {return calBurn;}
+    public int getSets() {
         return sets;
     }
 
-    public CircuitModel(String exercise, Integer duration, Integer sets, Integer reps, Integer calBurned, String directions, String gif,String mapImage, Integer totalBurn) {
+    public CircuitModel(){}
+    public CircuitModel(String exercise, int duration, int sets, int reps, int calBurned, String directions, String gif,String mapImage, int totalBurn) {
         this.exercise = exercise;
         this.duration = duration;
         this.sets = sets;
         this.reps = reps;
-        this.calBurned = calBurned;
+        this.calBurn = calBurned;
         this.directions = directions;
         this.gif = gif;
         this.totalBurn = totalBurn;
@@ -62,21 +61,21 @@ public class CircuitModel {
     }
 
     public void setMapImage(String mapImage) {this.mapImage = mapImage;}
-    public void setTotalBurn(Integer totalBurn) {this.totalBurn = totalBurn;}
+    public void setTotalBurn(int totalBurn) {this.totalBurn = totalBurn;}
     public void setExercise(String exercise) {
         this.exercise = exercise;
     }
-    public void setDuration(Integer duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
-    public void setSets(Integer sets) {
+    public void setSets(int sets) {
         this.sets = sets;
     }
-    public void setReps(Integer reps) {
+    public void setReps(int reps) {
         this.reps = reps;
     }
-    public void setCalBurned(Integer calBurned) {
-        this.calBurned = calBurned;
+    public void setCalBurned(int calBurned) {
+        this.calBurn = calBurned;
     }
     public void setDirections(String directions) {
         this.directions = directions;

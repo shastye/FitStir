@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -62,7 +63,7 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
 
             workouts_RV = root.findViewById(R.id.upper_Body_RV);
             workouts_RV.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            workouts_RV.setItemAnimator(new DefaultItemAnimator());
+            //workouts_RV.setItemAnimator(new DefaultItemAnimator());
             workouts_RV.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
 
             viewAdapter = new workoutAdapter(this.getActivity(), upperBodyApiArrayList, this);
@@ -86,7 +87,6 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
     @Override
     public void onItemClick(int position) {
      WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
-
      try {
          if (filtered.size() >= 1) {
              upperBody.getWorkoutClicked(position,filtered,workoutsViewModel);
@@ -96,9 +96,10 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
          }
      }catch (NullPointerException e){
          upperBody.getWorkoutClicked(position,upperBodyApiArrayList,workoutsViewModel);
-         Fragment fragment = new ViewWorkoutFragment();
-         FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-         fm.replace(R.id.container, fragment).commit();
+
+
+         Navigation.findNavController(this.getActivity(),R.id.nav_host_fragment_activity_main)
+                 .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
      }
 
     }

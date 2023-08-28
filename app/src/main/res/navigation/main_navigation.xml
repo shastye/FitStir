@@ -70,7 +70,11 @@
         android:id="@+id/navigation_circuit_workouts"
         android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits.CircuitWorkoutsFragment"
         android:label="Circuit Workouts"
-        tools:layout="@layout/fragment_circuit_workouts" />
+        tools:layout="@layout/fragment_circuit_workouts" >
+        <action
+            android:id="@+id/action_navigation_circuit_workouts_to_viewCircuitFragment"
+            app:destination="@id/viewCircuitFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_yoga"
@@ -232,5 +236,20 @@
         <action
             android:id="@+id/action_viewWorkoutFragment_to_navigation_lower_body"
             app:destination="@id/navigation_lower_body" />
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_navigation_upper_body2"
+            app:destination="@id/navigation_upper_body" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewCircuitFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits.ViewCircuitFragment"
+        android:label="fragment_view_circuit"
+        tools:layout="@layout/fragment_view_circuit" >
+        <action
+            android:id="@+id/action_viewCircuitFragment_to_navigation_workouts"
+            app:destination="@id/navigation_workouts" />
+        <action
+            android:id="@+id/action_viewCircuitFragment_to_navigation_circuit_workouts"
+            app:destination="@id/navigation_circuit_workouts" />
     </fragment>
 </navigation>

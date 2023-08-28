@@ -25,6 +25,7 @@ public class Constants {
         public static final String WEIGHT_LIFTING = "Weights";
         public static final String BEGINNER_CIRCUIT = "BeginnerCircuit";
         public static final String TONER_CIRCUIT = "TonerCircuit";
+        public static final String ACTIVE_CIRCUIT = "ActiveCircuit";
         public static final String BB_CIRCUIT = "BBCircuit";
         public static final String WARRIORS = "WarriorsCircuit";
         public static final String BCCIRCUIT ="BootCampCircuit";

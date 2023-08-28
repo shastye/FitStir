@@ -7,19 +7,20 @@
     android:layout_height="match_parent"
     >
 
+
     <androidx.cardview.widget.CardView
-        android:id="@+id/circuit_Cardview"
-        android:layout_width="443dp"
-        android:layout_height="739dp"
-        android:alpha="0.25"
+        android:id="@+id/cardView2"
+        android:layout_width="396dp"
+        android:layout_height="733dp"
         android:elevation="3dp"
         android:outlineProvider="paddedBounds"
-        app:cardBackgroundColor="@color/soft_deep_purple"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/circuit_gif"
@@ -27,6 +28,9 @@
             android:layout_height="300dp"
             android:scaleType="centerCrop"
             android:src="@color/mid_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardView2"
             app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
             app:shapeAppearanceOverlay="@style/RoundedBottom" />
 
@@ -37,118 +41,156 @@
             android:layout_marginTop="300dp"
             android:gravity="center"
             android:hint="Exercise Name"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="22sp" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="325dp"
             android:text="Directions:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/circuit_directions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="87dp"
+            android:layout_marginLeft="98dp"
             android:layout_marginTop="327dp"
             android:hint="Directions:"
-            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="555dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="545dp"
             android:text="Sets:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/sets_circuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="557dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="547dp"
             android:hint="Sets:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="555dp"
-            android:layout_marginLeft="250dp"
+            android:layout_marginLeft="240dp"
+            android:layout_marginTop="545dp"
             android:text="Duration:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/dur_circuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="322dp"
-            android:layout_marginTop="557dp"
+            android:layout_marginLeft="312dp"
+            android:layout_marginTop="547dp"
             android:hint="time:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="343dp"
-            android:layout_marginTop="557dp"
+            android:layout_marginLeft="345dp"
+            android:layout_marginTop="547dp"
             android:text="(sec):"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="585dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="575dp"
             android:text="Reps:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/reps_circuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:layout_marginTop="586dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="575dp"
             android:hint="reps:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="615dp"
-            android:text="Calorie Burn:"
-            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="605dp"
+            android:text="Calories Burned:"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/cal_circuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="105dp"
-            android:layout_marginTop="616dp"
+            android:layout_marginLeft="139dp"
+            android:layout_marginTop="606dp"
             android:hint="cal:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_marginTop="325dp"
-            android:background="@color/white"
+            android:background="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="-4dp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="545dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="-4dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="635dp"
+            android:text="Total Burned:"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/cal_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="115dp"
+            android:layout_marginTop="636dp"
+            android:hint="cal:"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/map_Image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="290dp"
+            android:clickable="true"/>
     </androidx.cardview.widget.CardView>
 
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 public class WorkoutsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
+    private final MutableLiveData<Integer> pageCLicked = new MutableLiveData<>(0);
     private final MutableLiveData<String> exercise = new MutableLiveData<>(" ");
     private final MutableLiveData<String> bodyPart = new MutableLiveData<>(" ");
     private final MutableLiveData<String> target = new MutableLiveData<>(" ");
@@ -20,8 +21,10 @@ public class WorkoutsViewModel extends ViewModel {
     private final MutableLiveData<Integer> calBurned = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> totalBurned = new MutableLiveData<>(0);
     private final MutableLiveData<String> mapImage = new MutableLiveData<>(" ");
-    public MutableLiveData<Integer> getTotalBurned() {return totalBurned;}
+    public final MutableLiveData<Integer> getTotalBurned() {return totalBurned;}
     public MutableLiveData<String> getMapImage() {return mapImage;}
+
+    public final MutableLiveData<Integer> getPageCLicked() {return pageCLicked;}
 
     public LiveData<String> getText() { return mText;}
     public MutableLiveData<String> getTarget() { return target;}
@@ -40,11 +43,11 @@ public class WorkoutsViewModel extends ViewModel {
         mText = new MutableLiveData<>();
         mText.setValue("");
     }
-
-    public void setSets(int set){this.sets.setValue(set);}
-    public void setReps(int rep){this.reps.setValue(rep);}
-    public void setDuration(int time){this.duration.setValue(time);}
-    public void setCalBurned(int cal){this.calBurned.setValue(cal);}
+    public void setPageCLicked(Integer page){this.pageCLicked.setValue(page);}
+    public void setSets(Integer set){this.sets.setValue(set);}
+    public void setReps(Integer rep){this.reps.setValue(rep);}
+    public void setDuration(Integer time){this.duration.setValue(time);}
+    public void setCalBurned(Integer cal){this.calBurned.setValue(cal);}
 
     public void setBodyPart(String body){this.bodyPart.setValue(body);}
     public void setTarget(String target){this.target.setValue(target);}

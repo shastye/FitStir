@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,12 +22,10 @@ import java.util.ArrayList;
 public class circuitAdapter extends RecyclerView.Adapter<circuitAdapter.ViewHolder> {
 
     private ArrayList<CircuitModel> list;
-    private RvInterface rvInterface;
     private Context context;
 
-    public circuitAdapter(Context context, ArrayList<CircuitModel> circuitModels, RvInterface rvInterface) {
+    public circuitAdapter(Context context, ArrayList<CircuitModel> circuitModels) {
 
-        this.rvInterface = rvInterface;
         this.context = context;
         this.list = circuitModels;
     }
@@ -43,13 +42,24 @@ public class circuitAdapter extends RecyclerView.Adapter<circuitAdapter.ViewHold
 
         CircuitModel circuits = list.get(position);
 
-        holder.cardView.startAnimation(AnimationUtils.loadAnimation(holder.cardView.getContext(), R.anim.anim_recyclerview));
         holder.name.setText(circuits.getExercise());
         holder.direction.setText(circuits.getDirections());
-        holder.sets.setText(circuits.getSets());
-        holder.cal.setText(circuits.getCalBurned());
-        holder.reps.setText(circuits.getReps());
-        holder.time.setText(circuits.getDuration());
+        holder.sets.setText(Integer.toString(circuits.getSets()));
+        holder.cal.setText(Integer.toString(circuits.getCalBurned()));
+        holder.reps.setText(Integer.toString(circuits.getReps()));
+        holder.time.setText(Integer.toString(circuits.getDuration()));
+        holder.total.setText(Integer.toString(circuits.getTotalBurn()));
+
+        holder.mapImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_viewCircuitFragment_to_navigation_circuit_workouts);
+            }
+        });
+
+        Glide.with(context)
+                .load(circuits.getMapImage())
+                .into(holder.mapImage);
 
         Glide.with(context)
                 .load(circuits.getGif())
@@ -61,12 +71,11 @@ public class circuitAdapter extends RecyclerView.Adapter<circuitAdapter.ViewHold
     public int getItemCount() {return list.size();}
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private CardView cardView;
-        private ImageView gif;
-        private TextView name, direction, sets, reps, time, cal;
+
+        private ImageView gif, mapImage;
+        private TextView name, direction, sets, reps, time, cal, total;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.circuit_Cardview);
             gif = itemView.findViewById(R.id.circuit_gif);
             name = itemView.findViewById(R.id.view_ExerciseName);
             direction = itemView.findViewById(R.id.circuit_directions);
@@ -74,6 +83,9 @@ public class circuitAdapter extends RecyclerView.Adapter<circuitAdapter.ViewHold
             reps = itemView.findViewById(R.id.reps_circuit);
             time = itemView.findViewById(R.id.dur_circuit);
             cal = itemView.findViewById(R.id.cal_circuit);
+            mapImage = itemView.findViewById(R.id.map_Image);
+            total = itemView.findViewById(R.id.cal_total);
+
         }
     }
 }
