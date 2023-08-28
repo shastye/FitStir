@@ -454,6 +454,13 @@ public class CalorieTrackerFragment extends Fragment {
                     int servings = (int) parsed.getFood().getServingsPerContainer();
                     int amount = data.get(i).getQuantity();
 
+                    if (servings == 0) {
+                        servings = 1;
+                    }
+                    if (amount == 0) {
+                        amount = 1;
+                    }
+
                     Nutrients nutr = parsed.getFood().getNutrients();
                     calSum += nutr.getENERC_KCAL() / servings;
                     carbSum += nutr.getCHOCDF() / servings * amount;
@@ -469,6 +476,13 @@ public class CalorieTrackerFragment extends Fragment {
                     int servings = (int) hint.getFood().getServingsPerContainer();
                     int amount = data.get(i).getQuantity();
 
+                    if (servings == 0) {
+                        servings = 1;
+                    }
+                    if (amount == 0) {
+                        amount = 1;
+                    }
+
                     Nutrients nutr = hint.getFood().getNutrients();
                     calSum += nutr.getENERC_KCAL() / servings * amount;
                     carbSum += nutr.getCHOCDF() / servings * amount;
@@ -483,6 +497,13 @@ public class CalorieTrackerFragment extends Fragment {
                     hit = (Hit) data.get(i).getItem();
                     int servings = (int) hit.getRecipe().getYield();
                     int amount = data.get(i).getQuantity();
+
+                    if (servings == 0) {
+                        servings = 1;
+                    }
+                    if (amount == 0) {
+                        amount = 1;
+                    }
 
                     TotalNutrients nutr = hit.getNutrients();
                     calSum += nutr.getENERC_KCAL().getQuantity() / servings * amount;

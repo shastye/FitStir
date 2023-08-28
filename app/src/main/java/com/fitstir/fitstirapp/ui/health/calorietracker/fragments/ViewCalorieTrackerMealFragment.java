@@ -195,16 +195,31 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
             if (data.getItem() instanceof Parsed) {
                 parsed = (Parsed) data.getItem();
+                int servings = (int) parsed.getFood().getServingsPerContainer();
                 int amount = data.getQuantity();
 
+                if (servings == 0) {
+                    servings = 1;
+                }
+                if (amount == 0) {
+                    amount = 1;
+                }
+
                 dataLabelTextView.setText(parsed.getFood().getLabel());
-                String tUnits = (parsed.getQuantity() * amount) + " " + parsed.getMeasure().getLabel();
+                String tUnits = (parsed.getQuantity() / servings * amount) + " " + parsed.getMeasure().getLabel();
                 dataUnitsTextView.setText(tUnits);
-                dataCalTextView.setText(String.valueOf((int) (parsed.getFood().getNutrients().getENERC_KCAL() * amount)));
+                dataCalTextView.setText(String.valueOf((int) (parsed.getFood().getNutrients().getENERC_KCAL() / servings * amount)));
             } else if (data.getItem() instanceof Hint) {
                 hint = (Hint) data.getItem();
                 int servings = (int) hint.getFood().getServingsPerContainer();
                 int amount = data.getQuantity();
+
+                if (servings == 0) {
+                    servings = 1;
+                }
+                if (amount == 0) {
+                    amount = 1;
+                }
 
                 dataLabelTextView.setText(hint.getFood().getLabel());
                 String tUnits = amount + " " + hint.getMeasures().get(0).getLabel();
@@ -214,6 +229,13 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
                 hit = (Hit) data.getItem();
                 int amount = data.getQuantity();
                 int servings = (int) hit.getRecipe().getYield();
+
+                if (servings == 0) {
+                    servings = 1;
+                }
+                if (amount == 0) {
+                    amount = 1;
+                }
 
                 dataLabelTextView.setText(hit.getRecipe().getLabel());
                 String tUnits = amount + " serving(s)";

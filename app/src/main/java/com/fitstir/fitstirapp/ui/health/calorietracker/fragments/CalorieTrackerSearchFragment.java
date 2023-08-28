@@ -136,7 +136,7 @@ public class CalorieTrackerSearchFragment extends Fragment {
                     Map<String, Object> kid = (Map<String, Object>) child.getValue();
                     assert kid != null;
 
-                    String resultID = (String) kid.get("resultID");
+                    String resultID = (String) child.getKey();
                     info.setResultID(resultID);
 
                     Calendar cal = Calendar.getInstance();
@@ -419,18 +419,6 @@ public class CalorieTrackerSearchFragment extends Fragment {
         binding = null;
     }
 
-    private void setLoadingScreen(boolean isLoading) {
-        if (isLoading) {
-            searchRecyclerView.setVisibility(View.GONE);
-            loadingScreen_CL.setVisibility(View.VISIBLE);
-
-            this.isInitialLoad = false;
-        } else {
-            searchRecyclerView.setVisibility(View.VISIBLE);
-            loadingScreen_CL.setVisibility(View.GONE);
-        }
-    }
-
     private boolean onEnterClick() {
         if (searchBar != null && !searchBar.getText().toString().equals("")) {
             boolean isFoodReady = true;
@@ -662,7 +650,13 @@ public class CalorieTrackerSearchFragment extends Fragment {
             } else {
                 saveState = SAVE;
 
-                if (result instanceof Hit) {
+                if (result instanceof Parsed) {
+                    Parsed parsed = (Parsed) result;
+                    recRef.setValue(parsed.getFood());
+                } else if (result instanceof Hint) {
+                    Hint hint = (Hint) result;
+                    recRef.setValue(hint.getFood());
+                } else if (result instanceof Hit) {
                     Hit hit = (Hit) result;
 
                     if (hit.getRecipe().getImageBitmapData() == null || hit.getRecipe().getImageBitmapData().equals("")) {
@@ -778,6 +772,13 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 int servings = (int) parsed.getFood().getServingsPerContainer();
                 int amount = response.getQuantity();
 
+                if (servings == 0) {
+                    servings = 1;
+                }
+                if (amount == 0) {
+                    amount = 1;
+                }
+
                 Nutrients nutr = parsed.getFood().getNutrients();
                 calSum = (int) (nutr.getENERC_KCAL() / servings * amount);
                 carbSum = nutr.getCHOCDF() / servings * amount;
@@ -790,6 +791,13 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 int servings = (int) hint.getFood().getServingsPerContainer();
                 int amount = response.getQuantity();
 
+                if (servings == 0) {
+                    servings = 1;
+                }
+                if (amount == 0) {
+                    amount = 1;
+                }
+
                 Nutrients nutr = hint.getFood().getNutrients();
                 calSum = (int) (nutr.getENERC_KCAL() / servings * amount);
                 carbSum = nutr.getCHOCDF() / servings * amount;
@@ -801,6 +809,13 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 Hit hit = (Hit) result;
                 int servings = (int) hit.getRecipe().getYield();
                 int amount = response.getQuantity();
+
+                if (servings == 0) {
+                    servings = 1;
+                }
+                if (amount == 0) {
+                    amount = 1;
+                }
 
                 TotalNutrients nutr = hit.getNutrients();
                 calSum = (int) (nutr.getENERC_KCAL().getQuantity() / servings * amount);
@@ -828,7 +843,7 @@ public class CalorieTrackerSearchFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-
+            int x = 0;
         }
     }
 
