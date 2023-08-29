@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -35,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.databinding.DialogGenericCalorieTrackerItemBinding;
 import com.fitstir.fitstirapp.databinding.FragmentCalorieTrackerSearchBinding;
 import com.fitstir.fitstirapp.ui.health.calorietracker.CalorieTrackerViewModel;
 import com.fitstir.fitstirapp.ui.health.calorietracker.ResponseInfo;
@@ -600,9 +603,11 @@ public class CalorieTrackerSearchFragment extends Fragment {
         }
     }
 
-    private class RecipeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecipeHolder extends RecyclerView.ViewHolder {
         private final int SAVE = 0, REMOVE = 1;
         private int saveState;
+        int calSum = 0;
+        float carbSum = 0.0f, protSum = 0.0f, fatSum = 0.0f;
 
         private ResponseInfo response;
         private final TextView recipeLabel, recipeCalories, recipeBig3;
@@ -712,10 +717,8 @@ public class CalorieTrackerSearchFragment extends Fragment {
             }
         }
 
-
         public RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.layout_calorie_tracker_search_both_grid, parent, false));
-            itemView.setOnClickListener(this);
 
             recipeBig3 = itemView.findViewById(R.id.layout_search_big_3);
             recipeLabel = itemView.findViewById(R.id.layout_search_label);
@@ -739,9 +742,109 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        setAddState(SAVE);
-                    } else {
-                        setAddState(REMOVE);
+                        if (response != null) {
+                            View popUpView = inflater.inflate(R.layout.dialog_generic_calorie_tracker_item, null);
+                            PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+                            DialogGenericCalorieTrackerItemBinding binding = DialogGenericCalorieTrackerItemBinding.bind(popUpView);
+                            TextView label = binding.dialogLabel;
+                            TextView measure = binding.dialogMeasure;
+                            TextView calories = binding.dialogCalories;
+                            TextView nutrients = binding.dialogNutrients;
+                            EditText resultID = binding.dialogResultID;
+                            EditText date = binding.dialogDate;
+                            EditText quantity = binding.dialogQuantity;
+                            ImageButton delete = binding.dialogDeleteIcon;
+                            delete.setVisibility(View.GONE);
+
+                            MealType[] tMeals = MealType.values();
+                            String[] spinnerOptions = new String[tMeals.length - 1];
+                            for (int i = 0; i < tMeals.length - 1; i++) {
+                                spinnerOptions[i] = tMeals[i + 1].getSpinnerTitle();
+                            }
+                            Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
+
+                            int index = response.getResultID().indexOf("&");
+                            String tID = response.getResultID().substring(0, index);
+                            resultID.setText(tID);
+                            date.setText("Today");
+
+                            String tNutr = "Carbs " + decimalFormat.format(carbSum) + "g \u22C5 " +
+                                    "Fat " + decimalFormat.format(fatSum) + "g \u22c5 " +
+                                    "Protein " + decimalFormat.format(protSum) + "g";
+                            String tCal = ((int) calSum) + " calories / serving";
+
+                            calories.setText(tCal);
+                            nutrients.setText(tNutr);
+
+                            if (response.getItem() instanceof Parsed) {
+                                Parsed parsed = (Parsed) response.getItem();
+                                int servings = (int) parsed.getFood().getServingsPerContainer();
+                                int amount = response.getQuantity();
+
+                                if (servings == 0) {
+                                    servings = 1;
+                                }
+                                if (amount == 0) {
+                                    amount = 1;
+                                }
+
+                                label.setText(parsed.getFood().getLabel());
+                                String tUnits = (parsed.getQuantity() / servings * amount) + " " + parsed.getMeasure().getLabel();
+                                measure.setText(tUnits);
+                            } else if (response.getItem() instanceof Hint) {
+                                Hint hint = (Hint) response.getItem();
+                                int amount = response.getQuantity();
+
+                                if (amount == 0) {
+                                    amount = 1;
+                                }
+
+                                label.setText(hint.getFood().getLabel());
+                                String tUnits = amount + " " + hint.getMeasures().get(0).getLabel();
+                                measure.setText(tUnits);
+                            } else if (response.getItem() instanceof Hit) {
+                                Hit hit = (Hit) response.getItem();
+                                int amount = response.getQuantity();
+
+                                if (amount == 0) {
+                                    amount = 1;
+                                }
+
+                                label.setText(hit.getRecipe().getLabel());
+                                String tUnits = amount + " serving(s)";
+                                measure.setText(tUnits);
+                            }
+
+                            AppCompatButton acceptButton = binding.dialogGenericAcceptButton;
+                            acceptButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    int index = mealType.getSelectedItemPosition();
+                                    String tMeal = MealType.values()[index + 1].getSpinnerTitle();
+                                    response.setMealType(tMeal);
+
+                                    int tQuant = Integer.parseInt(quantity.getText().toString());
+                                    response.setQuantity(tQuant);
+
+                                    setAddState(SAVE);
+                                    popupWindow.dismiss();
+                                }
+                            });
+                            AppCompatButton cancelButton = binding.dialogGenericCancelButton;
+                            cancelButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    buttonView.setChecked(false);
+                                    setAddState(REMOVE);
+                                    popupWindow.dismiss();
+                                }
+                            });
+
+                            popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+                        } else {
+                            setAddState(REMOVE);
+                        }
                     }
                 }
             });
@@ -764,8 +867,6 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 addButton.setChecked(false);
             }
 
-            int calSum = 0;
-            float carbSum = 0.0f, protSum = 0.0f, fatSum = 0.0f;
             String label = "";
             if (result instanceof Parsed) {
                 Parsed parsed = (Parsed) result;
@@ -839,11 +940,6 @@ public class CalorieTrackerSearchFragment extends Fragment {
             } else {
                 this.recipeCalories.setVisibility(View.GONE);
             }
-        }
-
-        @Override
-        public void onClick(View v) {
-            int x = 0;
         }
     }
 

@@ -148,22 +148,15 @@ public class CalorieTrackerFragment extends Fragment {
                             Map<String, Object> kid = (Map<String, Object>) child.getValue();
                             assert kid != null;
 
-                            String resultID = (String) kid.get("resultID");
+                            String resultID = (String) child.getKey();
                             info.setResultID(resultID);
 
                             Calendar cal = Calendar.getInstance();
                             HashMap<String, Object> calInfo = (HashMap<String, Object>) kid.get("date");
                             HashMap<String, Long> dateInfo = (HashMap<String, Long>) calInfo.get("time");
 
-                            int year = Math.toIntExact((long) calInfo.get("weekYear"));
-                            int month = Math.toIntExact(dateInfo.get("month"));
-                            int day = Math.toIntExact(dateInfo.get("date"));
-                            int hour = Math.toIntExact(dateInfo.get("hours"));
-                            int minutes = Math.toIntExact(dateInfo.get("minutes"));
-                            int seconds = Math.toIntExact(dateInfo.get("seconds"));
-                            int milliseconds = Math.toIntExact(dateInfo.get("seconds"));
-                            cal.set(year, month, day, hour, minutes, seconds);
-                            cal.set(Calendar.MILLISECOND, milliseconds);
+                            long timeInMillis = (long) calInfo.get("timeInMillis");
+                            cal.setTimeInMillis(timeInMillis);
                             info.setDate(cal);
 
                             String mealType = (String) kid.get("mealType");

@@ -218,7 +218,11 @@
         android:id="@+id/navigation_view_calorie_tracker_meal"
         android:name="com.fitstir.fitstirapp.ui.health.calorietracker.fragments.ViewCalorieTrackerMealFragment"
         android:label="View Meal"
-        tools:layout="@layout/fragment_view_calorie_tracker_meal" />
+        tools:layout="@layout/fragment_view_calorie_tracker_meal" >
+        <action
+            android:id="@+id/action_navigation_view_calorie_tracker_meal_to_navigation_calorie_tracker"
+            app:destination="@id/navigation_calorie_tracker" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_calorie_tracker_search"

@@ -1,25 +1,36 @@
 package com.fitstir.fitstirapp.ui.health.calorietracker.fragments;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.databinding.DialogGenericCalorieTrackerItemBinding;
 import com.fitstir.fitstirapp.databinding.FragmentViewCalorieTrackerMealBinding;
 import com.fitstir.fitstirapp.ui.health.calorietracker.CalorieTrackerViewModel;
 import com.fitstir.fitstirapp.ui.health.calorietracker.ResponseInfo;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
-import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.TotalNutrients;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -54,26 +65,12 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         decimalFormat = new DecimalFormat("####.#");
 
-        ArrayList<ResponseInfo> data = calorieTrackerViewModel.getClickedArray().getValue();
-        float calSum = calorieTrackerViewModel.getCalorieSum().getValue();
-        float carbSum = calorieTrackerViewModel.getCarbSum().getValue();
-        float fatSum = calorieTrackerViewModel.getFatSum().getValue();
-        float protSum = calorieTrackerViewModel.getProteinSum().getValue();
-
-        String tNutr = "Carbs " + decimalFormat.format(carbSum) + "g \u22C5 " +
-                "Fat " + decimalFormat.format(fatSum) + "g \u22c5 " +
-                "Protein " + decimalFormat.format(protSum) + "g";
-
         mealDataRecyclerView = binding.mealSectionItemRv;
         mealDataRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         mealLabelTextView = binding.mealSectionLabel;
         mealNutrTextView = binding.mealSectionBig3;
         mealCalTextView = binding.mealSectionCalories;
-
-        mealLabelTextView.setText(data.get(0).getMealType());
-        mealNutrTextView.setText(tNutr);
-        mealCalTextView.setText(String.valueOf((int) calSum));
 
         // Hide dropdown button on toolbar and show correct date
         root.findViewById(R.id.calendar_toolbar_dropdown_button).setVisibility(View.GONE);
@@ -86,41 +83,30 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        UserProfileData user = calorieTrackerViewModel.getThisUser().getValue();
-        assert user != null;
-        user.setCalorieTrackerGoal(calorieTrackerViewModel.getCalorieTrackerGoal().getValue());
-        calorieTrackerViewModel.setThisUser(user);
-
-        ArrayList<ResponseInfo> data = calorieTrackerViewModel.getCalorieTrackerData().getValue();
-
-
-        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert authUser != null;
-        DatabaseReference dataReference = FirebaseDatabase.getInstance().
+    private void saveData(ResponseInfo data) {
+        if (data != null) {
+            FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+            assert authUser != null;
+            DatabaseReference calReference = FirebaseDatabase.getInstance().
                 getReference("CalorieTrackingData").child(authUser.getUid());
 
-        for (int i = 0; i < data.size(); i++) {
             String id = "";
-            if (data.get(i).getItem() instanceof Parsed) {
-                id = ((Parsed) data.get(i).getItem()).getFood().getFoodId();
+            if (data.getItem() instanceof Parsed) {
+                id = ((Parsed) data.getItem()).getFood().getFoodId();
                 int index = id.indexOf("food_");
                 if (index != -1) {
                     index += 5;
                     id = id.substring(index);
                 }
-            } else if (data.get(i).getItem() instanceof Hint) {
-               id = ((Hint) data.get(i).getItem()).getFood().getFoodId();
+            } else if (data.getItem() instanceof Hint) {
+                id = ((Hint) data.getItem()).getFood().getFoodId();
                 int index = id.indexOf("food_");
                 if (index != -1) {
                     index += 5;
                     id = id.substring(index);
                 }
-            } else if (data.get(i).getItem() instanceof Hit) {
-                id = ((Hit) data.get(i).getItem()).getRecipe().getUri();
+            } else if (data.getItem() instanceof Hit) {
+                id = ((Hit) data.getItem()).getRecipe().getUri();
                 int index = id.indexOf("recipe_");
                 if (index != -1) {
                     index += 7;
@@ -129,7 +115,7 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
             }
 
             String collID = id + "&&&&&";
-            Calendar dataDate = data.get(i).getDate();
+            Calendar dataDate = data.getDate();
             collID += dataDate.get(Calendar.YEAR);
             collID += "-";
             collID += dataDate.get(Calendar.MONTH);
@@ -144,42 +130,129 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
             collID += "-";
             collID += dataDate.get(Calendar.MILLISECOND);
 
-            DatabaseReference dataID = dataReference.child(collID);
+            DatabaseReference dataID = calReference.child(collID);
             dataID.child("resultID").setValue(id);
-            dataID.child("date").setValue(data.get(i).getDate());
-            dataID.child("mealType").setValue(data.get(i).getMealType());
-            dataID.child("quantity").setValue(data.get(i).getQuantity());
+            dataID.child("date").setValue(data.getDate());
+            dataID.child("mealType").setValue(data.getMealType());
+            dataID.child("quantity").setValue(data.getQuantity());
 
             DatabaseReference itemRef = dataID.child("item");
-            if (data.get(i).getItem() instanceof Parsed) {
-                itemRef.child("food").setValue(((Parsed) data.get(i).getItem().getItem()).getFood());
-                itemRef.child("quantity").setValue(((Parsed) data.get(i).getItem().getItem()).getQuantity());
-                itemRef.child("measure").setValue(((Parsed) data.get(i).getItem().getItem()).getMeasure());
-            } else if (data.get(i).getItem() instanceof Hint) {
-                itemRef.child("food").setValue(((Hint) data.get(i).getItem().getItem()).getFood());
-                itemRef.child("measures").setValue(((Hint) data.get(i).getItem().getItem()).getMeasures());
-            } else if (data.get(i).getItem() instanceof Hit) {
-                itemRef.child("recipe").setValue(((Hit) data.get(i).getItem().getItem()).getRecipe());
-                itemRef.child("_links").setValue(((Hit) data.get(i).getItem().getItem()).get_links());
+            if (data.getItem() instanceof Parsed) {
+                itemRef.child("food").setValue(((Parsed) data.getItem().getItem()).getFood());
+                itemRef.child("quantity").setValue(((Parsed) data.getItem().getItem()).getQuantity());
+                itemRef.child("measure").setValue(((Parsed) data.getItem().getItem()).getMeasure());
+            } else if (data.getItem() instanceof Hint) {
+                itemRef.child("food").setValue(((Hint) data.getItem().getItem()).getFood());
+                itemRef.child("measures").setValue(((Hint) data.getItem().getItem()).getMeasures());
+            } else if (data.getItem() instanceof Hit) {
+                itemRef.child("recipe").setValue(((Hit) data.getItem().getItem()).getRecipe());
+                itemRef.child("_links").setValue(((Hit) data.getItem().getItem()).get_links());
             }
         }
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         binding = null;
     }
 
     private void updateUI() {
         ArrayList<ResponseInfo> data = calorieTrackerViewModel.getClickedArray().getValue();
-        mealAdapter = new MealAdapter(data);
-        mealDataRecyclerView.setAdapter(mealAdapter);
+
+        if (calorieTrackerViewModel.getClickedArray().getValue().size() == 0) {
+            calorieTrackerViewModel.setClickedArray(null);
+            getParentFragmentManager().popBackStackImmediate();
+        } else {
+            float calSum = 0.0f;
+            float carbSum = 0.0f;
+            float fatSum = 0.0f;
+            float protSum = 0.0f;
+            for (int i = 0; i < data.size(); i++) {
+                if (data.get(i).getItem() instanceof Parsed) {
+                    Parsed parsed = (Parsed) data.get(i).getItem();
+                    int servings = (int) parsed.getFood().getServingsPerContainer();
+                    int amount = data.get(i).getQuantity();
+
+                    if (servings == 0) {
+                        servings = 1;
+                    }
+                    if (amount == 0) {
+                        amount = 1;
+                    }
+
+                    Nutrients nutr = parsed.getFood().getNutrients();
+                    calSum += nutr.getENERC_KCAL() / servings;
+                    carbSum += nutr.getCHOCDF() / servings * amount;
+                    protSum += nutr.getPROCNT() / servings * amount;
+                    fatSum += nutr.getFAT() / servings * amount;
+                } else if (data.get(i).getItem() instanceof Hint) {
+                    Hint hint = (Hint) data.get(i).getItem();
+                    int servings = (int) hint.getFood().getServingsPerContainer();
+                    int amount = data.get(i).getQuantity();
+
+                    if (servings == 0) {
+                        servings = 1;
+                    }
+                    if (amount == 0) {
+                        amount = 1;
+                    }
+
+                    Nutrients nutr = hint.getFood().getNutrients();
+                    calSum += nutr.getENERC_KCAL() / servings * amount;
+                    carbSum += nutr.getCHOCDF() / servings * amount;
+                    protSum += nutr.getPROCNT() / servings * amount;
+                    fatSum += nutr.getFAT() / servings * amount;
+                } else if (data.get(i).getItem() instanceof Hit) {
+                    Hit hit = (Hit) data.get(i).getItem();
+                    int servings = (int) hit.getRecipe().getYield();
+                    int amount = data.get(i).getQuantity();
+
+                    if (servings == 0) {
+                        servings = 1;
+                    }
+                    if (amount == 0) {
+                        amount = 1;
+                    }
+
+                    TotalNutrients nutr = null;
+                    try {
+                        nutr = hit.getNutrients();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    calSum += nutr.getENERC_KCAL().getQuantity() / servings * amount;
+                    carbSum += nutr.getCHOCDF().getQuantity() / servings * amount;
+                    protSum += nutr.getPROCNT().getQuantity() / servings * amount;
+                    fatSum += nutr.getFAT().getQuantity() / servings * amount;
+                }
+            }
+
+            String tNutr = "Carbs " + decimalFormat.format(carbSum) + "g \u22C5 " +
+                    "Fat " + decimalFormat.format(fatSum) + "g \u22c5 " +
+                    "Protein " + decimalFormat.format(protSum) + "g";
+
+            mealLabelTextView.setText(data.get(0).getMealType());
+            mealNutrTextView.setText(tNutr);
+            mealCalTextView.setText(String.valueOf((int) calSum));
+
+            mealAdapter = new MealAdapter(data);
+            mealDataRecyclerView.setAdapter(mealAdapter);
+        }
     }
 
     private class MealHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ResponseInfo data;
         private final TextView dataLabelTextView, dataUnitsTextView, dataCalTextView;
+        private final LayoutInflater inflater;
+        int calSum = 0;
+        float carbSum = 0.0f, protSum = 0.0f, fatSum = 0.0f;
 
         public MealHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.layout_calorie_tracker_data_section, parent, false));
             itemView.setOnClickListener(this);
+
+            this.inflater = inflater;
 
             dataLabelTextView = itemView.findViewById(R.id.data_section_label);
             dataUnitsTextView = itemView.findViewById(R.id.data_section_units);
@@ -205,7 +278,16 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
                     amount = 1;
                 }
 
+                Nutrients nutr = parsed.getFood().getNutrients();
+                calSum = (int) nutr.getENERC_KCAL() / servings;
+                carbSum = nutr.getCHOCDF() / servings * amount;
+                protSum = nutr.getPROCNT() / servings * amount;
+                fatSum = nutr.getFAT() / servings * amount;
+
                 dataLabelTextView.setText(parsed.getFood().getLabel());
+                calSum = (int) (parsed.getFood().getNutrients().getENERC_KCAL() / servings * amount);
+
+
                 String tUnits = (parsed.getQuantity() / servings * amount) + " " + parsed.getMeasure().getLabel();
                 dataUnitsTextView.setText(tUnits);
                 dataCalTextView.setText(String.valueOf((int) (parsed.getFood().getNutrients().getENERC_KCAL() / servings * amount)));
@@ -220,6 +302,12 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
                 if (amount == 0) {
                     amount = 1;
                 }
+
+                Nutrients nutr = hint.getFood().getNutrients();
+                calSum = (int) nutr.getENERC_KCAL() / servings;
+                carbSum = nutr.getCHOCDF() / servings * amount;
+                protSum = nutr.getPROCNT() / servings * amount;
+                fatSum = nutr.getFAT() / servings * amount;
 
                 dataLabelTextView.setText(hint.getFood().getLabel());
                 String tUnits = amount + " " + hint.getMeasures().get(0).getLabel();
@@ -237,6 +325,12 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
                     amount = 1;
                 }
 
+                TotalNutrients nutr = hit.getNutrients();
+                calSum = (int) nutr.getENERC_KCAL().getQuantity() / servings * amount;
+                carbSum = nutr.getCHOCDF().getQuantity() / servings * amount;
+                protSum = nutr.getPROCNT().getQuantity() / servings * amount;
+                fatSum = nutr.getFAT().getQuantity() / servings * amount;
+
                 dataLabelTextView.setText(hit.getRecipe().getLabel());
                 String tUnits = amount + " serving(s)";
                 dataUnitsTextView.setText(tUnits);
@@ -246,7 +340,130 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            View popUpView = inflater.inflate(R.layout.dialog_generic_calorie_tracker_item, null);
+            PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
+            DialogGenericCalorieTrackerItemBinding binding = DialogGenericCalorieTrackerItemBinding.bind(popUpView);
+            TextView label = binding.dialogLabel;
+            TextView measure = binding.dialogMeasure;
+            TextView calories = binding.dialogCalories;
+            TextView nutrients = binding.dialogNutrients;
+            EditText resultID = binding.dialogResultID;
+            EditText date = binding.dialogDate;
+            EditText quantity = binding.dialogQuantity;
+            ImageButton delete = binding.dialogDeleteIcon;
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v2) {
+                    FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseDatabase.getInstance()
+                            .getReference("CalorieTrackingData")
+                            .child(authUser.getUid())
+                            .child(data.getResultID())
+                            .removeValue();
+
+                    calorieTrackerViewModel.getClickedArray().getValue().remove(data);
+                    popupWindow.dismiss();
+                    updateUI();
+                }
+            });
+
+            MealType[] tMeals = MealType.values();
+            String[] spinnerOptions = new String[tMeals.length - 1];
+            for (int i = 0; i < tMeals.length - 1; i++) {
+                spinnerOptions[i] = tMeals[i + 1].getSpinnerTitle();
+            }
+            Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
+            int index1 = 0;
+            for (int i = 0; i < MealType.values().length; i++) {
+                if (data.getMealType().equals(MealType.values()[i].getSpinnerTitle())) {
+                    index1 = i;
+                }
+            }
+            mealType.setSelection(index1 - 1);
+
+            int index2 = data.getResultID().indexOf("&");
+            String tID = data.getResultID().substring(0, index2);
+            resultID.setText(tID);
+
+            date.setText("Today");
+
+            quantity.setText(String.valueOf(data.getQuantity()));
+
+            String tNutr = "Carbs " + decimalFormat.format(carbSum) + "g \u22C5 " +
+                    "Fat " + decimalFormat.format(fatSum) + "g \u22c5 " +
+                    "Protein " + decimalFormat.format(protSum) + "g";
+            String tCal = ((int) calSum) + " calories / serving";
+
+            calories.setText(tCal);
+            nutrients.setText(tNutr);
+
+            if (data.getItem() instanceof Parsed) {
+                Parsed parsed = (Parsed) data.getItem();
+                int servings = (int) parsed.getFood().getServingsPerContainer();
+                int amount = data.getQuantity();
+
+                if (servings == 0) {
+                    servings = 1;
+                }
+                if (amount == 0) {
+                    amount = 1;
+                }
+
+                label.setText(parsed.getFood().getLabel());
+                String tUnits = (parsed.getQuantity() / servings * amount) + " " + parsed.getMeasure().getLabel();
+                measure.setText(tUnits);
+            } else if (data.getItem() instanceof Hint) {
+                Hint hint = (Hint) data.getItem();
+                int amount = data.getQuantity();
+
+                if (amount == 0) {
+                    amount = 1;
+                }
+
+                label.setText(hint.getFood().getLabel());
+                String tUnits = amount + " " + hint.getMeasures().get(0).getLabel();
+                measure.setText(tUnits);
+            } else if (data.getItem() instanceof Hit) {
+                Hit hit = (Hit) data.getItem();
+                int amount = data.getQuantity();
+
+                if (amount == 0) {
+                    amount = 1;
+                }
+
+                label.setText(hit.getRecipe().getLabel());
+                String tUnits = amount + " serving(s)";
+                measure.setText(tUnits);
+            }
+
+            AppCompatButton acceptButton = binding.dialogGenericAcceptButton;
+            acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int index = mealType.getSelectedItemPosition();
+                    String tMeal = MealType.values()[index + 1].getSpinnerTitle();
+                    data.setMealType(tMeal);
+
+                    int tQuant = Integer.parseInt(quantity.getText().toString());
+                    data.setQuantity(tQuant);
+
+
+                    saveData(data);
+                    updateUI();
+
+                    popupWindow.dismiss();
+                }
+            });
+            AppCompatButton cancelButton = binding.dialogGenericCancelButton;
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow.dismiss();
+                }
+            });
+
+            popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
         }
     }
 
