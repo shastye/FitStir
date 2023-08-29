@@ -88,7 +88,6 @@ public class ResponseInfo {
             // TODO: Edit to be specific to meal time
             ResponseInfo that = (ResponseInfo) o;
 
-            //boolean b1 = quantity == that.quantity;
             boolean b1 = isDate(that.date);
 
             int thisIndex = resultID.indexOf("&&&&&");
@@ -97,10 +96,10 @@ public class ResponseInfo {
             String thatID = that.resultID.substring(0, thatIndex);
             boolean b2 = Objects.equals(thisID, thatID);
 
-            //boolean b4 = Objects.equals(mealType, that.mealType);
             boolean b3 = Objects.equals(item, that.item);
+            boolean b4 = Objects.equals(mealType, that.mealType);
 
-            return b1 && b2 && b3;
+            return b1 && b2 && b3 && b4;
         }
     }
 

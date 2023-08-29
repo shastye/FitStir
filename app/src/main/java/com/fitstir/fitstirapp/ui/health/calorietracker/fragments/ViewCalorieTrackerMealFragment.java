@@ -370,17 +370,35 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
             MealType[] tMeals = MealType.values();
             String[] spinnerOptions = new String[tMeals.length - 1];
+            int currentDayPart = 0;
+
+            Calendar cal = Calendar.getInstance();
+            int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
+            String dayPart = "Breakfast";
+            if (hourOfDay < 6) {
+                dayPart = "Snack";
+            } else if (hourOfDay < 9) {
+                dayPart = "Breakfast";
+            } else if (hourOfDay < 12) {
+                dayPart = "Brunch";
+            } else if (hourOfDay < 15) {
+                dayPart = "Lunch";
+            } else if (hourOfDay < 18) {
+                dayPart = "Tea Time";
+            } else if (hourOfDay < 21) {
+                dayPart = "Dinner";
+            }  else {
+                dayPart = "Snack";
+            }
+
             for (int i = 0; i < tMeals.length - 1; i++) {
                 spinnerOptions[i] = tMeals[i + 1].getSpinnerTitle();
-            }
-            Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
-            int index1 = 0;
-            for (int i = 0; i < MealType.values().length; i++) {
-                if (data.getMealType().equals(MealType.values()[i].getSpinnerTitle())) {
-                    index1 = i;
+                if (dayPart.equals(tMeals[i + 1].getSpinnerTitle())) {
+                    currentDayPart = i;
                 }
             }
-            mealType.setSelection(index1 - 1);
+            Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
+            mealType.setSelection(currentDayPart);
 
             int index2 = data.getResultID().indexOf("&");
             String tID = data.getResultID().substring(0, index2);
@@ -447,7 +465,6 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
                     int tQuant = Integer.parseInt(quantity.getText().toString());
                     data.setQuantity(tQuant);
-
 
                     saveData(data);
                     updateUI();

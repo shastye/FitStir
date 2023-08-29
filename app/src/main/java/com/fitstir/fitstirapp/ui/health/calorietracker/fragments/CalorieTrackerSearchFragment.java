@@ -568,11 +568,32 @@ public class CalorieTrackerSearchFragment extends Fragment {
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         ArrayList<ResponseInfo> responses = new ArrayList<>(0);
+
+        Calendar cal = Calendar.getInstance();
+        int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
+
+        String dayPart = "Breakfast";
+        if (hourOfDay < 6) {
+            dayPart = "Snack";
+        } else if (hourOfDay < 9) {
+            dayPart = "Breakfast";
+        } else if (hourOfDay < 12) {
+            dayPart = "Brunch";
+        } else if (hourOfDay < 15) {
+            dayPart = "Lunch";
+        } else if (hourOfDay < 18) {
+            dayPart = "Tea Time";
+        } else if (hourOfDay < 21) {
+            dayPart = "Dinner";
+        }  else {
+            dayPart = "Snack";
+        }
+
         if (isRecipeSearch) {
             ArrayList<Hit> hits = calorieTrackerViewModel.getHits().getValue();
 
             for (Hit hit : hits) {
-                ResponseInfo info = new ResponseInfo(Calendar.getInstance(), "Breakfast", hit, 1);
+                ResponseInfo info = new ResponseInfo(Calendar.getInstance(), dayPart, hit, 1);
                 responses.add(info);
             }
 
@@ -586,12 +607,12 @@ public class CalorieTrackerSearchFragment extends Fragment {
             ArrayList<Hint> hints = calorieTrackerViewModel.getHints().getValue();
 
             for (Parsed parsed : parseds) {
-                ResponseInfo info = new ResponseInfo(Calendar.getInstance(), "Breakfast", parsed, 1);
+                ResponseInfo info = new ResponseInfo(Calendar.getInstance(), dayPart, parsed, 1);
                 responses.add(info);
             }
 
             for (Hint hint : hints) {
-                ResponseInfo info = new ResponseInfo(Calendar.getInstance(), "Breakfast", hint, 1);
+                ResponseInfo info = new ResponseInfo(Calendar.getInstance(), dayPart, hint, 1);
                 responses.add(info);
             }
 
@@ -759,10 +780,16 @@ public class CalorieTrackerSearchFragment extends Fragment {
 
                             MealType[] tMeals = MealType.values();
                             String[] spinnerOptions = new String[tMeals.length - 1];
+                            int currentDayPart = 0;
+                            String dayPart = response.getMealType();
                             for (int i = 0; i < tMeals.length - 1; i++) {
                                 spinnerOptions[i] = tMeals[i + 1].getSpinnerTitle();
+                                if (dayPart.equals(tMeals[i + 1].getSpinnerTitle())) {
+                                    currentDayPart = i;
+                                }
                             }
                             Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
+                            mealType.setSelection(currentDayPart);
 
                             int index = response.getResultID().indexOf("&");
                             String tID = response.getResultID().substring(0, index);
