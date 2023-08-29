@@ -89,6 +89,9 @@ public class ViewCircuitFragment extends Fragment {
             model.fetchCircuitData(circuitList,adapter, Constants.WORKOUT_BODYPART.WARRIORS);
         }
         if(workoutsViewModel.getPageCLicked().getValue().intValue() == 6){
+            model.fetchCircuitData(circuitList,adapter, Constants.WORKOUT_BODYPART.BCCIRCUIT);
+        }
+        if(workoutsViewModel.getPageCLicked().getValue().intValue() == 7){
             model.fetchCircuitData(circuitList,adapter, Constants.WORKOUT_BODYPART.CHALLENGE);
         }
 
