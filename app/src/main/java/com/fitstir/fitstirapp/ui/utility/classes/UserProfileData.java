@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
-import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,7 +15,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class UserProfileData {
 
@@ -111,10 +109,10 @@ public class UserProfileData {
         return weight;
     }
 
-    public void set_Weight(Integer weight) {
-        this.weight = weight;
+    public void addWeightData(Integer newWeight) throws RuntimeException {
+        // TODO: STILL NEEDS TESTING
 
-        // updata data on Weight Goal
+        // update data on Weight Goal
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference goalsRef = FirebaseDatabase.getInstance()
                 .getReference("GoalsData").child(authUser.getUid());
@@ -125,29 +123,26 @@ public class UserProfileData {
                 for (DataSnapshot child : children) {
                     Goal goal = child.getValue(Goal.class);
 
-                    if (goal.getName().equals("Weight Goal")) {
+                    if (goal.getName().equals("Weight Goal") && goal.getType().equals(WorkoutTypes.WEIGHT_CHANGE)) {
                         ArrayList<GoalDataPair> data = goal.getData();
-                        boolean isStored = false;
 
-                        for (int i = 0; i < data.size(); i++) {
-                            GoalDataPair iData = data.get(i);
+                        int size = data.size();
+                        GoalDataPair lastDateData = data.get(size - 1);
 
-                            Calendar today = Calendar.getInstance();
-                            Calendar dataDate = Calendar.getInstance();
-                            dataDate.setTime(iData.first);
+                        Calendar today = Calendar.getInstance();
+                        Calendar dataDate = Calendar.getInstance();
+                        dataDate.setTime(lastDateData.first);
 
-                            int tDOY = today.get(Calendar.DAY_OF_YEAR);
-                            int dDOY = dataDate.get(Calendar.DAY_OF_YEAR);
+                        int tDOY = today.get(Calendar.DAY_OF_YEAR);
+                        int dDOY = dataDate.get(Calendar.DAY_OF_YEAR);
 
-                            if (tDOY == dDOY) {
-                                isStored = true;
-                                break;
-                            }
-                        }
-
-                        if(!isStored) {
-                            goal.addData(Calendar.getInstance().getTime(), weight);
-                            goalsRef.child(goal.getID()).setValue(goal);
+                        if (tDOY == dDOY) {
+                            goal.addData(Calendar.getInstance().getTime(), newWeight);
+                            goalsRef.child(child.getKey())
+                                    .child("data")
+                                    .setValue(goal.getData());
+                        } else {
+                            throw new RuntimeException();
                         }
                     }
                 }
@@ -158,6 +153,50 @@ public class UserProfileData {
 
             }
         });
+    }
+
+    public void updateWeightGoal(Integer newGoal) {
+        // TODO: STILL NEEDS TESTING
+
+        this.goal_weight = newGoal;
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        // update data on GoalsData collection
+        DatabaseReference goalsRef = FirebaseDatabase.getInstance()
+                .getReference("GoalsData").child(authUser.getUid());
+        goalsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> children = snapshot.getChildren();
+                for (DataSnapshot child : children) {
+                    Goal goal = child.getValue(Goal.class);
+
+                    if (goal.getName().equals("Weight Goal") && goal.getType().equals(WorkoutTypes.WEIGHT_CHANGE)) {
+                        goalsRef.child(goal.getID())
+                                .child("value")
+                                .setValue(newGoal);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // update data on Users collection
+        FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(authUser.getUid())
+                .child("goal_weight")
+                .setValue(newGoal);
+
+    }
+
+    public void set_Weight(Integer weight) {
+        this.weight = weight;
     }
 
     public Integer getGoal_weight() {
@@ -166,30 +205,6 @@ public class UserProfileData {
 
     public void setGoal_weight(Integer goal_weight) {
         this.goal_weight = goal_weight;
-
-        // updata data on Weight Goal
-        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference goalsRef = FirebaseDatabase.getInstance()
-                .getReference("GoalsData").child(authUser.getUid());
-        goalsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> children = snapshot.getChildren();
-                for (DataSnapshot child : children) {
-                    Goal goal = child.getValue(Goal.class);
-
-                    if (goal.getName().equals("Weight Goal")) {
-                        goal.setValue(goal_weight);
-                        goalsRef.child(goal.getID()).setValue(goal);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     public Integer getAge() {
