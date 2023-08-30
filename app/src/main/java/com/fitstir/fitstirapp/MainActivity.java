@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.type.LatLng;
 
 import java.util.ArrayList;
 
@@ -76,7 +77,6 @@ public class MainActivity extends AppCompatActivity  {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         BottomNavigationView navView = binding.navView;
         // Passing each menu ID as a set of Ids because each
