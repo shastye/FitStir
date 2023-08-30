@@ -86,15 +86,11 @@ public class CreateGoalDialog extends IGenericGoalDialog {
 
         goalsViewModel.addGoal(thisGoal);
 
-        UserProfileData user = goalsViewModel.getThisUser().getValue();
-        user.setGoals(goalsViewModel.getGoals().getValue());
-        goalsViewModel.setThisUser(user);
-
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
-        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
+        DatabaseReference goalsReference = FirebaseDatabase.getInstance().getReference("GoalsData")
                 .child(authUser.getUid());
-        userReference.setValue(goalsViewModel.getThisUser().getValue());
+        goalsReference.child(thisGoal.getID()).setValue(thisGoal);
     }
 
     @Override

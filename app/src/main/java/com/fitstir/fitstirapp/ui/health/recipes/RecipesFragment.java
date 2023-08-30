@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.enums.CuisineType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.DietOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.HealthOptions;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Food;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.EdamamAPI_RecipesV2;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
@@ -58,6 +60,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class RecipesFragment extends Fragment {
@@ -99,7 +102,7 @@ public class RecipesFragment extends Fragment {
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
         viewRecipeBar = root.findViewById(R.id.recipe_view_toolbar);
-        searchRecipeBar = root.findViewById(R.id.recipe_search_toolbar);
+        searchRecipeBar = root.findViewById(R.id.search_toolbar);
         labelRecipeBar = root.findViewById(R.id.recipe_search_label);
         centerMessage = binding.textRecipes;
         recipeResponse_CL = root.findViewById(R.id.recipe_search_response);
@@ -112,24 +115,45 @@ public class RecipesFragment extends Fragment {
         setRecViewState(LIKED_RECVIEW);
         centerMessage.setVisibility(View.INVISIBLE);
 
+        RelativeLayout unusedSpinner = root.findViewById(R.id.toolbar_search_rl);
+        unusedSpinner.setVisibility(View.GONE);
+
         if (recipesViewModel.getHits().getValue() == null || recipesViewModel.getHits().getValue().equals(new ArrayList<>())) {
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
             assert authUser != null;
 
-            DatabaseReference thisUser = FirebaseDatabase.getInstance()
-                    .getReference("Users")
+            //DatabaseReference thisUser = FirebaseDatabase.getInstance()
+            //        .getReference("Users")
+            //        .child(authUser.getUid());
+            DatabaseReference listRef = FirebaseDatabase.getInstance()
+                    .getReference("LikedRecipesData")
                     .child(authUser.getUid());
 
             loadingScreen_CL.setVisibility(View.VISIBLE);
 
-            thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            /*thisUser*/listRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserProfileData value = snapshot.getValue(UserProfileData.class);
-                    recipesViewModel.setThisUser(value);
-                    recipesViewModel.setLikedRecipes(value.getLikedRecipes());
+                    //UserProfileData value = snapshot.getValue(UserProfileData.class);
+                    //recipesViewModel.setThisUser(value);
+                    //recipesViewModel.setLikedRecipes(value.getLikedRecipes());
 
-                    if (value.getLikedRecipes() != null || value.getLikedRecipes().size() != 0) {
+                    ArrayList<Recipe> likedRecipes = new ArrayList<>();
+                    Iterable<DataSnapshot> children = snapshot.getChildren();
+
+                    for (DataSnapshot child : children) {
+                        Map<String, Object> kid = (Map<String, Object>) child.getValue();
+                        String bitmapString = (String) kid.get("imageBitmapData");
+
+                        if (bitmapString != null && !bitmapString.equals("")) {
+                            Recipe recipe = child.getValue(Recipe.class);
+                            likedRecipes.add(recipe);
+                        }
+                    }
+
+                    recipesViewModel.setLikedRecipes(likedRecipes);
+
+                    if (likedRecipes.size() != 0) {
                         setRecViewState(LIKED_RECVIEW);
                         updateUI();
                     }
@@ -155,7 +179,7 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        AppCompatImageView backArrow = root.findViewById(R.id.recipe_search_toolbar_back_arrow_icon);
+        AppCompatImageView backArrow = root.findViewById(R.id.search_toolbar_back_arrow_icon);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +195,7 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        AppCompatImageView filter = root.findViewById(R.id.recipe_toolbar_filter_icon);
+        AppCompatImageView filter = root.findViewById(R.id.toolbar_filter_icon);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,7 +284,7 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        searchBar = root.findViewById(R.id.recipe_toolbar_search_edit_text);
+        searchBar = root.findViewById(R.id.toolbar_search_edit_text);
         searchBar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

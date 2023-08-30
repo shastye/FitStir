@@ -1,6 +1,8 @@
 package com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser;
 
-public class Parsed {
+import com.fitstir.fitstirapp.ui.health.edamamapi.ISearchResult;
+
+public class Parsed implements ISearchResult {
     private Food food;
     private float quantity;
     private Measure measure;
@@ -35,4 +37,16 @@ public class Parsed {
     public void setFood(Food food) { this.food = food; }
     public void setQuantity(float quantity) { this.quantity = quantity; }
     public void setMeasure(Measure measure) { this.measure = measure; }
+
+    @Override
+    public ISearchResult getItem() {
+        return this;
+    }
+
+    @Override
+    public void setItem(ISearchResult item) {
+        this.measure = ((Parsed) item).measure;
+        this.food = ((Parsed) item).food;
+        this.quantity = ((Parsed) item).quantity;
+    }
 }

@@ -1,8 +1,18 @@
 package com.fitstir.fitstirapp.ui.utility.classes;
 
+import androidx.annotation.NonNull;
+
 import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,24 +21,18 @@ import java.util.List;
 public class UserProfileData {
 
     String fullname, email, password, sex;
-    Integer height_ft,height_in, weight, goal_weight, age, themeID, intervalID, rangeID, unitID;
-    ArrayList<Goal> goals;
-    ArrayList<Recipe> likedRecipes;
+    Integer height_ft, height_in, weight, goal_weight, age,
+            themeID, intervalID, rangeID, unitID,
+            calorieTrackerGoal;
 
-    public ArrayList<Recipe> getLikedRecipes() {
-        return likedRecipes;
+
+
+    public Integer getCalorieTrackerGoal() {
+        return calorieTrackerGoal;
     }
 
-    public void setLikedRecipes(ArrayList<Recipe> likedRecipes) {
-        this.likedRecipes = likedRecipes;
-    }
-
-    public List<Goal> getGoals() {
-        return goals;
-    }
-
-    public void setGoals(ArrayList<Goal> goals) {
-        this.goals = goals;
+    public void setCalorieTrackerGoal(Integer calorieTrackerGoal) {
+        this.calorieTrackerGoal = calorieTrackerGoal;
     }
 
     public Integer getThemeID() {
@@ -109,7 +113,51 @@ public class UserProfileData {
 
     public void set_Weight(Integer weight) {
         this.weight = weight;
-        this.goals.get(0).addData(Calendar.getInstance().getTime(), weight);
+
+        // updata data on Weight Goal
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference goalsRef = FirebaseDatabase.getInstance()
+                .getReference("GoalsData").child(authUser.getUid());
+        goalsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> children = snapshot.getChildren();
+                for (DataSnapshot child : children) {
+                    Goal goal = child.getValue(Goal.class);
+
+                    if (goal.getName().equals("Weight Goal")) {
+                        ArrayList<GoalDataPair> data = goal.getData();
+                        boolean isStored = false;
+
+                        for (int i = 0; i < data.size(); i++) {
+                            GoalDataPair iData = data.get(i);
+
+                            Calendar today = Calendar.getInstance();
+                            Calendar dataDate = Calendar.getInstance();
+                            dataDate.setTime(iData.first);
+
+                            int tDOY = today.get(Calendar.DAY_OF_YEAR);
+                            int dDOY = dataDate.get(Calendar.DAY_OF_YEAR);
+
+                            if (tDOY == dDOY) {
+                                isStored = true;
+                                break;
+                            }
+                        }
+
+                        if(!isStored) {
+                            goal.addData(Calendar.getInstance().getTime(), weight);
+                            goalsRef.child(goal.getID()).setValue(goal);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public Integer getGoal_weight() {
@@ -118,7 +166,30 @@ public class UserProfileData {
 
     public void setGoal_weight(Integer goal_weight) {
         this.goal_weight = goal_weight;
-        this.goals.get(0).setValue(goal_weight);
+
+        // updata data on Weight Goal
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference goalsRef = FirebaseDatabase.getInstance()
+                .getReference("GoalsData").child(authUser.getUid());
+        goalsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> children = snapshot.getChildren();
+                for (DataSnapshot child : children) {
+                    Goal goal = child.getValue(Goal.class);
+
+                    if (goal.getName().equals("Weight Goal")) {
+                        goal.setValue(goal_weight);
+                        goalsRef.child(goal.getID()).setValue(goal);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public Integer getAge() {
@@ -138,12 +209,27 @@ public class UserProfileData {
 
 
 
-    public UserProfileData(){
-        this.goals = new ArrayList<>();
-        goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, 0));
-        this.likedRecipes = new ArrayList<>();
+    public UserProfileData() {
+        fullname = "";
+        email = "";
+        password = "";
+        sex = "";
+        height_ft = 0;
+        height_in = 0;
+        weight = 0;
+        goal_weight = 0;
+        age = 0;
+
+        themeID = 0;
+        intervalID = 0;
+        rangeID = 2;
+        unitID = 0;
+
+        calorieTrackerGoal = 2000;
     }
-    public UserProfileData(String fullname, String email, String password,String sex,  Integer height_ft, Integer height_in, Integer weight, Integer goal_weight, Integer age) {
+    public UserProfileData(String fullname, String email, String password,String sex,
+                           Integer height_ft, Integer height_in, Integer weight,
+                           Integer goal_weight, Integer age) {
         this.fullname = fullname;
         this.email = email;
         this.password = password;
@@ -154,8 +240,12 @@ public class UserProfileData {
         this.age = age;
         this.sex = sex;
 
-        goals = new ArrayList<>();
-        goals.add(new Goal("Weight Goal", WorkoutTypes.WEIGHT_CHANGE, goal_weight));
+        themeID = 0;
+        intervalID = 0;
+        rangeID = 2;
+        unitID = 0;
+
+        calorieTrackerGoal = 2000;
     }
 
 

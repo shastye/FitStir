@@ -106,15 +106,20 @@ public class ViewGoalFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        UserProfileData user = goalsViewModel.getThisUser().getValue();
-        user.setGoals(goalsViewModel.getGoals().getValue());
-        goalsViewModel.setThisUser(user);
+        ArrayList<Goal> goals = goalsViewModel.getGoals().getValue();
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
-        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Users")
-                .child(authUser.getUid());
-        userReference.setValue(goalsViewModel.getThisUser().getValue());
+        DatabaseReference goalsRef = FirebaseDatabase.getInstance()
+                .getReference("GoalsData").child(authUser.getUid());
+
+        for (int i = 0; i < goals.size(); i++) {
+            DatabaseReference goalID = goalsRef.child(goals.get(i).getID());
+            goalID.setValue(goals.get(i));
+        }
+
+
+
 
         binding = null;
     }

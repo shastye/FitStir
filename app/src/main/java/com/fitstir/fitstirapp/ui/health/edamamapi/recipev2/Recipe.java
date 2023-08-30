@@ -30,6 +30,7 @@ public class Recipe {
     @JsonProperty("dishType")
     private ArrayList<String> dishType;
     private ArrayList<String> tags;
+    private TotalNutrients totalNutrients;
 
     public Recipe() { }
 
@@ -68,6 +69,7 @@ public class Recipe {
                 "}";
     }
 
+    public TotalNutrients getTotalNutrients() { return totalNutrients; }
     public String getUri() { return uri; }
     public String getLabel() { return label; }
     public String getImage() { return image; }
@@ -86,6 +88,7 @@ public class Recipe {
     public ArrayList<String> getTags() { return tags; }
     public String getImageBitmapData() { return imageBitmapData; }
 
+    public void setTotalNutrients(TotalNutrients totalNutrients) { this.totalNutrients = totalNutrients; }
     public void setUri(String uri) { this.uri = uri; }
     public void setLabel(String label) { this.label = label; }
     public void setImage(String image) { this.image = image; }

@@ -109,9 +109,16 @@
 
     <fragment
         android:id="@+id/navigation_calorie_tracker"
-        android:name="com.fitstir.fitstirapp.ui.health.calorietracker.CalorieTrackerFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.calorietracker.fragments.CalorieTrackerFragment"
         android:label="Calorie Tracker"
-        tools:layout="@layout/fragment_calorie_tracker" />
+        tools:layout="@layout/fragment_calorie_tracker" >
+        <action
+            android:id="@+id/action_navigation_calorie_tracker_to_navigation_view_calorie_tracker_meal"
+            app:destination="@id/navigation_view_calorie_tracker_meal" />
+        <action
+            android:id="@+id/action_navigation_calorie_tracker_to_navigation_calorie_tracker_search"
+            app:destination="@id/navigation_calorie_tracker_search" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_food_guide"
@@ -220,8 +227,25 @@
     <fragment
         android:id="@+id/navigation_view_recipe"
         android:name="com.fitstir.fitstirapp.ui.health.recipes.ViewRecipeFragment"
-        android:label="Recipe"
+        android:label="View Recipe"
         tools:layout="@layout/fragment_view_recipe" />
+
+    <fragment
+        android:id="@+id/navigation_view_calorie_tracker_meal"
+        android:name="com.fitstir.fitstirapp.ui.health.calorietracker.fragments.ViewCalorieTrackerMealFragment"
+        android:label="View Meal"
+        tools:layout="@layout/fragment_view_calorie_tracker_meal" >
+        <action
+            android:id="@+id/action_navigation_view_calorie_tracker_meal_to_navigation_calorie_tracker"
+            app:destination="@id/navigation_calorie_tracker" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_calorie_tracker_search"
+        android:name="com.fitstir.fitstirapp.ui.health.calorietracker.fragments.CalorieTrackerSearchFragment"
+        android:label="Search for an Item"
+        tools:layout="@layout/fragment_calorie_tracker_search" />
+  
     <fragment
         android:id="@+id/viewWorkoutFragment"
         android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment"
@@ -240,6 +264,7 @@
             android:id="@+id/action_viewWorkoutFragment_to_navigation_upper_body2"
             app:destination="@id/navigation_upper_body" />
     </fragment>
+  
     <fragment
         android:id="@+id/viewCircuitFragment"
         android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits.ViewCircuitFragment"
@@ -252,4 +277,5 @@
             android:id="@+id/action_viewCircuitFragment_to_navigation_circuit_workouts"
             app:destination="@id/navigation_circuit_workouts" />
     </fragment>
+  
 </navigation>
