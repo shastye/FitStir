@@ -43,7 +43,7 @@ public class Recipe {
         } else {
             Recipe recipe = (Recipe) o;
             int index = recipe.image.indexOf('?');
-            return Float.compare(recipe.yield, yield) == 0 && Float.compare(recipe.calories, calories) == 0 && Float.compare(recipe.totalTime, totalTime) == 0 && Objects.equals(uri, recipe.uri) && Objects.equals(label, recipe.label) && Objects.equals(image.substring(0, index), recipe.image.substring(0, index)) && Objects.equals(images, recipe.images) && Objects.equals(source, recipe.source) && Objects.equals(url, recipe.url) && Objects.equals(dietLabels, recipe.dietLabels) && Objects.equals(healthLabels, recipe.healthLabels) && Objects.equals(ingredientLines, recipe.ingredientLines) && Objects.equals(cuisineType, recipe.cuisineType) && Objects.equals(mealType, recipe.mealType) && Objects.equals(dishType, recipe.dishType) && Objects.equals(tags, recipe.tags);
+            return Float.compare(recipe.yield, yield) == 0 && Float.compare(recipe.calories, calories) == 0 && Float.compare(recipe.totalTime, totalTime) == 0 && Objects.equals(uri, recipe.uri) && Objects.equals(label, recipe.label) && Objects.equals(image.substring(0, index), recipe.image.substring(0, index)) && Objects.equals(images, recipe.images) && Objects.equals(source, recipe.source) && Objects.equals(url, recipe.url) && Objects.equals(healthLabels, recipe.healthLabels) && Objects.equals(ingredientLines, recipe.ingredientLines) && Objects.equals(cuisineType, recipe.cuisineType) && Objects.equals(mealType, recipe.mealType) && Objects.equals(dishType, recipe.dishType) && Objects.equals(tags, recipe.tags);
         }
     }
 
