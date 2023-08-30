@@ -22,6 +22,7 @@ import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
 import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.ChangeWeightGoalDialog;
 import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.DeleteConformationDialog;
 import com.fitstir.fitstirapp.ui.health.weightloss.WeightLossViewModel;
+import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.UpdateWeightDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -96,11 +97,13 @@ public class WeightLossFragment extends Fragment {
         addDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    weightLossViewModel.getThisUser().getValue().addWeightData(7777777);
-                } catch (RuntimeException e) {
-                    // TODO: display dialog saying weight already saved for today
-                }
+                UpdateWeightDialog dialog = UpdateWeightDialog.newInstance(
+                        R.layout.dialog_change_calorie_goal,
+                        R.id.dialog_calgoal_accept_button,
+                        R.id.dialog_calgoal_cancel_button,
+                        weightLossViewModel.getThisUser().getValue().get_Weight()
+                );
+                dialog.showNow(getChildFragmentManager(), "Update Weight Data");
             }
         });
 

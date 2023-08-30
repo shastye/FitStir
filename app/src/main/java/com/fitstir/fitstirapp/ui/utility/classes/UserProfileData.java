@@ -111,9 +111,9 @@ public class UserProfileData {
 
     public void addWeightData(Integer newWeight) throws RuntimeException {
         // TODO: STILL NEEDS TESTING
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // update data on GoalsData collection
-        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference goalsRef = FirebaseDatabase.getInstance()
                 .getReference("GoalsData").child(authUser.getUid());
         goalsRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,14 +136,22 @@ public class UserProfileData {
                         int tDOY = today.get(Calendar.DAY_OF_YEAR);
                         int dDOY = dataDate.get(Calendar.DAY_OF_YEAR);
 
-                        if (tDOY == dDOY) {
+                        if (tDOY != dDOY) {
                             goal.addData(Calendar.getInstance().getTime(), newWeight);
-                            goalsRef.child(child.getKey())
-                                    .child("data")
-                                    .setValue(goal.getData());
                         } else {
-                            throw new RuntimeException();
+                            goal.getData().get(size - 1).second = newWeight;
                         }
+
+                        goalsRef.child(child.getKey())
+                                .child("data")
+                                .setValue(goal.getData());
+
+                        // update data on Users collection
+                        FirebaseDatabase.getInstance()
+                                .getReference("Users")
+                                .child(authUser.getUid())
+                                .child("_Weight")
+                                .setValue(newWeight);
                     }
                 }
             }
@@ -153,13 +161,6 @@ public class UserProfileData {
 
             }
         });
-
-        // update data on Users collection
-        FirebaseDatabase.getInstance()
-                .getReference("Users")
-                .child(authUser.getUid())
-                .child("_Weight")
-                .setValue(newWeight);
     }
 
     public void updateWeightGoal(Integer newGoal) {
