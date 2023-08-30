@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.health.weightloss;
+package com.fitstir.fitstirapp.ui.health.weightloss.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
+import com.fitstir.fitstirapp.ui.health.weightloss.WeightLossViewModel;
+import com.fitstir.fitstirapp.ui.health.weightloss.fragments.WeightLossFragment;
 import com.fitstir.fitstirapp.ui.utility.classes.IGenericAlertDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

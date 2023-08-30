@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.health.weightloss;
+package com.fitstir.fitstirapp.ui.health.weightloss.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -19,6 +19,9 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentWeightLossBinding;
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
+import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.ChangeWeightGoalDialog;
+import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.DeleteConformationDialog;
+import com.fitstir.fitstirapp.ui.health.weightloss.WeightLossViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -78,7 +81,13 @@ public class WeightLossFragment extends Fragment {
         changeGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ChangeWeightGoalDialog dialog = ChangeWeightGoalDialog.newInstance(
+                        R.layout.dialog_change_calorie_goal,
+                        R.id.dialog_calgoal_accept_button,
+                        R.id.dialog_calgoal_cancel_button,
+                        weightLossViewModel.getThisUser().getValue().get_Weight()
+                );
+                dialog.showNow(getChildFragmentManager(), "Change Weight Goal");
             }
         });
 

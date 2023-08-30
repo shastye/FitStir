@@ -112,7 +112,7 @@ public class UserProfileData {
     public void addWeightData(Integer newWeight) throws RuntimeException {
         // TODO: STILL NEEDS TESTING
 
-        // update data on Weight Goal
+        // update data on GoalsData collection
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference goalsRef = FirebaseDatabase.getInstance()
                 .getReference("GoalsData").child(authUser.getUid());
@@ -153,11 +153,16 @@ public class UserProfileData {
 
             }
         });
+
+        // update data on Users collection
+        FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(authUser.getUid())
+                .child("_Weight")
+                .setValue(newWeight);
     }
 
     public void updateWeightGoal(Integer newGoal) {
-        // TODO: STILL NEEDS TESTING
-
         this.goal_weight = newGoal;
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
