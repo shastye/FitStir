@@ -12,7 +12,7 @@
     android:foregroundGravity="center">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/layout_recipe_background"
+        android:id="@+id/workout_backgorund"
         android:layout_width="190dp"
         android:layout_height="210dp"
         android:outlineProvider="none"
@@ -48,10 +48,10 @@
         android:scaleType="centerCrop"
         app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
         app:shapeAppearanceOverlay="@style/RoundedTop"
-        app:layout_constraintBottom_toBottomOf="@id/layout_recipe_background"
-        app:layout_constraintEnd_toEndOf="@id/layout_recipe_background"
-        app:layout_constraintStart_toStartOf="@id/layout_recipe_background"
-        app:layout_constraintTop_toTopOf="@id/layout_recipe_background"
+        app:layout_constraintBottom_toBottomOf="@id/workout_backgorund"
+        app:layout_constraintEnd_toEndOf="@id/workout_backgorund"
+        app:layout_constraintStart_toStartOf="@id/workout_backgorund"
+        app:layout_constraintTop_toTopOf="@id/workout_backgorund"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -68,8 +68,8 @@
         android:textAlignment="center"
         android:paddingHorizontal="5dp"
         app:layout_constraintBottom_toTopOf="@id/layout_recipe_source"
-        app:layout_constraintEnd_toEndOf="@id/layout_recipe_background"
-        app:layout_constraintStart_toStartOf="@id/layout_recipe_background"
+        app:layout_constraintEnd_toEndOf="@id/workout_backgorund"
+        app:layout_constraintStart_toStartOf="@id/workout_backgorund"
         app:layout_constraintTop_toBottomOf="@id/layout_recipe_image"
         app:layout_constraintVertical_bias="0.50"
         app:layout_constraintHorizontal_bias="0.50"/>
@@ -85,9 +85,9 @@
         android:layout_marginEnd="10dp"
         android:textSize="12sp"
         android:inputType="textFilter"
-        app:layout_constraintBottom_toBottomOf="@id/layout_recipe_background"
-        app:layout_constraintEnd_toEndOf="@id/layout_recipe_background"
-        app:layout_constraintStart_toStartOf="@id/layout_recipe_background"
+        app:layout_constraintBottom_toBottomOf="@id/workout_backgorund"
+        app:layout_constraintEnd_toEndOf="@id/workout_backgorund"
+        app:layout_constraintStart_toStartOf="@id/workout_backgorund"
         app:layout_constraintTop_toBottomOf="@id/layout_recipe_image"
         app:layout_constraintVertical_bias="0.00"
         app:layout_constraintHorizontal_bias="1.00"/>
@@ -102,9 +102,9 @@
         android:layout_marginTop="75dp"
         android:layout_marginEnd="21dp"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/layout_recipe_background"
-        app:layout_constraintEnd_toEndOf="@id/layout_recipe_background"
-        app:layout_constraintStart_toStartOf="@id/layout_recipe_background"
+        app:layout_constraintBottom_toBottomOf="@id/workout_backgorund"
+        app:layout_constraintEnd_toEndOf="@id/workout_backgorund"
+        app:layout_constraintStart_toStartOf="@id/workout_backgorund"
         app:layout_constraintTop_toBottomOf="@id/layout_recipe_image"
         app:layout_constraintVertical_bias="0.00"
         app:layout_constraintHorizontal_bias="1.00"/>
@@ -119,9 +119,9 @@
         android:layout_marginTop="75dp"
         android:layout_marginStart="21dp"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/layout_recipe_background"
-        app:layout_constraintEnd_toEndOf="@id/layout_recipe_background"
-        app:layout_constraintStart_toStartOf="@id/layout_recipe_background"
+        app:layout_constraintBottom_toBottomOf="@id/workout_backgorund"
+        app:layout_constraintEnd_toEndOf="@id/workout_backgorund"
+        app:layout_constraintStart_toStartOf="@id/workout_backgorund"
         app:layout_constraintTop_toBottomOf="@id/layout_recipe_image"
         app:layout_constraintVertical_bias="0.00"
         app:layout_constraintHorizontal_bias="0.00"/>

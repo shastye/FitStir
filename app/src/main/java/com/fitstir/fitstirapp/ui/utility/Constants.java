@@ -17,4 +17,18 @@ public class Constants {
         public static final String APP_ID = "456d7882";
         public static final String APP_KEY = "772e2aed7f585b9eeacffbfaacf59de6";
     }
+
+    public static final class WORKOUT_BODYPART{
+
+        public  static final String UPPER_BODY = "UpperBody";
+        public static final String LOWER_BODY = "LowerBody";
+        public static final String WEIGHT_LIFTING = "Weights";
+        public static final String BEGINNER_CIRCUIT = "BeginnerCircuit";
+        public static final String TONER_CIRCUIT = "TonerCircuit";
+        public static final String ACTIVE_CIRCUIT = "ActiveCircuit";
+        public static final String BB_CIRCUIT = "BBCircuit";
+        public static final String WARRIORS = "WarriorsCircuit";
+        public static final String BCCIRCUIT ="BootCampCircuit";
+        public static final String CHALLENGE = "FitChallenge";
+    }
 }

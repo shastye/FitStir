@@ -5,15 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.workouts.RunClubFragment">
+    tools:context=".ui.workouts.exerciseapi.circuits.ViewCircuitFragment"
+    >
 
-
-    <fragment
-        android:id="@+id/mapView"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/circuit_RV"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="692dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

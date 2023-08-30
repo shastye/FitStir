@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_workouts">
+    app:startDestination="@id/navigation_workouts">
 
     <fragment
         android:id="@+id/navigation_workouts"
@@ -38,27 +38,43 @@
 
     <fragment
         android:id="@+id/navigation_upper_body"
-        android:name="com.fitstir.fitstirapp.ui.workouts.UpperBodyFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody.UpperBodyFragment"
         android:label="Upper Body"
-        tools:layout="@layout/fragment_upper_body" />
+        tools:layout="@layout/fragment_upper_body" >
+        <action
+            android:id="@+id/action_navigation_upper_body_to_viewWorkoutFragment"
+            app:destination="@id/viewWorkoutFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_lower_body"
-        android:name="com.fitstir.fitstirapp.ui.workouts.LowerBodyFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.lowerbody.LowerBodyFragment"
         android:label="Lower Body"
-        tools:layout="@layout/fragment_lower_body" />
+        tools:layout="@layout/fragment_lower_body" >
+        <action
+            android:id="@+id/action_navigation_lower_body_to_viewWorkoutFragment"
+            app:destination="@id/viewWorkoutFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_weight_lifting"
-        android:name="com.fitstir.fitstirapp.ui.workouts.WeightLiftingFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.WeightLiftingFragment"
         android:label="Weight Lifting"
-        tools:layout="@layout/fragment_weight_lifting" />
+        tools:layout="@layout/fragment_weight_lifting" >
+        <action
+            android:id="@+id/action_navigation_weight_lifting_to_viewWorkoutFragment"
+            app:destination="@id/viewWorkoutFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_circuit_workouts"
-        android:name="com.fitstir.fitstirapp.ui.workouts.CircuitWorkoutsFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits.CircuitWorkoutsFragment"
         android:label="Circuit Workouts"
-        tools:layout="@layout/fragment_circuit_workouts" />
+        tools:layout="@layout/fragment_circuit_workouts" >
+        <action
+            android:id="@+id/action_navigation_circuit_workouts_to_viewCircuitFragment"
+            app:destination="@id/viewCircuitFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_yoga"
@@ -229,4 +245,37 @@
         android:name="com.fitstir.fitstirapp.ui.health.calorietracker.fragments.CalorieTrackerSearchFragment"
         android:label="Search for an Item"
         tools:layout="@layout/fragment_calorie_tracker_search" />
+  
+    <fragment
+        android:id="@+id/viewWorkoutFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment"
+        android:label="fragment_view_workout"
+        tools:layout="@layout/fragment_view_workout" >
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_navigation_upper_body"
+            app:destination="@id/navigation_upper_body" />
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_navigation_weight_lifting"
+            app:destination="@id/navigation_weight_lifting" />
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_navigation_lower_body"
+            app:destination="@id/navigation_lower_body" />
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_navigation_upper_body2"
+            app:destination="@id/navigation_upper_body" />
+    </fragment>
+  
+    <fragment
+        android:id="@+id/viewCircuitFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits.ViewCircuitFragment"
+        android:label="fragment_view_circuit"
+        tools:layout="@layout/fragment_view_circuit" >
+        <action
+            android:id="@+id/action_viewCircuitFragment_to_navigation_workouts"
+            app:destination="@id/navigation_workouts" />
+        <action
+            android:id="@+id/action_viewCircuitFragment_to_navigation_circuit_workouts"
+            app:destination="@id/navigation_circuit_workouts" />
+    </fragment>
+  
 </navigation>

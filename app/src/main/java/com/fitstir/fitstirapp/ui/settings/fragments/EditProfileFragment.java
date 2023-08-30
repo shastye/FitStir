@@ -99,7 +99,6 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                 String t_inches = inches.getText().toString();
                 String t_weight = weight.getText().toString();
                 String t_email = email.getText().toString();
-                String uid = user.getUid();
                 if (!t_name.isEmpty()) {
                     if (!t_age.isEmpty()) {
                         if (!t_feet.isEmpty()) {

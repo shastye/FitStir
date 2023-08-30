@@ -4,20 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.workouts.WeightLiftingFragment">
+    tools:context=".ui.workouts.exerciseapi.WeightLiftingFragment">
 
-    <TextView
-        android:id="@+id/text_weight_lifting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+    <SearchView
+        android:id="@+id/searchView_Weights"
+        android:layout_width="349dp"
+        android:layout_height="34dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="@string/weight_lifting_intro"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/searchview_border"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/weights_RV"
+        android:layout_width="match_parent"
+        android:layout_height="685dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView_Weights" />
 </androidx.constraintlayout.widget.ConstraintLayout>

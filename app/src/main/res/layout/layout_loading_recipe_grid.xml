@@ -12,7 +12,7 @@
     android:foregroundGravity="center">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/layout_recipe_background"
+        android:id="@+id/workout_backgorund"
         android:layout_width="190dp"
         android:layout_height="210dp"
         android:outlineProvider="none"
