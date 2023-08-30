@@ -374,22 +374,7 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
             Calendar cal = Calendar.getInstance();
             int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
-            String dayPart = "Breakfast";
-            if (hourOfDay < 6) {
-                dayPart = "Snack";
-            } else if (hourOfDay < 9) {
-                dayPart = "Breakfast";
-            } else if (hourOfDay < 12) {
-                dayPart = "Brunch";
-            } else if (hourOfDay < 15) {
-                dayPart = "Lunch";
-            } else if (hourOfDay < 18) {
-                dayPart = "Tea Time";
-            } else if (hourOfDay < 21) {
-                dayPart = "Dinner";
-            }  else {
-                dayPart = "Snack";
-            }
+            String dayPart = data.getMealType();
 
             for (int i = 0; i < tMeals.length - 1; i++) {
                 spinnerOptions[i] = tMeals[i + 1].getSpinnerTitle();
@@ -459,12 +444,17 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ResponseInfo og = data;
+
                     int index = mealType.getSelectedItemPosition();
                     String tMeal = MealType.values()[index + 1].getSpinnerTitle();
                     data.setMealType(tMeal);
 
                     int tQuant = Integer.parseInt(quantity.getText().toString());
                     data.setQuantity(tQuant);
+
+                    int i = calorieTrackerViewModel.getClickedArray().getValue().indexOf(og);
+                    calorieTrackerViewModel.getClickedArray().getValue().set(i, data);
 
                     saveData(data);
                     updateUI();

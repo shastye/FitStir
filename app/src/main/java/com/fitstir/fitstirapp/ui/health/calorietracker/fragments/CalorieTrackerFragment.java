@@ -153,7 +153,6 @@ public class CalorieTrackerFragment extends Fragment {
 
                             Calendar cal = Calendar.getInstance();
                             HashMap<String, Object> calInfo = (HashMap<String, Object>) kid.get("date");
-                            HashMap<String, Long> dateInfo = (HashMap<String, Long>) calInfo.get("time");
 
                             long timeInMillis = (long) calInfo.get("timeInMillis");
                             cal.setTimeInMillis(timeInMillis);

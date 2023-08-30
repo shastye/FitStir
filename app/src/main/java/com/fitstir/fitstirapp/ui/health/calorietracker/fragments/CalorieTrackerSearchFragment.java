@@ -144,17 +144,9 @@ public class CalorieTrackerSearchFragment extends Fragment {
 
                     Calendar cal = Calendar.getInstance();
                     HashMap<String, Object> calInfo = (HashMap<String, Object>) kid.get("date");
-                    HashMap<String, Long> dateInfo = (HashMap<String, Long>) calInfo.get("time");
 
-                    int year = Math.toIntExact((long) calInfo.get("weekYear"));
-                    int month = Math.toIntExact(dateInfo.get("month"));
-                    int day = Math.toIntExact(dateInfo.get("date"));
-                    int hour = Math.toIntExact(dateInfo.get("hours"));
-                    int minutes = Math.toIntExact(dateInfo.get("minutes"));
-                    int seconds = Math.toIntExact(dateInfo.get("seconds"));
-                    int milliseconds = Math.toIntExact(dateInfo.get("seconds"));
-                    cal.set(year, month, day, hour, minutes, seconds);
-                    cal.set(Calendar.MILLISECOND, milliseconds);
+                    long timeInMillis = (long) calInfo.get("timeInMillis");
+                    cal.setTimeInMillis(timeInMillis);
                     info.setDate(cal);
 
                     String mealType = (String) kid.get("mealType");
@@ -629,11 +621,13 @@ public class CalorieTrackerSearchFragment extends Fragment {
         private int saveState;
         int calSum = 0;
         float carbSum = 0.0f, protSum = 0.0f, fatSum = 0.0f;
+        boolean needsUpdate = true;
 
         private ResponseInfo response;
         private final TextView recipeLabel, recipeCalories, recipeBig3;
         private final AppCompatImageView likeButton;
         private final CheckBox addButton;
+
         private final int colorPrimaryVariant = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorPrimaryVariant, requireContext());
         private final int colorOnPrimary = Methods.getThemeAttributeColor(com.google.android.material.R.attr.colorOnPrimary, requireContext());
 
@@ -706,23 +700,32 @@ public class CalorieTrackerSearchFragment extends Fragment {
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference dataID = FirebaseDatabase.getInstance()
                     .getReference("CalorieTrackingData")
-                    .child(authUser.getUid())
-                    .child(response.getResultID());
+                    .child(authUser.getUid());
+
+            int index = calorieTrackingData.indexOf(response);
+            ResponseInfo savedOne = null;
+            if (index != -1) {
+                savedOne = calorieTrackingData.get(index);
+            }
 
             if (state == REMOVE) {
-                if (calorieTrackingData.remove(response)) {
-                    dataID.removeValue();
+                if (savedOne != null) {
+                    DatabaseReference savedRef = dataID.child(savedOne.getResultID());
+                    calorieTrackingData.remove(savedOne);
+                    savedRef.removeValue();
                 }
             } else {
+                DatabaseReference newRef = dataID.child(response.getResultID());
+
                 if (!calorieTrackingData.contains(response)) {
                     calorieTrackingData.add(response);
 
-                    dataID.child("resultID").setValue(response.getResultID());
-                    dataID.child("date").setValue(response.getDate());
-                    dataID.child("mealType").setValue(response.getMealType());
-                    dataID.child("quantity").setValue(response.getQuantity());
+                    newRef.child("resultID").setValue(response.getResultID());
+                    newRef.child("date").setValue(response.getDate());
+                    newRef.child("mealType").setValue(response.getMealType());
+                    newRef.child("quantity").setValue(response.getQuantity());
 
-                    DatabaseReference itemRef = dataID.child("item");
+                    DatabaseReference itemRef = newRef.child("item");
                     if (result instanceof Parsed) {
                         itemRef.child("food").setValue(((Parsed) result).getFood());
                         itemRef.child("quantity").setValue(((Parsed) result).getQuantity());
@@ -764,114 +767,126 @@ public class CalorieTrackerSearchFragment extends Fragment {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         if (response != null) {
-                            View popUpView = inflater.inflate(R.layout.dialog_generic_calorie_tracker_item, null);
-                            PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                            if (needsUpdate) {
+                                View popUpView = inflater.inflate(R.layout.dialog_generic_calorie_tracker_item, null);
+                                PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
-                            DialogGenericCalorieTrackerItemBinding binding = DialogGenericCalorieTrackerItemBinding.bind(popUpView);
-                            TextView label = binding.dialogLabel;
-                            TextView measure = binding.dialogMeasure;
-                            TextView calories = binding.dialogCalories;
-                            TextView nutrients = binding.dialogNutrients;
-                            EditText resultID = binding.dialogResultID;
-                            EditText date = binding.dialogDate;
-                            EditText quantity = binding.dialogQuantity;
-                            ImageButton delete = binding.dialogDeleteIcon;
-                            delete.setVisibility(View.GONE);
+                                DialogGenericCalorieTrackerItemBinding binding = DialogGenericCalorieTrackerItemBinding.bind(popUpView);
+                                TextView label = binding.dialogLabel;
+                                TextView measure = binding.dialogMeasure;
+                                TextView calories = binding.dialogCalories;
+                                TextView nutrients = binding.dialogNutrients;
+                                EditText resultID = binding.dialogResultID;
+                                EditText date = binding.dialogDate;
+                                EditText quantity = binding.dialogQuantity;
+                                ImageButton delete = binding.dialogDeleteIcon;
+                                delete.setVisibility(View.GONE);
 
-                            MealType[] tMeals = MealType.values();
-                            String[] spinnerOptions = new String[tMeals.length - 1];
-                            int currentDayPart = 0;
-                            String dayPart = response.getMealType();
-                            for (int i = 0; i < tMeals.length - 1; i++) {
-                                spinnerOptions[i] = tMeals[i + 1].getSpinnerTitle();
-                                if (dayPart.equals(tMeals[i + 1].getSpinnerTitle())) {
-                                    currentDayPart = i;
+                                MealType[] tMeals = MealType.values();
+                                String[] spinnerOptions = new String[tMeals.length - 1];
+                                int currentDayPart = 0;
+                                String dayPart = response.getMealType();
+                                for (int i = 0; i < tMeals.length - 1; i++) {
+                                    spinnerOptions[i] = tMeals[i + 1].getSpinnerTitle();
+                                    if (dayPart.equals(tMeals[i + 1].getSpinnerTitle())) {
+                                        currentDayPart = i;
+                                    }
                                 }
+                                Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
+                                mealType.setSelection(currentDayPart);
+
+                                int index = response.getResultID().indexOf("&");
+                                String tID = response.getResultID().substring(0, index);
+                                resultID.setText(tID);
+                                date.setText("Today");
+
+                                String tNutr = "Carbs " + decimalFormat.format(carbSum) + "g \u22C5 " +
+                                        "Fat " + decimalFormat.format(fatSum) + "g \u22c5 " +
+                                        "Protein " + decimalFormat.format(protSum) + "g";
+                                String tCal = ((int) calSum) + " calories / serving";
+
+                                calories.setText(tCal);
+                                nutrients.setText(tNutr);
+
+                                if (response.getItem() instanceof Parsed) {
+                                    Parsed parsed = (Parsed) response.getItem();
+                                    int servings = (int) parsed.getFood().getServingsPerContainer();
+                                    int amount = response.getQuantity();
+
+                                    if (servings == 0) {
+                                        servings = 1;
+                                    }
+                                    if (amount == 0) {
+                                        amount = 1;
+                                    }
+
+                                    label.setText(parsed.getFood().getLabel());
+                                    String tUnits = (parsed.getQuantity() / servings * amount) + " " + parsed.getMeasure().getLabel();
+                                    measure.setText(tUnits);
+                                } else if (response.getItem() instanceof Hint) {
+                                    Hint hint = (Hint) response.getItem();
+                                    int amount = response.getQuantity();
+
+                                    if (amount == 0) {
+                                        amount = 1;
+                                    }
+
+                                    label.setText(hint.getFood().getLabel());
+                                    String tUnits = amount + " " + hint.getMeasures().get(0).getLabel();
+                                    measure.setText(tUnits);
+                                } else if (response.getItem() instanceof Hit) {
+                                    Hit hit = (Hit) response.getItem();
+                                    int amount = response.getQuantity();
+
+                                    if (amount == 0) {
+                                        amount = 1;
+                                    }
+
+                                    label.setText(hit.getRecipe().getLabel());
+                                    String tUnits = amount + " serving(s)";
+                                    measure.setText(tUnits);
+                                }
+
+                                AppCompatButton acceptButton = binding.dialogGenericAcceptButton;
+                                acceptButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        int index = mealType.getSelectedItemPosition();
+                                        String tMeal = MealType.values()[index + 1].getSpinnerTitle();
+                                        response.setMealType(tMeal);
+
+                                        int tQuant;
+                                        if (quantity.getText() != null && !quantity.getText().toString().equals("")) {
+                                            tQuant = Integer.parseInt(quantity.getText().toString());
+                                        } else {
+                                            tQuant = 1;
+                                        }
+
+                                        response.setQuantity(tQuant);
+
+                                        setAddState(SAVE);
+                                        popupWindow.dismiss();
+                                    }
+                                });
+                                AppCompatButton cancelButton = binding.dialogGenericCancelButton;
+                                cancelButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        buttonView.setChecked(false);
+                                        setAddState(REMOVE);
+                                        popupWindow.dismiss();
+                                    }
+                                });
+
+                                popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+                            } else {
+                                setAddState(SAVE);
                             }
-                            Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
-                            mealType.setSelection(currentDayPart);
-
-                            int index = response.getResultID().indexOf("&");
-                            String tID = response.getResultID().substring(0, index);
-                            resultID.setText(tID);
-                            date.setText("Today");
-
-                            String tNutr = "Carbs " + decimalFormat.format(carbSum) + "g \u22C5 " +
-                                    "Fat " + decimalFormat.format(fatSum) + "g \u22c5 " +
-                                    "Protein " + decimalFormat.format(protSum) + "g";
-                            String tCal = ((int) calSum) + " calories / serving";
-
-                            calories.setText(tCal);
-                            nutrients.setText(tNutr);
-
-                            if (response.getItem() instanceof Parsed) {
-                                Parsed parsed = (Parsed) response.getItem();
-                                int servings = (int) parsed.getFood().getServingsPerContainer();
-                                int amount = response.getQuantity();
-
-                                if (servings == 0) {
-                                    servings = 1;
-                                }
-                                if (amount == 0) {
-                                    amount = 1;
-                                }
-
-                                label.setText(parsed.getFood().getLabel());
-                                String tUnits = (parsed.getQuantity() / servings * amount) + " " + parsed.getMeasure().getLabel();
-                                measure.setText(tUnits);
-                            } else if (response.getItem() instanceof Hint) {
-                                Hint hint = (Hint) response.getItem();
-                                int amount = response.getQuantity();
-
-                                if (amount == 0) {
-                                    amount = 1;
-                                }
-
-                                label.setText(hint.getFood().getLabel());
-                                String tUnits = amount + " " + hint.getMeasures().get(0).getLabel();
-                                measure.setText(tUnits);
-                            } else if (response.getItem() instanceof Hit) {
-                                Hit hit = (Hit) response.getItem();
-                                int amount = response.getQuantity();
-
-                                if (amount == 0) {
-                                    amount = 1;
-                                }
-
-                                label.setText(hit.getRecipe().getLabel());
-                                String tUnits = amount + " serving(s)";
-                                measure.setText(tUnits);
-                            }
-
-                            AppCompatButton acceptButton = binding.dialogGenericAcceptButton;
-                            acceptButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    int index = mealType.getSelectedItemPosition();
-                                    String tMeal = MealType.values()[index + 1].getSpinnerTitle();
-                                    response.setMealType(tMeal);
-
-                                    int tQuant = Integer.parseInt(quantity.getText().toString());
-                                    response.setQuantity(tQuant);
-
-                                    setAddState(SAVE);
-                                    popupWindow.dismiss();
-                                }
-                            });
-                            AppCompatButton cancelButton = binding.dialogGenericCancelButton;
-                            cancelButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    buttonView.setChecked(false);
-                                    setAddState(REMOVE);
-                                    popupWindow.dismiss();
-                                }
-                            });
-
-                            popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
                         } else {
                             setAddState(REMOVE);
                         }
+                    } else {
+                        setAddState(REMOVE);
                     }
                 }
             });
@@ -889,7 +904,9 @@ public class CalorieTrackerSearchFragment extends Fragment {
             }
 
             if (isAdded) {
+                needsUpdate = false;
                 addButton.setChecked(true);
+                needsUpdate = true;
             } else {
                 addButton.setChecked(false);
             }
