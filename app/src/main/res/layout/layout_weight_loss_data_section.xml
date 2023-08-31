@@ -96,13 +96,13 @@
 
         <ImageButton
             android:id="@+id/layout_delete_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="5dp"
             android:layout_centerVertical="true"
             android:background="@drawable/ic_delete_200dp"
-            android:backgroundTint="?attr/colorOnPrimary" />
+            android:backgroundTint="?attr/colorSecondary" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

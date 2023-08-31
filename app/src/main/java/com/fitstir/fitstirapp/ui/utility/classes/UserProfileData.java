@@ -143,8 +143,7 @@ public class UserProfileData {
                         }
 
                         goalsRef.child(child.getKey())
-                                .child("data")
-                                .setValue(goal.getData());
+                                .setValue(goal);
 
                         // update data on Users collection
                         FirebaseDatabase.getInstance()
