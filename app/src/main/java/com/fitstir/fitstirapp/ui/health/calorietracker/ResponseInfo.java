@@ -85,7 +85,6 @@ public class ResponseInfo {
         } else if (!(o instanceof ResponseInfo)) {
             return false;
         } else {
-            // TODO: Edit to be specific to meal time
             ResponseInfo that = (ResponseInfo) o;
 
             boolean b1 = isDate(that.date);

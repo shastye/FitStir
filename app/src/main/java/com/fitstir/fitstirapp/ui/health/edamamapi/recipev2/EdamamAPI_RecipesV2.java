@@ -55,6 +55,7 @@ public class EdamamAPI_RecipesV2 {
         add("mealType");
         add("dishType");
         add("tags");
+        add("totalNutrients");
     }};
 
     public EdamamAPI_RecipesV2(

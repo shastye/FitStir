@@ -497,7 +497,7 @@ public class CalorieTrackerFragment extends Fragment {
                         amount = 1;
                     }
 
-                    TotalNutrients nutr = hit.getNutrients();
+                    TotalNutrients nutr = hit.getRecipe().getTotalNutrients();
                     calSum += nutr.getENERC_KCAL().getQuantity() / servings * amount;
                     carbSum += nutr.getCHOCDF().getQuantity() / servings * amount;
                     protSum += nutr.getPROCNT().getQuantity() / servings * amount;
