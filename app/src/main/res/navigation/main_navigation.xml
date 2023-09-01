@@ -128,7 +128,7 @@
 
     <fragment
         android:id="@+id/navigation_weight_loss"
-        android:name="com.fitstir.fitstirapp.ui.health.weightloss.WeightLossFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.weightloss.fragments.WeightLossFragment"
         android:label="Weight Loss"
         tools:layout="@layout/fragment_weight_loss" />
 

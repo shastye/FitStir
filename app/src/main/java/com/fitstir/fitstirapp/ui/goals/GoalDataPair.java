@@ -1,7 +1,9 @@
 package com.fitstir.fitstirapp.ui.goals;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class GoalDataPair {
     public Date first;
@@ -22,5 +24,13 @@ public class GoalDataPair {
     public GoalDataPair(GoalDataPair pair) {
         this.first = pair.first;
         this.second = pair.second;
+    }
+
+    public String getDateAsString() {
+        Locale loc = new Locale.Builder().setLanguage("en").setRegion("US").build();
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, loc);
+
+        String date = dateFormat.format(this.first);
+        return date;
     }
 }

@@ -2,9 +2,7 @@ package com.fitstir.fitstirapp.ui.health.edamamapi.recipev2;
 
 import com.fitstir.fitstirapp.ui.health.edamamapi.ISearchResult;
 import com.fitstir.fitstirapp.ui.health.edamamapi.Link;
-import com.fitstir.fitstirapp.ui.utility.Constants;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class Hit implements ISearchResult {
@@ -39,32 +37,6 @@ public class Hit implements ISearchResult {
 
     public void setRecipe(Recipe recipe) { this.recipe = recipe; }
     public void set_links(Link _links) { this._links = _links; }
-
-    public TotalNutrients getNutrients() throws IOException {
-        String fini = this.recipe.getUri();
-        if (fini.contains(":")) {
-            fini = fini.replaceAll(":", "%3A");
-        }
-        if (fini.contains("/")) {
-            fini = fini.replaceAll("/", "%2F");
-        }
-        if (fini.contains("#")) {
-            fini = fini.replaceAll("#", "%23");
-        }
-
-        String href = "https://api.edamam.com/api/recipes/v2/by-uri?" +
-                "type=public&" +
-                "uri=" + fini +
-                "&app_id=" + Constants.RECIPE_V2.APP_ID +
-                "&app_key=" + Constants.RECIPE_V2.APP_KEY +
-                "&field=totalNutrients";
-
-        EdamamAPI_RecipesV2 api = new EdamamAPI_RecipesV2(href);
-        api.execute();
-
-        RecipeResponse temp = api.getRecipeResponse();
-        return temp.getHits().get(0).getRecipe().getTotalNutrients();
-    }
 
     @Override
     public ISearchResult getItem() {

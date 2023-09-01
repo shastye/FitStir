@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="5dp"
+    android:foregroundGravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layout_recipe_background"
+        android:layout_width="400dp"
+        android:layout_height="70dp"
+        android:outlineProvider="none"
+        android:alpha="0.75"
+        android:elevation="0dp"
+        app:cardBackgroundColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="40dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="390dp"
+        android:layout_height="60dp"
+        android:outlineProvider="none"
+        android:alpha="0.25"
+        android:elevation="1dp"
+        app:cardCornerRadius="36dp"
+        app:cardBackgroundColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:id="@+id/layout_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weigh Date"
+            android:layout_marginHorizontal="10dp"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:textColor="?attr/colorOnPrimary"
+            android:textAlignment="viewStart"
+            android:textSize="20sp" />
+
+        <RelativeLayout
+            android:id="@+id/weight_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/layout_date"
+            android:layout_toStartOf="@id/layout_delete_button">
+
+            <TextView
+                android:id="@+id/layout_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weight"
+                android:layout_toStartOf="@id/layout_units"
+                android:layout_marginHorizontal="5dp"
+                android:singleLine="true"
+                android:textColor="?attr/colorOnPrimary"
+                android:textAlignment="viewEnd"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/layout_units"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="units"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="11dp"
+                android:layout_marginEnd="10dp"
+                android:singleLine="true"
+                android:textColor="?attr/colorOnPrimary"
+                android:textAlignment="viewEnd"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/layout_delete_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="5dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_delete_200dp"
+            android:backgroundTint="?attr/colorSecondary" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
