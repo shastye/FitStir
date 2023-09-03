@@ -96,24 +96,36 @@ public class UpdateWeightDialog extends IBasicDialog {
         if (newWeight != currWeight) {
 
             // Determine if movement in correct direction //
-                                                          //
+            //                                            //
             int d1 = currWeight - newWeight;              //
             // if d1 < 0; curr < newWeight                //
             // elseif d1 > 0; newWeight < curr            //
             int d2 = user.getGoal_weight() - newWeight;   //
             // if d2 < 0; goal < newWeight                //
             // elseif d2 > 0; newWeight < goal            //
-                                                          //
+            int d3 = user.getGoal_weight() - currWeight;  //
+            // if d3 < 0; goal < curr                     //
+            // elseif d3 > 0; curr < goal                 //
+            //                                            //
             boolean c1 = d2 > 0 && d1 < 0;                //
             boolean c2 = d2 < 0 && d1 > 0;                //
-            boolean c3 = d2 == 0;                         //
             // Correct direction if:                      //
             // curr < newWeight < goal                    //
             //          OR                                //
             // goal < newWeight < curr                    //
             //          OR                                //
             //    goal == newWeight                       //
-                                                          //
+            //                                            //
+            boolean c3 = d2 == 0;                         //
+            // if d2 == 0; goal == newWeight              //
+            //                                            //
+            boolean c4 = d3 > 0 && d2 < 0;                //
+            boolean c5 = d3 < 0 && d2 > 0;                //
+            // Passed weight goal if:                     //
+            // curr < goal < newWeight                    //
+            //          OR                                //
+            // newWeight < goal < curr                    //
+            //                                            //
             // ////////////////////////////////////////// //
 
             user.set_Weight(newWeight);
@@ -143,7 +155,7 @@ public class UpdateWeightDialog extends IBasicDialog {
             }
 
 
-            if (c1 || c2 || c3) {
+            if (c1 || c2 || c3 || c4 || c5) {
                 LayoutInflater inflater = LayoutInflater.from(requireActivity());
                 View popUpView = inflater.inflate(R.layout.dialog_generic_alert, null);
                 PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -173,7 +185,7 @@ public class UpdateWeightDialog extends IBasicDialog {
                 continueMessage.setTextColor(0xFF000000);
                 if (c1 || c2) {
                     continueMessage.setText("You made it one step\ncloser to your goal!");
-                } else if (c3) {
+                } else {
                     continueMessage.setText("You made it!!\nYou reached your goal!!!");
                 }
                 popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0,0);
