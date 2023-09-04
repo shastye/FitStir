@@ -1,9 +1,8 @@
 package com.fitstir.fitstirapp.ui.runtracker.utilites;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class RunViewModel extends ViewModel {
+public class RunViewModel {
     private final MutableLiveData<String> mText;
     private final MutableLiveData<Integer> runTime = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> runAveragePace = new MutableLiveData<>(0);
@@ -18,9 +17,8 @@ public class RunViewModel extends ViewModel {
     public MutableLiveData<Integer> getRunDistance() {return runDistance;}
 
     public MutableLiveData<Integer> getBurnedCalories() {return burnedCalories;}
-    public RunViewModel() {
-        this.mText = new MutableLiveData<>();
-        mText.setValue(" ");
+    public RunViewModel(MutableLiveData<String> mText) {
+        this.mText = mText;
     }
 
     public void setRunTime(Integer runTime){this.runTime.setValue(runTime);}
