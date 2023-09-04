@@ -1,10 +1,12 @@
 package com.fitstir.fitstirapp.ui.runtracker;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationRequest;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +20,30 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRunClubBinding;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.Granularity;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.Priority;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -40,8 +55,7 @@ import java.util.List;
 public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     private FragmentRunClubBinding binding;
     private View fragment;
-    private ImageButton startRun;
-    private ImageButton runHistory;
+    private ImageButton startRun,runHistory,pauseRun, stopRun;
     private RecyclerView history_RV;
     private SupportMapFragment mapFragment;
     private Location mCurrentLocation;
@@ -51,6 +65,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     private Boolean isTracking = false;
     private Boolean isPaused = false;
     private Boolean isStopped = false;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,16 +80,21 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         startRun = root.findViewById(R.id.start_Run_BTN);
         runHistory = root.findViewById(R.id.run_History_BTN);
         history_RV = root.findViewById(R.id.run_History_RV);
+        pauseRun = root.findViewById(R.id.pause_Run_BTN);
+        stopRun = root.findViewById(R.id.stop_Run_BTN);
 
+
+        //map setup and location tracking service
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync((OnMapReadyCallback) this);
-
-        createLocationRequest();
+        currentLocation();
 
         //initial visibility changed upon location access
         fragment.setVisibility(View.INVISIBLE);
         startRun.setVisibility(View.INVISIBLE);
         history_RV.setVisibility(View.INVISIBLE);
+        pauseRun.setVisibility(View.INVISIBLE);
+        stopRun.setVisibility(View.INVISIBLE);
 
 
 
@@ -82,8 +102,30 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         startRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateLocationRequest();
+                isTracking = true;
+                startRun.setVisibility(View.INVISIBLE);
+                pauseRun.setVisibility(View.VISIBLE);
+                stopRun.setVisibility(View.VISIBLE);
 
+            }
+        });
+        pauseRun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: pause location tracking
+                isPaused = true;
+            }
+        });
 
+        stopRun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fusedClient.removeLocationUpdates(locationCallback);
+                isStopped = true;
+                pauseRun.setVisibility(View.INVISIBLE);
+                stopRun.setVisibility(View.INVISIBLE);
+                startRun.setVisibility(View.VISIBLE);
             }
         });
 
@@ -126,9 +168,10 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                                                             LatLng curUser = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
                                                             mMap.addMarker(new MarkerOptions()
                                                                     .position(curUser)
-                                                                    .title("Location"));
+                                                                    .title("Current Location"));
                                                             mMap.setBuildingsEnabled(true);
                                                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curUser, 18));
+
                                                         } else if (mCurrentLocation == null) {
                                                             LatLng curUser = new LatLng(37, -84.5);
                                                             mMap.addMarker(new MarkerOptions()
@@ -143,8 +186,8 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                                                         mMap.getUiSettings().setMyLocationButtonEnabled(true);
                                                         mMap.getUiSettings().setAllGesturesEnabled(true);
                                                         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
                                                     }
+
                                                 }).addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
@@ -153,7 +196,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                                                 });
                                             }
                                         }
-                                        else if (multiplePermissionsReport.isAnyPermissionPermanentlyDenied()) {
+                                        else if (!multiplePermissionsReport.areAllPermissionsGranted()) {
                                             Toast.makeText(requireActivity(), "Run Club Feature:: Must have location access to operate" ,
                                                     Toast.LENGTH_LONG).show();
                                         }
@@ -165,18 +208,71 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                                     }
                                 }).check();
     }
-
-    public void createLocationRequest()
+    @SuppressLint("MissingPermission")
+    public void updateLocationRequest()
     {
-        LocationRequest locationRequest = new LocationRequest.Builder(1000)
-                .setIntervalMillis(5000)
-                .setQuality(LocationRequest.QUALITY_HIGH_ACCURACY)
+
+        LocationRequest locationRequest = new LocationRequest.Builder(5000)
+                .setGranularity(Granularity.GRANULARITY_FINE)
+                .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+                .setMinUpdateDistanceMeters(10)
                 .build();
 
-        fusedClient = LocationServices.getFusedLocationProviderClient(getContext());
+        LocationSettingsRequest locationSettingsRequest = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest)
+                .build();
+
+        SettingsClient settingsClient = LocationServices.getSettingsClient(getContext());
+        settingsClient.checkLocationSettings(locationSettingsRequest).addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+                if(task.isSuccessful()){
+                    fusedClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+                }
+                else{
+                    if(task.getException() instanceof ResolvableApiException){
+
+                        try {
+                            ResolvableApiException resolvableApiException = (ResolvableApiException) task.getException();
+                            resolvableApiException.startResolutionForResult(requireActivity(), Constants.REQUEST_CODE_PERMISSION);
+                        } catch (IntentSender.SendIntentException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+
+                    }
+                }
+            }
+        });
 
     }
+    @SuppressLint("MissingPermission")
+    public void currentLocation(){
 
+        LocationRequest locationRequest = new LocationRequest.Builder(5000)
+                .setGranularity(Granularity.GRANULARITY_FINE)
+                .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+                .setMinUpdateDistanceMeters(10)
+                .build();
+        fusedClient = LocationServices.getFusedLocationProviderClient(getContext());
+        fusedClient.getLastLocation();
+    }
+
+    LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(@NonNull LocationResult locationResult) {
+            super.onLocationResult(locationResult);
+            if(locationResult == null){
+                return;
+            }
+            for(Location location: locationResult.getLocations())
+            {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()),18));
+            }
+            Log.d("Updated", "on Location Result" + locationResult);
+        }
+    };
     @Override
     public void onDestroyView() {
         super.onDestroyView();
