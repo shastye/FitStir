@@ -148,6 +148,7 @@ public class LogInFragment extends Fragment {
                 Intent myIntent = new Intent(getActivity(), MainActivity.class);
                 Objects.requireNonNull(getActivity()).startActivity(myIntent);
 
+
             }
         }). addOnFailureListener(new OnFailureListener() {
             @Override
@@ -202,6 +203,7 @@ public class LogInFragment extends Fragment {
                             Toast.makeText(getActivity(), "LogIn Successfull", Toast.LENGTH_SHORT).show();
                             Intent myIntent = new Intent(getActivity(), MainActivity.class);
                             Objects.requireNonNull(getActivity()).startActivity(myIntent);
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

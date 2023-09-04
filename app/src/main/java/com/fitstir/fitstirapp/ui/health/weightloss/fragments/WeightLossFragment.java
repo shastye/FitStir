@@ -205,7 +205,7 @@ public class WeightLossFragment extends Fragment {
         int goal = weightLossViewModel.getWeightGoal().getValue();
         goalWeightTextView.setText(String.valueOf(goal));
 
-        int index = weightLossViewModel.getWeightData().getValue().size() - 1;
+        int index = weightLossViewModel.getWeightData().getValue().size()-1 ;
         double curr = weightLossViewModel.getWeightData().getValue().get(index).second;
         currWeightTextView.setText(decimalFormat.format(curr));
 

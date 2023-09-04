@@ -1,21 +1,18 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits;
+package com.fitstir.fitstirapp.ui.workouts.exercises.circuits;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.RvInterface;
 
 import java.util.ArrayList;
 

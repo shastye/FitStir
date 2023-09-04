@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp;
+package com.fitstir.fitstirapp.ui.utility;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -13,7 +13,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavDeepLinkBuilder;
 
-import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.MainActivity;
+import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.enums.ReminderChannels;
 
 import java.util.ArrayList;

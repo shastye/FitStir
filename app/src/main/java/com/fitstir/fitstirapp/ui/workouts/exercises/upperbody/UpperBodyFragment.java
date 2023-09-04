@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi.upperbody;
+package com.fitstir.fitstirapp.ui.workouts.exercises.upperbody;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,11 +18,11 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentUpperBodyBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.RvInterface;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.WorkoutApi;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.workoutAdapter;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.fitstir.fitstirapp.ui.utility.RvInterface;
+import com.fitstir.fitstirapp.ui.workouts.exercises.ViewWorkoutFragment;
+import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
+import com.fitstir.fitstirapp.ui.workouts.exercises.workoutAdapter;
+
 import java.util.ArrayList;
 
 public class UpperBodyFragment extends Fragment implements RvInterface {

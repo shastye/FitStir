@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi;
+package com.fitstir.fitstirapp.ui.workouts.exercises;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentWeightLiftingBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.RvInterface;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 

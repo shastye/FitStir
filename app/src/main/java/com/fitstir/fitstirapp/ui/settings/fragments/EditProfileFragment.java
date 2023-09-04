@@ -159,6 +159,7 @@ public class EditProfileFragment extends Fragment implements IPickResult {
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                             Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();
                                             taskSnapshot.getMetadata();
+
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override

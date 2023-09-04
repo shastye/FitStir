@@ -118,6 +118,7 @@ public class ProfileFragment extends Fragment {
                    settingsViewModel.setAvatar(bitmap);
                    ImageView profileImage = binding.profileImage;
                    profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
+
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

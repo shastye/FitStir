@@ -21,11 +21,11 @@ public class WorkoutsViewModel extends ViewModel {
     private final MutableLiveData<Integer> calBurned = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> totalBurned = new MutableLiveData<>(0);
     private final MutableLiveData<String> mapImage = new MutableLiveData<>(" ");
+
+
     public final MutableLiveData<Integer> getTotalBurned() {return totalBurned;}
     public MutableLiveData<String> getMapImage() {return mapImage;}
-
     public final MutableLiveData<Integer> getPageCLicked() {return pageCLicked;}
-
     public LiveData<String> getText() { return mText;}
     public MutableLiveData<String> getTarget() { return target;}
     public MutableLiveData<String> getDirections() { return directions;}
@@ -48,7 +48,6 @@ public class WorkoutsViewModel extends ViewModel {
     public void setReps(Integer rep){this.reps.setValue(rep);}
     public void setDuration(Integer time){this.duration.setValue(time);}
     public void setCalBurned(Integer cal){this.calBurned.setValue(cal);}
-
     public void setBodyPart(String body){this.bodyPart.setValue(body);}
     public void setTarget(String target){this.target.setValue(target);}
     public void setDirections(String directions){this.directions.setValue(directions);}

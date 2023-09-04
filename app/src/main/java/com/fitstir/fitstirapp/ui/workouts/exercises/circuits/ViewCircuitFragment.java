@@ -1,14 +1,11 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits;
+package com.fitstir.fitstirapp.ui.workouts.exercises.circuits;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +19,6 @@ import com.fitstir.fitstirapp.databinding.FragmentUpperBodyBinding;
 import com.fitstir.fitstirapp.databinding.FragmentViewCircuitBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment;
 
 import java.util.ArrayList;
 

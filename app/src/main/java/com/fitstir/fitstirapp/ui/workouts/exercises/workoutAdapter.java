@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi;
+package com.fitstir.fitstirapp.ui.workouts.exercises;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.utility.RvInterface;
+
 import java.util.ArrayList;
 
 public class workoutAdapter extends RecyclerView.Adapter<workoutAdapter.ViewHolder>{

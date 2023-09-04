@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi;
+package com.fitstir.fitstirapp.ui.utility;
 
 public interface RvInterface {
     void onItemClick(int position);

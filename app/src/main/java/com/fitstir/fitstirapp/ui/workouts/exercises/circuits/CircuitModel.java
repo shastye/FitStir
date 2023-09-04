@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi.circuits;
+package com.fitstir.fitstirapp.ui.workouts.exercises.circuits;
 
 import android.util.Log;
 
