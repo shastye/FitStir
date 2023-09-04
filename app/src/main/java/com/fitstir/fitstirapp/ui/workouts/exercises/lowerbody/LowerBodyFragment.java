@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi.lowerbody;
+package com.fitstir.fitstirapp.ui.workouts.exercises.lowerbody;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,11 +20,10 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentLowerBodyBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.RvInterface;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.ViewWorkoutFragment;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.WorkoutApi;
-import com.fitstir.fitstirapp.ui.workouts.exerciseapi.workoutAdapter;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.fitstir.fitstirapp.ui.utility.RvInterface;
+import com.fitstir.fitstirapp.ui.workouts.exercises.ViewWorkoutFragment;
+import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
+import com.fitstir.fitstirapp.ui.workouts.exercises.workoutAdapter;
 
 import java.util.ArrayList;
 

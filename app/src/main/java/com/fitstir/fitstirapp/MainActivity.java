@@ -27,6 +27,7 @@ import androidx.navigation.ui.NavigationUiSaveStateControl;
 
 import com.fitstir.fitstirapp.databinding.ActivityMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.utility.CheckRecentRun;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
@@ -40,7 +41,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.type.LatLng;
 
 import java.util.ArrayList;
 
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity  {
                     try {
                             settingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());;
                             navController.navigate(pageID);
-                    } catch (NullPointerException e) {
+                    } catch (IllegalArgumentException e) {
                         Log.e("Back up error", e.getMessage());
                     }
                     return true;

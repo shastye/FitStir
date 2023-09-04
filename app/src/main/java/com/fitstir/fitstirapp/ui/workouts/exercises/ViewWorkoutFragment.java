@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi;
+package com.fitstir.fitstirapp.ui.workouts.exercises;
 
 import android.os.Bundle;
 
@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewWorkoutBinding;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
-import com.google.firebase.database.ThrowOnExtraProperties;
 
 public class ViewWorkoutFragment extends Fragment {
 

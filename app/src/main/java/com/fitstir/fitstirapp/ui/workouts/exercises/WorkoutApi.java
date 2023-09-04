@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts.exerciseapi;
+package com.fitstir.fitstirapp.ui.workouts.exercises;
 
 import android.util.Log;
 
@@ -108,6 +108,7 @@ public class WorkoutApi {
                         }else{
                             //
                         }
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

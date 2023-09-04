@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-auth-ktx:22.1.1'
+
 
     //Android
     testImplementation 'junit:junit:4.13.2'
@@ -87,5 +89,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-cast:21.3.0'
     implementation 'com.google.android.gms:play-services-cast-framework:21.3.0'
+
+    implementation'com.karumi:dexter:6.2.3'
+
+
     
 }

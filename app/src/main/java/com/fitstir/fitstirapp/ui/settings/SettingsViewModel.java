@@ -145,6 +145,7 @@ public class SettingsViewModel extends ViewModel {
                     @Override
                     public void onSuccess(Void unused) {
                         success[0] = true;
+                        return ;
                     }
                 });
             }
@@ -168,6 +169,7 @@ public class SettingsViewModel extends ViewModel {
                 @Override
                 public void onSuccess(Void unused) {
                     success[0] = true;
+
                 }
             });
         }
