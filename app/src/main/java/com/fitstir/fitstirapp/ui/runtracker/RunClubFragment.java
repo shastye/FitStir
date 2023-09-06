@@ -4,19 +4,25 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRunClubBinding;
@@ -38,8 +44,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.ButtCap;
+import com.google.android.gms.maps.model.Cap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,13 +61,16 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     private FragmentRunClubBinding binding;
     private View fragment;
-    private ImageButton startRun,runHistory,pauseRun, stopRun;
+    private ImageButton startRun,runHistory,pauseRun, stopRun, statistics;
     private RecyclerView history_RV;
     private SupportMapFragment mapFragment;
     private Location mCurrentLocation;
@@ -65,6 +80,13 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     private Boolean isTracking = false;
     private Boolean isPaused = false;
     private Boolean isStopped = false;
+    private Boolean isTimerOn = false;
+    private ArrayList<LatLng> pathPoint;
+    private ArrayList<LatLng>  emptyPath;
+    private ArrayList<Float> distance;
+    private float totalDistance;
+    private Chronometer timer;
+
 
 
 
@@ -82,12 +104,15 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         history_RV = root.findViewById(R.id.run_History_RV);
         pauseRun = root.findViewById(R.id.pause_Run_BTN);
         stopRun = root.findViewById(R.id.stop_Run_BTN);
-
+        statistics = root.findViewById(R.id.statistics_BTN);
+        timer = root.findViewById(R.id.timer);
+        pathPoint = new ArrayList<>();
+        emptyPath = new ArrayList<>();
 
         //map setup and location tracking service
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync((OnMapReadyCallback) this);
-        currentLocation();
+        fusedClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
         //initial visibility changed upon location access
         fragment.setVisibility(View.INVISIBLE);
@@ -95,7 +120,10 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         history_RV.setVisibility(View.INVISIBLE);
         pauseRun.setVisibility(View.INVISIBLE);
         stopRun.setVisibility(View.INVISIBLE);
+        timer.setVisibility(View.INVISIBLE);
 
+
+        updateLocationRequest();
 
 
         //click listeners
@@ -103,21 +131,35 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 updateLocationRequest();
+
                 isTracking = true;
+
                 startRun.setVisibility(View.INVISIBLE);
                 pauseRun.setVisibility(View.VISIBLE);
                 stopRun.setVisibility(View.VISIBLE);
 
+                if(isTracking == true){
+                    isPaused = false;
+                    isTimerOn = true;
+                    timer.setBase(SystemClock.elapsedRealtime() - Constants.PAUSE_OFFSET);
+                    timer.start();
+
+                }
+                //TODO: start timer, distance calculations, cals burning
             }
         });
         pauseRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: pause location tracking
                 isPaused = true;
+                updateLocationRequest();
+                startRun.setVisibility(View.VISIBLE);
+                if(isPaused == true){
+                    isTracking = false;
+                    //TODO: Handle timer and collecting data
+                }
             }
         });
-
         stopRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,16 +168,23 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                 pauseRun.setVisibility(View.INVISIBLE);
                 stopRun.setVisibility(View.INVISIBLE);
                 startRun.setVisibility(View.VISIBLE);
+                if(isStopped == true){
+                    //TODO: save data and store to current user in firebase
+                }
             }
         });
-
         runHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 history_RV.setVisibility(View.VISIBLE);
             }
         });
-
+        statistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_navigation_run_club_to_runStatisticsFragment);
+            }
+        });
 
         // End
 
@@ -154,7 +203,8 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
 
                                         if(multiplePermissionsReport.areAllPermissionsGranted()){
                                             if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                                                    == PackageManager.PERMISSION_GRANTED ) {
+                                                    == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireActivity(),
+                                                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                                                 locationPermissionGranted = true;
                                                 mMap.setMyLocationEnabled(true);
                                                 fusedClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -247,28 +297,49 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         });
 
     }
-    @SuppressLint("MissingPermission")
-    public void currentLocation(){
 
-        LocationRequest locationRequest = new LocationRequest.Builder(5000)
-                .setGranularity(Granularity.GRANULARITY_FINE)
-                .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
-                .setMinUpdateDistanceMeters(10)
-                .build();
-        fusedClient = LocationServices.getFusedLocationProviderClient(getContext());
-        fusedClient.getLastLocation();
-    }
 
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {
             super.onLocationResult(locationResult);
+            //route options for tracking
+            Cap endCap = new ButtCap();
+
+            PolylineOptions opts = new PolylineOptions()
+                    .width(8)
+                    .color(Color.RED)
+                    .geodesic(true)
+                    .visible(true)
+                    .endCap(endCap);
+
+            //route for empty space
+            PolylineOptions empty = new PolylineOptions()
+                    .visible(false)
+                    .color(Color.TRANSPARENT)
+                    .endCap(endCap);;
+
             if(locationResult == null){
                 return;
             }
-            for(Location location: locationResult.getLocations())
-            {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()),18));
+            for(Location location: locationResult.getLocations()) {
+             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+
+                if(isTracking == true)
+                 {
+                     pathPoint.add(loc);
+                     Polyline route = mMap.addPolyline(opts);
+                     route.setPoints(pathPoint);
+
+                 }
+                if(isPaused == true)
+                 {
+                     emptyPath.add(loc);
+                     Polyline emptyRoute = mMap.addPolyline(empty);
+                     emptyRoute.setPoints(emptyPath);
+
+                 }
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,18));
             }
             Log.d("Updated", "on Location Result" + locationResult);
         }

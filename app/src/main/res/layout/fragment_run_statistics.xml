@@ -5,10 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.runtracker.RunStatisticsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+   <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="@drawable/background2"/>
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/soft_deep_purple"
+        android:alpha="0.35"/>
 
 </FrameLayout>
