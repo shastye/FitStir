@@ -34,7 +34,11 @@
         android:id="@+id/navigation_run_club"
         android:name="com.fitstir.fitstirapp.ui.runtracker.RunClubFragment"
         android:label="Run Club"
-        tools:layout="@layout/fragment_run_club" />
+        tools:layout="@layout/fragment_run_club" >
+        <action
+            android:id="@+id/action_navigation_run_club_to_runStatisticsFragment"
+            app:destination="@id/runStatisticsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_upper_body"
@@ -277,5 +281,10 @@
             android:id="@+id/action_viewCircuitFragment_to_navigation_circuit_workouts"
             app:destination="@id/navigation_circuit_workouts" />
     </fragment>
-  
+    <fragment
+        android:id="@+id/runStatisticsFragment"
+        android:name="com.fitstir.fitstirapp.ui.runtracker.RunStatisticsFragment"
+        android:label="fragment_run_statistics"
+        tools:layout="@layout/fragment_run_statistics" />
+
 </navigation>
