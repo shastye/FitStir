@@ -1,9 +1,11 @@
 package com.fitstir.fitstirapp.ui.health.diary.fragments;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +40,17 @@ public class ViewDiaryFragment extends Fragment {
 
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Your Diary");
 
-
+        //TODO: APPLY TO ALL CHECKBOXES NOT JUST TASK01
+        binding.task01Checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    buttonView.setPaintFlags(buttonView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                } else {
+                    buttonView.setPaintFlags(buttonView.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+            }
+        });
 
         // End
 

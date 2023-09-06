@@ -6,5 +6,251 @@
     android:layout_height="match_parent"
     tools:context=".ui.health.diary.fragments.ViewDiaryFragment">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/emotion_overhang"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+        app:shapeAppearanceOverlay="@style/RoundedBottom" />
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        app:showDividers="middle"
+        app:divider="@drawable/empty_short_divider"
+        app:layout_constraintEnd_toEndOf="@id/emotion_overhang"
+        app:layout_constraintStart_toStartOf="@id/emotion_overhang"
+        app:layout_constraintTop_toTopOf="@id/emotion_overhang"
+        app:layout_constraintBottom_toBottomOf="@id/emotion_overhang">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mental Health Tracker"
+            android:textSize="20sp"
+            android:textColor="?attr/colorPrimaryVariant"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/mood_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="Today's Mood"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:divider="@drawable/empty_thin_divider"
+                app:showDividers="middle"
+                android:layout_alignParentEnd="true">
+
+                <TextView
+                    android:id="@+id/recorded_emoji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/recorded_mood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nothing yet."
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Update Mood"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnPrimary"
+            android:background="@drawable/rounded_button"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/task_overhang"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="120dp"
+        android:background="@color/white"
+        android:elevation="3dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+        app:shapeAppearanceOverlay="@style/RoundedBottom" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="40dp"
+        android:elevation="4dp"
+        android:orientation="horizontal"
+        app:showDividers="middle"
+        app:divider="@drawable/empty_wide_divider"
+        app:layout_constraintVertical_bias="0.00"
+        app:layout_constraintEnd_toEndOf="@id/task_overhang"
+        app:layout_constraintStart_toStartOf="@id/task_overhang"
+        app:layout_constraintTop_toTopOf="@id/task_overhang"
+        app:layout_constraintBottom_toBottomOf="@id/task_overhang">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            app:showDividers="middle"
+            app:divider="@drawable/empty_short_divider">
+
+            <CheckBox
+                android:id="@+id/task01_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #1"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task02_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #2"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task03_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #3"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task04_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #4"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task05_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #5"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical"
+            app:showDividers="middle"
+            app:divider="@drawable/empty_short_divider">
+
+            <CheckBox
+                android:id="@+id/task06_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #6"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task07_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #7"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task08_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #8"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task09_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #9"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task10_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #10"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
