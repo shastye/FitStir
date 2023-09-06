@@ -9,6 +9,7 @@
     tools:context=".ui.runtracker.RunClubFragment">
 
     <ImageView
+        android:id="@+id/imageView8"
         android:layout_width="match_parent"
         android:layout_height="388dp"
         android:src="@drawable/background2"
@@ -17,19 +18,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mapView" />
 
+    <Chronometer
+        android:id="@+id/timer"
+        android:layout_width="215dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/dialog_background_square"
+        android:gravity="center"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/run_History_RV"
+        app:layout_constraintEnd_toStartOf="@+id/stop_Run_BTN"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        app:layout_constraintVertical_bias="1.0" />
 
     <fragment
         android:id="@+id/mapView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="388dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/run_History_RV"
-        android:layout_width="417dp"
-        android:layout_height="190dp"
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,34 +111,34 @@
 
     <ImageButton
         android:id="@+id/start_Run_BTN"
-        android:layout_width="79dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="388dp"
+        android:layout_width="55dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="393dp"
         android:background="@drawable/start"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.924"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/pause_Run_BTN"
-        android:layout_width="59dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="396dp"
-        android:background="@drawable/pause"
+        android:layout_width="45dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="404dp"
+        android:background="@drawable/baseline_pause_circle_filled_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.757"
+        app:layout_constraintHorizontal_bias="0.748"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/stop_Run_BTN"
-        android:layout_width="59dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="396dp"
-        android:background="@drawable/stop"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="404dp"
+        android:background="@drawable/baseline_stop_circle_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -136,6 +150,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/statistics_BTN"
+        android:layout_width="60dp"
+        android:layout_height="57dp"
+        android:background="@drawable/statistics"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.78"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view"
         app:layout_constraintVertical_bias="0.0" />
