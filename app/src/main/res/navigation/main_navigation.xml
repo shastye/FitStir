@@ -150,7 +150,7 @@
 
     <fragment
         android:id="@+id/navigation_diary"
-        android:name="com.fitstir.fitstirapp.ui.health.diary.DiaryFragment"
+        android:name="com.fitstir.fitstirapp.ui.health.diary.fragments.DiaryFragment"
         android:label="Diary"
         tools:layout="@layout/fragment_diary" />
 
