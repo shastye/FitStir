@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRunClubBinding;
 import com.fitstir.fitstirapp.databinding.FragmentRunStatisticsBinding;
+import com.fitstir.fitstirapp.ui.runtracker.utilites.RunViewModel;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
 
 
@@ -22,7 +23,7 @@ public class RunStatisticsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
+        RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
 
         binding = FragmentRunStatisticsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
