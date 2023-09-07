@@ -81,6 +81,7 @@
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/update_mood_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -93,7 +94,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/task_overhang"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="235dp"
         android:layout_marginTop="120dp"
         android:background="@color/white"
         android:elevation="3dp"
@@ -113,8 +114,7 @@
         android:layout_marginTop="40dp"
         android:elevation="4dp"
         android:orientation="horizontal"
-        app:showDividers="middle"
-        app:divider="@drawable/empty_wide_divider"
+        app:divider="@drawable/empty_thin_divider"
         app:layout_constraintVertical_bias="0.00"
         app:layout_constraintEnd_toEndOf="@id/task_overhang"
         app:layout_constraintStart_toStartOf="@id/task_overhang"
@@ -125,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="4dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_alignParentStart="true"
             android:orientation="vertical"
             app:showDividers="middle"
@@ -143,17 +143,6 @@
                 android:textColor="@color/black"/>
 
             <CheckBox
-                android:id="@+id/task02_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/custom_checkbox_square"
-                android:buttonTint="@color/custom_checkbox_square"
-                android:clickable="true"
-                android:text="Task #2"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-
-            <CheckBox
                 android:id="@+id/task03_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,17 +154,6 @@
                 android:textColor="@color/black"/>
 
             <CheckBox
-                android:id="@+id/task04_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/custom_checkbox_square"
-                android:buttonTint="@color/custom_checkbox_square"
-                android:clickable="true"
-                android:text="Task #4"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-
-            <CheckBox
                 android:id="@+id/task05_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -183,28 +161,6 @@
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
                 android:text="Task #5"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="4dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_alignParentEnd="true"
-            android:orientation="vertical"
-            app:showDividers="middle"
-            app:divider="@drawable/empty_short_divider">
-
-            <CheckBox
-                android:id="@+id/task06_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/custom_checkbox_square"
-                android:buttonTint="@color/custom_checkbox_square"
-                android:clickable="true"
-                android:text="Task #6"
                 android:textSize="18sp"
                 android:textColor="@color/black"/>
 
@@ -220,17 +176,6 @@
                 android:textColor="@color/black"/>
 
             <CheckBox
-                android:id="@+id/task08_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/custom_checkbox_square"
-                android:buttonTint="@color/custom_checkbox_square"
-                android:clickable="true"
-                android:text="Task #8"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-
-            <CheckBox
                 android:id="@+id/task09_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -238,6 +183,61 @@
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
                 android:text="Task #9"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical"
+            app:showDividers="middle"
+            app:divider="@drawable/empty_short_divider">
+
+            <CheckBox
+                android:id="@+id/task02_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #2"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task04_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #4"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task06_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #6"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <CheckBox
+                android:id="@+id/task08_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox_square"
+                android:buttonTint="@color/custom_checkbox_square"
+                android:clickable="true"
+                android:text="Task #8"
                 android:textSize="18sp"
                 android:textColor="@color/black"/>
 
@@ -251,6 +251,7 @@
                 android:text="Task #10"
                 android:textSize="18sp"
                 android:textColor="@color/black"/>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
