@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:cardBackgroundColor="@color/soft_deep_purple"
+        app:cardCornerRadius="55dp"
+        android:alpha="0.85"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Run Time:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="12sp"/>
+        <EditText
+            android:id="@+id/total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="time"
+            android:layout_marginLeft="88dp"
+            android:textColor="@color/black"
+
+            android:textSize="15sp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Distance:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="125dp"
+            android:textSize="12sp"/>
+        <EditText
+            android:id="@+id/total_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="distance"
+            android:layout_marginLeft="200dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories Burned:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="265dp"
+            android:textSize="12sp"/>
+        <EditText
+            android:id="@+id/total_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="cals"
+            android:layout_marginLeft="350dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginTop="2dp"/>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

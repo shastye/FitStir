@@ -18,20 +18,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mapView" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/stat_holder"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/run_History_RV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer" >
+
+        <include layout="@layout/included_finished_runs_stats"/>
+
+    </androidx.cardview.widget.CardView>
+
     <Chronometer
         android:id="@+id/timer"
-        android:layout_width="215dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="11dp"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
         android:background="@drawable/dialog_background_square"
         android:gravity="center"
-        android:textSize="40sp"
+        android:textSize="30sp"
+        android:layout_marginTop="3dp"
         app:layout_constraintBottom_toTopOf="@+id/run_History_RV"
         app:layout_constraintEnd_toStartOf="@+id/stop_Run_BTN"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <fragment
         android:id="@+id/mapView"
@@ -43,7 +56,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/run_History_RV"
         android:layout_width="match_parent"
-        android:layout_height="155dp"
+        android:layout_height="120dp"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +77,7 @@
         android:layout_height="388dp"
         android:background="@color/soft_deep_purple"
         app:layout_constraintEnd_toEndOf="parent"
+        android:alpha="0.5"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mapView" />
@@ -72,6 +86,7 @@
         android:id="@+id/view2"
         android:layout_width="8dp"
         android:layout_height="388dp"
+        android:alpha="0.5"
         android:background="@color/soft_deep_purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -93,6 +108,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="17dp"
+        android:alpha="0.5"
         android:background="@color/soft_deep_purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,6 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="17dp"
         android:layout_marginTop="372dp"
+        android:alpha="0.5"
         android:background="@color/soft_deep_purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
