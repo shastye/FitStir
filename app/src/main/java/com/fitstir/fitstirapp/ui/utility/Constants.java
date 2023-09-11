@@ -6,6 +6,8 @@ public class Constants {
     public static final int REQUEST_CODE_PERMISSION =3;
     public static final long MILLISECS_PER_SEC = 1000L;
     public static final long MILLISECS_PER_DAY = 86400000L;
+    public static final String DATE_TIME_FORMAT ="yyyy-MM-dd HH:mm:ss";
+    public static final String TIME_FORMAT ="H:mm:ss";
 
     public static final class FOOD_DATA_BASE_PARSER {
         public static final String APP_ID = "ab4a541a";
