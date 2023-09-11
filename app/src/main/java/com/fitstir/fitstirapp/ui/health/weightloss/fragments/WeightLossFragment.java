@@ -41,7 +41,6 @@ public class WeightLossFragment extends Fragment {
 
     private FragmentWeightLossBinding binding;
     private WeightLossViewModel weightLossViewModel;
-
     private ConstraintLayout loadingScreen, sectionScreen;
     private RecyclerView dataRecyclerView;
     private TextView goalWeightTextView, currWeightTextView;

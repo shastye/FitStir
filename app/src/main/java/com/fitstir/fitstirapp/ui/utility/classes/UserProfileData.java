@@ -22,7 +22,7 @@ public class UserProfileData {
     Integer height_ft, height_in, weight, goal_weight, age,
             themeID, intervalID, rangeID, unitID,
             calorieTrackerGoal;
-    
+    FirebaseUser user;
 
 
 
@@ -33,6 +33,8 @@ public class UserProfileData {
     public void setCalorieTrackerGoal(Integer calorieTrackerGoal) {
         this.calorieTrackerGoal = calorieTrackerGoal;
     }
+
+    public void setUser(FirebaseUser user) {this.user = user;}
 
     public Integer getThemeID() {
         return themeID;
@@ -77,6 +79,10 @@ public class UserProfileData {
     public String getEmail() {
         return email;
     }
+    public FirebaseUser getUser(){
+       user = FirebaseAuth.getInstance().getCurrentUser();
+       return user;
+    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -106,9 +112,7 @@ public class UserProfileData {
         this.height_in = height_in;
     }
 
-    public Integer get_Weight() {
-        return weight;
-    }
+    public Integer get_Weight() {return weight;}
 
     public void addWeightData(Integer newWeight) throws RuntimeException {
         // TODO: STILL NEEDS TESTING
@@ -227,9 +231,6 @@ public class UserProfileData {
     public void setSex(String sex) {
         this.sex = sex;
     }
-
-
-
     public UserProfileData() {
         fullname = "";
         email = "";

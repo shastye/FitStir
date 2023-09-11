@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -23,12 +24,21 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRunClubBinding;
+import com.fitstir.fitstirapp.ui.health.weightloss.WeightLossViewModel;
+import com.fitstir.fitstirapp.ui.runtracker.utilites.RunHistoryAdapter;
 import com.fitstir.fitstirapp.ui.runtracker.utilites.RunViewModel;
 import com.fitstir.fitstirapp.ui.runtracker.utilites.RunnerData;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
+import com.fitstir.fitstirapp.ui.workouts.exercises.workoutAdapter;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Granularity;
@@ -54,12 +64,24 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -69,8 +91,11 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         private View fragment;
         private ImageButton startRun,runHistory,pauseRun, stopRun, statistics;
         private RecyclerView history_RV;
+        private ArrayList<RunnerData> data;
+        private ArrayList<LatLng> location;
+        private RunHistoryAdapter adapter;
         private SupportMapFragment mapFragment;
-        private Location mCurrentLocation,prevLocation;
+        private Location mCurrentLocation;
         private FusedLocationProviderClient fusedClient;
         private GoogleMap mMap;
         private Boolean locationPermissionGranted = false;
@@ -79,14 +104,20 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         private Boolean isStopped = false;
         private Boolean isTimerOn = false;
         private ArrayList<LatLng> pathPoint;
-        private ArrayList<LatLng>  emptyPath;
-        private double totalDistance = 0;
+        private ArrayList<Polyline> pathPoly;
+        private float totalDistance = 0;
+        private float distanceCal = 0;
         private long pauseOffset = 0;
         private Chronometer timer;
+        private Chronometer miniTimer;
         private RunnerData currentRunner;
         private CardView stats;
-        private EditText distance;
+        private TextView distance, calories;
+        private DecimalFormat decimalFormat;
+        private SimpleDateFormat format;
+        private Date currentDate;
         //endregion
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
@@ -105,9 +136,19 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         statistics = root.findViewById(R.id.statistics_BTN);
         stats = root.findViewById(R.id.stat_holder);
         timer = root.findViewById(R.id.timer);
+        miniTimer = root.findViewById(R.id.end_timer);
         distance = root.findViewById(R.id.total_distance);
+        calories = root.findViewById(R.id.total_calories);
+        format = new SimpleDateFormat(Constants.DATE_TIME_FORMAT);
+        currentDate = new Date();
+        decimalFormat = new DecimalFormat("###.###");
+        pathPoly = new ArrayList<>();
+        location = new ArrayList<>();
         pathPoint = new ArrayList<>();
-        emptyPath = new ArrayList<>();
+        data = new ArrayList<>();
+        String date = format.format(currentDate);
+        viewRuns.setRunDate(date);
+        currentRunner.setCompletedDate(date);
 
         //map setup and location tracking service
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
@@ -121,6 +162,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         pauseRun.setVisibility(View.INVISIBLE);
         stopRun.setVisibility(View.INVISIBLE);
         timer.setVisibility(View.INVISIBLE);
+        miniTimer.setVisibility(View.INVISIBLE);
         stats.setVisibility(View.INVISIBLE);
 //endregion
 
@@ -141,10 +183,11 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                     isTimerOn = true;
                     timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
                     timer.start();
+                    miniTimer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                    miniTimer.start();
                 }
             }
         });
-
         pauseRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,46 +197,99 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                 if(isPaused){
                     isTracking = false;
                     isTimerOn = false;
+
                     timer.stop();
                     pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+
+                    //finished elapsed timer
+                    miniTimer.stop();
+                    pauseOffset = SystemClock.elapsedRealtime() - miniTimer.getBase();
                 }
             }
         });
-
         stopRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentRunner.setRunTime((int) timer.getBase());
-                viewRuns.setRunTime(currentRunner.getRunTime());
-                mMap.clear();
                 fusedClient.removeLocationUpdates(locationCallback);
+                mMap.clear();
+
                 isStopped = true;
+                isTimerOn = false;
+                isTracking = false;
+
                 pauseRun.setVisibility(View.INVISIBLE);
                 stopRun.setVisibility(View.INVISIBLE);
                 startRun.setVisibility(View.VISIBLE);
+                miniTimer.setVisibility(View.VISIBLE);
 
-                if(isStopped){
-                    isTimerOn = false;
-                    isTracking = false;
-                    isPaused = false;
+                double  elapsedTime = SystemClock.elapsedRealtime() - timer.getBase();
+                double converted =  ((elapsedTime / 1000f) / 60);
+                currentRunner.setCompletedRunInMinutes(converted);
+                viewRuns.setRunTimeInMinutes(converted);
 
-                        timer.setBase(SystemClock.elapsedRealtime());
-                        pauseOffset = 0;
-                        timer.stop();
+                timer.setBase(SystemClock.elapsedRealtime());
+                pauseOffset = 0;
+                timer.stop();
+                miniTimer.stop();
 
-               calculateDistance(prevLocation);
-                    //TODO: save data and store to current user in firebase
-                }
+                //getting total distance, formatting and displaying to screen
+                distanceCal += currentRunner.calculateDistance(pathPoint, totalDistance);
+                currentRunner.setTotalDistance(distanceCal);
+                float formatted = Float.valueOf(decimalFormat.format(distanceCal));
+                String totalDistance = String.valueOf(formatted);
+                viewRuns.setRunDistance(Double.valueOf(totalDistance));
+                distance.setText(totalDistance);
+
+                //getting average pace of runner to set data and viewModel
+                double avgPace = 0;
+                avgPace += currentRunner.calculateSpeed(distanceCal,converted);
+                currentRunner.setAvgPace(avgPace);
+                viewRuns.setAvgPace(avgPace);
+
+                //getting saved user data to calculate calories burned
+                //after calculation formatting for human-readable
+                FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+                assert authUser != null;
+                DatabaseReference userRef = FirebaseDatabase.getInstance()
+                        .getReference("Users")
+                        .child(authUser.getUid());
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserProfileData value = snapshot.getValue(UserProfileData.class);
+                        viewRuns.setUser(value);
+                        viewRuns.setWeight(value.get_Weight());
+                        viewRuns.setAge(value.getAge());
+                        int weight = Integer.parseInt(String.valueOf(viewRuns.getWeight().getValue()));
+                        int age = Integer.parseInt(String.valueOf(viewRuns.getAge().getValue()));
+
+                        //format to human-readable
+                        double burned = 0;
+                        burned += currentRunner.calculateBurnedCalories( weight, converted , age,distanceCal);
+                        double formatting = Double.valueOf(decimalFormat.format(burned));
+                        String calBurned = String.valueOf(formatting);
+                        calories.setText(calBurned);
+                        viewRuns.setBurnedCalories(formatting);
+                        currentRunner.setBurnedCalories(formatting);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+                currentRunner.addRunData(requireActivity(), data,currentRunner);
             }
         });
-
         runHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 history_RV.setVisibility(View.VISIBLE);
+                history_RV.setLayoutManager(new LinearLayoutManager(getActivity()));
+                history_RV.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+                adapter = new RunHistoryAdapter( data, requireActivity());
+                history_RV.setAdapter(adapter);
+
             }
         });
-
         statistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,6 +304,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap){
         mMap = googleMap;
+        RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
 
         Dexter.withContext(getContext())
                         .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -225,8 +322,12 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                                                 fusedClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                                                     @Override
                                                     public void onSuccess(Location location) {
-                                                        prevLocation = location;
+
                                                         mCurrentLocation = location;
+                                                        currentRunner.setLocation(mCurrentLocation);
+                                                        double [] locations ={mCurrentLocation.getLongitude(), mCurrentLocation.getLatitude()};
+                                                        viewRuns.setLocation(locations);
+
                                                         fragment.setVisibility(View.VISIBLE);
                                                         startRun.setVisibility(View.VISIBLE);
                                                         timer.setVisibility(View.VISIBLE);
@@ -354,6 +455,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                         pathPoint.add(loc);
                         Polyline route = mMap.addPolyline(opts);
                         route.setPoints(pathPoint);
+                        pathPoly.add(route);
                         mCurrentLocation = locationResult.getLastLocation();
                     }
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,18));
@@ -364,22 +466,6 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         };
   //endregion
 
-    public void calculateDistance(@NonNull Location location){
-
-
-        double startingDistance = location.distanceTo(mCurrentLocation);
-
-        //if less than 10 meters do not record
-        if(startingDistance < 10.00){
-            // do nothing
-        }
-        else{
-            totalDistance += startingDistance;
-            prevLocation = location;
-            //distance.setText((int) totalDistance);
-        }
-        Toast.makeText(requireActivity(),"distance = " + totalDistance, Toast.LENGTH_LONG).show();
-    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

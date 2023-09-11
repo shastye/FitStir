@@ -59,7 +59,6 @@ public class CalorieTrackerFragment extends Fragment {
 
     private FragmentCalorieTrackerBinding binding;
     private CalorieTrackerViewModel calorieTrackerViewModel;
-
     private ConstraintLayout loadingPopupView;
     private RecyclerView dataRecyclerView;
     private DataAdapter dataAdapter;
@@ -68,7 +67,6 @@ public class CalorieTrackerFragment extends Fragment {
     private LinearLayoutCompat goalInfoView;
     private AppBarLayout dateToolbar;
     private ImageButton moreButton;
-
     private boolean isLoading;
     private DecimalFormat decimalFormat;
     private String stringUserID;

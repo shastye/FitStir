@@ -20,43 +20,49 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Run Time:"
+            android:text="Run Time:"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="textStart"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="5dp"
             android:textSize="12sp"/>
-        <EditText
-            android:id="@+id/total_time"
+
+        <Chronometer
+            android:id="@+id/end_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="time"
-            android:layout_marginLeft="88dp"
-            android:textColor="@color/black"
-
-            android:textSize="15sp"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="15.5dp"
+            android:gravity="center"
+            android:textSize="12sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="103dp"
+            android:layout_marginTop="16dp"
             android:text="Total Distance:"
-            android:textColor="@color/black"
-            android:textStyle="bold"
             android:textAlignment="textStart"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="125dp"
-            android:textSize="12sp"/>
-        <EditText
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+        <TextView
             android:id="@+id/total_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="distance"
-            android:layout_marginLeft="200dp"
+            android:layout_marginLeft="185dp"
             android:textColor="@color/black"
-            android:textSize="15sp"
-            android:layout_marginTop="2dp"/>
+            android:textSize="13sp"
+            android:layout_marginTop="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="miles"
+            android:layout_marginLeft="218.5dp"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:layout_marginTop="15.5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,18 +71,17 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAlignment="textStart"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="265dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="260dp"
             android:textSize="12sp"/>
-        <EditText
+        <TextView
             android:id="@+id/total_calories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="cals"
-            android:layout_marginLeft="350dp"
+            android:layout_marginLeft="352dp"
             android:textColor="@color/black"
-            android:textSize="15sp"
-            android:layout_marginTop="2dp"/>
+            android:textSize="13sp"
+            android:layout_marginTop="14dp"/>
 
 
 

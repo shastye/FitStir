@@ -75,7 +75,6 @@ public class ChangeWeightGoalDialog extends IBasicDialog {
     @Override
     public void onAccept() {
         UserProfileData user = weightLossViewModel.getThisUser().getValue();
-
         int newGoal = Integer.parseInt(changedGoal.getText().toString());
         if (newGoal != user.getGoal_weight()) {
             user.setGoal_weight(newGoal);

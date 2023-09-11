@@ -5,22 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class RunHistoryAdapter extends RecyclerView.Adapter<RunHistoryAdapter.ViewHolder> {
 
-    private ArrayList<RunnerData> data;
+    private ArrayList<RunnerData> rundata;
     private Context context;
+    private DecimalFormat decimalFormat;
+    private SimpleDateFormat formatted;
+    private Date runDate;
 
     public RunHistoryAdapter(ArrayList<RunnerData> data, Context context) {
-        this.data = data;
+        this.rundata = data;
         this.context = context;
     }
 
@@ -33,24 +40,33 @@ public class RunHistoryAdapter extends RecyclerView.Adapter<RunHistoryAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull RunHistoryAdapter.ViewHolder holder, int position) {
-        RunnerData runner = new RunnerData();
+        RunnerData runner = rundata.get(position);
+        runDate = new Date();
+        decimalFormat = new DecimalFormat("##.##");
+        formatted = new SimpleDateFormat(Constants.DATE_TIME_FORMAT);
 
-        holder.dayTime.setText(Integer.toString(runner.getTimeOfDay()));
-        holder.date.setText(Integer.toString(runner.getRunDate()));
-        holder.area.setText(Integer.toString(runner.getLatLng()));
-        holder.distance.setText(Integer.toString(runner.getRunDistance()));
+        holder.date.setText(formatted.format(runDate));
+
+        String distanceFormatted = decimalFormat.format(runner.getTotalDistance());
+        holder.distance.setText(distanceFormatted);
+
+        String calFormatted = decimalFormat.format(runner.getBurnedCalories());
+        holder.calories.setText(calFormatted);
+
+        holder.area.setText(String.valueOf(runner.getLocation()));
+
     }
 
     @Override
-    public int getItemCount() {return data.size();}
+    public int getItemCount() {return rundata.size();}
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private EditText distance, date, dayTime,area;
+        private TextView distance, date,area, calories;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            calories = itemView.findViewById(R.id.calories_burned);
             distance = itemView.findViewById(R.id.run_distance);
             date = itemView.findViewById(R.id.run_date);
-            dayTime = itemView.findViewById(R.id.run_timeOfDay);
             area = itemView.findViewById(R.id.run_Latlng);
         }
     }
