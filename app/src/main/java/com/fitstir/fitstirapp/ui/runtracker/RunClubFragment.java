@@ -83,6 +83,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 public class RunClubFragment extends Fragment implements OnMapReadyCallback {
@@ -116,17 +117,20 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         private DecimalFormat decimalFormat;
         private SimpleDateFormat format;
         private Date currentDate;
+
         //endregion
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
+        SettingsViewModel model = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
-        currentRunner = new RunnerData();
+
         binding = FragmentRunClubBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
      // region Initialization
+        currentRunner = new RunnerData();
         fragment = root.findViewById(R.id.mapView);
         startRun = root.findViewById(R.id.start_Run_BTN);
         runHistory = root.findViewById(R.id.run_History_BTN);
@@ -141,7 +145,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         calories = root.findViewById(R.id.total_calories);
         format = new SimpleDateFormat(Constants.DATE_TIME_FORMAT);
         currentDate = new Date();
-        decimalFormat = new DecimalFormat("###.###");
+        decimalFormat = new DecimalFormat("###.##");
         pathPoly = new ArrayList<>();
         location = new ArrayList<>();
         pathPoint = new ArrayList<>();
@@ -175,6 +179,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
 
                 isTracking = true;
                 startRun.setVisibility(View.INVISIBLE);
+                miniTimer.setVisibility(View.INVISIBLE);
                 pauseRun.setVisibility(View.VISIBLE);
                 stopRun.setVisibility(View.VISIBLE);
 
@@ -234,7 +239,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
 
                 //getting total distance, formatting and displaying to screen
                 distanceCal += currentRunner.calculateDistance(pathPoint, totalDistance);
-                currentRunner.setTotalDistance(distanceCal);
+                //currentRunner.setTotalDistance(distanceCal);
                 float formatted = Float.valueOf(decimalFormat.format(distanceCal));
                 String totalDistance = String.valueOf(formatted);
                 viewRuns.setRunDistance(Double.valueOf(totalDistance));
@@ -243,7 +248,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                 //getting average pace of runner to set data and viewModel
                 double avgPace = 0;
                 avgPace += currentRunner.calculateSpeed(distanceCal,converted);
-                currentRunner.setAvgPace(avgPace);
+                //currentRunner.setAvgPace(avgPace);
                 viewRuns.setAvgPace(avgPace);
 
                 //getting saved user data to calculate calories burned
@@ -263,30 +268,53 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                         int weight = Integer.parseInt(String.valueOf(viewRuns.getWeight().getValue()));
                         int age = Integer.parseInt(String.valueOf(viewRuns.getAge().getValue()));
 
-                        //format to human-readable
-                        double burned = 0;
+                        float burned = 0;
                         burned += currentRunner.calculateBurnedCalories( weight, converted , age,distanceCal);
-                        double formatting = Double.valueOf(decimalFormat.format(burned));
+                        double formatting = Double.parseDouble(decimalFormat.format(burned));
                         String calBurned = String.valueOf(formatting);
                         calories.setText(calBurned);
-                        viewRuns.setBurnedCalories(formatting);
-                        currentRunner.setBurnedCalories(formatting);
+                        viewRuns.setBurnedCalories(burned);
+                        currentRunner.setBurnedCalories(String.valueOf(burned));
+
+                        if(distanceCal > 0.05)
+                        {
+                            currentRunner.addRunData(requireActivity(), data,currentRunner);
+                        }
+                        else{
+                            Toast.makeText(requireActivity(), "Run Cancelled no data saved", Toast.LENGTH_LONG).show();
+                        }
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
-                currentRunner.addRunData(requireActivity(), data,currentRunner);
             }
         });
         runHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                history_RV.setVisibility(View.VISIBLE);
-                history_RV.setLayoutManager(new LinearLayoutManager(getActivity()));
-                history_RV.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-                adapter = new RunHistoryAdapter( data, requireActivity());
-                history_RV.setAdapter(adapter);
+                ArrayList<RunnerData> runData = new ArrayList<>();
+
+                if(history_RV.getVisibility() == View.VISIBLE){
+                    history_RV.setVisibility(View.INVISIBLE);
+
+                    history_RV.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    history_RV.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
+                    adapter = new RunHistoryAdapter( runData, requireActivity());
+                    history_RV.setAdapter(adapter);
+
+                    currentRunner.fetchRunData(runData,adapter, requireActivity());
+                }
+                else if(history_RV.getVisibility() == View.INVISIBLE){
+                    history_RV.setVisibility(View.VISIBLE);
+                    history_RV.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    history_RV.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
+                    adapter = new RunHistoryAdapter( runData, requireActivity());
+                    history_RV.setAdapter(adapter);
+
+                    currentRunner.fetchRunData(runData,adapter, requireActivity());
+                }
 
             }
         });
@@ -324,9 +352,12 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                                                     public void onSuccess(Location location) {
 
                                                         mCurrentLocation = location;
-                                                        currentRunner.setLocation(mCurrentLocation);
-                                                        double [] locations ={mCurrentLocation.getLongitude(), mCurrentLocation.getLatitude()};
-                                                        viewRuns.setLocation(locations);
+                                                        String lat = String.valueOf(mCurrentLocation.getLatitude());
+                                                        String lng = String.valueOf(mCurrentLocation.getLongitude());
+                                                        currentRunner.setLatitude(lat);
+                                                        currentRunner.setLongitude(lng);
+                                                        viewRuns.setLat(lat);
+                                                        viewRuns.setLng(lng);
 
                                                         fragment.setVisibility(View.VISIBLE);
                                                         startRun.setVisibility(View.VISIBLE);
@@ -438,14 +469,14 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
 
-                PolylineOptions opts = new PolylineOptions()
-                        .width(8)
-                        .color(Color.RED)
-                        .geodesic(true)
-                        .visible(true);
                 if(locationResult == null){
                     return;
                 }
+                PolylineOptions opts = new PolylineOptions()
+                        .width(10)
+                        .color(Color.RED)
+                        .geodesic(true)
+                        .visible(true);
 
                 for(Location location: locationResult.getLocations()) {
                     LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());

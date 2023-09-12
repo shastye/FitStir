@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.workouts.exercises;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -106,7 +107,7 @@ public class WorkoutApi {
                             }
                             adapter.notifyDataSetChanged();
                         }else{
-                            //
+                           //
                         }
 
                     }

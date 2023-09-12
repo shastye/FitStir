@@ -41,19 +41,16 @@ public class RunHistoryAdapter extends RecyclerView.Adapter<RunHistoryAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull RunHistoryAdapter.ViewHolder holder, int position) {
         RunnerData runner = rundata.get(position);
+
         runDate = new Date();
         decimalFormat = new DecimalFormat("##.##");
         formatted = new SimpleDateFormat(Constants.DATE_TIME_FORMAT);
-
-        holder.date.setText(formatted.format(runDate));
-
         String distanceFormatted = decimalFormat.format(runner.getTotalDistance());
+        holder.date.setText(formatted.format(runDate));
         holder.distance.setText(distanceFormatted);
-
-        String calFormatted = decimalFormat.format(runner.getBurnedCalories());
-        holder.calories.setText(calFormatted);
-
-        holder.area.setText(String.valueOf(runner.getLocation()));
+        holder.calories.setText(runner.getBurnedCalories());
+        holder.areaLat.setText(runner.getLatitude());
+        holder.areaLng.setText(runner.getLongitude());
 
     }
 
@@ -61,13 +58,14 @@ public class RunHistoryAdapter extends RecyclerView.Adapter<RunHistoryAdapter.Vi
     public int getItemCount() {return rundata.size();}
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView distance, date,area, calories;
+        private TextView distance, date,areaLat, calories,areaLng;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             calories = itemView.findViewById(R.id.calories_burned);
             distance = itemView.findViewById(R.id.run_distance);
             date = itemView.findViewById(R.id.run_date);
-            area = itemView.findViewById(R.id.run_Latlng);
+            areaLat = itemView.findViewById(R.id.run_Lat);
+            areaLng = itemView.findViewById(R.id.run_Lng);
         }
     }
 }
