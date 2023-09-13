@@ -90,26 +90,109 @@ public class ViewDiaryFragment extends Fragment {
             throw new RuntimeException("TASK COUNT != TO CHECKBOX COUNT"); // debugging purposes in case the amount is changed
         }
 
+        ArrayList<DiaryEntry> diaryEntries = diaryData.getEmotions();
+
+        if (diaryEntries == null) {
+            diaryEntries = new ArrayList<>();
+        }
+        ArrayList<TextView> emojiGridDays = new ArrayList<TextView>() {{
+            add(binding.emojiDay1);
+            add(binding.emojiDay2);
+            add(binding.emojiDay3);
+            add(binding.emojiDay4);
+            add(binding.emojiDay5);
+            add(binding.emojiDay6);
+            add(binding.emojiDay7);
+        }};
+
         Calendar cal = Calendar.getInstance();
         final int today = cal.get(Calendar.DAY_OF_YEAR);
 
+        //region Updating saved lists to only include last seven days //////////////////////////////
+        cal = Calendar.getInstance(); // just in case I add something before this that
+                                      // manipulates cal since I'm not using cal.setTime()
+        cal.add(Calendar.DATE, -7);
+        final int lastDate = cal.get(Calendar.DAY_OF_YEAR);
+
+        if (diaryEntries.size() != 0) {
+            for (int i = 0; i < diaryEntries.size(); i++) {
+                DiaryEntry entry = diaryEntries.get(i);
+
+                Calendar temp = Calendar.getInstance();
+                temp.setTime(entry.getDate());
+                if (lastDate > temp.get(Calendar.DAY_OF_YEAR)) {
+                    diaryEntries.remove(entry);
+                }
+            }
+
+            diaryData.setEmotions(diaryEntries);
+        }
+
+        FirebaseDatabase.getInstance()
+                .getReference("DiaryData")
+                .child(authUser.getUid())
+                .child("emotions")
+                .setValue(diaryData.getEmotions());
+
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task != null && task.getCompletedOn() != null && task.getCompletedOn().size() != 0) {
+                ArrayList<Date> dates = task.getCompletedOn();
+                for (int k = 0; k < dates.size(); k++) {
+
+                    Calendar temp = Calendar.getInstance();
+                    temp.setTime(dates.get(k));
+                    if (lastDate > temp.get(Calendar.DAY_OF_YEAR)) {
+                        dates.remove(dates.get(k));
+                        k--;
+                    }
+                }
+                task.setCompletedOn(dates);
+            }
+            tasks.set(i, task);
+
+            switch (i) {
+                case 0:
+                    diaryData.setTask01(tasks.get(0));
+                    break;
+                case 1:
+                    diaryData.setTask02(tasks.get(1));
+                    break;
+                case 2:
+                    diaryData.setTask03(tasks.get(2));
+                    break;
+                case 3:
+                    diaryData.setTask04(tasks.get(3));
+                    break;
+                case 4:
+                    diaryData.setTask05(tasks.get(4));
+                    break;
+                case 5:
+                    diaryData.setTask06(tasks.get(5));
+                    break;
+                case 6:
+                    diaryData.setTask07(tasks.get(6));
+                    break;
+                case 7:
+                    diaryData.setTask08(tasks.get(7));
+                    break;
+                case 8:
+                    diaryData.setTask09(tasks.get(8));
+                    break;
+                case 9:
+                    diaryData.setTask10(tasks.get(9));
+                    break;
+            }
+        }
+
+        FirebaseDatabase.getInstance()
+                .getReference("DiaryData")
+                .child(authUser.getUid())
+                .setValue(diaryData);
+        //endregion ////////////////////////////////////////////////////////////////////////////////
+
         //region Updating isCompleted on screen and in Firebase ////////////////////////////////////
         final int size = checkBoxes.size();
-
-        final float scale = getContext().getResources().getDisplayMetrics().density;
-        int pixels = 0;
-        if (diaryData.getTask03() == null || diaryData.getTask03().getName() == null || diaryData.getTask03().getName().equals("")) {
-            pixels = (int) (75 * scale + 0.5f);
-        } else if (diaryData.getTask05() == null || diaryData.getTask05().getName() == null || diaryData.getTask05().getName().equals("")) {
-            pixels = (int) (115 * scale + 0.5f);
-        } else if (diaryData.getTask07() == null || diaryData.getTask07().getName() == null || diaryData.getTask07().getName().equals("")) {
-            pixels = (int) (155 * scale + 0.5f);
-        } else if (diaryData.getTask09() == null || diaryData.getTask09().getName() == null || diaryData.getTask09().getName().equals("")) {
-            pixels = (int) (195 * scale + 0.5f);
-        } else {
-            pixels = (int) (235 * scale + 0.5f);
-        }
-        binding.taskOverhang.getLayoutParams().height = pixels;
 
         for (int i = 0; i < size; i++) {
             Calendar finalCal = cal;
@@ -207,6 +290,21 @@ public class ViewDiaryFragment extends Fragment {
                 checkBoxes.get(i).setText(tasks.get(i).getName());
             }
         }
+
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        int pixels = 0;
+        if (numTasks < 3) {
+            pixels = (int) (75 * scale + 0.5f);
+        } else if (numTasks < 5) {
+            pixels = (int) (115 * scale + 0.5f);
+        } else if (numTasks < 7) {
+            pixels = (int) (155 * scale + 0.5f);
+        } else if (numTasks < 9) {
+            pixels = (int) (195 * scale + 0.5f);
+        } else {
+            pixels = (int) (235 * scale + 0.5f);
+        }
+        binding.taskOverhang.getLayoutParams().height = pixels;
         //endregion ////////////////////////////////////////////////////////////////////////////////
 
         //region Updating mood on screen and in Firebase ///////////////////////////////////////////
@@ -265,7 +363,7 @@ public class ViewDiaryFragment extends Fragment {
 
                         if (!mood.equals("")) {
                             if (!emoji.equals("")) {
-                                if (true) { // TODO: Check that it's an emoji?
+                                if (isEmoji(emoji)) {
                                     binding.recordedMood.setText(mood);
                                     binding.recordedEmoji.setText(emoji);
 
@@ -302,6 +400,30 @@ public class ViewDiaryFragment extends Fragment {
         //endregion ////////////////////////////////////////////////////////////////////////////////
 
         //region Updating the Wellness Tracker using Firebase information //////////////////////////
+        final ArrayList<String> emojis = new ArrayList<String>() {{
+            add("");
+            add("");
+            add("");
+            add("");
+            add("");
+            add("");
+            add("");
+        }};
+        for (int i = 0; i < diaryEntries.size(); i++) {
+            cal.setTime(diaryEntries.get(i).getDate());
+            int recorded = cal.get(Calendar.DAY_OF_YEAR);
+
+            for (int comparingDay = today - 1; comparingDay > today - 8; comparingDay--) {
+                if (comparingDay == recorded) {
+                    emojis.set(-(comparingDay - (today - 1)), diaryEntries.get(i).getEmoji());
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < emojiGridDays.size(); i++) {
+            emojiGridDays.get(i).setText(emojis.get(i));
+        }
+
         final ArrayList<Boolean> sevenFalse = new ArrayList<Boolean>() {{
             add(false);
             add(false);
@@ -354,10 +476,25 @@ public class ViewDiaryFragment extends Fragment {
         RecyclerView wellnessTrackerGrid = binding.wellnessTrackerGrid;
         wellnessTrackerGrid.setLayoutManager(new LinearLayoutManager(requireActivity()));
         WellnessTrackerAdapter adapter = new WellnessTrackerAdapter(wellnessTracker);
-        wellnessTrackerGrid.setAdapter(adapter);
-        //endregion
 
-        // TODO: only save last 7 days
+        int OGheight = binding.wellnessTrackerGrid.getLayoutParams().height;
+        int modifier;
+        if (numTasks < 3) {
+            modifier = 4;
+        } else if (numTasks < 5) {
+            modifier = 3;
+        } else if (numTasks < 7) {
+            modifier = 2;
+        } else if (numTasks < 9) {
+            modifier = 1;
+        } else {
+            modifier = 0;
+        }
+        int changeInHeight = (int) (modifier * 40 * scale + 0.5f);
+        binding.wellnessTrackerGrid.getLayoutParams().height = OGheight + changeInHeight;
+
+        wellnessTrackerGrid.setAdapter(adapter);
+        //endregion ////////////////////////////////////////////////////////////////////////////////
 
         // End
 
@@ -375,6 +512,19 @@ public class ViewDiaryFragment extends Fragment {
                 .beginTransaction()
                 .replace(R.id.current_fragment, fragment)
                 .commit();
+    }
+
+    public boolean isEmoji(String emoji) {
+        char[] temp = new char[emoji.length()];
+        emoji.getChars(0, emoji.length() - 1, temp, 0);
+
+        for (int i = 0; i < emoji.length(); i++) {
+            if (Character.isLetterOrDigit(temp[i]) || Character.isSpaceChar(temp[i]) || Character.isWhitespace(temp[i])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private class WellnessTrackerHolder extends RecyclerView.ViewHolder {

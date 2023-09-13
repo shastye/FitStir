@@ -135,6 +135,7 @@
                 android:id="@+id/task01_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -146,6 +147,7 @@
                 android:id="@+id/task03_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -157,6 +159,7 @@
                 android:id="@+id/task05_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -168,6 +171,7 @@
                 android:id="@+id/task07_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -179,6 +183,7 @@
                 android:id="@+id/task09_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -201,6 +206,7 @@
                 android:id="@+id/task02_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -212,6 +218,7 @@
                 android:id="@+id/task04_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -223,6 +230,7 @@
                 android:id="@+id/task06_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -234,6 +242,7 @@
                 android:id="@+id/task08_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -245,6 +254,7 @@
                 android:id="@+id/task10_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
                 android:button="@drawable/custom_checkbox_square"
                 android:buttonTint="@color/custom_checkbox_square"
                 android:clickable="true"
@@ -285,12 +295,15 @@
                 android:id="@+id/starting_month_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/date_row"
+                android:textAlignment="center"
                 android:text="Starting Month"
                 android:textSize="16dp"
                 android:textColor="?attr/colorPrimary"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/date_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -366,9 +379,136 @@
             android:layout_height="wrap_content"
             android:src="@drawable/divider_horizontal_thin_line"/>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/emoji_grid_row"
+                android:textAlignment="center"
+                android:text="Emotions"
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="16dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/emoji_grid_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+
+                <TextView
+                    android:id="@+id/emoji_day1"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/emoji_day2"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/emoji_day3"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/emoji_day4"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/emoji_day5"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/emoji_day6"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/emoji_day7"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/black" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/grid_outline_24dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/grid_outline_24dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/grid_outline_24dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/grid_outline_24dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/grid_outline_24dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/grid_outline_24dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/grid_outline_24dp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/wellness_tracker_grid"
             android:layout_width="match_parent"
-            android:layout_height="220dp"/>
+            android:layout_height="185dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
