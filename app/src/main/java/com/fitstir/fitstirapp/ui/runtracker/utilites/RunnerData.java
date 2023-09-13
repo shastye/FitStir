@@ -2,10 +2,23 @@ package com.fitstir.fitstirapp.ui.runtracker.utilites;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Location;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+
+import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,6 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 
 public class RunnerData {
@@ -24,6 +40,7 @@ public class RunnerData {
     private double totalDistance, completedRunInMinutes;
     private String latitude, longitude, avgPace, burnedCalories;
     private UserProfileData user;
+    private List<RunnerData> dataList;
 
 
     public String getImageRoute() {return imageRoute;}
@@ -94,6 +111,7 @@ public class RunnerData {
 
     }
     public void fetchRunData(ArrayList<RunnerData> data, RunHistoryAdapter adapter, Context context){
+        RunViewModel runViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(RunViewModel.class);
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = db.getReference("CompletedRun").child(authUser.getUid());
@@ -108,7 +126,9 @@ public class RunnerData {
                     {
                         RunnerData runnerData =  dataSnapshot.getValue(RunnerData.class);
                         data.add(runnerData);
+
                     }
+
                     adapter.notifyDataSetChanged();
                 }
 
@@ -152,6 +172,35 @@ public class RunnerData {
             return (float)avg;
         }
         return 0;
+
+    }
+
+    public void makeLineChart(LineChart chart, ArrayList<RunnerData> list){
+
+
+
+        Description description = new Description();
+        description.setText("Run Statistics Chart");
+        description.setPosition(150f,15f);
+        chart.setDescription(description);
+        chart.getAxisRight().setDrawLabels(false);
+
+        XAxis pointX = chart.getXAxis();
+        pointX.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        pointX.setLabelCount(7);
+        pointX.setGranularity(1f);
+
+        YAxis pointY = chart.getAxisLeft();
+        pointY.setAxisMinimum(0f);
+        pointY.setAxisMaximum(800f);
+        pointY.setAxisLineWidth(2f);
+        pointY.setAxisLineColor(Color.BLACK);
+        pointY.setLabelCount(10);
+
+
+
+        
 
     }
 }

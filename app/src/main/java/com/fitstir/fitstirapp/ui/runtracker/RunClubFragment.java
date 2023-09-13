@@ -123,7 +123,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
-        SettingsViewModel model = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
 
 
         binding = FragmentRunClubBinding.inflate(inflater, container, false);
@@ -314,6 +314,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                     history_RV.setAdapter(adapter);
 
                     currentRunner.fetchRunData(runData,adapter, requireActivity());
+
                 }
 
             }
@@ -480,6 +481,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
 
                 for(Location location: locationResult.getLocations()) {
                     LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                    RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
 
                     if(isTracking == true)
                     {
@@ -488,9 +490,18 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                         route.setPoints(pathPoint);
                         pathPoly.add(route);
                         mCurrentLocation = locationResult.getLastLocation();
+
+                        //set view model
+                        viewRuns.setAltitude(mCurrentLocation.getAltitude());
+                        viewRuns.setBearing(mCurrentLocation.getBearing());
+                        viewRuns.setElapsedRealTime(mCurrentLocation.getElapsedRealtimeMillis());
+                        viewRuns.setSpeed(mCurrentLocation.getSpeed());
+                        viewRuns.setClockTime(mCurrentLocation.getTime());
+                        viewRuns.setAccuracy(mCurrentLocation.getAccuracy());
                     }
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,18));
                 }
+
                 Log.d("Updated", "on Location Result" + locationResult);
 
             }

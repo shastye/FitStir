@@ -285,6 +285,10 @@
         android:id="@+id/runStatisticsFragment"
         android:name="com.fitstir.fitstirapp.ui.runtracker.RunStatisticsFragment"
         android:label="fragment_run_statistics"
-        tools:layout="@layout/fragment_run_statistics" />
+        tools:layout="@layout/fragment_run_statistics" >
+        <action
+            android:id="@+id/action_runStatisticsFragment_to_navigation_run_club"
+            app:destination="@id/navigation_run_club" />
+    </fragment>
 
 </navigation>
