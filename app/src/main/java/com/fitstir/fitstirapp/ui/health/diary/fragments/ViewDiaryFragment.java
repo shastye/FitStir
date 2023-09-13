@@ -36,6 +36,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -446,19 +448,19 @@ public class ViewDiaryFragment extends Fragment {
         binding.startingMonthLabel.setText(month);
 
         cal.add(Calendar.DATE, -1);
-        binding.date1.setText(String.valueOf(cal.get(Calendar.DATE)));
+        binding.date1.setText(getDateAsString(cal));
         cal.add(Calendar.DATE, -1);
-        binding.date2.setText(String.valueOf(cal.get(Calendar.DATE)));
+        binding.date2.setText(getDateAsString(cal));
         cal.add(Calendar.DATE, -1);
-        binding.date3.setText(String.valueOf(cal.get(Calendar.DATE)));
+        binding.date3.setText(getDateAsString(cal));
         cal.add(Calendar.DATE, -1);
-        binding.date4.setText(String.valueOf(cal.get(Calendar.DATE)));
+        binding.date4.setText(getDateAsString(cal));
         cal.add(Calendar.DATE, -1);
-        binding.date5.setText(String.valueOf(cal.get(Calendar.DATE)));
+        binding.date5.setText(getDateAsString(cal));
         cal.add(Calendar.DATE, -1);
-        binding.date6.setText(String.valueOf(cal.get(Calendar.DATE)));
+        binding.date6.setText(getDateAsString(cal));
         cal.add(Calendar.DATE, -1);
-        binding.date7.setText(String.valueOf(cal.get(Calendar.DATE)));
+        binding.date7.setText(getDateAsString(cal));
 
         for (int i = 0; i < numTasks; i++) {
             for (int comparingDay = today - 1; comparingDay > today - 8; comparingDay--) {
@@ -512,6 +514,14 @@ public class ViewDiaryFragment extends Fragment {
                 .beginTransaction()
                 .replace(R.id.current_fragment, fragment)
                 .commit();
+    }
+
+    public String getDateAsString(Calendar calendar) {
+        if (calendar.get(Calendar.DATE) == 1) {
+            return calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT_FORMAT, Locale.ENGLISH);
+        } else {
+            return String.valueOf(calendar.get(Calendar.DATE));
+        }
     }
 
     public boolean isEmoji(String emoji) {
