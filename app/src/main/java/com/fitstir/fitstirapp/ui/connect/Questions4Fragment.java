@@ -41,7 +41,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Questions4Fragment extends Fragment {
-    private DatabaseReference dataRef;
+    private DatabaseReference dbRef;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
     private EditText fullName;
@@ -73,7 +73,7 @@ public class Questions4Fragment extends Fragment {
 
         //firebase integration
         database = FirebaseDatabase.getInstance();
-        dataRef = database.getReference("Users");
+        dbRef = database.getReference("Users");
         auth = FirebaseAuth.getInstance();
 
         //additional code here
@@ -183,7 +183,7 @@ public class Questions4Fragment extends Fragment {
                                                         UserProfileData user = new UserProfileData(fName,email,pass,"male", finalFt, finalIn, finalWt, finalGWt, finalAge);
                                                         if(uid != null)
                                                         {
-                                                            dataRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
@@ -205,7 +205,7 @@ public class Questions4Fragment extends Fragment {
                                                         user.addWeightData(finalWt);
 
                                                         if(uid != null) {
-                                                            dataRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();

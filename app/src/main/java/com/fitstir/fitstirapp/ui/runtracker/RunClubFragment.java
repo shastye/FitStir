@@ -50,6 +50,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -88,48 +89,45 @@ import java.util.Objects;
 
 public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     //region Variables
-        private FragmentRunClubBinding binding;
-        private View fragment;
-        private ImageButton startRun,runHistory,pauseRun, stopRun, statistics;
-        private RecyclerView history_RV;
-        private ArrayList<RunnerData> data;
-        private ArrayList<LatLng> location;
-        private RunHistoryAdapter adapter;
-        private SupportMapFragment mapFragment;
-        private Location mCurrentLocation;
-        private FusedLocationProviderClient fusedClient;
-        private GoogleMap mMap;
-        private Boolean locationPermissionGranted = false;
-        private Boolean isTracking = false;
-        private Boolean isPaused = false;
-        private Boolean isStopped = false;
-        private Boolean isTimerOn = false;
-        private ArrayList<LatLng> pathPoint;
-        private ArrayList<Polyline> pathPoly;
-        private float totalDistance = 0;
-        private float distanceCal = 0;
-        private long pauseOffset = 0;
-        private Chronometer timer;
-        private Chronometer miniTimer;
-        private RunnerData currentRunner;
-        private CardView stats;
-        private TextView distance, calories;
-        private DecimalFormat decimalFormat;
-        private SimpleDateFormat format;
-        private Date currentDate;
-
-        //endregion
+    private FragmentRunClubBinding binding;
+    private View fragment;
+    private ImageButton startRun,runHistory,pauseRun, stopRun, statistics;
+    private RecyclerView history_RV;
+    private ArrayList<RunnerData> data;
+    private ArrayList<LatLng> location;
+    private RunHistoryAdapter adapter;
+    private SupportMapFragment mapFragment;
+    private Location mCurrentLocation;
+    private FusedLocationProviderClient fusedClient;
+    private GoogleMap mMap;
+    private Boolean locationPermissionGranted = false;
+    private Boolean isTracking = false;
+    private Boolean isPaused = false;
+    private Boolean isStopped = false;
+    private Boolean isTimerOn = false;
+    private ArrayList<LatLng> pathPoint;
+    private ArrayList<Polyline> pathPoly;
+    private float totalDistance = 0;
+    private float distanceCal = 0;
+    private long pauseOffset = 0;
+    private Chronometer timer;
+    private Chronometer miniTimer;
+    private RunnerData currentRunner;
+    private CardView stats;
+    private TextView distance, calories;
+    private DecimalFormat decimalFormat;
+    private SimpleDateFormat format;
+    private Date currentDate;
+    //endregion
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
 
-
-
         binding = FragmentRunClubBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-     // region Initialization
+        // region Initialization
         currentRunner = new RunnerData();
         fragment = root.findViewById(R.id.mapView);
         startRun = root.findViewById(R.id.start_Run_BTN);
@@ -170,7 +168,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         stats.setVisibility(View.INVISIBLE);
 //endregion
 
-     //region Click Listeners
+        //region Click Listeners
         startRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,8 +213,8 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         stopRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fusedClient.removeLocationUpdates(locationCallback);
-                mMap.clear();
+
+
 
                 isStopped = true;
                 isTimerOn = false;
@@ -274,11 +272,13 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                         String calBurned = String.valueOf(formatting);
                         calories.setText(calBurned);
                         viewRuns.setBurnedCalories(burned);
-                        currentRunner.setBurnedCalories(String.valueOf(burned));
+                        currentRunner.setBurnedCalories(burned);
 
                         if(distanceCal > 0.05)
                         {
                             currentRunner.addRunData(requireActivity(), data,currentRunner);
+                            currentRunner.saveRouteImage(mMap,requireActivity(), mCurrentLocation);
+                            fusedClient.removeLocationUpdates(locationCallback);
                         }
                         else{
                             Toast.makeText(requireActivity(), "Run Cancelled no data saved", Toast.LENGTH_LONG).show();
@@ -325,7 +325,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_run_club_to_runStatisticsFragment);
             }
         });
-    //endregion
+        //endregion
 
         return root;
     }
@@ -336,78 +336,75 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
 
         Dexter.withContext(getContext())
-                        .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-                                .withListener(new MultiplePermissionsListener() {
+                .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+
+                        if(multiplePermissionsReport.areAllPermissionsGranted()){
+                            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                                    == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireActivity(),
+                                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                                locationPermissionGranted = true;
+                                mMap.setMyLocationEnabled(true);
+
+                                fusedClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                                     @Override
-                                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                                    public void onSuccess(Location location) {
 
-                                        if(multiplePermissionsReport.areAllPermissionsGranted()){
-                                            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                                                    == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireActivity(),
-                                                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                                                locationPermissionGranted = true;
-                                                mMap.setMyLocationEnabled(true);
+                                        mCurrentLocation = location;
 
-                                                fusedClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                                                    @Override
-                                                    public void onSuccess(Location location) {
 
-                                                        mCurrentLocation = location;
-                                                        String lat = String.valueOf(mCurrentLocation.getLatitude());
-                                                        String lng = String.valueOf(mCurrentLocation.getLongitude());
-                                                        currentRunner.setLatitude(lat);
-                                                        currentRunner.setLongitude(lng);
-                                                        viewRuns.setLat(lat);
-                                                        viewRuns.setLng(lng);
+                                        currentRunner.setLatitude(mCurrentLocation.getLatitude());
+                                        currentRunner.setLongitude(mCurrentLocation.getLongitude());
+                                        viewRuns.setLat(mCurrentLocation.getLatitude());
+                                        viewRuns.setLng(mCurrentLocation.getLongitude());
 
-                                                        fragment.setVisibility(View.VISIBLE);
-                                                        startRun.setVisibility(View.VISIBLE);
-                                                        timer.setVisibility(View.VISIBLE);
-                                                        stats.setVisibility(View.VISIBLE);
+                                        fragment.setVisibility(View.VISIBLE);
+                                        startRun.setVisibility(View.VISIBLE);
+                                        timer.setVisibility(View.VISIBLE);
+                                        stats.setVisibility(View.VISIBLE);
 
-                                                        if(mCurrentLocation != null){
-                                                            LatLng curUser = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-                                                            mMap.addMarker(new MarkerOptions()
-                                                                    .position(curUser)
-                                                                    .title("Current Location"));
-                                                            mMap.setBuildingsEnabled(true);
-                                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curUser, 18));
-
-                                                        } else if (mCurrentLocation == null) {
-                                                            LatLng curUser = new LatLng(37, -84.5);
-                                                            mMap.addMarker(new MarkerOptions()
-                                                                    .position(curUser)
-                                                                    .title("Location"));
-                                                            mMap.setBuildingsEnabled(true);
-                                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curUser, 18));
-                                                        }
-
-                                                        mMap.getUiSettings().setCompassEnabled(true);
-                                                        mMap.getUiSettings().setZoomControlsEnabled(true);
-                                                        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                                                        mMap.getUiSettings().setAllGesturesEnabled(true);
-                                                        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                                                    }
-
-                                                }).addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.e("Error", e.getLocalizedMessage());
-                                                    }
-                                                });
-                                            }
+                                        if(mCurrentLocation != null){
+                                            LatLng curUser = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                                            mMap.addMarker(new MarkerOptions()
+                                                    .position(curUser)
+                                                    .title("Current Location"));
+                                            mMap.setBuildingsEnabled(true);
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curUser, 18));
                                         }
-                                        else if (!multiplePermissionsReport.areAllPermissionsGranted()) {
-                                            Toast.makeText(requireActivity(), "Run Club Feature:: Must have location access to operate" ,
-                                                    Toast.LENGTH_LONG).show();
+                                        else if (mCurrentLocation == null) {
+                                            LatLng curUser = new LatLng(37, -84.5);
+                                            mMap.addMarker(new MarkerOptions()
+                                                    .position(curUser)
+                                                    .title("Location"));
+                                            mMap.setBuildingsEnabled(true);
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curUser, 18));
                                         }
+                                        mMap.getUiSettings().setCompassEnabled(true);
+                                        mMap.getUiSettings().setZoomControlsEnabled(true);
+                                        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                                        mMap.getUiSettings().setAllGesturesEnabled(true);
+                                        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                                     }
-
+                                }).addOnFailureListener(new OnFailureListener() {
                                     @Override
-                                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
-                                        permissionToken.cancelPermissionRequest();
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("Error", e.getLocalizedMessage());
                                     }
-                                }).check();
+                                });
+                            }
+                        }
+                        else if (!multiplePermissionsReport.areAllPermissionsGranted()) {
+                            Toast.makeText(requireActivity(), "Run Club Feature:: Must have location access to operate" ,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                        permissionToken.cancelPermissionRequest();
+                    }
+                }).check();
     }
 
     @SuppressLint("MissingPermission")
@@ -446,12 +443,10 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-
     }
 
     @SuppressLint("MissingPermission")
     public void currentLocationRequest(){
-
         LocationRequest locationRequest = new LocationRequest.Builder(500)
                 .setGranularity(Granularity.GRANULARITY_FINE)
                 .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
@@ -461,58 +456,55 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         LocationSettingsRequest locationSettingsRequest = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest)
                 .build();
-
     }
 
     //region Location Callback
-        LocationCallback locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(@NonNull LocationResult locationResult) {
-                super.onLocationResult(locationResult);
+    LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(@NonNull LocationResult locationResult) {
+            super.onLocationResult(locationResult);
 
-                if(locationResult == null){
-                    return;
-                }
-                PolylineOptions opts = new PolylineOptions()
-                        .width(10)
-                        .color(Color.RED)
-                        .geodesic(true)
-                        .visible(true);
-
-                for(Location location: locationResult.getLocations()) {
-                    LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-                    RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
-
-                    if(isTracking == true)
-                    {
-                        pathPoint.add(loc);
-                        Polyline route = mMap.addPolyline(opts);
-                        route.setPoints(pathPoint);
-                        pathPoly.add(route);
-                        mCurrentLocation = locationResult.getLastLocation();
-
-                        //set view model
-                        viewRuns.setAltitude(mCurrentLocation.getAltitude());
-                        viewRuns.setBearing(mCurrentLocation.getBearing());
-                        viewRuns.setElapsedRealTime(mCurrentLocation.getElapsedRealtimeMillis());
-                        viewRuns.setSpeed(mCurrentLocation.getSpeed());
-                        viewRuns.setClockTime(mCurrentLocation.getTime());
-                        viewRuns.setAccuracy(mCurrentLocation.getAccuracy());
-                    }
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,18));
-                }
-
-                Log.d("Updated", "on Location Result" + locationResult);
-
+            if(locationResult == null){
+                return;
             }
-        };
-  //endregion
+            PolylineOptions opts = new PolylineOptions()
+                    .width(10)
+                    .color(Color.RED)
+                    .geodesic(true)
+                    .visible(true);
+
+            for(Location location: locationResult.getLocations()) {
+                LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
+
+                if(isTracking == true)
+                {
+                    pathPoint.add(loc);
+                    Polyline route = mMap.addPolyline(opts);
+                    route.setPoints(pathPoint);
+                    pathPoly.add(route);
+                    mCurrentLocation = locationResult.getLastLocation();
+
+                    //set view model
+                    viewRuns.setAltitude(mCurrentLocation.getAltitude());
+                    viewRuns.setBearing(mCurrentLocation.getBearing());
+                    viewRuns.setElapsedRealTime(mCurrentLocation.getElapsedRealtimeMillis());
+                    viewRuns.setSpeed(mCurrentLocation.getSpeed());
+                    viewRuns.setClockTime(mCurrentLocation.getTime());
+                    viewRuns.setAccuracy(mCurrentLocation.getAccuracy());
+                }
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,18));
+            }
+
+            Log.d("Updated", "on Location Result" + locationResult);
+
+        }
+    };
+    //endregion
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
-
-
 }

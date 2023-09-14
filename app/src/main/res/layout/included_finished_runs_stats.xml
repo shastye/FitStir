@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="miles"
-            android:layout_marginLeft="218.5dp"
+            android:layout_marginLeft="216.5dp"
             android:textColor="@color/black"
             android:textSize="13sp"
             android:layout_marginTop="15.5dp"/>

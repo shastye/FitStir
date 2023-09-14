@@ -2,10 +2,12 @@ package com.fitstir.fitstirapp.ui.runtracker.utilites;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
@@ -19,8 +21,14 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,34 +37,40 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 
 
 public class RunnerData {
-    private String imageRoute, completedDate;
-    private double totalDistance, completedRunInMinutes;
-    private String latitude, longitude, avgPace, burnedCalories;
+    private String imageRoute ,completedDate;
+    private double totalDistance, completedRunInMinutes, latitude, longitude, avgPace, burnedCalories;
     private UserProfileData user;
-    private List<RunnerData> dataList;
+    private GoogleMap mMap;
+
 
 
     public String getImageRoute() {return imageRoute;}
     public double getTotalDistance() {return totalDistance;}
-    public String getAvgPace() {return avgPace;}
-    public String getBurnedCalories() {return burnedCalories;}
+    public double getAvgPace() {return avgPace;}
+    public double getBurnedCalories() {return burnedCalories;}
     public double getCompletedRunInMinutes() {return completedRunInMinutes;}
     public String getCompletedDate() {return completedDate;}
     public UserProfileData getUser() {return user;}
-    public String getLatitude() {return latitude;}
-    public String getLongitude() {return longitude;}
+    public double getLatitude() {return latitude;}
+    public double getLongitude() {return longitude;}
 
     public RunnerData() {}
 
-    public RunnerData( double totalDistance, String avgPace, String burnedCalories,
-                       double completedRunInMinutes, String completedDate, String latitude, String longitude) {
+    public RunnerData( double totalDistance, double avgPace, double burnedCalories,
+                       double completedRunInMinutes, String completedDate, double latitude, double longitude) {
         this.totalDistance = totalDistance;
         this.avgPace = avgPace;
         this.burnedCalories = burnedCalories;
@@ -67,7 +81,7 @@ public class RunnerData {
     }
 
     public RunnerData(String imageRoute, String completedDate, double totalDistance, double completedRunInMinutes,
-                      String latitude, String longitude, String avgPace, String burnedCalories, UserProfileData user) {
+                      double latitude, double longitude, double avgPace, double burnedCalories, UserProfileData user) {
         this.imageRoute = imageRoute;
         this.completedDate = completedDate;
         this.totalDistance = totalDistance;
@@ -79,10 +93,10 @@ public class RunnerData {
         this.user = user;
     }
 
-    public void setLatitude(String latitude) {this.latitude = latitude;}
-    public void setLongitude(String longitude) {this.longitude = longitude;}
-    public void setAvgPace(String avgPace) {this.avgPace = avgPace;}
-    public void setBurnedCalories(String burnedCalories) {this.burnedCalories = burnedCalories;}
+    public void setLatitude(double latitude) {this.latitude = latitude;}
+    public void setLongitude(double longitude) {this.longitude = longitude;}
+    public void setAvgPace(double avgPace) {this.avgPace = avgPace;}
+    public void setBurnedCalories(double burnedCalories) {this.burnedCalories = burnedCalories;}
     public void setImageRoute(String imageRoute) {this.imageRoute = imageRoute;}
     public void setTotalDistance(double totalDistance) {this.totalDistance = totalDistance;}
     public void setCompletedRunInMinutes(double completedRunInMinutes) {this.completedRunInMinutes = completedRunInMinutes;}
@@ -92,7 +106,7 @@ public class RunnerData {
         String dateTime = String.valueOf(currentRunner.getCompletedDate());
 
         RunnerData runner = new RunnerData(currentRunner.getTotalDistance(), currentRunner.getAvgPace(), currentRunner.getBurnedCalories(),
-               currentRunner.getCompletedRunInMinutes(),
+                currentRunner.getCompletedRunInMinutes(),
                 currentRunner.getCompletedDate(),currentRunner.getLatitude(), currentRunner.getLongitude());
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -100,18 +114,16 @@ public class RunnerData {
                 .getReference("CompletedRun")
                 .child(authUser.getUid())
                 .child(dateTime);
-                runRef.setValue(runner).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+        runRef.setValue(runner).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
 
-                        Toast.makeText(context, "Run saved successfully", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-
+                Toast.makeText(context, "Run saved successfully", Toast.LENGTH_LONG).show();
+            }
+        });
     }
     public void fetchRunData(ArrayList<RunnerData> data, RunHistoryAdapter adapter, Context context){
-        RunViewModel runViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(RunViewModel.class);
+
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = db.getReference("CompletedRun").child(authUser.getUid());
@@ -159,7 +171,7 @@ public class RunnerData {
 
         if(totalDistance >= 0.05){
             double calBurnt = Math.round(75.4991 - (age * 0.2757) + (weight * 0.03295) + (totalDistance * 1.0781)) * time/ 8.368;
-            setBurnedCalories(String.valueOf(calBurnt));
+            setBurnedCalories(calBurnt);
             return (float)calBurnt;
         }
         return 0;
@@ -168,39 +180,51 @@ public class RunnerData {
 
         if(distanceCal > 0.05){
             double avg = Math.round(((distanceCal*1600)/curTime) /10 );
-            setAvgPace(String.valueOf(avg));
+            setAvgPace(avg);
             return (float)avg;
         }
         return 0;
 
     }
 
-    public void makeLineChart(LineChart chart, ArrayList<RunnerData> list){
+    public void saveRouteImage(GoogleMap map, Context context, Location location){
+        LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,14));
+
+        map.snapshot(new GoogleMap.SnapshotReadyCallback() {
+            @Override
+            public void onSnapshotReady(@Nullable Bitmap bitmap) {
+
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                FirebaseUser user = auth.getCurrentUser();
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageReference = storage.getReference();
+
+                StorageReference routeImage = storageReference.child("routes/"+user.getUid()).child(getCompletedDate());
+
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);
+
+                byte[] data = bao.toByteArray();
+                String image = Base64.getEncoder().encodeToString(data);
+                setImageRoute(image);
+                routeImage.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        map.clear();
+                        Toast.makeText(context, "Route Image Saved", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context,"Error Uploading Image!" +e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
 
 
-
-        Description description = new Description();
-        description.setText("Run Statistics Chart");
-        description.setPosition(150f,15f);
-        chart.setDescription(description);
-        chart.getAxisRight().setDrawLabels(false);
-
-        XAxis pointX = chart.getXAxis();
-        pointX.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        pointX.setLabelCount(7);
-        pointX.setGranularity(1f);
-
-        YAxis pointY = chart.getAxisLeft();
-        pointY.setAxisMinimum(0f);
-        pointY.setAxisMaximum(800f);
-        pointY.setAxisLineWidth(2f);
-        pointY.setAxisLineColor(Color.BLACK);
-        pointY.setLabelCount(10);
-
-
-
-        
 
     }
 }

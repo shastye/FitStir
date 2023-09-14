@@ -44,9 +44,12 @@ public class RunHistoryAdapter extends RecyclerView.Adapter<RunHistoryAdapter.Vi
         String distanceFormatted = decimalFormat.format(runner.getTotalDistance());
         holder.date.setText(formatted.format(runDate));
         holder.distance.setText(distanceFormatted);
-        holder.calories.setText(runner.getBurnedCalories());
-        holder.areaLat.setText(runner.getLatitude());
-        holder.areaLng.setText(runner.getLongitude());
+        String calories = decimalFormat.format(runner.getBurnedCalories());
+        holder.calories.setText(calories);
+        String lat = String.valueOf(runner.getLatitude());
+        holder.areaLat.setText(lat);
+        String lng = String.valueOf(runner.getLongitude());
+        holder.areaLng.setText(lng);
 
     }
 

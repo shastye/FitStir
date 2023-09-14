@@ -147,7 +147,6 @@ public class RunStatisticsFragment extends Fragment {
                         statChart.invalidate();
 
 
-
                     }
                     else{
                         Toast.makeText(requireActivity(),"No data to compare", Toast.LENGTH_LONG).show();
