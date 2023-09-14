@@ -214,8 +214,6 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
 
-
-
                 isStopped = true;
                 isTimerOn = false;
                 isTracking = false;
@@ -234,6 +232,8 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                 pauseOffset = 0;
                 timer.stop();
                 miniTimer.stop();
+                LatLng loc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,15));
 
                 //getting total distance, formatting and displaying to screen
                 distanceCal += currentRunner.calculateDistance(pathPoint, totalDistance);
@@ -277,7 +277,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                         if(distanceCal > 0.05)
                         {
                             currentRunner.addRunData(requireActivity(), data,currentRunner);
-                            currentRunner.saveRouteImage(mMap,requireActivity(), mCurrentLocation);
+                            currentRunner.saveRouteImage(mMap,requireActivity());
                             fusedClient.removeLocationUpdates(locationCallback);
                         }
                         else{

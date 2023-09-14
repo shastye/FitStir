@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/navigation_yoga"
-        android:name="com.fitstir.fitstirapp.ui.workouts.YogaFragment"
+        android:name="com.fitstir.fitstirapp.ui.yoga.YogaFragment"
         android:label="Yoga"
         tools:layout="@layout/fragment_yoga" />
 

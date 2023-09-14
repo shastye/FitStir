@@ -187,9 +187,7 @@ public class RunnerData {
 
     }
 
-    public void saveRouteImage(GoogleMap map, Context context, Location location){
-        LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,14));
+    public void saveRouteImage(GoogleMap map, Context context){
 
         map.snapshot(new GoogleMap.SnapshotReadyCallback() {
             @Override

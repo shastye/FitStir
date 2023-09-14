@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.workouts;
+package com.fitstir.fitstirapp.ui.yoga;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.databinding.FragmentYogaBinding;
+import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
 
 public class YogaFragment extends Fragment {
 
