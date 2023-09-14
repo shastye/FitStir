@@ -39,34 +39,53 @@ public class DiaryFragment extends Fragment {
 
         // Addition Text Here
 
-        loadingScreen = root.findViewById(R.id.generic_loading_screen);
-        currentFragment = root.findViewById(R.id.current_fragment);
-        currentFragment.setVisibility(View.GONE);
-
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseDatabase.getInstance()
+
+        loadingScreen = root.findViewById(R.id.generic_loading_screen);
+        loadingScreen.setVisibility(View.GONE);
+        currentFragment = root.findViewById(R.id.current_fragment);
+
+
+
+        /*FirebaseDatabase.getInstance()
                 .getReference("DiaryData")
                 .child(authUser.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getChildrenCount() == 0) {
-                            toggleLoadingScreen();
-                            replaceFragment(new DiarySetupFragment());
-                        } else {
-                            DiaryData diaryData = snapshot.getValue(DiaryData.class);
-                            diaryViewModel.setDiaryData(diaryData);
+                .setValue(DiaryViewModel.getData());*/
 
-                            toggleLoadingScreen();
-                            replaceFragment(new ViewDiaryFragment());
+
+        if (diaryViewModel.getPreviousFragment().getValue().equals("EditDiaryFragment")) {
+            loadingScreen.setVisibility(View.GONE);
+            currentFragment.setVisibility(View.VISIBLE);
+
+            replaceFragment(new EditDiaryFragment());
+        } else {
+            loadingScreen.setVisibility(View.VISIBLE);
+            currentFragment.setVisibility(View.GONE);
+
+            FirebaseDatabase.getInstance()
+                    .getReference("DiaryData")
+                    .child(authUser.getUid())
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount() == 0) {
+                                toggleLoadingScreen();
+                                replaceFragment(new DiarySetupFragment());
+                            } else {
+                                DiaryData diaryData = snapshot.getValue(DiaryData.class);
+                                diaryViewModel.setOGdiaryData(diaryData);
+
+                                toggleLoadingScreen();
+                                replaceFragment(new ViewDiaryFragment());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+        }
 
         // End
 
@@ -80,6 +99,7 @@ public class DiaryFragment extends Fragment {
     }
 
     public void replaceFragment(Fragment fragment) {
+        diaryViewModel.setPreviousFragment("DiaryFragment");
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.current_fragment, fragment)

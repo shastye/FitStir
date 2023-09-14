@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -49,7 +50,7 @@ public class DiarySetupFragment extends Fragment {
         binding.updateTasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<TextView> potentialTasks = new ArrayList<TextView>() {{
+                ArrayList<AppCompatEditText> potentialTasks = new ArrayList<AppCompatEditText>() {{
                     add(binding.task01);
                     add(binding.task02);
                     add(binding.task03);
@@ -64,59 +65,13 @@ public class DiarySetupFragment extends Fragment {
                 int size = potentialTasks.size();
 
                 DiaryData diaryData = new DiaryData();
-
-                ArrayList<Boolean> areTasks = new ArrayList<>();
                 for (int i = 0; i < size; i++) {
-                    if (potentialTasks.get(i).getText().toString().equals("")) {
-                        areTasks.add(Boolean.FALSE);
-                    } else {
-                        areTasks.add(Boolean.TRUE);
-                    }
+                    String taskName = potentialTasks.get(i).getText().toString();
+                    Task newTask = new Task(taskName);
+                    diaryData.addTask(newTask);
                 }
 
-                if (areTasks.contains(Boolean.TRUE)) {
-                    int count = 0;
-                    for (int i = 0; i < size; i++) {
-                        if (areTasks.get(i) == Boolean.TRUE) {
-                            count++;
-                            String taskName = potentialTasks.get(i).getText().toString();
-                            Task newTask = new Task(taskName);
-
-                            switch(count) {
-                                case 1:
-                                    diaryData.setTask01(newTask);
-                                    break;
-                                case 2:
-                                    diaryData.setTask02(newTask);
-                                    break;
-                                case 3:
-                                    diaryData.setTask03(newTask);
-                                    break;
-                                case 4:
-                                    diaryData.setTask04(newTask);
-                                    break;
-                                case 5:
-                                    diaryData.setTask05(newTask);
-                                    break;
-                                case 6:
-                                    diaryData.setTask06(newTask);
-                                    break;
-                                case 7:
-                                    diaryData.setTask07(newTask);
-                                    break;
-                                case 8:
-                                    diaryData.setTask08(newTask);
-                                    break;
-                                case 9:
-                                    diaryData.setTask09(newTask);
-                                    break;
-                                case 10:
-                                    diaryData.setTask10(newTask);
-                                    break;
-                            }
-                        }
-                    }
-
+                if (diaryData.getTasks().size() > 0) {
                     FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
                     FirebaseDatabase.getInstance()
                                     .getReference("DiaryData")
@@ -148,6 +103,7 @@ public class DiarySetupFragment extends Fragment {
     }
 
     public void replaceFragment(Fragment fragment) {
+        diaryViewModel.setPreviousFragment("DiarySetupFragment");
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.current_fragment, fragment)
