@@ -46,6 +46,7 @@ public class DiarySetupFragment extends Fragment {
         // Addition Text Here
 
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Diary Setup");
+        diaryViewModel.setPreviousFragment("DiarySetupFragment");
 
         binding.updateTasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +104,6 @@ public class DiarySetupFragment extends Fragment {
     }
 
     public void replaceFragment(Fragment fragment) {
-        diaryViewModel.setPreviousFragment("DiarySetupFragment");
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.current_fragment, fragment)

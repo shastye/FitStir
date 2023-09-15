@@ -57,6 +57,8 @@ public class ViewDiaryFragment extends Fragment {
         // Addition Text Here
 
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Your Diary");
+        diaryViewModel.setPreviousFragment("ViewDiaryFragment");
+
         DiaryData diaryData = diaryViewModel.getOGdiaryData().getValue();
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -453,7 +455,6 @@ public class ViewDiaryFragment extends Fragment {
     }
 
     public void replaceFragment(Fragment fragment) {
-        diaryViewModel.setPreviousFragment("ViewDiaryFragment");
         getParentFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
@@ -462,7 +463,7 @@ public class ViewDiaryFragment extends Fragment {
     }
 
     public String getDateAsString(Calendar calendar) {
-        if (calendar.get(Calendar.DATE) == 1) {
+        if (calendar.get(Calendar.DATE) == 31) {
             return calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT_FORMAT, Locale.ENGLISH);
         } else {
             return String.valueOf(calendar.get(Calendar.DATE));

@@ -47,6 +47,7 @@ public class EditDiaryFragment extends Fragment {
         // Addition Text Here
 
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Edit Diary");
+        diaryViewModel.setPreviousFragment("EditDiaryFragment");
 
         diaryData = diaryViewModel.getOGdiaryData().getValue();
         newData = diaryViewModel.getNewDiaryData().getValue();
@@ -222,7 +223,6 @@ public class EditDiaryFragment extends Fragment {
     }
 
     public void replaceFragment(Fragment fragment) {
-        diaryViewModel.setPreviousFragment("EditDiaryFragment");
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.current_fragment, fragment)
