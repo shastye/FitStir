@@ -18,7 +18,6 @@ public interface IYogaApi
     Call<List<CategoryModel>> getCategoriesByName();
     @GET("/categories?id=value&level=value")
     Call<List<CategoryModel>> getCategoriesByLevel();
-
     @GET("/poses")
     Call<List<PoseModel>> getPoses();
     @GET("/poses?id=value")
@@ -27,6 +26,5 @@ public interface IYogaApi
     Call<List<PoseModel>> getPosesByName();
     @GET("/poses?level=value")
     Call<List<PoseModel>> getPosesByLevel();
-
 
 }

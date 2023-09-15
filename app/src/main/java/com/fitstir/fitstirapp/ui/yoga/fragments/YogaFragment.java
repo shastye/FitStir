@@ -1,4 +1,4 @@
-package com.fitstir.fitstirapp.ui.yoga;
+package com.fitstir.fitstirapp.ui.yoga.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,8 +25,6 @@ public class YogaFragment extends Fragment {
         binding = FragmentYogaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textYoga;
-        //workoutsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here
 

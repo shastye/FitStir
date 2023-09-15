@@ -82,9 +82,22 @@
 
     <fragment
         android:id="@+id/navigation_yoga"
-        android:name="com.fitstir.fitstirapp.ui.yoga.YogaFragment"
+        android:name="com.fitstir.fitstirapp.ui.yoga.fragments.YogaFragment"
         android:label="Yoga"
-        tools:layout="@layout/fragment_yoga" />
+        tools:layout="@layout/fragment_yoga" >
+        <action
+            android:id="@+id/action_navigation_yoga_to_categoryViewFragment"
+            app:destination="@id/categoryViewFragment" />
+        <action
+            android:id="@+id/action_navigation_yoga_to_recentYogaFragment"
+            app:destination="@id/recentYogaFragment" />
+        <action
+            android:id="@+id/action_navigation_yoga_to_favoriteYogaFragment"
+            app:destination="@id/favoriteYogaFragment" />
+        <action
+            android:id="@+id/action_navigation_yoga_to_customYogaFragment"
+            app:destination="@id/customYogaFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_health"
@@ -290,5 +303,49 @@
             android:id="@+id/action_runStatisticsFragment_to_navigation_run_club"
             app:destination="@id/navigation_run_club" />
     </fragment>
+    <fragment
+        android:id="@+id/categoryViewFragment"
+        android:name="com.fitstir.fitstirapp.ui.yoga.fragments.CategoryViewFragment"
+        android:label="fragment_yoga_view"
+        tools:layout="@layout/fragment_yoga_view" >
+        <action
+            android:id="@+id/action_categoryViewFragment_to_yogaPoseFragment"
+            app:destination="@id/yogaPoseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customYogaFragment"
+        android:name="com.fitstir.fitstirapp.ui.yoga.fragments.CustomYogaFragment"
+        android:label="fragment_custom_yoga"
+        tools:layout="@layout/fragment_custom_yoga" >
+        <action
+            android:id="@+id/action_customYogaFragment_to_yogaPoseFragment"
+            app:destination="@id/yogaPoseFragment" />
+        <action
+            android:id="@+id/action_customYogaFragment_to_navigation_yoga"
+            app:destination="@id/navigation_yoga" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteYogaFragment"
+        android:name="com.fitstir.fitstirapp.ui.yoga.fragments.FavoriteYogaFragment"
+        android:label="fragment_favorite_yoga"
+        tools:layout="@layout/fragment_favorite_yoga" >
+        <action
+            android:id="@+id/action_favoriteYogaFragment_to_yogaPoseFragment"
+            app:destination="@id/yogaPoseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentYogaFragment"
+        android:name="com.fitstir.fitstirapp.ui.yoga.fragments.RecentYogaFragment"
+        android:label="fragment_recent_yoga"
+        tools:layout="@layout/fragment_recent_yoga" >
+        <action
+            android:id="@+id/action_recentYogaFragment_to_yogaPoseFragment"
+            app:destination="@id/yogaPoseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/yogaPoseFragment"
+        android:name="com.fitstir.fitstirapp.ui.yoga.fragments.YogaPoseFragment"
+        android:label="fragment_yoga_pose"
+        tools:layout="@layout/fragment_yoga_pose" />
 
 </navigation>
