@@ -17,8 +17,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:hint="This is the title banner"
+        android:background="@color/white"
         android:textAlignment="center"
         android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="@color/soft_deep_purple"
+
+        />
+
+    <SearchView
+        android:id="@+id/searchView_Yoga_Explore"
+        android:layout_width="349dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/searchview_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:queryHint="Search "
+        android:iconifiedByDefault="false"
+        android:visibility="invisible"
         />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -18,6 +18,7 @@ import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
 public class FavoriteYogaFragment extends Fragment {
 
 private FragmentFavoriteYogaBinding binding;
+    private View dialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,9 +28,10 @@ private FragmentFavoriteYogaBinding binding;
 
         // Inflate the layout for this fragment
         binding = FragmentFavoriteYogaBinding.inflate(inflater, container, false);
-
         View root = binding.getRoot();
 
+        dialog = root.findViewById(R.id.dialog_faves);
+        dialog.setVisibility(View.INVISIBLE);
 
 
         return root;

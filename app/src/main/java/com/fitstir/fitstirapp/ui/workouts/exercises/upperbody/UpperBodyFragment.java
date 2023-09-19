@@ -1,5 +1,6 @@
 package com.fitstir.fitstirapp.ui.workouts.exercises.upperbody;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,15 +90,14 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
      try {
          if (filtered.size() >= 1) {
              upperBody.getWorkoutClicked(position,filtered,workoutsViewModel);
-             Fragment fragment = new ViewWorkoutFragment();
-             FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-             fm.replace(R.id.container, fragment).commit();
+             Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
+                     .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
          }
      }catch (NullPointerException e){
          upperBody.getWorkoutClicked(position,upperBodyApiArrayList,workoutsViewModel);
 
 
-         Navigation.findNavController(this.getActivity(),R.id.nav_host_fragment_activity_main)
+         Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
                  .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
      }
 

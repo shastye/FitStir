@@ -15,19 +15,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-    android:layout_width="390dp"
-    android:layout_height="17dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="55dp"
-    android:elevation="10dp"
+        android:id="@+id/runHistory_cardview"
+        android:layout_width="390dp"
+        android:layout_height="17dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="55dp"
+        android:elevation="10dp"
         android:clickable="true"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
 
         <TextView
             android:id="@+id/run_date"
@@ -89,7 +91,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

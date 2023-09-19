@@ -37,12 +37,12 @@ public class CheckRecentRun extends Service {
                         this,
                         ReminderChannels.COME_BACK_REMINDERS.getValue(),
                         R.drawable.ic_bicep_black_200dp,
-                        "Don't forget to check in!",
-                        "It's been a few days since you last checked in.",
+                        "We've noticed you've gotten off your routine!",
+                        "It's been a few days since you last shared a workout.",
                         "It's been a few days since you last updated your " +
                                 "calorie tracker, diary, or completed a workout. " +
-                                "Come back and check in with FitStir to keep up with " +
-                                "your mental wellness!",
+                                "Come back and check in with FitStir to keep up with progress " +
+                                "and build your mental wellness!",
                         R.id.navigation_goals
                 );
             }

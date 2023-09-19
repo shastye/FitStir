@@ -1,6 +1,8 @@
 package com.fitstir.fitstirapp.ui.runtracker.utilites;
 
 
+import android.graphics.Bitmap;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,6 +12,7 @@ public class RunViewModel extends ViewModel {
 
     //region Variables
     private final MutableLiveData<String> mText;
+    private final MutableLiveData<Integer> actions = new MutableLiveData<>(0);
     private final MutableLiveData<Double> runTimeInMinutes = new MutableLiveData<>(0.0);
     private final MutableLiveData<Double> avgPace = new MutableLiveData<>(0.0);
     private final MutableLiveData<Double> totalDistance = new MutableLiveData<>(0.0);
@@ -26,9 +29,13 @@ public class RunViewModel extends ViewModel {
     private final MutableLiveData<Double> speed = new MutableLiveData<>(0.0);
     private final MutableLiveData<Double> time = new MutableLiveData<>(0.0);
     private final MutableLiveData<Double> accuracy = new MutableLiveData<>(0.0);
+    private final MutableLiveData<String> mapImage = new MutableLiveData<>(" ");
     //endregion
 
+
     //region Getters
+    public MutableLiveData<Integer> getActions() {return actions;}
+    public MutableLiveData<String> getMapImage() {return mapImage;}
     public MutableLiveData<Double> getBearing() {return bearing;}
     public MutableLiveData<Double> getElapsedRealTime() {return elapsedRealTime;}
     public MutableLiveData<Double> getSpeed() {return speed;}
@@ -55,6 +62,8 @@ public class RunViewModel extends ViewModel {
     }
 
     //region Setters
+    public void setActions(int action){this.actions.setValue(action);}
+    public void setMapImage(String bitmap){this.mapImage.setValue(bitmap);}
     public void setRunTimeInMinutes(Double runTime){this.runTimeInMinutes.setValue(runTime);}
     public void setAvgPace(double pace){this.avgPace.setValue(pace);}
     public void setRunDistance(double distance){this.totalDistance.setValue(distance);}

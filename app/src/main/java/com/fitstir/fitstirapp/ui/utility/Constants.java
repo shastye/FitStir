@@ -7,7 +7,7 @@ public class Constants {
     public static final long MILLISECS_PER_SEC = 1000L;
     public static final long MILLISECS_PER_DAY = 86400000L;
     public static final String DATE_TIME_FORMAT ="yyyy-MM-dd HH:mm:ss";
-    public static final String TIME_FORMAT ="H:mm:ss";
+    public static final long MEGA_BYTE = 200000 * 200000;
 
     public static final class FOOD_DATA_BASE_PARSER {
         public static final String APP_ID = "ab4a541a";
@@ -17,6 +17,29 @@ public class Constants {
     public static final class RECIPE_V2 {
         public static final String APP_ID = "456d7882";
         public static final String APP_KEY = "772e2aed7f585b9eeacffbfaacf59de6";
+    }
+    public static final class MAP_ACTION {
+        public static final int RUN_ACTION = 1;
+        public static final int HISTORY_ACTION = 2;
+    }
+    public static  final class YOGA_ID{
+        public static final int  BEGINNER = 1;
+        public static final int  MEDIUM = 2;
+        public static final int  EXPERT = 3;
+        public static final int  EXPLORE = 4;
+        public static final int  QUICK_START = 5;
+        public static final int  LEARN = 6;
+        public static final int  STANDING = 7;
+        public static final int  BALANCE = 8;
+        public static final String BEGINNER_POSE = "Beginner Poses";
+        public static final String INTERMEDIATE_POSE = "Intermediate Poses";
+        public static final String EXPERT_POSE = "Expert Poses";
+        public static final String EXPLORE_POSES = "Explore Poses";
+        public static final String LEARN_POSES = "Learn Poses";
+        public static final String STANDING_POSE = "Standing Poses";
+        public static final String BALANCE_POSE = "Balance Poses";
+        public static final String QUICK_START_POSES = "Quick Start";
+
     }
 
     public static final class WORKOUT_BODYPART{

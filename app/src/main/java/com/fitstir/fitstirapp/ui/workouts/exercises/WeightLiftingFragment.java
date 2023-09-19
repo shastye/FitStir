@@ -1,5 +1,6 @@
 package com.fitstir.fitstirapp.ui.workouts.exercises;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -91,15 +93,11 @@ public class WeightLiftingFragment extends Fragment implements RvInterface {
         try {
             if (filtered.size() >= 1) {
                 workoutApi.getWorkoutClicked(position,filtered,workoutsViewModel);
-                Fragment fragment = new ViewWorkoutFragment();
-                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-                fm.replace(R.id.container, fragment).commit();
+                Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_weight_lifting_to_viewWorkoutFragment);
             }
         }catch (NullPointerException e){
             workoutApi.getWorkoutClicked(position,weights,workoutsViewModel);
-            Fragment fragment = new ViewWorkoutFragment();
-            FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-            fm.replace(R.id.container, fragment).commit();
+            Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_weight_lifting_to_viewWorkoutFragment);
         }
 
     }

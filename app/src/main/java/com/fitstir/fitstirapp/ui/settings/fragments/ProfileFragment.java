@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentProfileBinding;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,7 +42,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
-    private final long MEGA_BYTE = 200000 * 200000;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -111,7 +111,7 @@ public class ProfileFragment extends Fragment {
             auth = FirebaseAuth.getInstance();
             String user = auth.getCurrentUser().getUid();
             StorageReference photo = storageReference.child("images/"+user);
-            photo.getBytes(MEGA_BYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            photo.getBytes(Constants.MEGA_BYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

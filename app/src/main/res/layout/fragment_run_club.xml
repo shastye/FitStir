@@ -9,6 +9,24 @@
     tools:context=".ui.runtracker.RunClubFragment">
 
     <ImageView
+        android:id="@+id/pic_Holder"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginBottom="643dp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
+    <ImageView
+        android:id="@+id/map_Image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        android:visibility="invisible"/>
+
+    <ImageView
         android:id="@+id/imageView8"
         android:layout_width="match_parent"
         android:layout_height="388dp"
@@ -108,6 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/start_Run_BTN" />
 
     <View
+        android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="17dp"
         android:alpha="0.5"

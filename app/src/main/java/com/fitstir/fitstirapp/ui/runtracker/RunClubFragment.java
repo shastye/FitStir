@@ -14,8 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -25,20 +25,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentRunClubBinding;
-import com.fitstir.fitstirapp.ui.health.weightloss.WeightLossViewModel;
 import com.fitstir.fitstirapp.ui.runtracker.utilites.RunHistoryAdapter;
 import com.fitstir.fitstirapp.ui.runtracker.utilites.RunViewModel;
 import com.fitstir.fitstirapp.ui.runtracker.utilites.RunnerData;
-import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.RvInterface;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
-import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
-import com.fitstir.fitstirapp.ui.workouts.exercises.workoutAdapter;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Granularity;
@@ -50,13 +46,10 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.ButtCap;
-import com.google.android.gms.maps.model.Cap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -72,22 +65,25 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 
-public class RunClubFragment extends Fragment implements OnMapReadyCallback {
+public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvInterface {
     //region Variables
     private FragmentRunClubBinding binding;
     private View fragment;
@@ -118,6 +114,8 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     private DecimalFormat decimalFormat;
     private SimpleDateFormat format;
     private Date currentDate;
+    private RvInterface rvInterface;
+    private ImageView holder;
     //endregion
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -141,6 +139,8 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         miniTimer = root.findViewById(R.id.end_timer);
         distance = root.findViewById(R.id.total_distance);
         calories = root.findViewById(R.id.total_calories);
+        holder = root.findViewById(R.id.pic_Holder);
+        rvInterface = this;
         format = new SimpleDateFormat(Constants.DATE_TIME_FORMAT);
         currentDate = new Date();
         decimalFormat = new DecimalFormat("###.##");
@@ -148,9 +148,6 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         location = new ArrayList<>();
         pathPoint = new ArrayList<>();
         data = new ArrayList<>();
-        String date = format.format(currentDate);
-        viewRuns.setRunDate(date);
-        currentRunner.setCompletedDate(date);
 
         //map setup and location tracking service
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
@@ -218,10 +215,16 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                 isTimerOn = false;
                 isTracking = false;
 
+                fusedClient.removeLocationUpdates(locationCallback);
+
                 pauseRun.setVisibility(View.INVISIBLE);
                 stopRun.setVisibility(View.INVISIBLE);
                 startRun.setVisibility(View.VISIBLE);
                 miniTimer.setVisibility(View.VISIBLE);
+
+                String date = format.format(currentDate);
+                viewRuns.setRunDate(date);
+                currentRunner.setCompletedDate(date);
 
                 double  elapsedTime = SystemClock.elapsedRealtime() - timer.getBase();
                 double converted =  ((elapsedTime / 1000f) / 60);
@@ -232,8 +235,9 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                 pauseOffset = 0;
                 timer.stop();
                 miniTimer.stop();
-                LatLng loc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,15));
+
+                //LatLng loc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,13));
 
                 //getting total distance, formatting and displaying to screen
                 distanceCal += currentRunner.calculateDistance(pathPoint, totalDistance);
@@ -276,14 +280,15 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
 
                         if(distanceCal > 0.05)
                         {
-                            currentRunner.addRunData(requireActivity(), data,currentRunner);
-                            currentRunner.saveRouteImage(mMap,requireActivity());
-                            fusedClient.removeLocationUpdates(locationCallback);
+                            currentRunner.addRunData(requireActivity(),currentRunner);
+                            currentRunner.saveRouteImage(mMap,requireActivity(), viewRuns);
+                            String image = currentRunner.getImageRoute();
+                            viewRuns.setMapImage(image);
+                            viewRuns.setActions(Constants.MAP_ACTION.RUN_ACTION);
                         }
                         else{
                             Toast.makeText(requireActivity(), "Run Cancelled no data saved", Toast.LENGTH_LONG).show();
                         }
-
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -294,26 +299,27 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
         runHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<RunnerData> runData = new ArrayList<>();
+                //ArrayList<RunnerData> runData = new ArrayList<>();
 
                 if(history_RV.getVisibility() == View.VISIBLE){
                     history_RV.setVisibility(View.INVISIBLE);
 
                     history_RV.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    history_RV.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
-                    adapter = new RunHistoryAdapter( runData, requireActivity());
+                    history_RV.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+                    adapter = new RunHistoryAdapter(requireActivity(),data,rvInterface);
                     history_RV.setAdapter(adapter);
 
-                    currentRunner.fetchRunData(runData,adapter, requireActivity());
+
+                    currentRunner.fetchRunData(data,adapter, requireActivity());
                 }
                 else if(history_RV.getVisibility() == View.INVISIBLE){
                     history_RV.setVisibility(View.VISIBLE);
                     history_RV.setLayoutManager(new LinearLayoutManager(getActivity()));
                     history_RV.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
-                    adapter = new RunHistoryAdapter( runData, requireActivity());
+                    adapter = new RunHistoryAdapter( requireActivity(),data,rvInterface);
                     history_RV.setAdapter(adapter);
 
-                    currentRunner.fetchRunData(runData,adapter, requireActivity());
+                    currentRunner.fetchRunData(data,adapter, requireActivity());
 
                 }
 
@@ -345,6 +351,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                             if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                                     == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireActivity(),
                                     Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
                                 locationPermissionGranted = true;
                                 mMap.setMyLocationEnabled(true);
 
@@ -353,7 +360,6 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                                     public void onSuccess(Location location) {
 
                                         mCurrentLocation = location;
-
 
                                         currentRunner.setLatitude(mCurrentLocation.getLatitude());
                                         currentRunner.setLongitude(mCurrentLocation.getLongitude());
@@ -379,13 +385,13 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                                                     .position(curUser)
                                                     .title("Location"));
                                             mMap.setBuildingsEnabled(true);
-                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curUser, 18));
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curUser, 19));
                                         }
                                         mMap.getUiSettings().setCompassEnabled(true);
                                         mMap.getUiSettings().setZoomControlsEnabled(true);
                                         mMap.getUiSettings().setMyLocationButtonEnabled(true);
                                         mMap.getUiSettings().setAllGesturesEnabled(true);
-                                        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                                        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -493,10 +499,14 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
                     viewRuns.setClockTime(mCurrentLocation.getTime());
                     viewRuns.setAccuracy(mCurrentLocation.getAccuracy());
                 }
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,18));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
             }
 
             Log.d("Updated", "on Location Result" + locationResult);
+            if(isStopped == true){
+                LatLng loc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,14));
+            }
 
         }
     };
@@ -506,5 +516,51 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+    @Override
+    public void onItemClick(int position) {
+        RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
+
+        currentRunner.getClickedItem(position,data);
+
+        String mapImage = currentRunner.getImageRoute();
+        double dist = currentRunner.getTotalDistance();
+        double pace = currentRunner.getAvgPace();
+        double time = currentRunner.getCompletedRunInMinutes();
+        double lat = currentRunner.getLatitude();
+        double lng = currentRunner.getLongitude();
+        double cal = currentRunner.getBurnedCalories();
+        String date = currentRunner.getCompletedDate();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference imageRef = storageReference.child("routes/"+user.getUid()).child(date);
+        imageRef.getBytes(Constants.MEGA_BYTE).addOnCompleteListener(new OnCompleteListener<byte[]>() {
+            @Override
+            public void onComplete(@NonNull Task<byte[]> task) {
+               byte[] photo = task.getResult();
+                    String image = new String(photo, StandardCharsets.UTF_8);
+                    viewRuns.setMapImage(image);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                     Toast.makeText(requireActivity(),"No data gathered", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        viewRuns.setActions(Constants.MAP_ACTION.HISTORY_ACTION);
+        viewRuns.setMapImage(mapImage);
+        viewRuns.setRunDistance(dist);
+        viewRuns.setBurnedCalories((float)cal);
+        viewRuns.setAvgPace(pace);
+        viewRuns.setElapsedRealTime(time);
+        viewRuns.setLat(lat);
+        viewRuns.setLng(lng);
+        Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
+                .navigate(R.id.action_navigation_run_club_to_runStatisticsFragment);
     }
 }

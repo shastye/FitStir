@@ -6,17 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.runtracker.RunStatisticsFragment">
 
-   <ImageView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:background="@drawable/background2"/>
 
-   <View
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:alpha="0.35"
-       android:background="@color/soft_deep_purple" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@color/white"/>
     <View
         android:layout_width="314dp"
         android:layout_height="460dp"
@@ -29,7 +24,6 @@
     <View
         android:layout_width="50dp"
         android:layout_height="480dp"
-        android:layout_below="@+id/stat_chart"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
@@ -50,15 +44,21 @@
      android:alpha="0.85"
      android:background="@color/soft_blue"
      android:elevation="5dp" />
-
- <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/stat_chart"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/soft_blue"
-        android:elevation="15dp"
-        android:alpha="0.90"
-        />
+        android:layout_height="253dp"
+        android:background="@drawable/logo">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/stat_chart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:elevation="15dp"
+            android:alpha="0.90"
+            />
+    </RelativeLayout>
+
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,8 +91,6 @@
         android:textColor="@color/dark_grey"
         android:textStyle="italic" />
 
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -107,12 +105,13 @@
         android:id="@+id/route_Image"
         android:layout_width="196dp"
         android:layout_height="158dp"
+        android:elevation="15dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
         android:layout_marginStart="105dp"
         android:layout_marginTop="240dp"
         android:layout_marginBottom="333dp"
-        android:src="@drawable/profileimage_background" />
+        android:background="@drawable/profileimage_background" />
 
     <TextView
         android:id="@+id/tv_accuracy"
@@ -202,7 +201,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="245dp"
+        android:layout_marginStart="250dp"
         android:layout_marginTop="501.5dp"
         android:text="Speed"
         android:textSize="15sp"
@@ -212,7 +211,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="245dp"
+        android:layout_marginStart="250dp"
         android:layout_marginTop="500.0dp"
         android:text="Speed"
         android:textSize="15sp"
@@ -292,7 +291,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="117dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="551.5dp"
         android:text="Time"
         android:textSize="15sp"
@@ -301,7 +300,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="117dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="550.0dp"
         android:text="Time"
         android:textSize="15sp"
@@ -345,6 +344,35 @@
         android:hint="CalBurned"
         android:textSize="13sp"
         />
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="220dp"
+       android:layout_marginTop="596.2dp"
+       android:text="Total Distance"
+       android:textSize="15sp"
+       android:textColor="@color/dark_grey"
+       android:textStyle="italic" />
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="220dp"
+       android:layout_marginTop="595dp"
+       android:text="Total Distance"
+       android:textSize="15sp"
+       android:textColor="@color/black"
+       android:textStyle="italic" />
+
+   <TextView
+       android:id="@+id/tv_Distance"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="210dp"
+       android:layout_marginTop="615dp"
+       android:hint="total distance"
+       android:textSize="13sp"
+       />
 
    <TextView
        android:id="@+id/no_run_Message"

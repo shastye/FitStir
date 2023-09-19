@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
 
 public class CustomYogaFragment extends Fragment {
 
+    private View dialog;
     private FragmentCustomYogaBinding binding;
 
     @Override
@@ -28,6 +30,10 @@ public class CustomYogaFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentCustomYogaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        dialog = root.findViewById(R.id.custom_empty);
+        dialog.setVisibility(View.INVISIBLE);
+
 
 
         return root;
