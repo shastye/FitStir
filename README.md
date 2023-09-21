@@ -127,3 +127,4 @@ Acknowledgments
 * ['com.jjoe64:graphview:4.2.2'](https://github.com/jjoe64/GraphView/wiki#showcase-1)
 * [Edamam Food Database API](https://developer.edamam.com/food-database-api-docs#/)
 * ['com.fasterxml.jackson.core:jackson-databind:2.14.2'](https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-core/2.15.2)
+* ['com.appolica:interactive-info-window-android:1.1.0'](https://github.com/Appolica/InteractiveInfoWindowAndroid/tree/master#interactiveinfowindowandroid-by-appolica)

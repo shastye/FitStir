@@ -1,20 +1,15 @@
-package com.fitstir.fitstirapp.ui.health.finddietician;
+package com.fitstir.fitstirapp.ui.health.finddietitian;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -26,6 +21,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.appolica.interactiveinfowindow.InfoWindow;
+import com.appolica.interactiveinfowindow.fragment.MapInfoWindowFragment;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentFindDietitianBinding;
 import com.fitstir.fitstirapp.ui.health.HealthViewModel;
@@ -36,12 +33,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
-import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -52,18 +47,12 @@ public class FindDietitianFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HealthViewModel healthViewModel =
-                new ViewModelProvider(this).get(HealthViewModel.class);
-
         binding = FragmentFindDietitianBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textFindDietitian;
-        //healthViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
         // Addition Text Here
 
-        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        MapInfoWindowFragment supportMapFragment = (MapInfoWindowFragment ) getChildFragmentManager().findFragmentById(R.id.map);
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -122,13 +111,28 @@ public class FindDietitianFragment extends Fragment {
                 }
 
                 // On marker click, inflate information
-                final float scale = requireContext().getResources().getDisplayMetrics().density;
-                final int pixels =  (int)(59 * scale + 0.5f);   // HOW GET 59?
+                googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                    @Nullable
+                    @Override
+                    public View getInfoContents(@NonNull Marker marker) {
+                        InfoWindow infoWindow = new InfoWindow(
+                                marker,
+                                new InfoWindow.MarkerSpecification(0,100),
+                                new MapInfoFragment(marker, places)
+                        );
 
-                googleMap.setInfoWindowAdapter(new InfoWindowAdapter(requireContext(), places));
+                        supportMapFragment.infoWindowManager().toggle(infoWindow, true);
+                        return null;
+                    }
+
+                    @Nullable
+                    @Override
+                    public View getInfoWindow(@NonNull Marker marker) {
+                        return null;
+                    }
+                });
             }
         });
-
 
         // End
 
