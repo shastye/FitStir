@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.yoga.fragments.YogaPoseFragment">
+    tools:context=".ui.yoga.fragments.YogaPoseFragment"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
                     android:id="@+id/url_PNG"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/explose_search"
+
                     />
 
                 <ToggleButton
@@ -63,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Pose Name: "
+
                 android:layout_marginStart="-70dp"
                 android:layout_marginTop="-19dp"
                 android:textSize="14sp"
@@ -125,6 +127,7 @@
                 android:layout_marginTop="20dp"
                 />
             <TextView
+                android:id="@+id/pose_benefits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pose Benefits: "
@@ -157,7 +160,7 @@
                 android:layout_height="125dp"
                 android:layout_marginStart="-75dp"
                 android:layout_marginTop="100dp"
-                android:background="@drawable/explose_search"
+
                 />
             <ImageView
                 android:id="@+id/url_SVG"
@@ -165,7 +168,7 @@
                 android:layout_height="125dp"
                 android:layout_marginStart="75dp"
                 android:layout_marginTop="-124dp"
-                android:background="@drawable/explose_search"
+
                 />
 
             <ImageButton
