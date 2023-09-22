@@ -95,8 +95,6 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
          }
      }catch (NullPointerException e){
          upperBody.getWorkoutClicked(position,upperBodyApiArrayList,workoutsViewModel);
-
-
          Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
                  .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
      }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,7 +15,6 @@ import androidx.navigation.Navigation;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentYogaBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
-import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
 import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
 
 public class YogaFragment extends Fragment {
@@ -24,12 +22,10 @@ public class YogaFragment extends Fragment {
     private FragmentYogaBinding binding;
     private CardView beginner, interm, expert, explore, standing, balance, learn, quickStart;
     private ImageView recent, custom, favorite;
+    private YogaViewModel yogaViews;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        YogaViewModel yogaViews = new ViewModelProvider(this.requireActivity()).get(YogaViewModel.class);
-
         binding = FragmentYogaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -46,6 +42,8 @@ public class YogaFragment extends Fragment {
         recent = root.findViewById(R.id.recents_Tab);
         custom = root.findViewById(R.id.custom_Tab);
         favorite = root.findViewById(R.id.favorite_Tab);
+        yogaViews = new ViewModelProvider(this.requireActivity()).get(YogaViewModel.class);
+
 
         beginner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +101,6 @@ public class YogaFragment extends Fragment {
                 yogaViews.setCat_Id(Constants.YOGA_ID.STANDING);
                 yogaViews.setCat_Name(Constants.YOGA_ID.STANDING_POSE);
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
-
             }
         });
         balance.setOnClickListener(new View.OnClickListener() {
@@ -112,13 +109,11 @@ public class YogaFragment extends Fragment {
                 yogaViews.setCat_Id(Constants.YOGA_ID.BALANCE);
                 yogaViews.setCat_Name(Constants.YOGA_ID.BALANCE_POSE);
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
-
             }
         });
         recent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_recentYogaFragment);
             }
         });
@@ -126,20 +121,15 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_customYogaFragment);
-
             }
         });
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_favoriteYogaFragment);
             }
         });
-
-
         // End
-
         return root;
     }
 

@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.RvInterface;
-import com.fitstir.fitstirapp.ui.yoga.models.YogaApiModel;
+import com.fitstir.fitstirapp.ui.yoga.models.CategoryModel;
+import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -22,14 +23,18 @@ public class YogaAdapter extends RecyclerView.Adapter<YogaAdapter.ViewHolder> {
 
     private final RvInterface rvInterface;
     private Context context;
-    private ArrayList<YogaApiModel> apiCallList;
+    private ArrayList<PoseModel> posesList;
 
-    public YogaAdapter(RvInterface rvInterface, Context context, ArrayList<YogaApiModel> apiCallList) {
+
+    public YogaAdapter(RvInterface rvInterface){
+        this.rvInterface = rvInterface;
+    };
+
+    public YogaAdapter(RvInterface rvInterface, Context context, ArrayList<PoseModel> posesList) {
         this.rvInterface = rvInterface;
         this.context = context;
-        this.apiCallList = apiCallList;
+        this.posesList = posesList;
     }
-
     @NonNull
     @Override
     public YogaAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,12 +44,11 @@ public class YogaAdapter extends RecyclerView.Adapter<YogaAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull YogaAdapter.ViewHolder holder, int position) {
-        YogaApiModel apiCall = new YogaApiModel();
-        holder.pose_name.setText(apiCall.getEnglish_name().toLowerCase(Locale.ROOT));
-        holder.benefits.setText(apiCall.getPose_benefits().toLowerCase(Locale.ROOT));
-
+        PoseModel poseApi = posesList.get(position);
+        holder.pose_name.setText(poseApi.getEnglish_name());
+        holder.benefits.setText(poseApi.getPose_benefits());
         Glide.with(context)
-                .load(apiCall.getUrl_png())
+                .load(poseApi.getUrl_png())
                 .into(holder.pose_Image);
 
         holder.pose_Image.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +62,9 @@ public class YogaAdapter extends RecyclerView.Adapter<YogaAdapter.ViewHolder> {
     }
 
     @Override
-    public int getItemCount() {return apiCallList.size();}
+    public int getItemCount() {
+        return posesList.size();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView pose_name, benefits;

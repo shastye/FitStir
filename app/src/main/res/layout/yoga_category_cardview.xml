@@ -17,11 +17,24 @@
         app:cardCornerRadius="35dp"
         app:cardElevation="10dp">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/benefits_TV"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:hint="Benefits"
+                android:textSize="13sp"
+                android:layout_marginTop="55dp"
+                android:layout_marginStart="140dp"/>
+        </ScrollView>
+
         <ImageView
             android:id="@+id/yogaPose_IMG"
-            android:background="@drawable/explose_search"
-            android:layout_width="155dp"
-            android:layout_height="265dp"/>
+            android:layout_width="115dp"
+            android:layout_height="205dp"/>
         <TextView
             android:id="@+id/title_name_TV"
             android:layout_width="wrap_content"
@@ -29,17 +42,17 @@
             android:hint="Yoga Name"
             android:textStyle="italic"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_marginTop="15dp"
             android:layout_marginStart="160dp"/>
         <TextView
-            android:id="@+id/benefits_TV"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:hint="Benefits"
+            android:hint="Benefits:"
             android:textSize="14sp"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="40dp"
             android:layout_marginStart="160dp"/>
+
 
     </androidx.cardview.widget.CardView>
 
