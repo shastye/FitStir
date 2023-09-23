@@ -23,6 +23,7 @@ public class YogaPoseFragment extends Fragment {
     private TextView english_Name, adapted_Name, san_Name, tran_Name, descript,benefits;
     private ImageView png,svg,alt;
     private FragmentYogaPoseBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +45,6 @@ public class YogaPoseFragment extends Fragment {
         alt = root.findViewById(R.id.url_ALT);
 
         english_Name.setText(yogaView.getEnglish_Name().getValue());
-        adapted_Name.setText(yogaView.getAdapted_Name().getValue());
         san_Name.setText(yogaView.getSanskrit_Name().getValue());
         tran_Name.setText(yogaView.getTranslated_Name().getValue());
         descript.setText(yogaView.getPose_Description().getValue());
@@ -52,11 +52,9 @@ public class YogaPoseFragment extends Fragment {
         Glide.with(this)
                 .load(yogaView.getUrl_PNG().getValue())
                 .into(png);
+
         Glide.with(this)
-                .load(yogaView.getUrl_SVG().getValue())
-                .into(svg);
-        Glide.with(this)
-                .load(yogaView.getUrl_ALT().getValue())
+                .load(yogaView.getVideo().getValue())
                 .into(alt);
 
 

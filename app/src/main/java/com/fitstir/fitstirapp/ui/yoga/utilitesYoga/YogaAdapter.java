@@ -13,11 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.RvInterface;
-import com.fitstir.fitstirapp.ui.yoga.models.CategoryModel;
 import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class YogaAdapter extends RecyclerView.Adapter<YogaAdapter.ViewHolder> {
 

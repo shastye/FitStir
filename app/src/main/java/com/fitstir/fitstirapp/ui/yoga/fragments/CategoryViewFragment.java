@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -21,7 +20,6 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentYogaViewBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.RvInterface;
-import com.fitstir.fitstirapp.ui.yoga.models.CategoryModel;
 import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.YogaAdapter;
@@ -35,11 +33,9 @@ public class CategoryViewFragment extends Fragment implements RvInterface {
     private RecyclerView rv;
     private YogaAdapter adapter;
     private RvInterface rvInterface;
-    private ArrayList<CategoryModel> categoryList;
     private ArrayList<PoseModel> poseList;
     private SearchView search;
     private TextView title;
-    private CategoryModel category;
     private PoseModel poseModel;
     private YogaViewModel yogaViews;
 
@@ -56,37 +52,23 @@ public class CategoryViewFragment extends Fragment implements RvInterface {
 
         search = root.findViewById(R.id.searchView_Yoga_Explore);
         title = root.findViewById(R.id.category_Title);
-        rv = root.findViewById(R.id.yoga_RV);
-        category = new CategoryModel();
-        categoryList = new ArrayList<>();
-        poseList = new ArrayList<>();
-        rvInterface = this;
-        adapter = new YogaAdapter(rvInterface,requireActivity(), poseList);
+        adapter = new YogaAdapter(rvInterface, requireActivity(), poseList);
         poseModel = new PoseModel();
 
+
+        //switch between each category
         int id = yogaViews.getCat_Id().getValue();
-        switch(id){
+        switch (id) {
             case 1:
                 title.setText(Constants.YOGA_ID.BEGINNER_POSE);
-                yogaViews.getResponsePose().observe(requireActivity(), new Observer<List<PoseModel>>() {
-                    @Override
-                    public void onChanged(List<PoseModel> poses) {
-                        for(PoseModel pose : poses) {
+                poseList = new ArrayList<>();
+                rvInterface = this;
+                rv = root.findViewById(R.id.yoga_RV);
+                rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                rv.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
+                adapter = new YogaAdapter(rvInterface, requireActivity(), poseList);
+                rv.setAdapter(adapter);
 
-                            poseModel.setPose_benefits(pose.getPose_benefits());
-                            poseModel.setUrl_png(pose.getUrl_png());
-                            poseModel.setEnglish_name(pose.getEnglish_name());
-                            poseList.add(pose);
-
-                            rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                            rv.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
-                            adapter = new YogaAdapter(rvInterface, requireActivity(), poseList);
-                            rv.setAdapter(adapter);
-                        }
-                    }
-                });
-
-                yogaViews.fetchApiData(adapter);
                 break;
 
             case 2:
@@ -127,7 +109,9 @@ public class CategoryViewFragment extends Fragment implements RvInterface {
     @Override
     public void onItemClick(int position) {
         YogaViewModel views = new ViewModelProvider(requireActivity()).get(YogaViewModel.class);
+
         views.getClickedItem(position, poseList);
+
         Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_categoryViewFragment_to_yogaPoseFragment);
     }
 }
