@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -35,6 +36,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.appolica.interactiveinfowindow.InfoWindow;
 import com.appolica.interactiveinfowindow.fragment.MapInfoWindowFragment;
@@ -83,177 +85,12 @@ public class FindDietitianFragment extends Fragment {
 
         // Addition Text Here
 
-        MapInfoWindowFragment supportMapFragment = (MapInfoWindowFragment ) getChildFragmentManager().findFragmentById(R.id.map);
-        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                // When map is loaded
-                MapsInitializer.initialize(requireActivity());
-                map = googleMap;
-                distanceMiles = 15;
-                minRating = 0;
-                maxRating = 5;
-                grey =  0x44000000;
 
-                // Get Permissions
-                while (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
-                }
 
-                while (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
-                }
+        // Get Permissions
+        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
 
-                // Set map to current position and zoom
-                map.setMyLocationEnabled(true);
-                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-                LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
-                Criteria criteria = new Criteria();
-                Location currLoc = new Location(locationManager.getBestProvider(criteria, false));
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    currLoc = locationManager.getLastKnownLocation(Objects.requireNonNull(locationManager.getBestProvider(criteria, false)));
-                }
-                currLatLng = new LatLng(currLoc.getLatitude(), currLoc.getLongitude());
-                zoomToRadius(distanceMiles);
-
-                CircleOptions circleOptions = new CircleOptions()
-                        .center(currLatLng)
-                        .radius(distanceMiles * 1609.34f)
-                        .strokeColor(Color.BLACK)
-                        .fillColor(grey);
-                circle = map.addCircle(circleOptions);
-
-                // Show filters on button click
-                binding.filterButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        LayoutInflater inflater = LayoutInflater.from(requireActivity());
-                        View popUpView = inflater.inflate(R.layout.popup_map_filter, null);
-                        PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-                        String[] minRatingOptions = new String[] { "Min", "0", "1", "2", "3", "4", "5" };
-                        String[] maxRatingOptions = new String[] { "Max", "0", "1", "2", "3", "4", "5" };
-                        Spinner minSpinner = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.min_rating, minRatingOptions);
-                        Spinner maxSpinner = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.max_rating, maxRatingOptions);
-
-                        SeekBar seekBar = popUpView.findViewById(R.id.distance_slider);
-                        seekBar.setProgress((int) distanceMiles);
-                        ((TextView) popUpView.findViewById(R.id.distance_from_bar)).setText(String.valueOf((int) distanceMiles));
-                        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                            @Override
-                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                if (fromUser) {
-                                    ((TextView) popUpView.findViewById(R.id.distance_from_bar)).setText(String.valueOf(progress));
-                                }
-                            }
-
-                            @Override
-                            public void onStartTrackingTouch(SeekBar seekBar) { }
-
-                            @Override
-                            public void onStopTrackingTouch(SeekBar seekBar) { }
-                        });
-
-                        AppCompatButton accept = popUpView.findViewById(R.id.map_accept_button);
-                        accept.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                try {
-                                    int minIndex = minSpinner.getSelectedItemPosition();
-                                    int maxIndex = maxSpinner.getSelectedItemPosition();
-
-                                    if (minIndex > maxIndex) {
-                                        if (maxIndex == 0) {
-                                            minRating = minIndex - 1;
-                                            maxRating = 5;
-                                        } else {
-                                            throw new IndexOutOfBoundsException("Min rating must be smaller than\nor equal to the max rating.");
-                                        }
-                                    } else if (minIndex == maxIndex) {
-                                        if (minIndex == 0) {
-                                            minRating = 0;
-                                            maxRating = 5;
-                                        } else {
-                                            minRating = minIndex - 1;
-                                            maxRating = maxIndex - 1;
-                                        }
-                                    } else { // minIndex < maxIndex
-                                        if (minIndex == 0) {
-                                            minRating = 0;
-                                        } else {
-                                            minRating = minIndex - 1;
-                                        }
-                                        maxRating = maxIndex - 1;
-                                    }
-
-                                    distanceMiles = seekBar.getProgress();
-
-                                    popupWindow.dismiss();
-
-                                    circle.remove();
-                                    circle = map.addCircle(new CircleOptions()
-                                            .center(currLatLng)
-                                            .radius(distanceMiles * 1609.34f)
-                                            .strokeColor(Color.BLACK)
-                                            .fillColor(grey));
-                                    zoomToRadius(distanceMiles);
-                                } catch (IndexOutOfBoundsException e) {
-                                    TextView errorText = (TextView) popUpView.findViewById(R.id.error);
-                                    errorText.setError("");
-                                    errorText.setText(e.getMessage());
-
-                                    minSpinner.setOnTouchListener(new View.OnTouchListener() {
-                                        @Override
-                                        public boolean onTouch(View v, MotionEvent event) {
-                                            errorText.setText("");
-                                            errorText.setError(null);
-                                            return false;
-                                        }
-                                    });
-
-                                    maxSpinner.setOnTouchListener(new View.OnTouchListener() {
-                                        @Override
-                                        public boolean onTouch(View v, MotionEvent event) {
-                                            errorText.setText("");
-                                            errorText.setError(null);
-                                            return false;
-                                        }
-                                    });
-                                }
-                            }
-                        });
-
-                        popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0,0);
-                    }
-                });
-
-                // Show dietitians on map on button click
-                binding.searchButton.setOnClickListener(getSearchListener());
-
-                // On marker click, inflate information
-                googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-                    @Nullable
-                    @Override
-                    public View getInfoContents(@NonNull Marker marker) {
-                        InfoWindow infoWindow = new InfoWindow(
-                                marker,
-                                new InfoWindow.MarkerSpecification(0,100),
-                                new MapInfoFragment(marker, places)
-                        );
-
-                        supportMapFragment.infoWindowManager().toggle(infoWindow, true);
-                        return null;
-                    }
-
-                    @Nullable
-                    @Override
-                    public View getInfoWindow(@NonNull Marker marker) {
-                        return null;
-                    }
-                });
-            }
-        });
 
         // End
 
@@ -271,11 +108,199 @@ public class FindDietitianFragment extends Fragment {
             new ActivityResultCallback<Boolean>() {
                 @Override
                 public void onActivityResult(Boolean result) {
+
+
+
                     if (result) {
-                        // PERMISSION GRANTED
+
+
+
+                        //region Map instantiation /////////////////////////////////////////////////
+
+
+
+                        MapInfoWindowFragment supportMapFragment = (MapInfoWindowFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(GoogleMap googleMap) {
+                                // When map is loaded
+                                MapsInitializer.initialize(requireActivity());
+                                map = googleMap;
+                                distanceMiles = 15;
+                                minRating = 0;
+                                maxRating = 5;
+                                grey = 0x44000000;
+
+                                // Set map to current position and zoom
+                                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                                    map.setMyLocationEnabled(true);
+                                }
+                                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                                LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+                                Criteria criteria = new Criteria();
+                                Location currLoc = new Location(locationManager.getBestProvider(criteria, false));
+                                currLoc = locationManager.getLastKnownLocation(Objects.requireNonNull(locationManager.getBestProvider(criteria, false)));
+                                currLatLng = new LatLng(currLoc.getLatitude(), currLoc.getLongitude());
+                                zoomToRadius(distanceMiles);
+
+                                // Show filters on button click
+                                binding.filterButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        LayoutInflater inflater = LayoutInflater.from(requireActivity());
+                                        View popUpView = inflater.inflate(R.layout.popup_map_filter, null);
+                                        PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+                                        String[] minRatingOptions = new String[]{"Min", "0", "1", "2", "3", "4", "5"};
+                                        String[] maxRatingOptions = new String[]{"Max", "0", "1", "2", "3", "4", "5"};
+                                        Spinner minSpinner = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.min_rating, minRatingOptions);
+                                        Spinner maxSpinner = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.max_rating, maxRatingOptions);
+
+                                        SeekBar seekBar = popUpView.findViewById(R.id.distance_slider);
+                                        seekBar.setProgress((int) distanceMiles);
+                                        ((TextView) popUpView.findViewById(R.id.distance_from_bar)).setText(String.valueOf((int) distanceMiles));
+                                        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                            @Override
+                                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                                if (fromUser) {
+                                                    ((TextView) popUpView.findViewById(R.id.distance_from_bar)).setText(String.valueOf(progress));
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onStartTrackingTouch(SeekBar seekBar) {
+                                            }
+
+                                            @Override
+                                            public void onStopTrackingTouch(SeekBar seekBar) {
+                                            }
+                                        });
+
+                                        AppCompatButton accept = popUpView.findViewById(R.id.map_accept_button);
+                                        accept.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                try {
+                                                    int minIndex = minSpinner.getSelectedItemPosition();
+                                                    int maxIndex = maxSpinner.getSelectedItemPosition();
+
+                                                    if (minIndex > maxIndex) {
+                                                        if (maxIndex == 0) {
+                                                            minRating = minIndex - 1;
+                                                            maxRating = 5;
+                                                        } else {
+                                                            throw new IndexOutOfBoundsException("Min rating must be smaller than\nor equal to the max rating.");
+                                                        }
+                                                    } else if (minIndex == maxIndex) {
+                                                        if (minIndex == 0) {
+                                                            minRating = 0;
+                                                            maxRating = 5;
+                                                        } else {
+                                                            minRating = minIndex - 1;
+                                                            maxRating = maxIndex - 1;
+                                                        }
+                                                    } else { // minIndex < maxIndex
+                                                        if (minIndex == 0) {
+                                                            minRating = 0;
+                                                        } else {
+                                                            minRating = minIndex - 1;
+                                                        }
+                                                        maxRating = maxIndex - 1;
+                                                    }
+
+                                                    distanceMiles = seekBar.getProgress();
+
+                                                    popupWindow.dismiss();
+
+                                                    // TODO: FOR SHOWING ZOOM FUNCTIONALITY
+                                                    /*circle.remove();
+                                                    circle = map.addCircle(new CircleOptions()
+                                                            .center(currLatLng)
+                                                            .radius(distanceMiles * 1609.34f)
+                                                            .strokeColor(Color.BLACK)
+                                                            .fillColor(grey));*/
+                                                    zoomToRadius(distanceMiles);
+                                                } catch (IndexOutOfBoundsException e) {
+                                                    TextView errorText = (TextView) popUpView.findViewById(R.id.error);
+                                                    errorText.setError("");
+                                                    errorText.setText(e.getMessage());
+
+                                                    minSpinner.setOnTouchListener(new View.OnTouchListener() {
+                                                        @Override
+                                                        public boolean onTouch(View v, MotionEvent event) {
+                                                            errorText.setText("");
+                                                            errorText.setError(null);
+                                                            return false;
+                                                        }
+                                                    });
+
+                                                    maxSpinner.setOnTouchListener(new View.OnTouchListener() {
+                                                        @Override
+                                                        public boolean onTouch(View v, MotionEvent event) {
+                                                            errorText.setText("");
+                                                            errorText.setError(null);
+                                                            return false;
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+
+                                        popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+                                    }
+                                });
+
+                                // Show dietitians on map on button click
+                                binding.searchButton.setOnClickListener(getSearchListener());
+
+                                // On marker click, inflate information
+                                googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                                    @Nullable
+                                    @Override
+                                    public View getInfoContents(@NonNull Marker marker) {
+                                        InfoWindow infoWindow = new InfoWindow(
+                                                marker,
+                                                new InfoWindow.MarkerSpecification(0, 100),
+                                                new MapInfoFragment(marker, places)
+                                        );
+
+                                        supportMapFragment.infoWindowManager().toggle(infoWindow, true);
+                                        return null;
+                                    }
+
+                                    @Nullable
+                                    @Override
+                                    public View getInfoWindow(@NonNull Marker marker) {
+                                        return null;
+                                    }
+                                });
+                            }
+                        });
+
+
+
+                        //endregion ////////////////////////////////////////////////////////////////
+
+
+
                     } else {
-                        // PERMISSION NOT GRANTED
-                        // TODO: Show error dialog and return to home
+                        LayoutInflater inflater2 = LayoutInflater.from(requireActivity());
+                        View popUpView = inflater2.inflate(R.layout.dialog_generic_alert, null);
+                        PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+                        ((TextView) popUpView.findViewById(R.id.dialog_generic_message)).setText("Location permission is required for this section.");
+                        ((TextView) popUpView.findViewById(R.id.dialog_generic_continue)).setText("Redirecting back to\nmain health page.");
+                        ((Button) popUpView.findViewById(R.id.dialog_generic_cancel_button)).setVisibility(View.GONE);
+
+                        ((Button) popUpView.findViewById(R.id.dialog_generic_accept_button)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popupWindow.dismiss();
+                                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_find_dietician_to_navigation_health);
+                            }
+                        });
+                        popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0,0);
                     }
                 }
             }
