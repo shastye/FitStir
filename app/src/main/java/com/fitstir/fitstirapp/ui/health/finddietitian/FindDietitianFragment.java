@@ -164,7 +164,12 @@ public class FindDietitianFragment extends Fragment {
                                     int maxIndex = maxSpinner.getSelectedItemPosition();
 
                                     if (minIndex > maxIndex) {
-                                        throw new IndexOutOfBoundsException("Min rating must be smaller than\nor equal to the max rating.");
+                                        if (maxIndex == 0) {
+                                            minRating = minIndex - 1;
+                                            maxRating = 5;
+                                        } else {
+                                            throw new IndexOutOfBoundsException("Min rating must be smaller than\nor equal to the max rating.");
+                                        }
                                     } else if (minIndex == maxIndex) {
                                         if (minIndex == 0) {
                                             minRating = 0;
@@ -296,7 +301,9 @@ public class FindDietitianFragment extends Fragment {
                         String.valueOf(currLatLng.latitude),
                         String.valueOf(currLatLng.longitude),
                         String.valueOf(distanceMiles * 1609.37f), // in meters... 50,000 meters = max = 31.07 miles
-                        "dietitian"
+                        "dietitian",
+                        minRating,
+                        maxRating
                 );
                 try {
                     api.execute();
@@ -326,10 +333,10 @@ public class FindDietitianFragment extends Fragment {
                             .position(location)
                             .snippet(Integer.toString(i))
                     );
-
-                    ((AppCompatButton) v).setText("Clear");
-                    v.setOnClickListener(getHideListener());
                 }
+
+                ((AppCompatButton) v).setText("Clear");
+                v.setOnClickListener(getHideListener());
             }
         };
     }

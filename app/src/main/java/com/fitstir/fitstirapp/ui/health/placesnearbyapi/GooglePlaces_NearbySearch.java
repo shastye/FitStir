@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.FoodResponse;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.RecipeResponse;
+import com.fitstir.fitstirapp.ui.health.placesnearbyapi.classes.Place;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.google.android.gms.maps.GoogleMap;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,13 +31,17 @@ public class GooglePlaces_NearbySearch {
     private String responseString;
     private NearbySearchResponse searchResponse;
 
-    String longitude, latitude, radius, keyword;
+    private String longitude, latitude, radius, keyword;
+    private int minRating, maxRating;
 
-    public GooglePlaces_NearbySearch(String latitude, String longitude, String radius, String keyword) {
+    public GooglePlaces_NearbySearch(String latitude, String longitude, String radius, String keyword, int minRating, int maxRating) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.radius = radius;
         this.keyword = keyword;
+
+        this.minRating = minRating;
+        this.maxRating = maxRating;
 
         String requestBody = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
         requestBody += ("location=" + latitude + "%2C" + longitude);
@@ -97,6 +103,19 @@ public class GooglePlaces_NearbySearch {
                 searchResponse = recipeFuture.get();
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
+            }
+
+            for (int i = 0; i < searchResponse.getResults().size(); i++) {
+                if (searchResponse.getResults().get(i) != null && searchResponse.getResults().get(i).getRating() != null) {
+                    ArrayList<Place> results = searchResponse.getResults();
+                    Place place = results.get(i);
+                    float rating = place.getRating();
+
+                    if (rating < minRating || rating > maxRating) {
+                        results.remove(place);
+                        i--;
+                    }
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
