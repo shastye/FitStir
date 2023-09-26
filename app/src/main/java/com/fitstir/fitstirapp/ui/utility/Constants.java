@@ -45,6 +45,8 @@ public class Constants {
 
     }
 
+    public static final String MAPS_API_KEY = "AIzaSyCVnELwsZKk_41fNEdIrkpjc1S6GUUSvsc";
+
     public static final class WORKOUT_BODYPART{
         public  static final String UPPER_BODY = "UpperBody";
         public static final String LOWER_BODY = "LowerBody";
