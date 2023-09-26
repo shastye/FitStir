@@ -27,27 +27,54 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:background="@drawable/rounded_a80_section_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="40dp"
-        app:cardCornerRadius="40dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <fragment
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/map"
-            android:name="com.appolica.interactiveinfowindow.fragment.MapInfoWindowFragment"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/filter_button"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="Search"
+            android:textColor="?attr/colorOnPrimary"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="?attr/colorPrimaryVariant" />
+
+        <ImageButton
+            android:id="@+id/filter_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_filter_black_200dp"
+            android:backgroundTint="?attr/colorPrimaryVariant"/>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </androidx.cardview.widget.CardView>
+            android:layout_height="match_parent"
+            android:layout_marginTop="80dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <fragment
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/map"
+                android:name="com.appolica.interactiveinfowindow.fragment.MapInfoWindowFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

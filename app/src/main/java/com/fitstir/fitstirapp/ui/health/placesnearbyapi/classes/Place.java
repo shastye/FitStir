@@ -26,8 +26,12 @@ public class Place {
     private Geometry geometry;
     @JsonProperty("icon")
     private String icon;
+    @JsonProperty("international_phone_number")
+    private String internationalPhoneNumber;
     @JsonProperty("name")
     private String name;
+    @JsonProperty("opening_hours")
+    private PlaceOpeningHours openingHours;
     @JsonProperty("photos")
     private ArrayList<PlacePhoto> photos;
     @JsonProperty("place_id")
@@ -172,5 +176,29 @@ public class Place {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public PlaceOpeningHours getOpeningHours() {
+        return openingHours;
+    }
+
+    public void setOpeningHours(PlaceOpeningHours openingHours) {
+        this.openingHours = openingHours;
+    }
+
+    public ArrayList<PlacePhoto> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(ArrayList<PlacePhoto> photos) {
+        this.photos = photos;
+    }
+
+    public String getInternationalPhoneNumber() {
+        return internationalPhoneNumber;
+    }
+
+    public void setInternationalPhoneNumber(String internationalPhoneNumber) {
+        this.internationalPhoneNumber = internationalPhoneNumber;
     }
 }
