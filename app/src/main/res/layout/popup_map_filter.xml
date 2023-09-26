@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/recipe_filter_background"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginTop="12dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.00">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/rating_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:elevation="5dp"
+                android:text="Rating:" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/min_rating"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_toEndOf="@id/rating_tv"
+                android:elevation="5dp"
+                android:hint="min"
+                android:textColorHint="@color/mid_grey"
+                android:textSize="16sp"
+                android:textAlignment="textEnd"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/num_rating_dash_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_toEndOf="@id/min_rating"
+                android:elevation="5dp"
+                android:text="-"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/max_rating"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/num_rating_dash_tv"
+                android:elevation="5dp"
+                android:gravity="center_horizontal"
+                android:hint="max"
+                android:inputType="number"
+                android:textColorHint="@color/mid_grey"
+                android:textSize="12sp"
+                tools:ignore="TouchTargetSizeCheck" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp">
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:elevation="5dp"
+                android:text=""
+                android:textSize="16sp"
+                android:textAlignment="textEnd"
+                android:textColor="@color/Red"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp">
+
+            <TextView
+                android:id="@+id/distance_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:elevation="5dp"
+                android:text="Distance Radius (in miles):"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/distance_from_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/distance_tv"
+                android:layout_marginStart="50dp"
+                android:elevation="5dp"
+                android:text="20"
+                android:textSize="16sp"
+                android:textColor="?attr/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/distance_units"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/distance_from_bar"
+                android:layout_marginStart="5dp"
+                android:elevation="5dp"
+                android:text="miles"
+                android:textSize="16sp"
+                android:textColor="?attr/colorPrimary"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp">
+
+            <TextView
+                android:id="@+id/five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_alignParentStart="true"
+                android:text="5"
+                android:textSize="16sp"/>
+
+            <SeekBar
+                android:id="@+id/distance_slider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/five"
+                android:layout_toStartOf="@+id/thirty"
+                android:min="5"
+                android:max="30"
+                android:progress="15"
+                android:thumbTint="?attr/colorPrimary"
+                android:progressTint="?attr/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/thirty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_alignParentEnd="true"
+                android:text="30"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:layout_marginBottom="15dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/map_accept_button"
+                android:layout_width="90dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="?attr/colorOnPrimary"
+                android:textSize="12sp"
+                android:text="update"
+                android:textColor="?attr/colorPrimaryVariant" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
