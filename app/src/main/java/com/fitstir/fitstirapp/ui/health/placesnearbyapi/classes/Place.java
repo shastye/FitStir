@@ -1,6 +1,8 @@
 package com.fitstir.fitstirapp.ui.health.placesnearbyapi.classes;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import androidx.appcompat.content.res.AppCompatResources;
@@ -57,8 +59,7 @@ public class Place {
             GooglePlaces_PhotoSearch api = new GooglePlaces_PhotoSearch(photos.get(0).getPhotoReference());
             api.execute();
 
-            return null;
-            // TODO: ACTUALLY TURN INTO IMAGE;
+            return new BitmapDrawable(context.getResources(), api.getSearchResponse());
         } catch (Exception e) {
             return AppCompatResources.getDrawable(context, R.drawable.default_google_image);
         }

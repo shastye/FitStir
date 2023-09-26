@@ -29,9 +29,14 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class MapInfoFragment extends Fragment  {
+
     private FragmentMapInfoBinding binding;
+
     private Marker marker;
     private Place place;
+    private PlaceDetailResponse response;
+
+
 
     public MapInfoFragment(Marker marker, ArrayList<Place> places) {
         int index;
@@ -48,7 +53,7 @@ public class MapInfoFragment extends Fragment  {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        PlaceDetailResponse response = api.getSearchResponse();
+        this.response = api.getSearchResponse();
         this.place = response.getResult();
 
         this.marker = marker;
@@ -68,6 +73,20 @@ public class MapInfoFragment extends Fragment  {
         binding.placeImage.setImageDrawable(image);
 
         binding.placeTitle.setText(place.getName());
+
+        String attrString = binding.placeAttr.getText().toString();
+        if (response.getHtmlAttributions().size() == 0) {
+            attrString += "None";
+        } else {
+            for (int i = 0; i < response.getHtmlAttributions().size(); i++) {
+                attrString += response.getHtmlAttributions().get(i);
+
+                if (i != response.getHtmlAttributions().size() - 1) {
+                    attrString += ", ";
+                }
+            }
+        }
+        binding.placeAttr.setText(attrString);
 
         try {
             String isOpen = "Closed";

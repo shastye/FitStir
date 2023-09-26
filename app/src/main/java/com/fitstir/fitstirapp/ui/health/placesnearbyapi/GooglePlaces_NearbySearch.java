@@ -29,7 +29,7 @@ public class GooglePlaces_NearbySearch {
     private String responseString;
     private NearbySearchResponse searchResponse;
 
-    String longitude, latitude, radius, type, keyword;
+    String longitude, latitude, radius, keyword;
 
     public GooglePlaces_NearbySearch(String latitude, String longitude, String radius, String keyword) {
         this.latitude = latitude;

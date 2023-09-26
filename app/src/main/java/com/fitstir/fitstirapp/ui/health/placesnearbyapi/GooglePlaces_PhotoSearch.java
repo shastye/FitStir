@@ -1,5 +1,8 @@
 package com.fitstir.fitstirapp.ui.health.placesnearbyapi;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.fitstir.fitstirapp.ui.utility.Constants;
 
 import java.io.IOException;
@@ -20,10 +23,10 @@ public class GooglePlaces_PhotoSearch {
     private Response response;
     private int responseCode;
     private ResponseBody responseBody;
-    private String responseString;
-    private NearbySearchResponse searchResponse;
+    private byte[] responseBytes;
+    private Bitmap searchResponse;
 
-    private String photoReference;
+    private final String photoReference;
 
     public GooglePlaces_PhotoSearch(String photoReference) {
         this.photoReference = photoReference;
@@ -67,11 +70,15 @@ public class GooglePlaces_PhotoSearch {
 
             responseCode = response.code();
             responseBody = response.body();
-            responseString = responseBody.string();
+            responseBytes = responseBody.bytes();
 
-            int x = 0;
+            searchResponse = BitmapFactory.decodeByteArray(responseBytes, 0, responseBytes.length);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Bitmap getSearchResponse() {
+        return searchResponse;
     }
 }
