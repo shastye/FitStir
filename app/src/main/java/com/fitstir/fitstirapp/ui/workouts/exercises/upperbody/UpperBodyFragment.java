@@ -70,6 +70,7 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
 
             workouts_RV.setAdapter(viewAdapter);
             upperBody = new WorkoutApi();
+
             upperBody.fetchData(upperBodyApiArrayList, Constants.WORKOUT_BODYPART.UPPER_BODY, viewAdapter);
         }
 

@@ -103,6 +103,7 @@ public class RunnerData {
                 .getReference("CompletedRun")
                 .child(authUser.getUid())
                 .child(dateTime);
+
         setUser(authUser.getUid());
         runRef.setValue(runner).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

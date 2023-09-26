@@ -29,7 +29,6 @@ public class RecipesViewModel extends ViewModel {
     private final MutableLiveData<Recipe> clickedRecipe = new MutableLiveData<>(new Recipe());
     private final MutableLiveData<Hit> firstHit = new MutableLiveData<>(new Hit());
     private final MutableLiveData<ArrayList<Recipe>> likedRecipes = new MutableLiveData<>(new ArrayList<>());
-
     private final MutableLiveData<String> instructionsList;
     private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
 
@@ -63,8 +62,6 @@ public class RecipesViewModel extends ViewModel {
     public MutableLiveData<String> getInstructionsList() {
         return instructionsList;
     }
-
-
     public MutableLiveData<String> getMinIngr() {
         return minIngr;
     }

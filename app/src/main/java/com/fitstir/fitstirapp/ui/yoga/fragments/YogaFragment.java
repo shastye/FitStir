@@ -49,7 +49,6 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.BEGINNER);
-                yogaViews.setCat_Name(Constants.YOGA_ID.BEGINNER_POSE);
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
@@ -57,7 +56,7 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.MEDIUM);
-                yogaViews.setCat_Name(Constants.YOGA_ID.INTERMEDIATE_POSE);
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
@@ -65,7 +64,7 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.EXPERT);
-                yogaViews.setCat_Name(Constants.YOGA_ID.EXPERT_POSE);
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
@@ -73,7 +72,7 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.EXPLORE);
-                yogaViews.setCat_Name(Constants.YOGA_ID.EXPERT_POSE);
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
@@ -81,7 +80,7 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.LEARN);
-                yogaViews.setCat_Name(Constants.YOGA_ID.LEARN_POSES);
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
 
             }
@@ -90,7 +89,7 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.QUICK_START);
-                yogaViews.setCat_Name(Constants.YOGA_ID.QUICK_START_POSES);
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
 
             }
@@ -99,7 +98,6 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.STANDING);
-                yogaViews.setCat_Name(Constants.YOGA_ID.STANDING_POSE);
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
@@ -107,7 +105,6 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.BALANCE);
-                yogaViews.setCat_Name(Constants.YOGA_ID.BALANCE_POSE);
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });

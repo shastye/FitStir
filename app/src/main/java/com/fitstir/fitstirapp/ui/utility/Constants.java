@@ -39,6 +39,9 @@ public class Constants {
         public static final String STANDING_POSE = "Standing Poses";
         public static final String BALANCE_POSE = "Balance Poses";
         public static final String QUICK_START_POSES = "Quick Start";
+        public static final String BEGINNER_YOGA = "BeginnerYoga";
+        public static final String INTERMEDIATE_YOGA = "IntermediateYoga";
+        public static final String EXPERT_YOGA = "ExpertYoga";
 
     }
 

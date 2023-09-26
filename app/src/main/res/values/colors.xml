@@ -22,4 +22,7 @@
     <color name="Red">#D40B0B</color>
     <color name="soft_pink_pink">#FFB8E5</color>
     <color name="soft_deep_purple">#632272</color>
+    <color name="default_togglebutton_color">#0B84D5</color>
+    <color name="clicked_togglebutton_color">#BA762788</color>
+
 </resources>

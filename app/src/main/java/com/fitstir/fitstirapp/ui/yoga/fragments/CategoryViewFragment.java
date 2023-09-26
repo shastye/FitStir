@@ -34,6 +34,7 @@ public class CategoryViewFragment extends Fragment implements RvInterface {
     private YogaAdapter adapter;
     private RvInterface rvInterface;
     private ArrayList<PoseModel> poseList;
+    private ArrayList<PoseModel> allPoses;
     private SearchView search;
     private TextView title;
     private PoseModel poseModel;
@@ -50,51 +51,60 @@ public class CategoryViewFragment extends Fragment implements RvInterface {
         binding = FragmentYogaViewBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // Initialization of private variables
         search = root.findViewById(R.id.searchView_Yoga_Explore);
         title = root.findViewById(R.id.category_Title);
         adapter = new YogaAdapter(rvInterface, requireActivity(), poseList);
         poseModel = new PoseModel();
+        poseList = new ArrayList<>();
+        allPoses = new ArrayList<>();
 
+        // Initialization and setup of recyclerview + adapter
+        rvInterface = this;
+        rv = root.findViewById(R.id.yoga_RV);
+        rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        rv.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
+        adapter = new YogaAdapter(rvInterface, requireActivity(), poseList);
+        rv.setAdapter(adapter);
 
         //switch between each category
         int id = yogaViews.getCat_Id().getValue();
         switch (id) {
             case 1:
                 title.setText(Constants.YOGA_ID.BEGINNER_POSE);
-                poseList = new ArrayList<>();
-                rvInterface = this;
-                rv = root.findViewById(R.id.yoga_RV);
-                rv.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                rv.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
-                adapter = new YogaAdapter(rvInterface, requireActivity(), poseList);
-                rv.setAdapter(adapter);
-
+                yogaViews.fetchYogaData(poseList,Constants.YOGA_ID.BEGINNER_YOGA, adapter);
                 break;
-
             case 2:
                 title.setText(Constants.YOGA_ID.INTERMEDIATE_POSE);
+                yogaViews.fetchYogaData(poseList,Constants.YOGA_ID.INTERMEDIATE_YOGA, adapter);
                 break;
 
             case 3:
                 title.setText(Constants.YOGA_ID.EXPERT_POSE);
+                yogaViews.fetchYogaData(poseList,Constants.YOGA_ID.EXPERT_YOGA, adapter);
                 break;
 
             case 4:
                 title.setText(Constants.YOGA_ID.EXPLORE_POSES);
+                search.setVisibility(View.VISIBLE);
                 break;
 
             case 5:
                 title.setText(Constants.YOGA_ID.QUICK_START_POSES);
+                yogaViews.fetchYogaData(poseList,Constants.YOGA_ID.BEGINNER_YOGA, adapter);
                 break;
             case 6:
                 title.setText(Constants.YOGA_ID.LEARN_POSES);
+                yogaViews.fetchYogaData(poseList,Constants.YOGA_ID.BEGINNER_YOGA, adapter);
                 break;
 
             case 7:
                 title.setText(Constants.YOGA_ID.STANDING_POSE);
+                yogaViews.fetchYogaData(poseList,Constants.YOGA_ID.BEGINNER_YOGA, adapter);
                 break;
             case 8:
                 title.setText(Constants.YOGA_ID.BALANCE_POSE);
+                yogaViews.fetchYogaData(poseList,Constants.YOGA_ID.BEGINNER_YOGA, adapter);
                 break;
         }
 
@@ -109,9 +119,9 @@ public class CategoryViewFragment extends Fragment implements RvInterface {
     @Override
     public void onItemClick(int position) {
         YogaViewModel views = new ViewModelProvider(requireActivity()).get(YogaViewModel.class);
-
         views.getClickedItem(position, poseList);
-
+        views.setYoga(poseList);
+        views.setFavoriteItemPosition(position);
         Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_categoryViewFragment_to_yogaPoseFragment);
     }
 }
