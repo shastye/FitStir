@@ -163,7 +163,11 @@
         android:id="@+id/navigation_find_dietitian"
         android:name="com.fitstir.fitstirapp.ui.health.finddietitian.FindDietitianFragment"
         android:label="Find Dietitian"
-        tools:layout="@layout/fragment_find_dietitian" />
+        tools:layout="@layout/fragment_find_dietitian">
+        <action
+            android:id="@+id/action_navigation_find_dietician_to_navigation_health"
+            app:destination="@id/navigation_health" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_diary"
