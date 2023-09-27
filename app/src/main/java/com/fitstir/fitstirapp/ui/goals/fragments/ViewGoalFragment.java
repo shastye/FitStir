@@ -2,6 +2,7 @@ package com.fitstir.fitstirapp.ui.goals.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.goals.dialogs.DeleteGoalDialog;
 import com.fitstir.fitstirapp.ui.goals.dialogs.EditGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -68,7 +70,13 @@ public class ViewGoalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(requireActivity(), moreButton);
-                popupMenu.getMenuInflater().inflate(R.menu.goal_menu, popupMenu.getMenu());
+
+                if (goal.getType().equals(GoalTypes.WEIGHT_CHANGE)) {
+                    popupMenu.getMenuInflater().inflate(R.menu.goal_menu_change_weight, popupMenu.getMenu());
+                } else {
+                    popupMenu.getMenuInflater().inflate(R.menu.goal_menu, popupMenu.getMenu());
+                }
+
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
