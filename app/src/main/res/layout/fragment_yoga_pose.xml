@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.yoga.fragments.YogaPoseFragment">
+    tools:context=".ui.yoga.fragments.YogaPoseFragment"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,40 +15,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/logo">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="355dp"
-                android:layout_height="255dp"
+                android:layout_height="235dp"
                 android:layout_marginTop="55dp"
                 app:cardCornerRadius="35dp"
                 app:cardElevation="20dp"
                 >
                 <ImageView
                     android:id="@+id/url_PNG"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/explose_search"
+                    android:layout_width="375dp"
+                    android:layout_height="245dp"
+                    android:layout_gravity="center"
                     />
-
                 <ToggleButton
-                    android:id="@+id/toggleButton"
-                    android:layout_width="40dp"
-                    android:layout_height="35dp"
+                android:id="@+id/favoriteButton_on"
+                android:layout_width="35dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="280dp"
+                android:layout_marginTop="10dp"
+                android:textOff=""
+                android:textOn=""
+                android:background="@drawable/baseline_favorite_purple"
+                />
+                <ToggleButton
+                    android:id="@+id/favoriteButton_off"
+                    android:layout_width="35dp"
+                    android:layout_height="31dp"
                     android:layout_marginStart="280dp"
                     android:layout_marginTop="10dp"
+                    android:textOff=""
+                    android:textOn=""
                     android:background="@drawable/baseline_favorite_24"
-                    android:checked="false"
-                    android:clipToOutline="true"
-                    android:fontFamily="serif"
-                    android:outlineAmbientShadowColor="#E91E63"
-                    android:textColor="#0B83D4" />
+                    />
+
+
 
             </androidx.cardview.widget.CardView>
 
@@ -55,7 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pose Name: "
-                android:layout_marginStart="-150dp"
+                android:textStyle="bold"
+                android:layout_marginStart="-165dp"
                 android:layout_marginTop="70dp"
                 />
             <TextView
@@ -63,32 +74,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Pose Name: "
-                android:layout_marginStart="-70dp"
+                android:layout_marginStart="-75dp"
                 android:layout_marginTop="-19dp"
                 android:textSize="14sp"
                 android:textColorHighlight="@color/white"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Adapted Name: "
-                android:layout_marginStart="-140dp"
-                android:layout_marginTop="2dp"
-                />
-            <TextView
-                android:id="@+id/pose_AdaptedName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Adapted Name: "
-                android:layout_marginStart="-40dp"
-                android:layout_marginTop="-20dp"
-                android:textSize="14sp"
-                />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Translated Name: "
-                android:layout_marginStart="-135dp"
+                android:textStyle="bold"
+                android:layout_marginStart="-147dp"
                 android:layout_marginTop="2dp"
                 />
             <TextView
@@ -96,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Translated Name: "
-                android:layout_marginStart="-20dp"
+                android:layout_marginStart="-30dp"
                 android:layout_marginTop="-19dp"
                 android:textSize="14sp"
                 />
@@ -104,7 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sanskrit Name: "
-                android:layout_marginStart="-140dp"
+                android:textStyle="bold"
+                android:layout_marginStart="-153dp"
                 android:layout_marginTop="2dp"
                 />
             <TextView
@@ -112,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Sanskrit Name: "
-                android:layout_marginStart="-40dp"
+                android:layout_marginStart="-50dp"
                 android:layout_marginTop="-19dp"
                 android:textSize="14sp"
                 />
@@ -121,15 +119,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pose Benefits: "
-                android:layout_marginStart="-142dp"
-                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:layout_marginStart="-155dp"
+                android:layout_marginTop="10dp"
                 />
             <TextView
+                android:id="@+id/pose_benefits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pose Benefits: "
-                android:layout_marginStart="-48dp"
-                android:layout_marginTop="-19dp"
+                android:textColorHighlight="@color/cotton_candy_pink"
                 android:textSize="14sp"
                 />
 
@@ -138,7 +137,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Description: "
-                android:layout_marginStart="-150dp"
+                android:textStyle="bold"
+                android:layout_marginStart="-163dp"
                 android:layout_marginTop="20dp"
                 />
             <TextView
@@ -146,27 +146,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Description: "
-                android:layout_marginStart="-70dp"
-                android:layout_marginTop="-19dp"
+
                 android:textSize="14sp"
                 />
 
-            <ImageView
-                android:id="@+id/url_ALT"
-                android:layout_width="135dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="-75dp"
-                android:layout_marginTop="100dp"
-                android:background="@drawable/explose_search"
-                />
-            <ImageView
-                android:id="@+id/url_SVG"
-                android:layout_width="135dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="-124dp"
-                android:background="@drawable/explose_search"
-                />
+            <WebView
+                android:id="@+id/youtube_View"
+                android:layout_width="match_parent"
+                android:layout_height="255dp"
+                android:layout_marginTop="20dp"/>
 
             <ImageButton
                 android:id="@+id/add_To_Custom"
@@ -176,8 +164,6 @@
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="70dp"
                 />
-
-
         </LinearLayout>
     </ScrollView>
 

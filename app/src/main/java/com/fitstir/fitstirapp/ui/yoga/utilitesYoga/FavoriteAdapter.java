@@ -17,37 +17,36 @@ import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 
 import java.util.ArrayList;
 
-public class YogaAdapter extends RecyclerView.Adapter<YogaAdapter.ViewHolder> {
-
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder>  {
     private final RvInterface rvInterface;
     private Context context;
-    private ArrayList<PoseModel> posesList;
+    private ArrayList<PoseModel> faveList;
 
 
-    public YogaAdapter(RvInterface rvInterface){
-        this.rvInterface = rvInterface;
-    };
-
-    public YogaAdapter(RvInterface rvInterface, Context context, ArrayList<PoseModel> posesList) {
+    public FavoriteAdapter(RvInterface rvInterface, Context context, ArrayList<PoseModel> list) {
         this.rvInterface = rvInterface;
         this.context = context;
-        this.posesList = posesList;
+        this.faveList = list;
     }
+
     @NonNull
     @Override
-    public YogaAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.yoga_category_cardview, parent, false);
-        return new ViewHolder(view);
+    public FavoriteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_favorite_yoga, parent, false);
+        return new FavoriteAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull YogaAdapter.ViewHolder holder, int position) {
-        PoseModel poseApi = posesList.get(position);
+    public void onBindViewHolder(@NonNull FavoriteAdapter.ViewHolder holder, int position) {
+        PoseModel poseApi = faveList.get(position);
+
         holder.pose_name.setText(poseApi.getEnglish_name());
+        holder.pose_Type.setText(poseApi.getPose_Type());
+        holder.pose_Level.setText(poseApi.getDifficulty_level());
+
         Glide.with(context)
                 .load(poseApi.getUrl_png())
                 .into(holder.pose_Image);
-
         holder.pose_Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,16 +59,18 @@ public class YogaAdapter extends RecyclerView.Adapter<YogaAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return posesList.size();
+        return faveList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView pose_name;
+        private TextView pose_name, pose_Level, pose_Type;
         private ImageView pose_Image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            pose_name = itemView.findViewById(R.id.title_name_TV);
-            pose_Image = itemView.findViewById(R.id.yogaPose_IMG);
+            pose_name = itemView.findViewById(R.id.fave_YogaName);
+            pose_Image = itemView.findViewById(R.id.yoga_Image);
+            pose_Level = itemView.findViewById(R.id.fave_Difficulty);
+            pose_Type = itemView.findViewById(R.id.fave_Type);
         }
     }
 }
