@@ -28,7 +28,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CreateGoalDialog extends IGenericGoalDialog {
 
@@ -36,7 +39,7 @@ public class CreateGoalDialog extends IGenericGoalDialog {
     private EditText valueEditText;
     private Spinner typeSpinner;
     private TextView unitTextView;
-    private final GoalTypes[] typeEnumArray = GoalTypes.values();
+    private ArrayList<GoalTypes> uniqueOptions;
 
     private Context context;
     private void setContext(Context context) { this.context = context; }
@@ -64,9 +67,22 @@ public class CreateGoalDialog extends IGenericGoalDialog {
 
         assert getView() != null;
 
-        String[] spinnerOptions = new String[typeEnumArray.length];
-        for (int i = 0; i < typeEnumArray.length; i++) {
-            spinnerOptions[i] = typeEnumArray[i].getSpinnerTitle();
+        GoalTypes[] typeEnumArray = GoalTypes.values();
+        uniqueOptions = new ArrayList<>(Arrays.asList(typeEnumArray));
+
+        ArrayList<Goal> goals = goalsViewModel.getGoals().getValue();
+        for (int k = 0; k < goals.size(); k++) {
+            for (int i = 0; i < typeEnumArray.length; i++) {
+                if (goals.get(k).getType().equals(typeEnumArray[i])) {
+                    // index i is NOT unique
+                    uniqueOptions.remove(typeEnumArray[i]);
+                }
+            }
+        }
+
+        String[] spinnerOptions = new String[uniqueOptions.size()];
+        for (int i = 0; i < uniqueOptions.size(); i++) {
+            spinnerOptions[i] = uniqueOptions.get(i).getSpinnerTitle();
         }
         unitTextView = binding.dialogCreateGoalUnitTextView;
 
@@ -74,7 +90,7 @@ public class CreateGoalDialog extends IGenericGoalDialog {
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                unitTextView.setText(typeEnumArray[position].getImperialUnit());
+                unitTextView.setText(uniqueOptions.get(position).getImperialUnit());
             }
 
             @Override
@@ -100,45 +116,19 @@ public class CreateGoalDialog extends IGenericGoalDialog {
             value = 0;
         }
 
-        boolean isUnique = true;
-        ArrayList<Goal> goals = goalsViewModel.getGoals().getValue();
-        for (Goal goal : goals) {
-            if (typeEnumArray[type] == goal.getType()) {
-                isUnique = false;
-            }
-        }
+        Goal thisGoal = new Goal(uniqueOptions.get(type), value);
 
-        if (isUnique) {
-            Goal thisGoal = new Goal(typeEnumArray[type], value);
+        // TODO: pull from database
+        //       get workouts that match {type}
+        //       add data to goal
 
-            // TODO: pull from database
-            //       get workouts that match {type}
-            //       add data to goal
+        goalsViewModel.addGoal(thisGoal);
 
-            goalsViewModel.addGoal(thisGoal);
-
-            FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-            assert authUser != null;
-            DatabaseReference goalsReference = FirebaseDatabase.getInstance().getReference("GoalsData")
-                    .child(authUser.getUid());
-            goalsReference.child(thisGoal.getID()).setValue(thisGoal);
-        } else {
-            LayoutInflater inflater2 = LayoutInflater.from(requireActivity());
-            View popUpView = inflater2.inflate(R.layout.dialog_generic_alert, null);
-            PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-            ((TextView) popUpView.findViewById(R.id.dialog_generic_message)).setText("There is already a goal of this type.");
-            ((TextView) popUpView.findViewById(R.id.dialog_generic_continue)).setText("Only one goal of each\ntype is allowed.");
-            ((Button) popUpView.findViewById(R.id.dialog_generic_cancel_button)).setVisibility(View.GONE);
-
-            ((Button) popUpView.findViewById(R.id.dialog_generic_accept_button)).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow.dismiss();
-                }
-            });
-            popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0,0);
-        }
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference goalsReference = FirebaseDatabase.getInstance().getReference("GoalsData")
+                .child(authUser.getUid());
+        goalsReference.child(thisGoal.getID()).setValue(thisGoal);
     }
 
     @Override
