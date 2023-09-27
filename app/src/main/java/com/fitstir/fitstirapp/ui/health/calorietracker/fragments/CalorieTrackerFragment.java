@@ -53,6 +53,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class CalorieTrackerFragment extends Fragment {
@@ -238,46 +239,21 @@ public class CalorieTrackerFragment extends Fragment {
                     public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                         Calendar today = Calendar.getInstance();
 
+                        Calendar setDay = Calendar.getInstance();
+                        setDay.set(year, month, dayOfMonth);
+
                         if (!(today.get(Calendar.YEAR) == year && today.get(Calendar.MONTH) == month && today.get(Calendar.DAY_OF_MONTH) == dayOfMonth)) {
                             dateString[0] = "";
-                            switch (month) {
-                                case Calendar.JANUARY:
-                                    dateString[0] += "Jan.";
-                                    break;
-                                case Calendar.FEBRUARY:
-                                    dateString[0] += "Feb.";
-                                    break;
-                                case Calendar.MARCH:
-                                    dateString[0] += "Mar.";
-                                    break;
-                                case Calendar.APRIL:
-                                    dateString[0] += "Apr.";
-                                    break;
-                                case Calendar.MAY:
-                                    dateString[0] += "May";
-                                    break;
-                                case Calendar.JUNE:
-                                    dateString[0] += "June";
-                                    break;
-                                case Calendar.JULY:
-                                    dateString[0] += "July";
-                                    break;
-                                case Calendar.AUGUST:
-                                    dateString[0] += "Aug.";
-                                    break;
-                                case Calendar.SEPTEMBER:
-                                    dateString[0] += "Sept.";
-                                    break;
-                                case Calendar.OCTOBER:
-                                    dateString[0] += "Oct.";
-                                    break;
-                                case Calendar.NOVEMBER:
-                                    dateString[0] += "Nov.";
-                                    break;
-                                case Calendar.DECEMBER:
-                                    dateString[0] += "Dec.";
-                                    break;
+                            String shortName = setDay.getDisplayName(Calendar.MONTH, Calendar.SHORT_FORMAT, Locale.ENGLISH);
+                            String longName = setDay.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.ENGLISH);
+
+                            if (longName != null && longName.length() <= 4) {
+                                dateString[0] += longName;
+                            } else {
+                                dateString[0] += shortName;
+                                dateString[0] += ".";
                             }
+
                             dateString[0] += " " + dayOfMonth + ", " + year;
                         }
 
