@@ -7,7 +7,103 @@
     tools:context=".ui.yoga.fragments.CustomYogaFragment"
     android:background="@drawable/expert"
     >
-    <include layout="@layout/dialog_empty_list"/>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/dialog_empty_list" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/addPoses_CV"
+        android:layout_width="325dp"
+        android:layout_height="285dp"
+        android:layout_marginTop="40dp"
+        app:cardBackgroundColor="@color/soft_deep_purple"
+        app:cardCornerRadius="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="305dp"
+            android:layout_height="270dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="50dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="285dp"
+                android:layout_height="255dp"
+                android:layout_gravity="center"
+                android:elevation="15dp"
+                android:outlineAmbientShadowColor="@color/cotton_candy_pink"
+                app:cardBackgroundColor="@color/light_grey"
+                app:cardCornerRadius="48dp">
+
+                <EditText
+                    android:id="@+id/routine_ET"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:hint="Enter Routine Title:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/custom_RV"
+                    android:layout_width="260dp"
+                    android:layout_height="165dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp" />
+
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/justAdded_CV"
+        android:layout_width="290dp"
+        android:layout_height="225dp"
+        android:layout_marginBottom="72dp"
+        app:cardBackgroundColor="@color/soft_blue"
+        app:cardCornerRadius="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/include"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="270dp"
+            android:layout_height="205dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="50dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="255dp"
+                android:layout_height="195dp"
+                android:layout_gravity="center"
+                android:elevation="15dp"
+                android:outlineAmbientShadowColor="@color/cotton_candy_pink"
+                app:cardBackgroundColor="@color/light_grey"
+                app:cardCornerRadius="48dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="Current Custom Pose List"
+                    android:layout_marginStart="45dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/justAdded_RV"
+                    android:layout_width="250dp"
+                    android:layout_height="125dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp" />
+
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <ImageButton
         android:id="@+id/add_To_Custom"
