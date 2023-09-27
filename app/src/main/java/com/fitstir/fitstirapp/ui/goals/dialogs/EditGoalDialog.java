@@ -12,18 +12,17 @@ import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.goals.fragments.ViewGoalFragment;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.IGenericGoalDialog;
-import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class EditGoalDialog extends IGenericGoalDialog {
 
     private GoalsViewModel goalsViewModel;
-    private EditText titleEditText, valueEditText;
+    private EditText valueEditText;
     private TextView unitTextView;
-    private final WorkoutTypes[] typeEnumArray = WorkoutTypes.values();
+    private final GoalTypes[] typeEnumArray = GoalTypes.values();
     private ViewGoalFragment baseFragment;
 
     public void setBaseFragment(ViewGoalFragment fragment) { baseFragment = fragment; }
@@ -51,10 +50,6 @@ public class EditGoalDialog extends IGenericGoalDialog {
 
         assert getView() != null;
 
-        titleEditText = binding.dialogCreateGoalTitleEditText;
-        titleEditText.setText(goalsViewModel.getClickedGoal().getValue().getName());
-        titleEditText.setEnabled(false);
-
         String[] spinnerOptions = new String[typeEnumArray.length];
         for (int i = 0; i < typeEnumArray.length; i++) {
             spinnerOptions[i] = typeEnumArray[i].getSpinnerTitle();
@@ -72,17 +67,15 @@ public class EditGoalDialog extends IGenericGoalDialog {
 
     @Override
     public void onAccept() {
-        String title = titleEditText.getText().toString();
         String strValue = valueEditText.getText().toString().trim();
 
         int value = Integer.parseInt(strValue);
 
         Goal clickedGoal = goalsViewModel.getClickedGoal().getValue();
         int index = goalsViewModel.getGoals().getValue().indexOf(clickedGoal);
-        goalsViewModel.getGoals().getValue().get(index).setName(title);
         goalsViewModel.getGoals().getValue().get(index).setValue(value);
 
-        if (clickedGoal.getName().equals("Weight Goal")) {
+        if (clickedGoal.getType() == GoalTypes.WEIGHT_CHANGE) {
             goalsViewModel.getThisUser().getValue().setGoal_weight(value);
 
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();

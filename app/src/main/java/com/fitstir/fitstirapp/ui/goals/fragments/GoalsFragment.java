@@ -106,7 +106,6 @@ public class GoalsFragment extends Fragment {
 
                 goalRecyclerView = binding.goalRecyclerView;
                 goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                //updateUI(goalsViewModel.getGoals().getValue());
 
                 DatabaseReference goalsRef = FirebaseDatabase.getInstance()
                         .getReference("GoalsData").child(authUser.getUid());
@@ -147,7 +146,8 @@ public class GoalsFragment extends Fragment {
                 CreateGoalDialog.newInstance(
                         R.layout.dialog_generic_goal,
                         R.id.dialog_create_goal_accept_button,
-                        R.id.dialog_create_goal_cancel_button
+                        R.id.dialog_create_goal_cancel_button,
+                        requireContext()
                 ).show(getParentFragmentManager(), "Create Goal");
             }
         });
@@ -170,7 +170,6 @@ public class GoalsFragment extends Fragment {
     private class GoalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Goal goal;
         private final TextView nameTextView;
-        private final TextView typeTextView;
         private final TextView valueTextView;
         private final GraphView graphView;
 
@@ -179,7 +178,6 @@ public class GoalsFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             nameTextView = (TextView) itemView.findViewById(R.id.layout_goal_name_label);
-            typeTextView = (TextView) itemView.findViewById(R.id.layout_goal_type_label);
             valueTextView = (TextView) itemView.findViewById(R.id.layout_goal_value_label);
             graphView = (GraphView) itemView.findViewById(R.id.goal_grid_graph);
         }
@@ -189,8 +187,7 @@ public class GoalsFragment extends Fragment {
 
 
 
-            this.nameTextView.setText(this.goal.getName());
-            this.typeTextView.setText(this.goal.getType().getSpinnerTitle());
+            this.nameTextView.setText(this.goal.getType().getSpinnerTitle());
             String valueText = String.valueOf(this.goal.getValue()) + " " + this.goal.getUnit();
             this.valueTextView.setText(valueText);
 

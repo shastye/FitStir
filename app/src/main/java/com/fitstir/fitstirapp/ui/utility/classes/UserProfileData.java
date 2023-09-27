@@ -4,7 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
-import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -115,7 +116,6 @@ public class UserProfileData {
     public Integer get_Weight() {return weight;}
 
     public void addWeightData(Integer newWeight) throws RuntimeException {
-        // TODO: STILL NEEDS TESTING
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // update data on GoalsData collection
@@ -128,20 +128,13 @@ public class UserProfileData {
                 for (DataSnapshot child : children) {
                     Goal goal = child.getValue(Goal.class);
 
-                    if (goal.getName().equals("Weight Goal") && goal.getType().equals(WorkoutTypes.WEIGHT_CHANGE)) {
+                    if (goal.getType().equals(GoalTypes.WEIGHT_CHANGE)) {
                         ArrayList<GoalDataPair> data = goal.getData();
 
                         int size = data.size();
                         GoalDataPair lastDateData = data.get(size - 1);
 
-                        Calendar today = Calendar.getInstance();
-                        Calendar dataDate = Calendar.getInstance();
-                        dataDate.setTime(lastDateData.first);
-
-                        int tDOY = today.get(Calendar.DAY_OF_YEAR);
-                        int dDOY = dataDate.get(Calendar.DAY_OF_YEAR);
-
-                        if (tDOY != dDOY) {
+                        if (!Methods.isToday(lastDateData.first)) {
                             goal.addData(Calendar.getInstance().getTime(), newWeight);
                         } else {
                             goal.getData().get(size - 1).second = newWeight;
@@ -182,7 +175,7 @@ public class UserProfileData {
                 for (DataSnapshot child : children) {
                     Goal goal = child.getValue(Goal.class);
 
-                    if (goal.getName().equals("Weight Goal") && goal.getType().equals(WorkoutTypes.WEIGHT_CHANGE)) {
+                    if (goal.getType().equals(GoalTypes.WEIGHT_CHANGE)) {
                         goalsRef.child(goal.getID())
                                 .child("value")
                                 .setValue(newGoal);

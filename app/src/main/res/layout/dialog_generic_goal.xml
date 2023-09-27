@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/dialog_background"
-        android:layout_width="300dp"
-        android:layout_height="280dp"
+        android:layout_width="350dp"
+        android:layout_height="230dp"
         android:background="@android:color/transparent"
         android:foreground="@drawable/dialog_background_square"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +39,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title:"
+        android:text="Type:"
         android:textAlignment="center"
         android:textColor="?attr/colorPrimaryVariant"
         android:textSize="18sp"
@@ -52,45 +52,11 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="70dp"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/dialog_create_goal_title_edit_text"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="15dp"
-        android:hint="Goal Title"
-        android:minHeight="48dp"
-        android:textAlignment="textStart"
-        android:textSize="18sp"
-        android:singleLine="true"
-        app:layout_constraintBottom_toBottomOf="@id/dialog_background"
-        app:layout_constraintEnd_toEndOf="@id/dialog_background"
-        app:layout_constraintHorizontal_bias="1.00"
-        app:layout_constraintStart_toStartOf="@id/dialog_background"
-        app:layout_constraintTop_toTopOf="@id/dialog_background"
-        app:layout_constraintVertical_bias="0.00" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Type:"
-        android:textAlignment="center"
-        android:textColor="?attr/colorPrimaryVariant"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/dialog_background"
-        app:layout_constraintEnd_toEndOf="@id/dialog_background"
-        app:layout_constraintStart_toStartOf="@id/dialog_background"
-        app:layout_constraintTop_toTopOf="@id/dialog_background"
-        app:layout_constraintVertical_bias="0.00"
-        app:layout_constraintHorizontal_bias="0.00"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="120dp"/>
-
     <RelativeLayout
         android:background="@drawable/spinner_outline"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="@id/dialog_background"
         app:layout_constraintEnd_toEndOf="@id/dialog_background"
@@ -138,13 +104,13 @@
         app:layout_constraintVertical_bias="0.00"
         app:layout_constraintHorizontal_bias="0.00"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="170dp"/>
+        android:layout_marginTop="120dp"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/dialog_create_goal_value_edit_text"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="110dp"
         android:layout_marginEnd="15dp"
         android:hint="Goal Value"
         android:minHeight="48dp"
@@ -173,7 +139,7 @@
         app:layout_constraintVertical_bias="0.00"
         app:layout_constraintHorizontal_bias="1.00"
         android:layout_marginEnd="24dp"
-        android:layout_marginTop="170dp"/>
+        android:layout_marginTop="120dp"/>
 
 
 

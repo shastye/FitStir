@@ -7,8 +7,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.IGenericAlertDialog;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -45,8 +50,15 @@ public class DeleteGoalDialog extends IGenericAlertDialog {
 
     @Override
     public void onAccept() {
-        goalsViewModel.removeGoal(goalsViewModel.getClickedGoal().getValue());
+        Goal goalToDelete = goalsViewModel.getClickedGoal().getValue();
+        goalsViewModel.removeGoal(goalToDelete);
         goalsViewModel.setClickedGoal(null);
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference goalsReference = FirebaseDatabase.getInstance().getReference("GoalsData")
+                .child(authUser.getUid());
+        goalsReference.child(goalToDelete.getID()).removeValue();
 
         assert getParentFragment() != null;
         Navigation.findNavController(Objects.requireNonNull(getParentFragment().requireView())).navigate(R.id.navigation_goals);

@@ -43,7 +43,7 @@ public class ViewGoalFragment extends Fragment {
     GoalsViewModel goalsViewModel;
     private Goal goal;
 
-    private TextView nameTextView, typeTextView, valueTextView, idTextView;
+    private TextView nameTextView, valueTextView, idTextView;
     private GraphView graphView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -56,7 +56,6 @@ public class ViewGoalFragment extends Fragment {
         // Additional Text Here
 
         this.nameTextView = binding.viewGoalNameLabel;
-        this.typeTextView = binding.viewGoalTypeLabel;
         this.valueTextView = binding.viewGoalValueLabel;
         this.idTextView = binding.viewGoalIdLabel;
         this.graphView = binding.viewGoalGridGraph;
@@ -128,8 +127,7 @@ public class ViewGoalFragment extends Fragment {
     public void bind() {
         this.graphView.removeAllSeries();
 
-        this.nameTextView.setText(this.goal.getName());
-        this.typeTextView.setText(this.goal.getType().getSpinnerTitle());
+        this.nameTextView.setText(this.goal.getType().getSpinnerTitle());
         String valueText = String.valueOf(this.goal.getValue()) + " " + this.goal.getUnit();
         this.valueTextView.setText(valueText);
         String idText = "Goal ID: " + String.valueOf(this.goal.getID());

@@ -48,19 +48,19 @@ public class HealthFragment extends Fragment {
                     case 0:
                         Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_calorie_tracker);
                         break;
+                    //case 1:
+                    //    Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_food_guide);
+                    //    break;
                     case 1:
-                        Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_food_guide);
-                        break;
-                    case 2:
                         Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_weight_loss);
                         break;
-                    case 3:
+                    case 2:
                         Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_recipes);
                         break;
-                    case 4:
+                    case 3:
                         Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_find_dietitian);
                         break;
-                    case 5:
+                    case 4:
                         Navigation.findNavController(view).navigate(R.id.action_navigation_health_to_navigation_diary);
                         break;
                     default:
@@ -83,7 +83,7 @@ public class HealthFragment extends Fragment {
     private ArrayList<SectionItem> getHealthSections() {
         return new ArrayList<SectionItem>() {{
             add(new SectionItem(R.drawable.ic_cal_black_200dp, "Calorie Tracker"));
-            add(new SectionItem(R.drawable.ic_guide_black_200dp, "Food Guide"));
+            //add(new SectionItem(R.drawable.ic_guide_black_200dp, "Food Guide"));
             add(new SectionItem(R.drawable.ic_scale_black_200dp, "Weight Loss"));
             add(new SectionItem(R.drawable.ic_recipe_black_200dp, "Recipes"));
             add(new SectionItem(R.drawable.ic_loc_black_200dp, "Find Dietitian"));
