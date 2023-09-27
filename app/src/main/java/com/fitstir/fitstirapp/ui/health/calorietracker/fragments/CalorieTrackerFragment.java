@@ -36,6 +36,7 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.TotalNutrients;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -237,12 +238,10 @@ public class CalorieTrackerFragment extends Fragment {
                 calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                     @Override
                     public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                        Calendar today = Calendar.getInstance();
-
                         Calendar setDay = Calendar.getInstance();
                         setDay.set(year, month, dayOfMonth);
 
-                        if (!(today.get(Calendar.YEAR) == year && today.get(Calendar.MONTH) == month && today.get(Calendar.DAY_OF_MONTH) == dayOfMonth)) {
+                        if (!Methods.isToday(setDay.getTime())) {
                             dateString[0] = "";
                             String shortName = setDay.getDisplayName(Calendar.MONTH, Calendar.SHORT_FORMAT, Locale.ENGLISH);
                             String longName = setDay.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.ENGLISH);

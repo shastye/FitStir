@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -89,5 +91,74 @@ public class Methods {
     public static Bitmap getBitmapFromString(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
+    public static boolean isToday(Date date) {
+        Calendar todayCal = Calendar.getInstance();
+        Calendar dateCal = Calendar.getInstance();
+        dateCal.setTime(date);
+
+        int tDOY = todayCal.get(Calendar.DAY_OF_YEAR);
+        int dDOY = dateCal.get(Calendar.DAY_OF_YEAR);
+
+        return tDOY == dDOY;
+    }
+
+    public static boolean isBeforeToday(Date date) {
+        Calendar todayCal = Calendar.getInstance();
+        Calendar dateCal = Calendar.getInstance();
+        dateCal.setTime(date);
+
+        int tDOY = todayCal.get(Calendar.DAY_OF_YEAR);
+        int dDOY = dateCal.get(Calendar.DAY_OF_YEAR);
+
+        return dDOY < tDOY;
+    }
+
+    public static boolean isAfterToday(Date date) {
+        Calendar todayCal = Calendar.getInstance();
+        Calendar dateCal = Calendar.getInstance();
+        dateCal.setTime(date);
+
+        int tDOY = todayCal.get(Calendar.DAY_OF_YEAR);
+        int dDOY = dateCal.get(Calendar.DAY_OF_YEAR);
+
+        return tDOY < dDOY;
+    }
+
+    public static boolean firstIsSecond(Date first, Date second) {
+        Calendar firstCal = Calendar.getInstance();
+        firstCal.setTime(first);
+        Calendar secondCal = Calendar.getInstance();
+        secondCal.setTime(second);
+
+        int firstDay = firstCal.get(Calendar.DAY_OF_YEAR);
+        int secondDay = secondCal.get(Calendar.DAY_OF_YEAR);
+
+        return firstDay == secondDay;
+    }
+
+    public static boolean firstIsBeforeSecond(Date first, Date second) {
+        Calendar firstCal = Calendar.getInstance();
+        firstCal.setTime(first);
+        Calendar secondCal = Calendar.getInstance();
+        secondCal.setTime(second);
+
+        int firstDay = firstCal.get(Calendar.DAY_OF_YEAR);
+        int secondDay = secondCal.get(Calendar.DAY_OF_YEAR);
+
+        return firstDay < secondDay;
+    }
+
+    public static boolean firstIsAfterSecond(Date first, Date second) {
+        Calendar firstCal = Calendar.getInstance();
+        firstCal.setTime(first);
+        Calendar secondCal = Calendar.getInstance();
+        secondCal.setTime(second);
+
+        int firstDay = firstCal.get(Calendar.DAY_OF_YEAR);
+        int secondDay = secondCal.get(Calendar.DAY_OF_YEAR);
+
+        return secondDay < firstDay;
     }
 }

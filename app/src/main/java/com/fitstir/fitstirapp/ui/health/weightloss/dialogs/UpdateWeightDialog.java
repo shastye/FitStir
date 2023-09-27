@@ -141,14 +141,10 @@ public class UpdateWeightDialog extends IBasicDialog {
             int size = weightLossViewModel.getWeightData().getValue().size();
             GoalDataPair lastDateData = weightLossViewModel.getWeightData().getValue().get(size - 1);
 
-            Calendar today = Calendar.getInstance();
             Calendar dataDate = Calendar.getInstance();
             dataDate.setTime(lastDateData.first);
 
-            int tDOY = today.get(Calendar.DAY_OF_YEAR);
-            int dDOY = dataDate.get(Calendar.DAY_OF_YEAR);
-
-            if (tDOY != dDOY) {
+            if (!Methods.isToday(dataDate.getTime())) {
                 weightLossViewModel.getWeightData().getValue().add(new GoalDataPair(Calendar.getInstance().getTime(), newWeight));
             } else {
                 weightLossViewModel.getWeightData().getValue().get(size - 1).second = newWeight;
