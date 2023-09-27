@@ -35,6 +35,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class ViewGoalFragment extends Fragment {
 
@@ -210,47 +211,7 @@ public class ViewGoalFragment extends Fragment {
                     int day = calendar.get(Calendar.DATE);
 
                     if (day == 1) {
-                        switch (month) {
-                            case Calendar.JANUARY:
-                                toReturn = "Jan";
-                                break;
-                            case Calendar.FEBRUARY:
-                                toReturn = "Feb";
-                                break;
-                            case Calendar.MARCH:
-                                toReturn = "Mar";
-                                break;
-                            case Calendar.APRIL:
-                                toReturn = "Apr";
-                                break;
-                            case Calendar.MAY:
-                                toReturn = "May";
-                                break;
-                            case Calendar.JUNE:
-                                toReturn = "Jun";
-                                break;
-                            case Calendar.JULY:
-                                toReturn = "Jul";
-                                break;
-                            case Calendar.AUGUST:
-                                toReturn = "Aug";
-                                break;
-                            case Calendar.SEPTEMBER:
-                                toReturn = "Sep";
-                                break;
-                            case Calendar.OCTOBER:
-                                toReturn = "Oct";
-                                break;
-                            case Calendar.NOVEMBER:
-                                toReturn = "Nov";
-                                break;
-                            case Calendar.DECEMBER:
-                                toReturn = "Dec";
-                                break;
-                            default:
-                                toReturn = "oops";
-                                break;
-                        }
+                        toReturn = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT_FORMAT, Locale.ENGLISH);
                     } else {
                         toReturn = "";
 
