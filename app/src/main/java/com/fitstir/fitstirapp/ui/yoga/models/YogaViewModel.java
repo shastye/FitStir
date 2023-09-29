@@ -2,6 +2,8 @@ package com.fitstir.fitstirapp.ui.yoga.models;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,7 +14,9 @@ import com.fitstir.fitstirapp.ui.runtracker.utilites.RunHistoryAdapter;
 import com.fitstir.fitstirapp.ui.runtracker.utilites.RunnerData;
 import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
 import com.fitstir.fitstirapp.ui.workouts.exercises.workoutAdapter;
+import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.CustomsAdapter;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.FavoriteAdapter;
+import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.RoutineAdapter;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.YogaAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,6 +35,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class YogaViewModel extends ViewModel {
 
@@ -51,6 +56,7 @@ public class YogaViewModel extends ViewModel {
 	private MutableLiveData<String> type = new MutableLiveData<>();
 
 
+
 	public MutableLiveData<Integer> getFavoriteItemPosition() {return favoriteItemPosition;}
 	public MutableLiveData<ArrayList<PoseModel>> getYoga() {return yoga;}
 	public MutableLiveData<Integer> getCat_Id() {return cat_Id;}
@@ -65,26 +71,6 @@ public class YogaViewModel extends ViewModel {
 	public MutableLiveData<String> getUrl_PNG() {return url_PNG;}
 	public MutableLiveData<String> getVideo() {return url_Vid;}
 	public MutableLiveData<String> getType() {return type;}
-	public MutableLiveData<PoseModel> getLikedFavorites() {return likedFavorites;}
-
-	public YogaViewModel() {
-		mText = new MutableLiveData<>();
-		mText.setValue(" ");
-	}
-
-	public void setFavoriteItemPosition(int pos){favoriteItemPosition.setValue(pos);}
-	public void setYoga(ArrayList<PoseModel> allPoses){yoga.setValue(allPoses);}
-	public void setLikedFavorites(PoseModel yogaModel){likedFavorites.setValue(yogaModel);}
-	public void setType(String types) {type.setValue(types);}
-	public void setCat_Id(Integer id){cat_Id.setValue(id);}
-	public void setEnglish_Name(String englishName){english_Name.setValue(englishName);}
-	public void setSanskrit_Name(String sanskritName){sanskrit_Name.setValue(sanskritName);}
-	public void setTranslated_Name(String translatedName){translated_Name.setValue(translatedName);}
-	public void setPose_Description(String poseDescription){pose_Description.setValue(poseDescription);}
-	public void setPose_Benefits(String benefits){pose_Benefits.setValue(benefits);}
-	public void setUrl_PNG(String urlPng){url_PNG.setValue(urlPng);}
-	public void setUrl_Vid(String urlVid){url_Vid.setValue(urlVid);}
-	public void setLevels(String difficulty_Levels){levels.setValue(difficulty_Levels);}
 	public void getClickedItem(int position, ArrayList<PoseModel> list){
 
 		String englishName = list.get(position).getEnglish_name();
@@ -107,23 +93,94 @@ public class YogaViewModel extends ViewModel {
 		setUrl_Vid(urlVid);
 		setType(pose_Type);
 	}
+	public MutableLiveData<PoseModel> getLikedFavorites() {return likedFavorites;}
 
-	public void saveFavorite(PoseModel pose, Context context){
+	public YogaViewModel() {
+		mText = new MutableLiveData<>();
+		mText.setValue(" ");
+	}
+
+	public void setFavoriteItemPosition(int pos){favoriteItemPosition.setValue(pos);}
+	public void setYoga(ArrayList<PoseModel> allPoses){yoga.setValue(allPoses);}
+	public void setLikedFavorites(PoseModel yogaModel){likedFavorites.setValue(yogaModel);}
+	public void setType(String types) {type.setValue(types);}
+	public void setCat_Id(Integer id){cat_Id.setValue(id);}
+	public void setEnglish_Name(String englishName){english_Name.setValue(englishName);}
+	public void setSanskrit_Name(String sanskritName){sanskrit_Name.setValue(sanskritName);}
+	public void setTranslated_Name(String translatedName){translated_Name.setValue(translatedName);}
+	public void setPose_Description(String poseDescription){pose_Description.setValue(poseDescription);}
+	public void setPose_Benefits(String benefits){pose_Benefits.setValue(benefits);}
+	public void setUrl_PNG(String urlPng){url_PNG.setValue(urlPng);}
+	public void setUrl_Vid(String urlVid){url_Vid.setValue(urlVid);}
+	public void setLevels(String difficulty_Levels){levels.setValue(difficulty_Levels);}
+
+
+
+	public void saveYogaData(PoseModel pose, Context context, String path, String childTitle){
 
 		FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 		DatabaseReference dataRef = FirebaseDatabase.getInstance()
-				.getReference("FavoriteItemYoga")
+				.getReference(path)
 				.child(authUser.getUid())
-				.child(getEnglish_Name().getValue().toString());
+				.child(childTitle.trim());
 		dataRef.setValue(pose).addOnCompleteListener(new OnCompleteListener<Void>() {
 			@Override
 			public void onComplete(@NonNull Task<Void> task) {
 
-				Toast.makeText(context, "Favorite saved successfully", Toast.LENGTH_LONG).show();
+				Toast.makeText(context, "Saved successfully", Toast.LENGTH_LONG).show();
+			}
+		}).addOnFailureListener(new OnFailureListener() {
+			@Override
+			public void onFailure(@NonNull Exception e) {
+
+
+				int maxAttempts = 4;
+
+				for (int i = 0; i < maxAttempts;){
+					if(i >= 0){
+						i++;
+						Toast.makeText(context, "Saved Failed...Please try again", Toast.LENGTH_LONG).show();
+
+					} else if ( i > 3 && i != 0 ) {
+						i++;
+						Toast.makeText(context, "Check title for errors", Toast.LENGTH_LONG).show();
+					}
+					else{
+						i++;
+						Toast.makeText(context, "Sorry for the issues...Restart the application", Toast.LENGTH_LONG).show();
+					}
+				}
+
+
 			}
 		});
 	}
 	public void fetchYogaData(ArrayList<PoseModel> arrayList, String string, YogaAdapter adapter){
+		FirebaseFirestore db = FirebaseFirestore.getInstance();
+		db.collection(string).get()
+				.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+					@Override
+					public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+						if(!queryDocumentSnapshots.isEmpty()){
+							List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+							for(DocumentSnapshot d : list){
+								PoseModel bodyApi = d.toObject(PoseModel.class);
+								arrayList.add(bodyApi);
+								//setYoga(bodyApi);
+							}
+							adapter.notifyDataSetChanged();
+						}else{
+							//
+						}
+					}
+				}).addOnFailureListener(new OnFailureListener() {
+					@Override
+					public void onFailure(@NonNull Exception e) {
+						Log.e("error while loading",e.toString());
+					}
+				});
+	}
+	public void fetchYogaData(ArrayList<PoseModel> arrayList, String string, CustomsAdapter adapter){
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
 		db.collection(string).get()
 				.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -176,6 +233,34 @@ public class YogaViewModel extends ViewModel {
 			}
 		});
 	}
+	public void fetchRoutines(Context context, ArrayList<PoseModel> data, RoutineAdapter adapter, View dialog, EditText text){
 
+		FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+		FirebaseDatabase db = FirebaseDatabase.getInstance();
+		DatabaseReference dbRef = db.getReference("CustomRoutines")
+				.child(authUser.getUid());
+		dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot snapshot) {
+				if(snapshot.exists()){
+					for(DataSnapshot dataSnapshot : snapshot.getChildren())
+					{
+						PoseModel faveData =  dataSnapshot.getValue(PoseModel.class);
+						String routineName = dataSnapshot.getKey();
+						text.setText(routineName);
+						data.add(faveData);
+					}
+					adapter.notifyDataSetChanged();
 
+				}
+				else{
+					dialog.setVisibility(View.VISIBLE);
+				}
+			}
+			@Override
+			public void onCancelled(@NonNull DatabaseError error) {
+
+			}
+		});
+	}
 }

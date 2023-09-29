@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="40dp"
+    app:cardCornerRadius="200dp"
+    app:cardBackgroundColor="@color/soft_pink_pink"
+    >
+    <androidx.cardview.widget.CardView
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="120dp"
+        app:cardBackgroundColor="@color/soft_deep_purple"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="140dp"
+        app:cardBackgroundColor="@color/soft_blue"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="140dp"
+        android:elevation="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/yoga_Image_Window"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/name_Window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Yoga Name"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="84dp"/>
+    <TextView
+        android:id="@+id/cat_Window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Category"
+        android:textSize="12sp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="20dp"/>
+
+
+    <ImageButton
+        android:id="@+id/subtract_from_BTN"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/baseline_remove_circle_24"/>
+
+</androidx.cardview.widget.CardView>

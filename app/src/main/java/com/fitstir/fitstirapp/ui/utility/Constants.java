@@ -42,6 +42,9 @@ public class Constants {
         public static final String BEGINNER_YOGA = "BeginnerYoga";
         public static final String INTERMEDIATE_YOGA = "IntermediateYoga";
         public static final String EXPERT_YOGA = "ExpertYoga";
+        public static final int CLICKTOADD = 0;
+        public static final int CLICKTOSUBTRACT = 1;
+
 
     }
 

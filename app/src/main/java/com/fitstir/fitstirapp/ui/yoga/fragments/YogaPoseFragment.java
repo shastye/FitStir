@@ -137,9 +137,11 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         ArrayList<PoseModel> favoriteList = new ArrayList<>();
         PoseModel model = view.getYoga().getValue().get(position);
 
+        String pathFolder = "FavoriteItemYoga";
+        String filePathName = model.getEnglish_name().toString();
         if(faveOff.getVisibility() == View.INVISIBLE) {
 
-            view.saveFavorite(model, requireActivity());
+            view.saveYogaData(model, requireActivity(),pathFolder,filePathName);
             favoriteList.add(model);
 
         }

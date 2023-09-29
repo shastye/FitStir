@@ -15,9 +15,14 @@ import androidx.navigation.Navigation;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentYogaBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.RvInterface;
+import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
+import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.CustomsAdapter;
 
-public class YogaFragment extends Fragment {
+import java.util.ArrayList;
+
+public class YogaFragment extends Fragment  {
 
     private FragmentYogaBinding binding;
     private CardView beginner, interm, expert, explore, standing, balance, learn, quickStart;
@@ -56,7 +61,6 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.MEDIUM);
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
@@ -64,7 +68,6 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.EXPERT);
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
@@ -72,7 +75,6 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.EXPLORE);
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
@@ -80,7 +82,6 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.LEARN);
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
 
             }
@@ -89,7 +90,6 @@ public class YogaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 yogaViews.setCat_Id(Constants.YOGA_ID.QUICK_START);
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
 
             }
@@ -135,4 +135,5 @@ public class YogaFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }
