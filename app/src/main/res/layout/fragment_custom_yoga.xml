@@ -9,7 +9,7 @@
     >
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/closedCardView_RV"
+        android:id="@+id/main_RV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
@@ -18,9 +18,7 @@
         android:id="@+id/include"
         layout="@layout/dialog_empty_list"
         />
-
-    <include layout="@layout/custom_expandable_cardview"></include>
-
+    <include layout="@layout/custom_expandable_cardview"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/addPoses_CV"

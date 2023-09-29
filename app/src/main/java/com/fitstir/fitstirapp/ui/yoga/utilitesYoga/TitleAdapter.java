@@ -20,13 +20,13 @@ import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 
 import java.util.ArrayList;
 
-public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHolder> {
+public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> {
 
     private ArrayList<PoseModel> list;
     private Context context;
     private final CustomInterface rvInterface;
 
-    public RoutineAdapter(ArrayList<PoseModel> list, Context context, CustomInterface rvInterface) {
+    public TitleAdapter(ArrayList<PoseModel> list, Context context, CustomInterface rvInterface) {
         this.list = list;
         this.context = context;
         this.rvInterface = rvInterface;
@@ -34,26 +34,20 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
 
     @NonNull
     @Override
-    public RoutineAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_routine_cardview, parent, false);
+    public TitleAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_expandable_cardview, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RoutineAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         PoseModel data = list.get(position);
 
-        String video = data.getUrl_Vid();
         holder.name.setText(data.getEnglish_name());
-        Glide.with(context)
-                .load(data.getUrl_png())
-                .into(holder.img);
-        holder.vid.loadData(video, "text/html", "utf-8");
-        holder.vid.getSettings().setJavaScriptEnabled(true);
-        holder.vid.setWebChromeClient(new WebChromeClient());
+        holder.pose_Total.setText(String.valueOf(list.size()));
 
     }
-
     @Override
     public int getItemCount() {
         return list.size();
@@ -61,16 +55,15 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView name;
-        private ImageView img;
-        private WebView vid;
+        private TextView name, pose_Total;
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.name_Routine);
-            img = itemView.findViewById(R.id.img_Routine);
-            vid = itemView.findViewById(R.id.vid_Routine);
-
+            name = itemView.findViewById(R.id.routine_Name2);
+            pose_Total = itemView.findViewById(R.id.pose_Total);
         }
 
     }
 }
+

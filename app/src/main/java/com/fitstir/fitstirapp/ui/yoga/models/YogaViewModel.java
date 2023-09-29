@@ -10,13 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.fitstir.fitstirapp.ui.runtracker.utilites.RunHistoryAdapter;
-import com.fitstir.fitstirapp.ui.runtracker.utilites.RunnerData;
-import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
-import com.fitstir.fitstirapp.ui.workouts.exercises.workoutAdapter;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.CustomsAdapter;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.FavoriteAdapter;
-import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.RoutineAdapter;
+import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.PoseAdapter;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.YogaAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,7 +31,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class YogaViewModel extends ViewModel {
 
@@ -233,7 +228,7 @@ public class YogaViewModel extends ViewModel {
 			}
 		});
 	}
-	public void fetchRoutines(Context context, ArrayList<PoseModel> data, RoutineAdapter adapter, View dialog, EditText text){
+	public void fetchRoutines(Context context, ArrayList<PoseModel> data, PoseAdapter adapter, View dialog, EditText text){
 
 		FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 		FirebaseDatabase db = FirebaseDatabase.getInstance();
