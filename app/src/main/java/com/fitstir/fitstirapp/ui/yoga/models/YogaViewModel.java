@@ -228,34 +228,5 @@ public class YogaViewModel extends ViewModel {
 			}
 		});
 	}
-	public void fetchRoutines(Context context, ArrayList<PoseModel> data, PoseAdapter adapter, View dialog, EditText text){
 
-		FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-		FirebaseDatabase db = FirebaseDatabase.getInstance();
-		DatabaseReference dbRef = db.getReference("CustomRoutines")
-				.child(authUser.getUid());
-		dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-			@Override
-			public void onDataChange(@NonNull DataSnapshot snapshot) {
-				if(snapshot.exists()){
-					for(DataSnapshot dataSnapshot : snapshot.getChildren())
-					{
-						PoseModel faveData =  dataSnapshot.getValue(PoseModel.class);
-						String routineName = dataSnapshot.getKey();
-						text.setText(routineName);
-						data.add(faveData);
-					}
-					adapter.notifyDataSetChanged();
-
-				}
-				else{
-					dialog.setVisibility(View.VISIBLE);
-				}
-			}
-			@Override
-			public void onCancelled(@NonNull DatabaseError error) {
-
-			}
-		});
-	}
 }

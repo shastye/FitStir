@@ -53,7 +53,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
     private View dialog;
     private CardView listCardView, windowCardView, openCardView, closedCardView;
     private FragmentCustomYogaBinding binding;
-    private ArrayList<PoseModel> yogaPoseList,newCustomList, retrievedRoutineList ;
+    private ArrayList<PoseModel> yogaPoseList,newCustomList, retrievedRoutineList, tempList ;
     private CustomsAdapter adapter;
     private CustomsAdapterView adapterWindow;
     private PoseAdapter routineAdapter;
@@ -93,6 +93,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         retrievedRoutineList = new ArrayList<>();
         yogaPoseList = new ArrayList<>();
         newCustomList = new ArrayList<>();
+        tempList = new ArrayList<>();
         model = new PoseModel();
         rvI = this;
 
@@ -107,6 +108,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         // to make a full list of everything to chose from for customs fragment
         adapter = new CustomsAdapter(rvI, requireActivity(), yogaPoseList);
         yogaView.fetchYogaData(yogaPoseList, Constants.YOGA_ID.BEGINNER_YOGA,adapter);
+
         adapterWindow = new CustomsAdapterView(rvI, requireActivity(), newCustomList, yogaView);
 
 

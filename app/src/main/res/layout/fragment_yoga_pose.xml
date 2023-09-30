@@ -36,25 +36,15 @@
                     android:layout_height="245dp"
                     android:layout_gravity="center"
                     />
-                <ToggleButton
-                android:id="@+id/favoriteButton_on"
-                android:layout_width="35dp"
-                android:layout_height="31dp"
-                android:layout_marginStart="280dp"
-                android:layout_marginTop="10dp"
-                android:textOff=""
-                android:textOn=""
-                android:background="@drawable/baseline_favorite_purple"
-                />
-                <ToggleButton
-                    android:id="@+id/favoriteButton_off"
+
+                <ImageView
+                    android:id="@+id/favoriteButton"
                     android:layout_width="35dp"
                     android:layout_height="31dp"
                     android:layout_marginStart="280dp"
                     android:layout_marginTop="10dp"
-                    android:textOff=""
-                    android:textOn=""
-                    android:background="@drawable/baseline_favorite_24"
+                    android:onClick="toggleFavorite"
+                    android:src="@drawable/baseline_favorite_24"
                     />
 
 
@@ -156,14 +146,6 @@
                 android:layout_height="255dp"
                 android:layout_marginTop="20dp"/>
 
-            <ImageButton
-                android:id="@+id/add_To_Custom"
-                android:layout_width="35dp"
-                android:layout_height="40dp"
-                android:background="@drawable/baseline_add_circle_24"
-                android:layout_marginStart="150dp"
-                android:layout_marginTop="70dp"
-                />
         </LinearLayout>
     </ScrollView>
 

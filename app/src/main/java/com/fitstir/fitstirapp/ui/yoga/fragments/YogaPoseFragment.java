@@ -44,23 +44,25 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
 
     private TextView english_Name, san_Name, tran_Name, descript,benefits;
     private ImageView png;
-    private ToggleButton faveOff, faveOn;
+    private ImageView favorite_Button;
     private FragmentYogaPoseBinding binding;
     private WebView youtube;
     private ArrayList<PoseModel> faveList;
     private RvInterface rvInterface;
     private SharedPreferences sharedPreferences;
-    private Boolean isFavoriteOn;
-    private Boolean isFavoriteOff;
+    private Boolean isFavoriteButtonOn = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Call  yoga view model
         YogaViewModel yogaView = new ViewModelProvider(this.requireActivity()).get(YogaViewModel.class);
+
+        // saving favorite button state
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
-        isFavoriteOn = sharedPreferences.getBoolean("button_invisible",true);
-        isFavoriteOff = sharedPreferences.getBoolean("button_visible", true);
+        isFavoriteButtonOn = sharedPreferences.getBoolean("is_favorite", false);
+        updateFavorite();
 
 
         // Inflate the layout for this fragment
@@ -75,8 +77,7 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         benefits = root.findViewById(R.id.pose_benefits);
         png = root.findViewById(R.id.url_PNG);
         youtube = root.findViewById(R.id.youtube_View);
-        faveOff = root.findViewById(R.id.favoriteButton_off);
-        faveOn = root.findViewById(R.id.favoriteButton_on);
+        favorite_Button = root.findViewById(R.id.favoriteButton);
         faveList = new ArrayList<>();
         rvInterface = this;
 
@@ -96,38 +97,42 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         youtube.getSettings().setJavaScriptEnabled(true);
         youtube.setWebChromeClient(new WebChromeClient());
 
-        faveOn.setVisibility(isFavoriteOn ? View.INVISIBLE : View.VISIBLE);
-        faveOff.setVisibility(isFavoriteOff ? View.VISIBLE : View.INVISIBLE);
-            faveOff.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    boolean currentState = faveOff.getVisibility() == View.VISIBLE;
-                    faveOff.setVisibility(isFavoriteOff ? View.INVISIBLE : View.VISIBLE);
 
-                    sharedPreferences.edit()
-                            .putBoolean("button_visible", !currentState)
-                            .apply();
-
-                    onItemClick(yogaView.getFavoriteItemPosition().getValue());
-                }
-            });
-
-            faveOn.setOnClickListener(new View.OnClickListener() {
+            favorite_Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    boolean currentState = faveOn.getVisibility() == View.INVISIBLE;
-                    faveOn.setVisibility(isFavoriteOn ? View.VISIBLE : View.INVISIBLE);
+                    // Toggle favorite state
+                    isFavoriteButtonOn = !isFavoriteButtonOn;
 
-                    sharedPreferences.edit()
-                            .putBoolean("button_visible", currentState)
-                                    .apply();
+                    updateFavorite();
+
+                    // Save button state
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("is_favorite", isFavoriteButtonOn);
+                    editor.apply();
 
                     onItemClick(yogaView.getFavoriteItemPosition().getValue());
                 }
             });
 
         return root;
+    }
+
+    private void updateFavorite() {
+        if(isFavoriteButtonOn){
+            favorite_Button.setImageResource(R.drawable.baseline_favorite_purple);
+        }
+        else{
+            if(favorite_Button != null){
+                favorite_Button.setImageResource(R.drawable.baseline_favorite_24);
+            }
+
+        }
+    }
+
+    private void toggleFavorite(View view){
+        favorite_Button.callOnClick();
     }
 
 
@@ -139,13 +144,14 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
 
         String pathFolder = "FavoriteItemYoga";
         String filePathName = model.getEnglish_name().toString();
-        if(faveOff.getVisibility() == View.INVISIBLE) {
+
+        if(isFavoriteButtonOn) {
 
             view.saveYogaData(model, requireActivity(),pathFolder,filePathName);
             favoriteList.add(model);
 
         }
-        else if(faveOn.getVisibility() == View.VISIBLE){
+        else {
 
            favoriteList.remove(model);
 
@@ -165,6 +171,23 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         }
 
 
+    }
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+
+        // Saving the favorite state
+        outState.putBoolean("is_favorite", isFavoriteButtonOn);
+    }
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState){
+        super.onViewStateRestored(savedInstanceState);
+
+        //restoring the favorite button state
+        if(savedInstanceState != null){
+            isFavoriteButtonOn = savedInstanceState.getBoolean("is_favorite");
+            updateFavorite();
+        }
     }
 
 }
