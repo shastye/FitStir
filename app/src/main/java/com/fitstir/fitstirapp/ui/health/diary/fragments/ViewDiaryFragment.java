@@ -62,7 +62,6 @@ public class ViewDiaryFragment extends Fragment {
         DiaryData diaryData = diaryViewModel.getOGdiaryData().getValue();
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        int numTasks = 0;
         ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>() {{
             add(binding.task01Checkbox);
             add(binding.task02Checkbox);
@@ -96,21 +95,20 @@ public class ViewDiaryFragment extends Fragment {
         }};
 
         Calendar cal = Calendar.getInstance();
-        final int today = cal.get(Calendar.DAY_OF_YEAR);
 
         //region Updating saved lists to only include last seven days //////////////////////////////
         cal = Calendar.getInstance(); // just in case I add something before this that
                                       // manipulates cal since I'm not using cal.setTime()
         cal.add(Calendar.DATE, -7);
-        final int lastDate = cal.get(Calendar.DAY_OF_YEAR);
+        final Date lastDate = cal.getTime();
 
         if (diaryEntries.size() != 0) {
             for (int i = 0; i < diaryEntries.size(); i++) {
                 DiaryEntry entry = diaryEntries.get(i);
 
-                Calendar temp = Calendar.getInstance();
-                temp.setTime(entry.getDate());
-                if (lastDate > temp.get(Calendar.DAY_OF_YEAR)) {
+                Calendar entryCal = Calendar.getInstance();
+                entryCal.setTime(entry.getDate());
+                if (Methods.firstIsAfterSecond(lastDate, entryCal.getTime())) {
                     diaryEntries.remove(entry);
                 }
             }
@@ -130,9 +128,9 @@ public class ViewDiaryFragment extends Fragment {
                 ArrayList<Date> dates = task.getCompletedOn();
                 for (int k = 0; k < dates.size(); k++) {
 
-                    Calendar temp = Calendar.getInstance();
-                    temp.setTime(dates.get(k));
-                    if (lastDate > temp.get(Calendar.DAY_OF_YEAR)) {
+                    Calendar dateCal = Calendar.getInstance();
+                    dateCal.setTime(dates.get(k));
+                    if (Methods.firstIsAfterSecond(lastDate, dateCal.getTime())) {
                         dates.remove(dates.get(k));
                         k--;
                     }
@@ -153,22 +151,16 @@ public class ViewDiaryFragment extends Fragment {
         final int size = checkBoxes.size();
 
         for (int i = 0; i < size; i++) {
-            Calendar finalCal = cal;
+            final Date[] lastCompleted = { null };
+
             checkBoxes.get(i).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     int index = -1;
-                    int lastCompleted = -1;
 
                     for (int j = 0; j < size; j++) {
                         if (buttonView.equals(checkBoxes.get(j))) {
                             index = j;
-
-                            if (tasks.get(j).getCompletedOn() != null && tasks.get(j).getCompletedOn().size() != 0) {
-                                finalCal.setTime(tasks.get(j).getCompletedOn().get(tasks.get(j).getCompletedOn().size() - 1));
-                                lastCompleted = finalCal.get(Calendar.DAY_OF_YEAR);
-                            }
-
                             break;
                         }
                     }
@@ -176,18 +168,18 @@ public class ViewDiaryFragment extends Fragment {
                     if (isChecked) {
                         buttonView.setPaintFlags(buttonView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-                        if (today != lastCompleted) {
+                        if (!Methods.isToday(lastCompleted[0])) {
                             tasks.get(index).addDate(Calendar.getInstance().getTime());
                         }
                     } else {
                         buttonView.setPaintFlags(buttonView.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
 
-                        ArrayList<Date> dates = tasks.get(index).getCompletedOn();
+                        ArrayList<Date> completedOn = tasks.get(index).getCompletedOn();
 
-                        if (dates != null && dates.size() != 0) {
-                            Date savedDate = dates.get(dates.size() - 1);
-                            if (index != -1 && lastCompleted != -1 && today == lastCompleted && dates.remove(savedDate)) {
-                                tasks.get(index).setCompletedOn(dates);
+                        if (completedOn != null && completedOn.size() != 0) {
+                            if (Methods.isToday(lastCompleted[0]) && lastCompleted[0] != null && completedOn.remove(lastCompleted[0])) {
+                                lastCompleted[0] = completedOn.get(completedOn.size() - 1);
+                                tasks.get(index).setCompletedOn(completedOn);
                             }
                         }
                     }
@@ -205,15 +197,11 @@ public class ViewDiaryFragment extends Fragment {
             try {
                 task = tasks.get(i);
 
-                numTasks++;
-
-                int lastCompleted = -1;
                 if (task.getCompletedOn() != null && task.getCompletedOn().size() != 0) {
-                    cal.setTime(task.getCompletedOn().get(task.getCompletedOn().size() - 1));
-                    lastCompleted = cal.get(Calendar.DAY_OF_YEAR);
+                    lastCompleted[0] = task.getCompletedOn().get(task.getCompletedOn().size() - 1);
                 }
 
-                checkBoxes.get(i).setChecked(lastCompleted != -1 && today == lastCompleted);
+                checkBoxes.get(i).setChecked(lastCompleted[0] != null && Methods.isToday(lastCompleted[0]));
                 checkBoxes.get(i).setVisibility(View.VISIBLE);
                 checkBoxes.get(i).setText(tasks.get(i).getName());
             } catch (IndexOutOfBoundsException e) {
@@ -223,13 +211,13 @@ public class ViewDiaryFragment extends Fragment {
 
         final float scale = getContext().getResources().getDisplayMetrics().density;
         int pixels = 0;
-        if (numTasks < 3) {
+        if (tasks.size() < 3) {
             pixels = (int) (75 * scale + 0.5f);
-        } else if (numTasks < 5) {
+        } else if (tasks.size() < 5) {
             pixels = (int) (115 * scale + 0.5f);
-        } else if (numTasks < 7) {
+        } else if (tasks.size() < 7) {
             pixels = (int) (155 * scale + 0.5f);
-        } else if (numTasks < 9) {
+        } else if (tasks.size() < 9) {
             pixels = (int) (195 * scale + 0.5f);
         } else {
             pixels = (int) (235 * scale + 0.5f);
@@ -247,9 +235,8 @@ public class ViewDiaryFragment extends Fragment {
         if (diaryData.getEmotions() != null && diaryData.getEmotions().size() != 0) {
             potentiallyToday = diaryData.getEmotions().get(diaryData.getEmotions().size() - 1);
             cal.setTime(potentiallyToday.getDate());
-            int actual = cal.get(Calendar.DAY_OF_YEAR);
 
-            if (today == actual) {
+            if (Methods.isToday(cal.getTime())) {
                 todaysMood = potentiallyToday.getComment();
                 todaysEmoji = potentiallyToday.getEmoji();
                 isRecordedToday = true;
@@ -347,12 +334,17 @@ public class ViewDiaryFragment extends Fragment {
         }};
         for (int i = 0; i < diaryEntries.size(); i++) {
             cal.setTime(diaryEntries.get(i).getDate());
-            int recorded = cal.get(Calendar.DAY_OF_YEAR);
+            Date recordedDate = cal.getTime();
 
-            for (int comparingDay = today - 1; comparingDay > today - 8; comparingDay--) {
-                if (comparingDay == recorded) {
-                    emojis.set(-(comparingDay - (today - 1)), diaryEntries.get(i).getEmoji());
-                    break;
+            cal = Calendar.getInstance();
+            Date comparingDate;
+
+            for (int k = 0; k < emojis.size(); k++) {
+                cal.add(Calendar.DATE, -1);
+                comparingDate = cal.getTime();
+
+                if (Methods.firstIsSecond(recordedDate, comparingDate)) {
+                    emojis.set(k, diaryEntries.get(i).getEmoji());
                 }
             }
         }
@@ -371,7 +363,7 @@ public class ViewDiaryFragment extends Fragment {
         }};
         final ArrayList<ArrayList<Boolean>> wellnessTracker = new ArrayList<>();
         final ArrayList<ArrayList<Date>> allCompleted = new ArrayList<>();
-        for (int i = 0; i < numTasks; i++) {
+        for (int i = 0; i < tasks.size(); i++) {
             allCompleted.add(tasks.get(i).getCompletedOn());
             wellnessTracker.add(new ArrayList<>(sevenFalse));
         }
@@ -396,14 +388,19 @@ public class ViewDiaryFragment extends Fragment {
         cal.add(Calendar.DATE, -1);
         binding.date7.setText(getDateAsString(cal));
 
-        for (int i = 0; i < numTasks; i++) {
-            for (int comparingDay = today - 1; comparingDay > today - 8; comparingDay--) {
-                for (int k = 0; k < allCompleted.get(i).size(); k++) {
-                    cal.setTime(allCompleted.get(i).get(k));
-                    int recorded = cal.get(Calendar.DAY_OF_YEAR);
+        for (int i = 0; i < tasks.size(); i++) {
+            cal = Calendar.getInstance();
+            Date comparingDate;
 
-                    if (comparingDay == recorded) {
-                        wellnessTracker.get(i).set(-(comparingDay - (today - 1)), true);
+            for (int k = 0; k < wellnessTracker.get(i).size(); k++) {
+                cal.add(Calendar.DATE, -1);
+                comparingDate = cal.getTime();
+
+                for (int j = 0; j < allCompleted.get(i).size(); j++) {
+                    Date recordedDate = allCompleted.get(i).get(j);
+
+                    if (Methods.firstIsSecond(recordedDate, comparingDate)) {
+                        wellnessTracker.get(i).set(k, true);
                     }
                 }
             }
@@ -415,13 +412,13 @@ public class ViewDiaryFragment extends Fragment {
 
         int OGheight = binding.wellnessTrackerGrid.getLayoutParams().height;
         int modifier;
-        if (numTasks < 3) {
+        if (tasks.size() < 3) {
             modifier = 4;
-        } else if (numTasks < 5) {
+        } else if (tasks.size() < 5) {
             modifier = 3;
-        } else if (numTasks < 7) {
+        } else if (tasks.size() < 7) {
             modifier = 2;
-        } else if (numTasks < 9) {
+        } else if (tasks.size() < 9) {
             modifier = 1;
         } else {
             modifier = 0;

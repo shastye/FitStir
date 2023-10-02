@@ -1,6 +1,6 @@
 package com.fitstir.fitstirapp.ui.goals;
 
-import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -9,8 +9,7 @@ import java.util.Date;
 
 
 public class Goal {
-    private String name;
-    private WorkoutTypes type;
+    private GoalTypes type;
     private String unit;
     private int value;
     private ArrayList<GoalDataPair> data;
@@ -20,8 +19,7 @@ public class Goal {
     private Date maxDate;
 
     public Goal() {
-        this.name = "Goal Name";
-        this.type = WorkoutTypes.RUN_CLUB_DISTANCE;
+        this.type = GoalTypes.RUN_CLUB_DISTANCE;
         this.unit = this.type.getImperialUnit();
         this.value = 0;
         this.data = new ArrayList<>();
@@ -29,8 +27,7 @@ public class Goal {
         this.maxDate = null;
         this.id = RandomStringUtils.randomAlphanumeric(12); // ID is 12 characters long
     }
-    public Goal(String name, WorkoutTypes type, int value) {
-        this.name = name;
+    public Goal(GoalTypes type, int value) {
         this.type = type;
         this.unit = this.type.getImperialUnit();
         this.value = value;
@@ -40,7 +37,6 @@ public class Goal {
         this.id = RandomStringUtils.randomAlphanumeric(12); // ID is 12 characters long
     }
     public Goal(Goal goal) {
-        this.name = goal.name;
         this.type = goal.type;
         this.unit = goal.unit;
         this.value = goal.value;
@@ -76,8 +72,7 @@ public class Goal {
     }
     public void resetData() { this.data.clear(); }
 
-    public String getName() { return this.name; }
-    public WorkoutTypes getType() { return this.type; }
+    public GoalTypes getType() { return this.type; }
     public String getUnit() { return this.unit; }
     public int getValue() { return this.value; }
     public ArrayList<GoalDataPair> getData() { return this.data; }
@@ -85,8 +80,7 @@ public class Goal {
     public Date getMinDate() { return this.minDate; }
     public String getID() { return id; }
 
-    public void setName(String name) { this.name = name; }
-    public void setType(WorkoutTypes type) { this.type = type; }
+    public void setType(GoalTypes type) { this.type = type; }
     public void setValue(int value) { this.value = value; }
     public void setData(ArrayList<GoalDataPair> data) { this.data = new ArrayList<>(data); }
 }

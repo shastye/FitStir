@@ -24,7 +24,7 @@ import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.DeleteConformationDia
 import com.fitstir.fitstirapp.ui.health.weightloss.WeightLossViewModel;
 import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.UpdateWeightDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
-import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -136,7 +136,7 @@ public class WeightLossFragment extends Fragment {
                         for (DataSnapshot child : children) {
                             Goal goal = child.getValue(Goal.class);
 
-                            if (goal.getName().equals("Weight Goal") && goal.getType().equals(WorkoutTypes.WEIGHT_CHANGE)) {
+                            if (goal.getType().equals(GoalTypes.WEIGHT_CHANGE)) {
                                 weightLossGoal = goal;
                                 weightLossViewModel.setGoalID(goal.getID());
                             }

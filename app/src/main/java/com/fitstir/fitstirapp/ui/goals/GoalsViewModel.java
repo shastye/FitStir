@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
-import com.fitstir.fitstirapp.ui.utility.enums.WorkoutTypes;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,7 +55,7 @@ public class GoalsViewModel extends ViewModel {
 
         switch(goalNum) {
             case 1:
-                g = new Goal("Test1", WorkoutTypes.RUN_CLUB_DISTANCE, 16);
+                g = new Goal(GoalTypes.RUN_CLUB_DISTANCE, 16);
 
                 calendar.set(Calendar.MONTH, Calendar.MAY);
                 calendar.set(Calendar.DAY_OF_MONTH, 10);
@@ -93,7 +93,7 @@ public class GoalsViewModel extends ViewModel {
                 g.addData(calendar.getTime(), 14.7);
                 break;
             default:
-                g = new Goal("Test#", WorkoutTypes.RUN_CLUB_ENDURANCE, 14);
+                g = new Goal(GoalTypes.RUN_CLUB_ENDURANCE, 14);
 
                 calendar.set(Calendar.MONTH, Calendar.JUNE);
                 calendar.set(Calendar.DAY_OF_MONTH, 1);
