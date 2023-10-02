@@ -104,28 +104,6 @@ public class Methods {
         return tDOY == dDOY;
     }
 
-    public static boolean isBeforeToday(Date date) {
-        Calendar todayCal = Calendar.getInstance();
-        Calendar dateCal = Calendar.getInstance();
-        dateCal.setTime(date);
-
-        int tDOY = todayCal.get(Calendar.DAY_OF_YEAR);
-        int dDOY = dateCal.get(Calendar.DAY_OF_YEAR);
-
-        return dDOY < tDOY;
-    }
-
-    public static boolean isAfterToday(Date date) {
-        Calendar todayCal = Calendar.getInstance();
-        Calendar dateCal = Calendar.getInstance();
-        dateCal.setTime(date);
-
-        int tDOY = todayCal.get(Calendar.DAY_OF_YEAR);
-        int dDOY = dateCal.get(Calendar.DAY_OF_YEAR);
-
-        return tDOY < dDOY;
-    }
-
     public static boolean firstIsSecond(Date first, Date second) {
         Calendar firstCal = Calendar.getInstance();
         firstCal.setTime(first);
@@ -136,18 +114,6 @@ public class Methods {
         int secondDay = secondCal.get(Calendar.DAY_OF_YEAR);
 
         return firstDay == secondDay;
-    }
-
-    public static boolean firstIsBeforeSecond(Date first, Date second) {
-        Calendar firstCal = Calendar.getInstance();
-        firstCal.setTime(first);
-        Calendar secondCal = Calendar.getInstance();
-        secondCal.setTime(second);
-
-        int firstDay = firstCal.get(Calendar.DAY_OF_YEAR);
-        int secondDay = secondCal.get(Calendar.DAY_OF_YEAR);
-
-        return firstDay < secondDay;
     }
 
     public static boolean firstIsAfterSecond(Date first, Date second) {

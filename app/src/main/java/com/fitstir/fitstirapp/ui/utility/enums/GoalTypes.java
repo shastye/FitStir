@@ -1,7 +1,15 @@
 package com.fitstir.fitstirapp.ui.utility.enums;
 
-public enum WorkoutTypes { // TODO: Add more to represent all types
+import android.util.Pair;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public enum GoalTypes { // TODO: Add more to represent all types
     WEIGHT_CHANGE("Weight Change", 0, "Pounds", "Kilograms"),
+
+
+
     RUN_CLUB_DISTANCE("Run Club - Distance", 1, "Miles", "Kilometers"),
     RUN_CLUB_ENDURANCE("Run Club - Endurance", 2, "Hours", "Hours"),
     UPPER_BODY_WEIGHT("Upper Body - Weight", 3, "Pounds", "Kilograms"),
@@ -20,7 +28,7 @@ public enum WorkoutTypes { // TODO: Add more to represent all types
     private final String imperialUnit;
     private final String metricUnit;
 
-    private WorkoutTypes(String spinnerTitle, int value, String imperialUnit, String metricUnit) {
+    private GoalTypes(String spinnerTitle, int value, String imperialUnit, String metricUnit) {
         this.spinnerTitle = spinnerTitle;
         this.value = value;
         this.imperialUnit = imperialUnit;
@@ -38,5 +46,20 @@ public enum WorkoutTypes { // TODO: Add more to represent all types
     }
     public String getMetricUnit() {
         return this.metricUnit;
+    }
+
+    public DatabaseReference getDatabaseReferenceStringsForTypeData(String userID) {
+        switch (this) {
+            case RUN_CLUB_DISTANCE:
+                //      returns List of class items representing each run
+                //      each Object will use { kid.getTotalDistance } and { kid.getCompletedDate }
+            case RUN_CLUB_ENDURANCE:
+                return FirebaseDatabase.getInstance().getReference("CompletedRun").child(userID);
+                //      returns List of class items representing each run
+                //      each Object will use { kid.getCompletedRunInMinutes } and { kid.getCompletedDate }
+                break;
+            default:
+                return null;
+        }
     }
 }
