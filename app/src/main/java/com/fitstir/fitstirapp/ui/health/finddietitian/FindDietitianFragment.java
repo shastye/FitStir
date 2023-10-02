@@ -109,7 +109,11 @@ public class FindDietitianFragment extends Fragment {
                 @Override
                 public void onActivityResult(Boolean result) {
 
-
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     if (result) {
 
@@ -143,6 +147,13 @@ public class FindDietitianFragment extends Fragment {
                                 currLoc = locationManager.getLastKnownLocation(Objects.requireNonNull(locationManager.getBestProvider(criteria, false)));
                                 currLatLng = new LatLng(currLoc.getLatitude(), currLoc.getLongitude());
                                 zoomToRadius(distanceMiles);
+
+                                // TODO: FOR SHOWING ZOOM FUNCTIONALITY
+                                /*circle = map.addCircle(new CircleOptions()
+                                        .center(currLatLng)
+                                        .radius(distanceMiles * 1609.34f)
+                                        .strokeColor(Color.BLACK)
+                                        .fillColor(grey));*/
 
                                 // Show filters on button click
                                 binding.filterButton.setOnClickListener(new View.OnClickListener() {
