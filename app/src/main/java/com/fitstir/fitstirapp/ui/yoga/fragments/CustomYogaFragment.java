@@ -58,6 +58,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
     private TitleAdapter folderAdapter;
     private PoseModel model;
     private ImageView open, close;
+    private Map<String, List<PoseModel>> folderPoseMap;
 //endregion
 
     @Override
@@ -112,13 +113,13 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         yogaView.fetchYogaData(yogaPoseList, Constants.YOGA_ID.BEGINNER_YOGA,adapter);
         adapterWindow = new CustomsAdapterView(rvI, requireActivity(), newCustomList, yogaView);
 
-
+//firebase integration and visibility settings
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = db.getReference("CustomRoutines")
                 .child(authUser.getUid());
 
-        Map<String, List<PoseModel>> folderPoseMap = new HashMap<>();
+      folderPoseMap = new HashMap<>();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -131,11 +132,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                         String routineName = routineSnapshot.getKey();
                         //model.setRoutineName(rName);
                         ArrayList<PoseModel> poseList = new ArrayList<>();
-
-
                         //Iterable<DataSnapshot> poseSnapshots = routineSnapshot.getChildren();
-
-
                       for(DataSnapshot poseSnapshot : routineSnapshot.getChildren()){
                           PoseModel retrievedData =  poseSnapshot.getValue(PoseModel.class);
                           if(retrievedData != null){
@@ -152,7 +149,8 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                     //parent recyclerView
                     main.setLayoutManager(new LinearLayoutManager(requireActivity()));
                     main.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
-                    folderAdapter = new TitleAdapter( new HashMap<>(), rvI);
+                    folderAdapter = new TitleAdapter( new HashMap<>(), rvI, requireActivity());
+                    folderAdapter.setFolderPoseMap(folderPoseMap);
                     main.setAdapter(folderAdapter);
                     folderAdapter.notifyDataSetChanged();
 
@@ -179,9 +177,6 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                             openCardView.setVisibility(View.INVISIBLE);
                         }
                     });
-
-
-
                 }
                 else{
                     dialog.setVisibility(View.VISIBLE);
@@ -193,7 +188,6 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                 Log.d("Firebase Save to Database error", error.getDetails());
             }
         });
-
 
         addTo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,14 +244,16 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
             }
             else{
 
-                newCustomList.remove(newCustomList.get(position));
+                if(newCustomList.size() != 0){
+                    newCustomList.remove(newCustomList.get(position));
 
-                // reset recyclerview and check if array is at end to close dialog recyclerview
-                customWindowView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                customWindowView.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
-                customWindowView.setAdapter(adapterWindow);
+                    // reset recyclerview and check if array is at end to close dialog recyclerview
+                    customWindowView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                    customWindowView.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
+                    customWindowView.setAdapter(adapterWindow);
+                }
 
-                if(newCustomList.size() == 0){
+                else if(newCustomList.size() == 0){
                     windowCardView.setVisibility(View.INVISIBLE);
                 }
             }
@@ -307,6 +303,14 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                 }
             }
         });
+
+        if(!folderPoseMap.isEmpty()){
+            ArrayList<String> routineNames = new ArrayList<>(folderPoseMap.keySet());
+            String clickedRoutine = routineNames.get(position);
+
+            ArrayList<PoseModel> posesFromRoutine = (ArrayList<PoseModel>) folderPoseMap.get(clickedRoutine);
+            routineAdapter.setPoseList(posesFromRoutine);
+        }
 
 
     }

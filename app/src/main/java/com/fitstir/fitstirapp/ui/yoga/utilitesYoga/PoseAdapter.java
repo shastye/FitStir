@@ -38,6 +38,10 @@ public class PoseAdapter extends RecyclerView.Adapter<PoseAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    public void setPoseList(ArrayList<PoseModel> newList){
+        this.list = newList;
+        notifyDataSetChanged();
+    }
     @Override
     public void onBindViewHolder(@NonNull PoseAdapter.ViewHolder holder, int position) {
         PoseModel data = list.get(position);
