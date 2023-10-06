@@ -1,7 +1,6 @@
 package com.fitstir.fitstirapp.ui.yoga.fragments;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -10,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentCustomYogaBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
@@ -38,15 +35,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
-
 
 public class CustomYogaFragment extends Fragment implements CustomInterface {
 
+    //region Variables
     private EditText routineName;
     private Button save, cancel;
     private ImageButton addTo, addTo_RV, subtract_RV;
@@ -55,13 +51,14 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
     private View dialog;
     private CardView listCardView, windowCardView, openCardView, closedCardView;
     private FragmentCustomYogaBinding binding;
-    private ArrayList<PoseModel> yogaPoseList,newCustomList, retrievedRoutineList, tempList ;
+    private ArrayList<PoseModel> yogaPoseList,newCustomList, retrievedRoutineList, tempList, routineFolderList ;
     private CustomsAdapter adapter;
     private CustomsAdapterView adapterWindow;
     private PoseAdapter routineAdapter;
-    private TitleAdapter titleAdapter;
+    private TitleAdapter folderAdapter;
     private PoseModel model;
     private ImageView open, close;
+//endregion
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,25 +77,25 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         save = root.findViewById(R.id.save_Routine);
         cancel = root.findViewById(R.id.cancel_Routine);
         addTo = root.findViewById(R.id.add_To_Custom);
-        customList = root.findViewById(R.id.custom_RV);
-        customWindowView = root.findViewById(R.id.justAdded_RV);
         listCardView = root.findViewById(R.id.addPoses_CV);
         windowCardView = root.findViewById(R.id.justAdded_CV);
-        addTo_RV = root.findViewById(R.id.add_To_BTN);
-        subtract_RV = root.findViewById(R.id.subtract_from_BTN);
         dialog = root.findViewById(R.id.custom_empty);
         openCardView = root.findViewById(R.id.custon_cardView_opened);
         closedCardView = root.findViewById(R.id.custon_cardView_closed);
-        expandableCardView_RV = root.findViewById(R.id.opened_cardview_RV);
         open = root.findViewById(R.id.open_cardview);
         close = root.findViewById(R.id.close_cardview);
+        customList = root.findViewById(R.id.custom_RV);
+        customWindowView = root.findViewById(R.id.justAdded_RV);
         main = root.findViewById(R.id.main_RV);
-
+        expandableCardView_RV = root.findViewById(R.id.opened_cardview_RV);
+        addTo_RV = root.findViewById(R.id.add_To_BTN);
+        subtract_RV = root.findViewById(R.id.subtract_from_BTN);
         retrievedRoutineList = new ArrayList<>();
         yogaPoseList = new ArrayList<>();
         newCustomList = new ArrayList<>();
         tempList = new ArrayList<>();
         model = new PoseModel();
+        routineFolderList = new ArrayList<>();
         rvI = this;
 
         //initial view logic
@@ -120,39 +117,50 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = db.getReference("CustomRoutines")
                 .child(authUser.getUid());
+
+        Map<String, List<PoseModel>> folderPoseMap = new HashMap<>();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
 
-                    ArrayList<PoseModel> data = new ArrayList<>();
+                    //ArrayList<PoseModel> data = new ArrayList<>();
 
                     for(DataSnapshot routineSnapshot : snapshot.getChildren())
                     {
-                        String rName = routineSnapshot.getKey();
-                        model.setRoutineName(rName);
-
-                        Iterable<DataSnapshot> poseSnapshots = routineSnapshot.getChildren();
+                        String routineName = routineSnapshot.getKey();
+                        //model.setRoutineName(rName);
                         ArrayList<PoseModel> poseList = new ArrayList<>();
 
-                      for(DataSnapshot poseSnapshot : poseSnapshots){
+
+                        //Iterable<DataSnapshot> poseSnapshots = routineSnapshot.getChildren();
+
+
+                      for(DataSnapshot poseSnapshot : routineSnapshot.getChildren()){
                           PoseModel retrievedData =  poseSnapshot.getValue(PoseModel.class);
                           if(retrievedData != null){
                               poseList.add(retrievedData);
                           }
 
                       }
-                      data.addAll(poseList);
-                        if(!data.isEmpty()){
+                     folderPoseMap.put(routineName, poseList);
+                        if(!folderPoseMap.isEmpty()){
                             closedCardView.setVisibility(View.VISIBLE);
                         }
-
                     }
+
+                    //parent recyclerView
+                    main.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                    main.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
+                    folderAdapter = new TitleAdapter( new HashMap<>(), rvI);
+                    main.setAdapter(folderAdapter);
+                    folderAdapter.notifyDataSetChanged();
+
+                    //child recyclerView
                     expandableCardView_RV.setLayoutManager(new LinearLayoutManager(requireActivity()));
                     expandableCardView_RV.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
-                    routineAdapter = new PoseAdapter( data, requireActivity(), rvI);
+                    routineAdapter = new PoseAdapter( new ArrayList<>(), requireActivity(), rvI);
                     expandableCardView_RV.setAdapter(routineAdapter);
-
                     routineAdapter.notifyDataSetChanged();
 
                     open.setOnClickListener(new View.OnClickListener() {
@@ -172,29 +180,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                         }
                     });
 
-                   /* main.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                    main.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
-                    titleAdapter = new TitleAdapter( data, requireActivity(), rvI);
-                    main.setAdapter(titleAdapter);
 
-                    titleAdapter.notifyDataSetChanged();*/
-
-                    open.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            closedCardView.setVisibility(View.INVISIBLE);
-                            openCardView.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    close.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            model.setIsClosedCardView(true);
-                            closedCardView.setVisibility(View.VISIBLE);
-                            openCardView.setVisibility(View.INVISIBLE);
-                        }
-                    });
 
                 }
                 else{
@@ -203,7 +189,8 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("Database Error", error.getMessage());
+                Log.d("Firebase Save to Database error", error.getDetails());
             }
         });
 
@@ -234,10 +221,11 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 for(int i = 0; i < newCustomList.size(); i++){
                     newCustomList.remove(i);
-                    windowCardView.setVisibility(View.INVISIBLE);
                 }
+                windowCardView.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -251,7 +239,6 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
 
         try{
             if(isAddButtonClicked){
-
 
                 newCustomList.add(yogaPoseList.get(position));
 
