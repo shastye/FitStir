@@ -80,12 +80,6 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    @Override
     public void onItemClick(int position) {
      WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
      try {

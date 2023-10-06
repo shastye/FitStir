@@ -44,7 +44,6 @@ public class YogaFragment extends Fragment  {
         balance = root.findViewById(R.id.balance_Yoga);
         learn = root.findViewById(R.id.learn_Yoga);
         quickStart = root.findViewById(R.id.quickStart);
-        recent = root.findViewById(R.id.recents_Tab);
         custom = root.findViewById(R.id.custom_Tab);
         favorite = root.findViewById(R.id.favorite_Tab);
         yogaViews = new ViewModelProvider(this.requireActivity()).get(YogaViewModel.class);
@@ -108,12 +107,7 @@ public class YogaFragment extends Fragment  {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_categoryViewFragment);
             }
         });
-        recent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_yoga_to_recentYogaFragment);
-            }
-        });
+
         custom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

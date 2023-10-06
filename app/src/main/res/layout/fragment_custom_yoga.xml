@@ -12,14 +12,14 @@
         android:id="@+id/main_RV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         />
     <include
         android:id="@+id/include"
         layout="@layout/dialog_empty_list"
         />
-    <include layout="@layout/custom_expandable_cardview"/>
 
+    <include layout="@layout/custom_expandable_cardview"
+        android:visibility="invisible"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/addPoses_CV"
         android:layout_width="315dp"

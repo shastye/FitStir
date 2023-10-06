@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -36,7 +38,9 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
     @Override
     public TitleAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_expandable_cardview, parent, false);
-        return new ViewHolder(view);
+        ViewHolder parentView = new ViewHolder(view);
+
+        return parentView;
     }
 
     @Override
@@ -44,6 +48,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
 
         PoseModel data = list.get(position);
 
+        //set data
         holder.name.setText(data.getEnglish_name());
         holder.pose_Total.setText(String.valueOf(list.size()));
 
@@ -57,13 +62,13 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
 
         private TextView name, pose_Total;
 
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             name = itemView.findViewById(R.id.routine_Name2);
             pose_Total = itemView.findViewById(R.id.pose_Total);
-        }
 
+        }
     }
 }
 

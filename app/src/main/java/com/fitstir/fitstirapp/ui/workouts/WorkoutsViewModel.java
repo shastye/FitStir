@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.errorprone.annotations.MustBeClosed;
+
 public class WorkoutsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
@@ -21,8 +23,14 @@ public class WorkoutsViewModel extends ViewModel {
     private final MutableLiveData<Integer> calBurned = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> totalBurned = new MutableLiveData<>(0);
     private final MutableLiveData<String> mapImage = new MutableLiveData<>(" ");
+    private final MutableLiveData<String> vidURL = new MutableLiveData<>();
+    private final MutableLiveData<String> altURL = new MutableLiveData<>();
+    private final MutableLiveData<String> alt2URL = new MutableLiveData<>();
 
 
+    public MutableLiveData<String> getAltURL() {return altURL;}
+    public MutableLiveData<String> getAlt2URL() {return alt2URL;}
+    public MutableLiveData<String> getVidURL() {return vidURL;}
     public final MutableLiveData<Integer> getTotalBurned() {return totalBurned;}
     public MutableLiveData<String> getMapImage() {return mapImage;}
     public final MutableLiveData<Integer> getPageCLicked() {return pageCLicked;}
@@ -55,5 +63,9 @@ public class WorkoutsViewModel extends ViewModel {
     public void setEquipment(String equip){this.equipment.setValue(equip);}
     public void setGifURL(String gif){this.gifURL.setValue(gif);}
     public void setExercise(String name){this.exercise.setValue(name);}
+    public void setVidURl(String url){this.vidURL.setValue(url);}
+    public void setAltURl(String url){this.altURL.setValue(url);}
+    public void setAlt2URL(String url){this.alt2URL.setValue(url);}
+    public void setTotalBurned(Integer totalBurned){this.totalBurned.setValue(totalBurned);}
 
 }

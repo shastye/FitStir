@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -184,6 +185,7 @@ public class Questions4Fragment extends Fragment {
                                                         if(uid != null)
                                                         {
                                                             dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();

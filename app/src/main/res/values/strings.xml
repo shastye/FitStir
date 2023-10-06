@@ -53,4 +53,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="web_client_id">1016436046945-po8mbu7gef11fbbtpnkveu94sb9ns950.apps.googleusercontent.com</string>
     <string name="MAP_API">AIzaSyB2nfOwUN6PBCqieyL6jBeH_lJflw5Af1w</string>
+    <string name="Youtube_Api_Key">AIzaSyDdFboyfJRuW-3pm1x_r-I49at2nXJx5x4</string>
 </resources>

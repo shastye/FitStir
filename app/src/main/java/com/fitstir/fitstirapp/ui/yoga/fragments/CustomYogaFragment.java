@@ -30,6 +30,7 @@ import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.CustomsAdapter;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.CustomsAdapterView;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.PoseAdapter;
+import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.TitleAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -48,7 +50,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
     private EditText routineName;
     private Button save, cancel;
     private ImageButton addTo, addTo_RV, subtract_RV;
-    private RecyclerView customList, customWindowView, expandableCardView_RV;
+    private RecyclerView customList, customWindowView, expandableCardView_RV, main;
     private CustomInterface rvI;
     private View dialog;
     private CardView listCardView, windowCardView, openCardView, closedCardView;
@@ -57,6 +59,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
     private CustomsAdapter adapter;
     private CustomsAdapterView adapterWindow;
     private PoseAdapter routineAdapter;
+    private TitleAdapter titleAdapter;
     private PoseModel model;
     private ImageView open, close;
 
@@ -72,7 +75,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         binding = FragmentCustomYogaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        //region initializations
         routineName = root.findViewById(R.id.routine_Title_ET);
         save = root.findViewById(R.id.save_Routine);
         cancel = root.findViewById(R.id.cancel_Routine);
@@ -89,6 +92,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         expandableCardView_RV = root.findViewById(R.id.opened_cardview_RV);
         open = root.findViewById(R.id.open_cardview);
         close = root.findViewById(R.id.close_cardview);
+        main = root.findViewById(R.id.main_RV);
 
         retrievedRoutineList = new ArrayList<>();
         yogaPoseList = new ArrayList<>();
@@ -97,18 +101,18 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         model = new PoseModel();
         rvI = this;
 
+        //initial view logic
         listCardView.setVisibility(View.INVISIBLE);
         windowCardView.setVisibility(View.INVISIBLE);
         dialog.setVisibility(View.INVISIBLE);
         openCardView.setVisibility(View.INVISIBLE);
         closedCardView.setVisibility(View.INVISIBLE);
-
+//endregion
 
         // Get data before option selection from each category
-        // to make a full list of everything to chose from for customs fragment
+        // to make a full list of everything to choose from for customs fragment
         adapter = new CustomsAdapter(rvI, requireActivity(), yogaPoseList);
         yogaView.fetchYogaData(yogaPoseList, Constants.YOGA_ID.BEGINNER_YOGA,adapter);
-
         adapterWindow = new CustomsAdapterView(rvI, requireActivity(), newCustomList, yogaView);
 
 
@@ -150,6 +154,30 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                     expandableCardView_RV.setAdapter(routineAdapter);
 
                     routineAdapter.notifyDataSetChanged();
+
+                    open.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            closedCardView.setVisibility(View.INVISIBLE);
+                            openCardView.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            model.setIsClosedCardView(true);
+                            closedCardView.setVisibility(View.VISIBLE);
+                            openCardView.setVisibility(View.INVISIBLE);
+                        }
+                    });
+
+                   /* main.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                    main.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
+                    titleAdapter = new TitleAdapter( data, requireActivity(), rvI);
+                    main.setAdapter(titleAdapter);
+
+                    titleAdapter.notifyDataSetChanged();*/
 
                     open.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -249,7 +277,6 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
 
         }catch (NullPointerException e){
             Log.e("Load/Update", "Error: Load/Update..try again later");
-
         }
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -257,17 +284,20 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
             public void onClick(View v) {
 
                 String path = "CustomRoutines";
-                String childPath = routineName.getText().toString();
+                String childPath = routineName.getText().toString().trim();
+
                 PoseModel poseModel = new PoseModel();
                 poseModel.setRoutineName(childPath);
 
                 Map<String, Object> convertedObject = new HashMap<>();
 
-                int index = 0;
+
                 for(PoseModel item : newCustomList){
-                    String key = item.getEnglish_name();
+
+                    item.setRoutineName(childPath);
+                    String key = "Pose: "+ item.getEnglish_name();
                     convertedObject.put(key, item);
-                    index++;
+
                 }
                 // Make sure user adds title to store routine properly.
                 if(!childPath.isEmpty() || childPath == "\n") {

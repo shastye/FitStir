@@ -10,49 +10,29 @@
     android:orientation="horizontal"
     >
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/option_tabs"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="50dp"
-        android:elevation="5dp"
-        android:visibility="invisible"
-        />
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/option_tabs"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:elevation="5dp"
-        />
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/option_tabs"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:elevation="5dp"
-
-        />
 
     <ImageView
-        android:id="@+id/recents_Tab"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="-190dp"
-        android:background="@drawable/recent"
+        android:background="@drawable/option_tabs"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="50dp"
         android:elevation="5dp"
-        android:clickable="true"
-        android:visibility="invisible"
         />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/option_tabs"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="50dp"
+        android:elevation="5dp"
+        />
+
     <ImageView
         android:id="@+id/custom_Tab"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="-130dp"
         android:background="@drawable/custom"
         android:layout_marginTop="50dp"
         android:elevation="5dp"
@@ -62,29 +42,20 @@
         android:id="@+id/favorite_Tab"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_marginStart="55.5dp"
+        android:layout_marginStart="75.5dp"
         android:background="@drawable/baseline_favorite_border_24"
         android:layout_marginTop="55dp"
         android:elevation="5dp"
         android:clickable="true"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recents"
-        android:visibility="invisible"
-        android:textSize="11sp"
-        android:textColor="@color/black"
-        android:layout_marginStart="-190dp"
-        android:layout_marginTop="35dp"
-        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Custom"
         android:textSize="11sp"
         android:textColor="@color/black"
-        android:layout_marginStart="38.5dp"
+        android:layout_marginStart="-130.5dp"
         android:layout_marginTop="35dp"
         />
     <TextView
@@ -93,7 +64,7 @@
         android:text="Favorites"
         android:textSize="11sp"
         android:textColor="@color/black"
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="59dp"
         android:layout_marginTop="35dp"
         />
 
@@ -101,18 +72,17 @@
         android:id="@+id/quickStart"
         android:layout_width="300dp"
         android:layout_height="175dp"
-        android:layout_marginStart="-240dp"
-        android:layout_marginTop="-165dp"
+        android:layout_marginStart="-225dp"
+        android:layout_marginTop="115dp"
         app:cardCornerRadius="35dp"
         app:cardElevation="5dp"
-        android:clickable="true"
-        android:layout_gravity="center">
+        android:clickable="true">
 
         <ImageView
             android:layout_width="340dp"
             android:layout_height="175dp"
             android:background="@drawable/quick_start"
-            android:layout_marginStart="-20dp"
+            android:layout_marginStart="-10dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -137,7 +107,7 @@
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-350dp"
+        android:layout_marginStart="-370dp"
         android:layout_marginTop="340dp"
         >
         <LinearLayout
@@ -255,8 +225,8 @@
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
-       android:layout_marginStart="-400dp"
+        android:layout_marginTop="520dp"
+       android:layout_marginStart="-410dp"
 
         >
 
@@ -274,8 +244,8 @@
                 app:cardElevation="5dp">
 
                 <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="145dp"
+                    android:layout_width="205dp"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="-20dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/learning" />
