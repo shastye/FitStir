@@ -26,6 +26,7 @@ import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.CustomsAdapter;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.CustomsAdapterView;
+import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.ICustoms;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.PoseAdapter;
 import com.fitstir.fitstirapp.ui.yoga.utilitesYoga.TitleAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomYogaFragment extends Fragment implements CustomInterface {
+public class CustomYogaFragment extends Fragment implements CustomInterface, ICustoms {
 
     //region Variables
     private EditText routineName;
@@ -48,10 +49,11 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
     private ImageButton addTo, addTo_RV, subtract_RV;
     private RecyclerView customList, customWindowView, expandableCardView_RV, main;
     private CustomInterface rvI;
+    private ICustoms interface2;
     private View dialog;
     private CardView listCardView, windowCardView, openCardView, closedCardView;
     private FragmentCustomYogaBinding binding;
-    private ArrayList<PoseModel> yogaPoseList,newCustomList, retrievedRoutineList, tempList, routineFolderList ;
+    private ArrayList<PoseModel> yogaPoseList,newCustomList, retrievedRoutineList, tempList, routineFolderList, poseList ;
     private CustomsAdapter adapter;
     private CustomsAdapterView adapterWindow;
     private PoseAdapter routineAdapter;
@@ -98,13 +100,15 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
         model = new PoseModel();
         routineFolderList = new ArrayList<>();
         rvI = this;
+        interface2 = this;
+
 
         //initial view logic
         listCardView.setVisibility(View.INVISIBLE);
         windowCardView.setVisibility(View.INVISIBLE);
         dialog.setVisibility(View.INVISIBLE);
-        openCardView.setVisibility(View.INVISIBLE);
-        closedCardView.setVisibility(View.INVISIBLE);
+        //openCardView.setVisibility(View.INVISIBLE);
+        //closedCardView.setVisibility(View.INVISIBLE);
 //endregion
 
         // Get data before option selection from each category
@@ -131,7 +135,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                     {
                         String routineName = routineSnapshot.getKey();
                         //model.setRoutineName(rName);
-                        ArrayList<PoseModel> poseList = new ArrayList<>();
+                          poseList = new ArrayList<>();
                         //Iterable<DataSnapshot> poseSnapshots = routineSnapshot.getChildren();
                       for(DataSnapshot poseSnapshot : routineSnapshot.getChildren()){
                           PoseModel retrievedData =  poseSnapshot.getValue(PoseModel.class);
@@ -142,14 +146,14 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                       }
                      folderPoseMap.put(routineName, poseList);
                         if(!folderPoseMap.isEmpty()){
-                            closedCardView.setVisibility(View.VISIBLE);
+                           closedCardView.setVisibility(View.VISIBLE);
                         }
                     }
 
                     //parent recyclerView
                     main.setLayoutManager(new LinearLayoutManager(requireActivity()));
                     main.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
-                    folderAdapter = new TitleAdapter( new HashMap<>(), rvI, requireActivity());
+                    folderAdapter = new TitleAdapter( new HashMap<>(), interface2, requireActivity());
                     folderAdapter.setFolderPoseMap(folderPoseMap);
                     main.setAdapter(folderAdapter);
                     folderAdapter.notifyDataSetChanged();
@@ -157,26 +161,10 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                     //child recyclerView
                     expandableCardView_RV.setLayoutManager(new LinearLayoutManager(requireActivity()));
                     expandableCardView_RV.addItemDecoration(new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL));
-                    routineAdapter = new PoseAdapter( new ArrayList<>(), requireActivity(), rvI);
+                    routineAdapter = new PoseAdapter( poseList, requireActivity());
                     expandableCardView_RV.setAdapter(routineAdapter);
                     routineAdapter.notifyDataSetChanged();
 
-                    open.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            closedCardView.setVisibility(View.INVISIBLE);
-                            openCardView.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    close.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            model.setIsClosedCardView(true);
-                            closedCardView.setVisibility(View.VISIBLE);
-                            openCardView.setVisibility(View.INVISIBLE);
-                        }
-                    });
                 }
                 else{
                     dialog.setVisibility(View.VISIBLE);
@@ -303,15 +291,20 @@ public class CustomYogaFragment extends Fragment implements CustomInterface {
                 }
             }
         });
+    }
 
+    @Override
+    public void customOnItemClick(int position) {
         if(!folderPoseMap.isEmpty()){
             ArrayList<String> routineNames = new ArrayList<>(folderPoseMap.keySet());
             String clickedRoutine = routineNames.get(position);
 
             ArrayList<PoseModel> posesFromRoutine = (ArrayList<PoseModel>) folderPoseMap.get(clickedRoutine);
+
             routineAdapter.setPoseList(posesFromRoutine);
+            model.setRoutineSize(posesFromRoutine.size());
+            routineAdapter.notifyDataSetChanged();
+
         }
-
-
     }
 }

@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.yoga.utilitesYoga;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +24,11 @@ public class PoseAdapter extends RecyclerView.Adapter<PoseAdapter.ViewHolder> {
 
     private ArrayList<PoseModel> list;
     private Context context;
-    private final CustomInterface rvInterface;
 
-    public PoseAdapter(ArrayList<PoseModel> list, Context context, CustomInterface rvInterface) {
+
+    public PoseAdapter(ArrayList<PoseModel> list, Context context) {
         this.list = list;
         this.context = context;
-        this.rvInterface = rvInterface;
     }
 
     @NonNull
@@ -46,6 +46,7 @@ public class PoseAdapter extends RecyclerView.Adapter<PoseAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull PoseAdapter.ViewHolder holder, int position) {
         PoseModel data = list.get(position);
 
+        Log.d("What is the view doing", "Look"+holder);
         String video = data.getUrl_Vid();
         holder.name.setText(data.getEnglish_name());
         Glide.with(context)
