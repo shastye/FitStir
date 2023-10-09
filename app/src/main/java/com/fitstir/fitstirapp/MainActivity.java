@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 import androidx.core.view.MenuProvider;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -30,6 +31,7 @@ import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.CheckRecentRun;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.IOnBackPressed;
 import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity  {
                             pageID = R.id.navigation_settings;
                             break;
                         case R.id.log_out_item:
+                            pageID = R.id.log_out_item;
                             signOut();
                             break;
                         default:
@@ -115,8 +118,23 @@ public class MainActivity extends AppCompatActivity  {
                     }
 
                     try {
-                            settingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());;
+                        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).getChildFragmentManager().getPrimaryNavigationFragment();
+                        if (!(fragment instanceof IOnBackPressed)) {
+                            settingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());
                             navController.navigate(pageID);
+                        } else {
+                            switch (pageID) {
+                                case R.id.navigation_profile:
+                                case R.id.navigation_settings:
+                                    navController.navigate(pageID);
+                                    break;
+                                case R.id.log_out_item:
+                                    signOut();
+                                    break;
+                                default:
+                                    return ((IOnBackPressed) fragment).onBackPressed();
+                            }
+                        }
                     } catch (IllegalArgumentException e) {
                         Log.e("Back up error", e.getMessage());
                     }
@@ -167,10 +185,15 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public boolean onSupportNavigateUp() {
-        return Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigateUp();
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).getChildFragmentManager().getPrimaryNavigationFragment();
+        if (!(fragment instanceof IOnBackPressed)) {
+            return Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigateUp();
+        } else {
+            return ((IOnBackPressed) fragment).onBackPressed();
+        }
     }
 
-    private void signOut() {
+    public void signOut() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

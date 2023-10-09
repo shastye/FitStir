@@ -57,9 +57,6 @@ public class WeightLossFragment extends Fragment {
         binding = FragmentWeightLossBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textWeightLoss;
-        //healthViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
         // Addition Text Here
 
         decimalFormat = new DecimalFormat("####.##");

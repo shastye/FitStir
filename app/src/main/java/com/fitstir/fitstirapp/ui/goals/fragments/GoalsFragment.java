@@ -55,9 +55,6 @@ public class GoalsFragment extends Fragment {
         binding = FragmentGoalsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
-        //final TextView textView = binding.textGoals;
-        //goalsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
         // Addition Text Here
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();

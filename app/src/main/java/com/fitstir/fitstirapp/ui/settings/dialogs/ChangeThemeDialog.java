@@ -1,43 +1,39 @@
 package com.fitstir.fitstirapp.ui.settings.dialogs;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Spinner;
 
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.DialogChangeThemeBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.IBasicDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
-
-import java.util.Objects;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ChangeThemeDialog extends IBasicDialog {
-    private int theme, range, interval, unit;
-    private View root;
-    private void setRoot(View view) { root = view; }
+    private int theme, primaryColor, primaryColorVariant, secondaryColor, secondaryColorVariant;
+    private String userID;
     private SettingsViewModel settingsViewModel;
 
     public ChangeThemeDialog() { }
 
-    public static ChangeThemeDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID, int themeID, int rangeID, int intervalID, int unitID, View root) {
+    public static ChangeThemeDialog newInstance(int layoutID, int acceptButtonID, int cancelButtonID,
+                                                int themeID, int primaryColor, int primaryColorVariant,
+                                                int secondaryColor, int secondaryColorVariant, String userID) {
         ChangeThemeDialog  frag = new ChangeThemeDialog();
 
         Bundle args = new Bundle();
         args.putInt("themeID", themeID);
-        args.putInt("rangeID", rangeID);
-        args.putInt("intervalID", intervalID);
-        args.putInt("unitID", unitID);
+        args.putInt("primaryColor", primaryColor);
+        args.putInt("primaryColorVariant", primaryColorVariant);
+        args.putInt("secondaryColor", secondaryColor);
+        args.putInt("secondaryColorVariant", secondaryColorVariant);
+        args.putString("userID", userID);
         args.putInt("layoutID", layoutID);
         args.putInt("acceptButtonID", acceptButtonID);
         args.putInt("cancelButtonID", cancelButtonID);
         frag.setArguments(args);
-        frag.setRoot(root);
 
         return frag;
     }
@@ -51,62 +47,39 @@ public class ChangeThemeDialog extends IBasicDialog {
 
         assert getArguments() != null;
         theme = getArguments().getInt("themeID");
-        range = getArguments().getInt("rangeID");
-        interval = getArguments().getInt("intervalID");
-        unit = getArguments().getInt("unitID");
+        primaryColor = getArguments().getInt("primaryColor");
+        primaryColorVariant = getArguments().getInt("primaryColorVariant");
+        secondaryColor = getArguments().getInt("secondaryColor");
+        secondaryColorVariant = getArguments().getInt("secondaryColorVariant");
+        userID = getArguments().getString("userID");
 
         assert getView() != null;
-        ImageView primaryColor = binding.primaryColorImage;
-        ImageView primaryVariantColor = binding.primaryVariantImage;
-        ImageView secondaryColor = binding.secondaryColorImage;
-        ImageView secondaryVariantColor = binding.secondaryVariantImage;
 
-        int[] colors = new int[0];
-        switch (theme) {
-            case 0:
-                colors = new int[]{
-                        R.color.soft_blue,
-                        R.color.fuchsia,
-                        R.color.forest,
-                        R.color.lime
-                };
-                break;
-            case 1:
-                colors = new int[]{
-                        R.color.black,
-                        R.color.purple_700,
-                        R.color.purple_200,
-                        R.color.teal_200
-                };
-                break;
-        }
-
-        Drawable background = ContextCompat.getDrawable(Objects.requireNonNull(requireActivity()), R.drawable.change_dialog_fragment_theme_color_background);
-        assert background != null;
-        background.setTint(ContextCompat.getColor(requireActivity(), colors[0]));
-        primaryColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(requireActivity(), colors[1]));
-        primaryVariantColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(requireActivity(), colors[2]));
-        secondaryColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
-        background.setTint(ContextCompat.getColor(requireActivity(), colors[3]));
-        secondaryVariantColor.setImageDrawable(background.getConstantState().newDrawable().mutate());
+        binding.primaryColorImage.setBackgroundColor(primaryColor);
+        binding.primaryVariantImage.setBackgroundColor(primaryColorVariant);
+        binding.secondaryColorImage.setBackgroundColor(secondaryColor);
+        binding.secondaryVariantImage.setBackgroundColor(secondaryColorVariant);
     }
 
     @Override
     public void onAccept() {
         settingsViewModel.setThemeID(theme);
-        settingsViewModel.setRangeID(range);
-        settingsViewModel.setIntervalID(interval);
-        settingsViewModel.setUnitID(unit);
+
+        UserProfileData user = settingsViewModel.getThisUser().getValue();
+        user.setThemeID(theme);
+        settingsViewModel.setThisUser(user);
+
+        FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(userID)
+                .child("themeID")
+                .setValue(theme);
 
         ResetTheme.changeToTheme(requireActivity(), theme);
     }
 
     @Override
     public void onCancel() {
-        ((Spinner) root.findViewById(R.id.themeID_spinner)).setSelection(settingsViewModel.getThemeID().getValue());
 
-        dismiss();
     }
 }

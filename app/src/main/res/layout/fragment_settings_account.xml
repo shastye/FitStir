@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.settings.fragments.SettingsAccountFragment">
+
+    <LinearLayout
+        android:id="@+id/user_id_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_button"
+        android:clickable="false"
+        android:backgroundTint="@color/off_white"
+        android:layout_margin="20dp"
+        android:padding="20dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="User ID: "/>
+
+        <TextView
+            android:id="@+id/user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text=""/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.00"
+        android:layout_marginTop="50dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <LinearLayout
+            android:id="@+id/settings_topics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_a80_section_background"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+                android:id="@+id/password_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                app:title0="Change Password"
+                app:description="Change password and stay logged in"
+                app:image="@drawable/ic_person_black_200dp"/>
+
+            <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+                android:id="@+id/delete_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                app:title0="Delete Application Data"
+                app:description="Delete all downloaded application data"
+                app:image="@drawable/ic_person_black_200dp"/>
+
+            <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+                android:id="@+id/deactivate_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                app:title0="Deactivate Account"
+                app:description="Delete all saved user data and delete account"
+                app:image="@drawable/ic_person_black_200dp"/>
+
+            <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+                android:id="@+id/hard_reset_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                app:title0="Hard Reset"
+                app:description="Delete application data AND deactivate account"
+                app:image="@drawable/ic_person_black_200dp"/>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

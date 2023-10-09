@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.settings.fragments.SettingsMainFragment">
+
+    <LinearLayout
+        android:id="@+id/user_id_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_button"
+        android:clickable="false"
+        android:backgroundTint="@color/off_white"
+        android:layout_margin="20dp"
+        android:padding="20dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="User ID: "/>
+
+        <TextView
+            android:id="@+id/user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="1234567890"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settings_topics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_a80_section_background"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+            android:id="@+id/profile_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            app:title0="Profile"
+            app:description="Name, weight, height..."
+            app:image="@drawable/ic_person_black_200dp"/>
+
+        <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+            android:id="@+id/general_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            app:title0="General"
+            app:description="Theme, units..."
+            app:image="@drawable/ic_pencil_black_200dp"/>
+
+        <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+            android:id="@+id/goals_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            app:title0="Goals"
+            app:description="Range..."
+            app:image="@drawable/ic_goals_black_200dp"/>
+
+        <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+            android:id="@+id/account_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            app:title0="Account"
+            app:description="Change password, delete account..."
+            app:image="@drawable/ic_age_black_200dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
