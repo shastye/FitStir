@@ -65,7 +65,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0="Change Password"
                 app:description="Change password and stay logged in"
-                app:image="@drawable/ic_person_black_200dp"/>
+                app:image="@drawable/ic_password_black_200dp"/>
 
             <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
                 android:id="@+id/delete_view"
@@ -74,7 +74,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0="Delete Application Data"
                 app:description="Delete all downloaded application data"
-                app:image="@drawable/ic_person_black_200dp"/>
+                app:image="@drawable/ic_application_black_200dp"/>
 
             <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
                 android:id="@+id/deactivate_view"
@@ -83,7 +83,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0="Deactivate Account"
                 app:description="Delete all saved user data and delete account"
-                app:image="@drawable/ic_person_black_200dp"/>
+                app:image="@drawable/ic_account_black_200dp"/>
 
             <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
                 android:id="@+id/hard_reset_view"
@@ -92,7 +92,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0="Hard Reset"
                 app:description="Delete application data AND deactivate account"
-                app:image="@drawable/ic_person_black_200dp"/>
+                app:image="@drawable/ic_reset_black_200dp"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

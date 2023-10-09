@@ -127,8 +127,8 @@
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
                 app:title1="Sex"
-                app:image1="@drawable/ic_person_black_200dp"
-                app:image2="@drawable/ic_person_black_200dp"
+                app:image1="@drawable/ic_female_black_200"
+                app:image2="@drawable/ic_male_black_200"
                 app:option1="Female"
                 app:option2="Male"
                 app:reference1="sex" />
@@ -150,7 +150,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0=""
                 app:description="Age"
-                app:image="@drawable/ic_pencil_black_200dp"
+                app:image="@drawable/ic_age_black_200dp"
                 app:reference="age" />
 
             <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
@@ -160,7 +160,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0=""
                 app:description="Height"
-                app:image="@drawable/ic_goals_black_200dp"
+                app:image="@drawable/ic_height_black_200dp"
                 app:reference="height" />
 
             <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
@@ -170,7 +170,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0=""
                 app:description="Weight"
-                app:image="@drawable/ic_age_black_200dp"
+                app:image="@drawable/ic_weight_black_200dp"
                 app:reference="weight" />
 
             <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
@@ -190,7 +190,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0=""
                 app:description="Weight Goal"
-                app:image="@drawable/ic_age_black_200dp"
+                app:image="@drawable/ic_email_black_200dp"
                 app:reference="goal_weight" />
         </LinearLayout>
     </ScrollView>
