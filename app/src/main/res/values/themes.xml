@@ -25,6 +25,7 @@
 
     <!-- Base application theme. -->
     <style name="Theme1" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:name">Default Theme</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/soft_blue</item>
         <item name="colorPrimaryVariant">@color/fuchsia</item>
@@ -45,6 +46,7 @@
 
     <!-- Secondary application theme. -->
     <style name="Theme2" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:name">Dark Theme</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -82,10 +84,6 @@
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">36dp</item>
         <item name="cornerSizeBottomLeft">36dp</item>
-    </style>
-
-    <style name="ColorOnPrimaryProgressBarColor">
-        <item name="colorAccent">?attr/colorOnPrimary</item>
     </style>
 
 </resources>

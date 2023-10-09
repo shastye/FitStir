@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ThemeColors">
+        <attr name="android:name" />
+        <attr name="colorPrimary" />
+        <attr name="colorPrimaryVariant" />
+        <attr name="colorSecondary" />
+        <attr name="colorSecondaryVariant" />
+    </declare-styleable>
+
+    <declare-styleable name="SettingsTopicView">
+        <attr name="image" format="reference" />
+        <attr name="title0" format="string" />
+        <attr name="description" format="string" />
+        <attr name="reference" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SettingsTwoOptionItemView">
+        <attr name="image1" format="reference" />
+        <attr name="image2" format="reference" />
+        <attr name="title1" format="string" />
+        <attr name="option1" format="string" />
+        <attr name="option2" format="string" />
+        <attr name="reference1" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SettingsThemeItemView">
+        <attr name="primarycolor" format="color" />
+        <attr name="primaryvariantcolor" format="color" />
+        <attr name="secondarycolor" format="color" />
+        <attr name="secondaryvariantcolor" format="color" />
+        <attr name="title2" format="string" />
+        <attr name="reference2" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SettingsRadioGroupView">
+        <attr name="title3" format="string" />
+        <attr name="description3" format="string" />
+        <attr name="reference3" format="string" />
+    </declare-styleable>
+</resources>

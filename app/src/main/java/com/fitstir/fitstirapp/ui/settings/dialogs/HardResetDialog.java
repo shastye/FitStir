@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.IGenericAlertDialog;
 
@@ -46,6 +47,8 @@ public class HardResetDialog extends IGenericAlertDialog {
         settingsViewModel.clearApplicationData(requireActivity());
         settingsViewModel.deleteFromDatabase();
         settingsViewModel.deleteUser();
+
+        ((MainActivity) requireActivity()).signOut();
     }
 
     @Override
