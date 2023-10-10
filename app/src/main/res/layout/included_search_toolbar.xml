@@ -48,7 +48,6 @@
                     android:id="@+id/toolbar_search_rl"
                     android:layout_width="140dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/spinner_outline"
                     android:layout_toStartOf="@id/toolbar_filter_icon"
                     android:orientation="horizontal">
 
@@ -56,25 +55,10 @@
                         android:id="@+id/toolbar_search_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_alignEnd="@+id/dropdown_button"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="20dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="@string/app_name"
-                        android:spinnerMode="dropdown"
-                        android:textAlignment="textStart" />
-
-                    <ImageView
-                        android:id="@+id/dropdown_button"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="20dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/spinner_dropdown_button"
-                        app:tint="?attr/colorPrimaryVariant"/>
+                        android:contentDescription="@string/app_name" />
                 </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView

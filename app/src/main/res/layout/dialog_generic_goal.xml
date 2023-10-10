@@ -52,8 +52,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="70dp"/>
 
-    <RelativeLayout
-        android:background="@drawable/spinner_outline"
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/dialog_create_goal_type_spinner"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:layout_marginTop="60dp"
@@ -63,32 +63,7 @@
         app:layout_constraintHorizontal_bias="1.00"
         app:layout_constraintStart_toStartOf="@id/dialog_background"
         app:layout_constraintTop_toTopOf="@id/dialog_background"
-        app:layout_constraintVertical_bias="0.00">
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/dialog_create_goal_type_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignEnd="@+id/dropdown_button"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/app_name"
-            android:spinnerMode="dropdown"
-            android:textAlignment="textStart" />
-
-        <ImageView
-            android:id="@+id/dropdown_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
-            android:layout_gravity="center"
-            android:src="@drawable/spinner_dropdown_button"
-            app:tint="?attr/colorPrimaryVariant"/>
-    </RelativeLayout>
+        app:layout_constraintVertical_bias="0.00" />
 
     <TextView
         android:layout_width="wrap_content"

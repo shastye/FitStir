@@ -8,16 +8,21 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.fitstir.fitstirapp.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
@@ -31,6 +36,9 @@ public class Methods {
     @NonNull
     public static Spinner getSpinnerWithAdapter(@NonNull Activity activity, @NonNull View root, int spinnerID, String[] spinnerOptions) {
         Spinner spinner = (Spinner) root.findViewById(spinnerID);
+        spinner.setBackground(AppCompatResources.getDrawable(root.getContext(), R.drawable.spinner_outline));
+        spinner.setPopupBackgroundDrawable(AppCompatResources.getDrawable(root.getContext(), R.drawable.spinner_custom));
+
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(activity, R.layout.spinner_text, spinnerOptions);
         langAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spinner.setAdapter(langAdapter);

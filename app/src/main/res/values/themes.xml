@@ -13,14 +13,6 @@
         <item name="itemRippleColor">@color/bnv_ripple</item>
     </style>
 
-    <!-- Spinner Style settings -->
-    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
-
-    </style>
-
-    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-
-    </style>
 
 
     <!-- Base application theme. -->

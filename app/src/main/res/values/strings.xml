@@ -22,5 +22,22 @@
         <item>Last 12 Months</item>
     </string-array>
 
+    <string-array name="section_list">
+        <item>Workouts (Main)</item>
+        <item>Run Club</item>
+        <item>Upper Body</item>
+        <item>Lower Body</item>
+        <item>Weight Lifting</item>
+        <item>Circuit Workouts</item>
+        <item>Yoga</item>
+        <item>Health (Main)</item>
+        <item>Calorie Tracker</item>
+        <item>Weight Loss</item>
+        <item>Recipes</item>
+        <item>Find Dietician</item>
+        <item>Diary</item>
+        <item>Goals (Main)</item>
+    </string-array>
+
     <string name="web_client_id">1016436046945-po8mbu7gef11fbbtpnkveu94sb9ns950.apps.googleusercontent.com</string>
 </resources>
