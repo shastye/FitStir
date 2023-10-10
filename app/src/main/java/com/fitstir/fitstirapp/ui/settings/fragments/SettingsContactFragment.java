@@ -52,7 +52,7 @@ public class SettingsContactFragment extends Fragment {
         binding.userId.setText(uid);
 
         String[] sectionArray = getResources().getStringArray(R.array.section_list);
-        Spinner sectionSpinner = Methods.getSpinnerWithAdapter(requireActivity(), root, binding.sectionSpinner.getId(), sectionArray);
+        Spinner sectionSpinner = Methods.setSpinnerAdapter(requireContext(), binding.sectionSpinner, sectionArray);
 
         binding.sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

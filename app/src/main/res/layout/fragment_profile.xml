@@ -120,11 +120,11 @@
 
             <ImageView
                 android:id="@+id/age_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/ic_age_black_200dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="68dp" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="77dp" />
 
             <TextView
                 android:id="@+id/text_age"
@@ -166,11 +166,11 @@
 
             <ImageView
                 android:id="@+id/weight_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/ic_weight_black_200dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="159dp" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="179dp" />
 
             <TextView
                 android:id="@+id/text_weight"

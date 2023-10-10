@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.fitstir.fitstirapp.R;
 
@@ -34,12 +35,11 @@ import java.util.concurrent.Future;
 
 public class Methods {
     @NonNull
-    public static Spinner getSpinnerWithAdapter(@NonNull Activity activity, @NonNull View root, int spinnerID, String[] spinnerOptions) {
-        Spinner spinner = (Spinner) root.findViewById(spinnerID);
-        spinner.setBackground(AppCompatResources.getDrawable(root.getContext(), R.drawable.spinner_outline));
-        spinner.setPopupBackgroundDrawable(AppCompatResources.getDrawable(root.getContext(), R.drawable.spinner_custom));
+    public static Spinner setSpinnerAdapter(@NonNull Context context, @NonNull AppCompatSpinner spinner, String[] spinnerOptions) {
+        spinner.setBackground(AppCompatResources.getDrawable(context, R.drawable.spinner_outline));
+        spinner.setPopupBackgroundDrawable(AppCompatResources.getDrawable(context, R.drawable.spinner_custom));
 
-        ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(activity, R.layout.spinner_text, spinnerOptions);
+        ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(context, R.layout.spinner_text, spinnerOptions);
         langAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spinner.setAdapter(langAdapter);
 

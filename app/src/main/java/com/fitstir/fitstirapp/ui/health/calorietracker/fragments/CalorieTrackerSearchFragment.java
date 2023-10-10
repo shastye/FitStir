@@ -227,7 +227,7 @@ public class CalorieTrackerSearchFragment extends Fragment {
         for (int i = 0; i < searchOptions.length; i++) {
             searchOptionsStrings[i] = searchOptions[i].getSpinnerTitle();
         }
-        searchOptionsSpinner = (AppCompatSpinner) Methods.getSpinnerWithAdapter(requireActivity(), root, R.id.toolbar_search_spinner, searchOptionsStrings);
+        searchOptionsSpinner = (AppCompatSpinner) Methods.setSpinnerAdapter(requireContext(), root.findViewById(R.id.toolbar_search_spinner), searchOptionsStrings);
         searchOptionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -284,25 +284,25 @@ public class CalorieTrackerSearchFragment extends Fragment {
                     for (int i = 0; i < DietOptions.values().length; i++) {
                         dietOptions[i] = DietOptions.values()[i].getSpinnerTitle();
                     }
-                    Spinner diet = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.diet_spinner, dietOptions);
+                    Spinner diet = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.diet_spinner), dietOptions);
 
                     String[] healthOptions = new String[HealthOptions.values().length];
                     for (int i = 0; i < HealthOptions.values().length; i++) {
                         healthOptions[i] = HealthOptions.values()[i].getSpinnerTitle();
                     }
-                    Spinner health = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.health_spinner, healthOptions);
+                    Spinner health = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.health_spinner), healthOptions);
 
                     String[] cuisineOptions = new String[CuisineType.values().length];
                     for (int i = 0; i < CuisineType.values().length; i++) {
                         cuisineOptions[i] = CuisineType.values()[i].getSpinnerTitle();
                     }
-                    Spinner cuisine = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.cuisine_spinner, cuisineOptions);
+                    Spinner cuisine = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.cuisine_spinner), cuisineOptions);
 
                     String[] mealOptions = new String[MealType.values().length];
                     for (int i = 0; i < MealType.values().length; i++) {
                         mealOptions[i] = MealType.values()[i].getSpinnerTitle();
                     }
-                    Spinner meal = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.meal_spinner, mealOptions);
+                    Spinner meal = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.meal_spinner), mealOptions);
 
 
 
@@ -354,19 +354,19 @@ public class CalorieTrackerSearchFragment extends Fragment {
                     for (int i = 0; i < HealthOptions.values().length; i++) {
                         healthOptions[i] = HealthOptions.values()[i].getSpinnerTitle();
                     }
-                    Spinner health = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.health_spinner, healthOptions);
+                    Spinner health = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.health_spinner), healthOptions);
 
                     String[] nutritionOption = new String[NutritionType.values().length];
                     for (int i = 0; i < NutritionType.values().length; i++) {
                         nutritionOption[i] = NutritionType.values()[i].getSpinnerTitle();
                     }
-                    Spinner nutrition = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.nutrition_spinner, nutritionOption);
+                    Spinner nutrition = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.nutrition_spinner), nutritionOption);
 
                     String[] categoryOptions = new String[CategoryOptions.values().length];
                     for (int i = 0; i < CategoryOptions.values().length; i++) {
                         categoryOptions[i] = CategoryOptions.values()[i].getSpinnerTitle();
                     }
-                    Spinner category = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.category_spinner, categoryOptions);
+                    Spinner category = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.category_spinner), categoryOptions);
 
 
 
@@ -792,7 +792,7 @@ public class CalorieTrackerSearchFragment extends Fragment {
                                         currentDayPart = i;
                                     }
                                 }
-                                Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
+                                Spinner mealType = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.dialog_meal_type_spinner), spinnerOptions);
                                 mealType.setSelection(currentDayPart);
 
                                 int index = response.getResultID().indexOf("&");

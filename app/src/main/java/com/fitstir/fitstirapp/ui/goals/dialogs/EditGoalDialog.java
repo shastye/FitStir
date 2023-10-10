@@ -54,7 +54,7 @@ public class EditGoalDialog extends IGenericGoalDialog {
         for (int i = 0; i < typeEnumArray.length; i++) {
             spinnerOptions[i] = typeEnumArray[i].getSpinnerTitle();
         }
-        Spinner typeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), getView(), binding.dialogCreateGoalTypeSpinner.getId(), spinnerOptions);
+        Spinner typeSpinner = Methods.setSpinnerAdapter(requireContext(), binding.dialogCreateGoalTypeSpinner, spinnerOptions);
         typeSpinner.setSelection(goalsViewModel.getClickedGoal().getValue().getType().getValue());
         typeSpinner.setEnabled(false);
 
