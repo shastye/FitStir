@@ -37,6 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Breakfast"
+                    android:textStyle="italic"
                     android:textColor="?attr/colorOnPrimary"
                     android:textSize="24sp" />
 

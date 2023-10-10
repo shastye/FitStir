@@ -39,6 +39,7 @@
                     android:layout_gravity="center"
                     android:text="Looks like you don't have any tasks set!\n\nLet's fix that!"
                     android:textAlignment="center"
+                    android:textStyle="bold"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="24sp" />
 
@@ -48,6 +49,7 @@
                     android:layout_gravity="start"
                     android:text="Choose up to 10 tasks that\nyou want to complete daily:"
                     android:textAlignment="textStart"
+                    android:textStyle="italic"
                     android:textColor="@color/black"
                     android:textSize="24sp" />
 

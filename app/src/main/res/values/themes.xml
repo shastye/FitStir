@@ -34,6 +34,7 @@
         <item name="bottomNavigationStyle">@style/BottomNavigation</item>
         <item name="android:navigationBarColor">?attr/colorSecondary</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/family</item>
     </style>
 
     <!-- Secondary application theme. -->
@@ -55,6 +56,7 @@
         <item name="bottomNavigationStyle">@style/BottomNavigation</item>
         <item name="android:navigationBarColor">?attr/colorSecondary</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/family</item>
     </style>
 
     <style name="RoundedTop" parent="">

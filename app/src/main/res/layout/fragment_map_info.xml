@@ -89,6 +89,7 @@
                     android:layout_marginHorizontal="0dp"
                     android:layout_alignParentStart="true"
                     android:text="Attributions: "
+                    android:textStyle="italic"
                     android:layout_centerVertical="true"
                     android:textSize="12sp"
                     android:textColor="?attr/colorSecondary"/>
