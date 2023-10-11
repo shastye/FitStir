@@ -38,20 +38,15 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private DatabaseReference reference;
-    private FirebaseAuth auth;
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
+    private SettingsViewModel settingsViewModel;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textUserIdProfile;
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Add additions here
 
@@ -67,30 +62,16 @@ public class ProfileFragment extends Fragment {
                 UserProfileData value = snapshot.getValue(UserProfileData.class);
                 settingsViewModel.setThisUser(value);
 
-                settingsViewModel.setName(value.getFullname());
-                settingsViewModel.setAge(value.getAge());
-                settingsViewModel.setHeightInFeet(value.getHeight_ft());
-                settingsViewModel.setHeightInInches(value.getHeight_in());
-                settingsViewModel.setWeight(value.get_Weight());
-                settingsViewModel.setEmail(value.getEmail());
-
-                TextView name = binding.textName;
-                TextView age = binding.textAge;
-                TextView height_ft = binding.textHeightFt;
-                TextView height_in = binding.textHeightIn;
-                TextView weight = binding.textWeight;
-                TextView email = binding.textEmail;
-
-                name.setText(settingsViewModel.getName().getValue());
-                String tAge = settingsViewModel.getAge().getValue() + " years old";
-                age.setText(tAge);
-                String tHeightFeet = settingsViewModel.getHeightInFeet().getValue() + " feet ";
-                height_ft.setText(tHeightFeet);
-                String tHeightInches = settingsViewModel.getHeightInInches().getValue() + " inches";
-                height_in.setText(tHeightInches);
-                String tWeight = settingsViewModel.getWeight().getValue() + " lbs";
-                weight.setText(tWeight);
-                email.setText(settingsViewModel.getEmail().getValue());
+                binding.textName.setText(value.getFullname());
+                String tAge = value.getAge() + " years old";
+                binding.textAge.setText(tAge);
+                String tHeightFeet = value.getHeight_ft() + " feet ";
+                binding.textHeightFt.setText(tHeightFeet);
+                String tHeightInches = value.getHeight_in() + " inches";
+                binding.textHeightIn.setText(tHeightInches);
+                String tWeight = value.get_Weight() + " lbs";
+                binding.textWeight.setText(tWeight);
+                binding.textEmail.setText(value.getEmail());
             }
 
             @Override
@@ -105,20 +86,17 @@ public class ProfileFragment extends Fragment {
 
         try{
             //access firebase storage for profile pic
-            storage = FirebaseStorage.getInstance();
-            storageReference = storage.getReference();
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
 
-            auth = FirebaseAuth.getInstance();
+            FirebaseAuth auth = FirebaseAuth.getInstance();
             String user = auth.getCurrentUser().getUid();
             StorageReference photo = storageReference.child("images/"+user);
             photo.getBytes(Constants.MEGA_BYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                   settingsViewModel.setAvatar(bitmap);
-                   ImageView profileImage = binding.profileImage;
-                   profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
-
+                   binding.profileImage.setImageBitmap(bitmap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -126,51 +104,8 @@ public class ProfileFragment extends Fragment {
 
                 }
             });
-
-
-
-            /*reference =  FirebaseDatabase.getInstance().getReference("Users");
-            reference.child(user).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-
-                    if(task.isSuccessful())
-                    {
-                        if(task.getResult().exists())
-                        {
-                            DataSnapshot snapshot = task.getResult();
-                            String fullName = String.valueOf(snapshot.child("fullname").getValue());
-                            String email = String.valueOf(snapshot.child("email").getValue());
-                            String age = String.valueOf(snapshot.child("age").getValue());
-                            String height_ft = String.valueOf(snapshot.child("height_ft").getValue());
-                            String height_in = String.valueOf(snapshot.child("height_in").getValue());
-                            String weight = String.valueOf(snapshot.child("_Weight").getValue());
-
-
-                            settingsViewModel.setName(fullName);
-                            settingsViewModel.setEmail(email);
-                            settingsViewModel.setAge(Integer.parseInt(age));
-                            settingsViewModel.setHeightInFeet(Integer.parseInt(height_ft));
-                            settingsViewModel.setHeightInInches(Integer.parseInt(height_in));
-                            settingsViewModel.setWeight(Integer.parseInt(weight));
-
-                            binding.textName.setText(fullName);
-                            binding.textEmail.setText(email);
-                            String tAge = settingsViewModel.getAge().getValue() + " years old";
-                            binding.textAge.setText(tAge);
-                            String tHeightFeet = settingsViewModel.getHeightInFeet().getValue() + " feet ";
-                            binding.textHeightFt.setText(tHeightFeet);
-                            String tHeightInches = settingsViewModel.getHeightInInches().getValue() + " inches";
-                            binding.textHeightIn.setText(tHeightInches);
-                            String tWeight = settingsViewModel.getWeight().getValue() + " lbs";
-                            binding.textWeight.setText(tWeight);
-
-                        }
-                    }
-                }
-            });*/
         }
-        catch(NullPointerException e){
+        catch (NullPointerException e){
             Toast.makeText(requireActivity(),"Refer to Google to see Account Details", Toast.LENGTH_SHORT).show();
         }
 
@@ -179,8 +114,8 @@ public class ProfileFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Navigation.findNavController(root).navigate(R.id.action_navigation_profile_to_navigation_edit_profile);
+                settingsViewModel.setCameFromProfile(true);
+                Navigation.findNavController(root).navigate(R.id.action_navigation_profile_to_navigation_settings);
             }
         });
 
@@ -194,5 +129,4 @@ public class ProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }

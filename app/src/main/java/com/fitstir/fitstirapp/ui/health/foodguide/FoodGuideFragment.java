@@ -25,9 +25,6 @@ public class FoodGuideFragment extends Fragment {
         binding = FragmentFoodGuideBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textFoodGuide;
-        //healthViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
         // Addition Text Here
 
 

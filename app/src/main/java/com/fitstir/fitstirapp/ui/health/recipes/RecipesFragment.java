@@ -134,10 +134,6 @@ public class RecipesFragment extends Fragment {
             /*thisUser*/listRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    //UserProfileData value = snapshot.getValue(UserProfileData.class);
-                    //recipesViewModel.setThisUser(value);
-                    //recipesViewModel.setLikedRecipes(value.getLikedRecipes());
-
                     ArrayList<Recipe> likedRecipes = new ArrayList<>();
                     Iterable<DataSnapshot> children = snapshot.getChildren();
 

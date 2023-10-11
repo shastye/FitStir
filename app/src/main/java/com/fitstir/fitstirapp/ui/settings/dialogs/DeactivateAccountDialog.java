@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.IGenericAlertDialog;
 
@@ -45,6 +46,8 @@ public class DeactivateAccountDialog extends IGenericAlertDialog {
     public void onAccept() {
         settingsViewModel.deleteFromDatabase();
         settingsViewModel.deleteUser();
+
+        ((MainActivity) requireActivity()).signOut();
     }
 
     @Override

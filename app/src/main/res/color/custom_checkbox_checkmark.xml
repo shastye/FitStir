@@ -4,11 +4,11 @@
     android:enterFadeDuration="@android:integer/config_shortAnimTime"
     android:exitFadeDuration="@android:integer/config_shortAnimTime" >
     <item android:state_checked ="true"
-        android:color="@color/fuchsia"
+        android:color="?attr/colorPrimaryVariant"
         android:drawable="@drawable/ic_check_circle_solid_200dp" />
 
     <item android:state_checked ="false"
-        android:color="@color/off_white"
+        android:color="?attr/colorOnPrimary"
         android:drawable="@drawable/ic_check_circle_black_200dp" />
 
 </selector>
