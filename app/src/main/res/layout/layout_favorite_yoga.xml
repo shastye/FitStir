@@ -11,6 +11,7 @@
     android:background="@color/soft_deep_purple">
 
     <ImageButton
+        android:id="@+id/delete_Favorite"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/baseline_close_24"

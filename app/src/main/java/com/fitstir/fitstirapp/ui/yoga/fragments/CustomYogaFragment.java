@@ -4,6 +4,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentCustomYogaBinding;
@@ -61,6 +64,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface, ICu
     private PoseModel model;
     private ImageView open, close;
     private Map<String, List<PoseModel>> folderPoseMap;
+    private NestedScrollView scrollView;
 //endregion
 
     @Override
@@ -114,16 +118,33 @@ public class CustomYogaFragment extends Fragment implements CustomInterface, ICu
         // Get data before option selection from each category
         // to make a full list of everything to choose from for customs fragment
         adapter = new CustomsAdapter(rvI, requireActivity(), yogaPoseList);
-        yogaView.fetchYogaData(yogaPoseList, Constants.YOGA_ID.BEGINNER_YOGA,adapter);
+        yogaView.fetchCustomData(yogaPoseList, Constants.YOGA_ID.BEGINNER_YOGA,adapter);
         adapterWindow = new CustomsAdapterView(rvI, requireActivity(), newCustomList, yogaView);
 
-//firebase integration and visibility settings
+        getCustomRoutines();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                for(int i = 0; i < newCustomList.size(); i++){
+                    newCustomList.remove(i);
+                }
+                windowCardView.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        return root;
+    }
+
+    public void getCustomRoutines(){
+
+        //firebase integration and visibility settings
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = db.getReference("CustomRoutines")
                 .child(authUser.getUid());
 
-      folderPoseMap = new HashMap<>();
+        folderPoseMap = new HashMap<>();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -135,18 +156,18 @@ public class CustomYogaFragment extends Fragment implements CustomInterface, ICu
                     {
                         String routineName = routineSnapshot.getKey();
                         //model.setRoutineName(rName);
-                          poseList = new ArrayList<>();
+                        poseList = new ArrayList<>();
                         //Iterable<DataSnapshot> poseSnapshots = routineSnapshot.getChildren();
-                      for(DataSnapshot poseSnapshot : routineSnapshot.getChildren()){
-                          PoseModel retrievedData =  poseSnapshot.getValue(PoseModel.class);
-                          if(retrievedData != null){
-                              poseList.add(retrievedData);
-                          }
+                        for(DataSnapshot poseSnapshot : routineSnapshot.getChildren()){
+                            PoseModel retrievedData =  poseSnapshot.getValue(PoseModel.class);
+                            if(retrievedData != null){
+                                poseList.add(retrievedData);
+                            }
 
-                      }
-                     folderPoseMap.put(routineName, poseList);
+                        }
+                        folderPoseMap.put(routineName, poseList);
                         if(!folderPoseMap.isEmpty()){
-                           closedCardView.setVisibility(View.VISIBLE);
+                            closedCardView.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -199,21 +220,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface, ICu
                 }
             }
         });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                for(int i = 0; i < newCustomList.size(); i++){
-                    newCustomList.remove(i);
-                }
-                windowCardView.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        return root;
     }
-
     @Override
     public void onItemClick(int position, boolean isAddButtonClicked) {
 
@@ -291,6 +298,7 @@ public class CustomYogaFragment extends Fragment implements CustomInterface, ICu
                 }
             }
         });
+        getCustomRoutines();
     }
 
     @Override

@@ -85,11 +85,15 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
      try {
          if (filtered.size() >= 1) {
              upperBody.getWorkoutClicked(position,filtered,workoutsViewModel);
+             workoutsViewModel.setFavoriteItemPosition(position);
+             workoutsViewModel.setWorkouts(filtered);
              Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
                      .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
          }
      }catch (NullPointerException e){
          upperBody.getWorkoutClicked(position,upperBodyApiArrayList,workoutsViewModel);
+         workoutsViewModel.setFavoriteItemPosition(position);
+         workoutsViewModel.setWorkouts(upperBodyApiArrayList);
          Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
                  .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
      }

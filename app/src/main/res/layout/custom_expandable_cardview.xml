@@ -19,6 +19,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
         >
         <ImageView
             android:id="@+id/open_cardview"
@@ -26,13 +27,13 @@
             android:layout_height="45dp"
             android:background="@drawable/baseline_arrow_drop_down_24"
             android:layout_marginStart="150dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="75dp"
             android:clickable="true"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Routine Name: "
+            android:text="Routine: "
             android:layout_marginStart="20dp"
             android:textSize="16dp"
             android:layout_marginTop="20dp"
@@ -43,14 +44,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Routine Name: "
-            android:layout_marginStart="127dp"
+            android:layout_marginStart="87dp"
             android:textSize="14dp"
             android:layout_marginTop="22dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yoga Poses: "
+            android:text="Poses Count: "
             android:layout_marginStart="20dp"
             android:textSize="16dp"
             android:layout_marginTop="50dp"
@@ -86,30 +87,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"
+
      >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/opened_cardview_RV"
+                    android:layout_width="300dp"
+                    android:layout_height="360dp"
+                    android:layout_marginTop="130dp"
+                    android:layout_marginLeft="20dp"
+                />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Routine Name: "
-            android:layout_marginStart="20dp"
-            android:textSize="16dp"
             android:layout_marginTop="20dp"
-            />
-
+            android:text="Routine: "
+            android:textSize="16dp"
+           android:layout_marginLeft="20dp" />
         <TextView
             android:id="@+id/routine_Name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Routine Name: "
-            android:layout_marginStart="127dp"
+            android:layout_marginStart="87dp"
             android:textSize="14dp"
             android:layout_marginTop="22dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yoga Poses: "
+            android:text="Poses count: "
             android:layout_marginStart="20dp"
             android:textSize="16dp"
             android:layout_marginTop="50dp"
@@ -131,13 +140,8 @@
             android:background="@drawable/logo"
             android:layout_marginTop="-10dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/opened_cardview_RV"
-            android:layout_width="320dp"
-            android:layout_height="390dp"
-            android:layout_marginTop="130dp"
-            android:layout_marginLeft="15dp"
-            />
+
+
         <ImageView
             android:id="@+id/close_cardview"
             android:layout_width="45dp"

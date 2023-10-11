@@ -49,6 +49,8 @@ public class PoseAdapter extends RecyclerView.Adapter<PoseAdapter.ViewHolder> {
         Log.d("What is the view doing", "Look"+holder);
         String video = data.getUrl_Vid();
         holder.name.setText(data.getEnglish_name());
+        holder.type.setText(data.getPose_Type());
+        holder.level.setText(data.getDifficulty_level());
         Glide.with(context)
                 .load(data.getUrl_png())
                 .into(holder.img);
@@ -65,7 +67,7 @@ public class PoseAdapter extends RecyclerView.Adapter<PoseAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView name;
+        private TextView name, level, type;
         private ImageView img;
         private WebView vid;
         public ViewHolder(@NonNull View itemView) {
@@ -73,6 +75,9 @@ public class PoseAdapter extends RecyclerView.Adapter<PoseAdapter.ViewHolder> {
             name = itemView.findViewById(R.id.name_Routine);
             img = itemView.findViewById(R.id.img_Routine);
             vid = itemView.findViewById(R.id.vid_Routine);
+            level = itemView.findViewById(R.id.name_level);
+            type = itemView.findViewById(R.id.pose_Type);
+
 
         }
 

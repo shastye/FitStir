@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.yoga.fragments.CustomYogaFragment"
     android:background="@drawable/expert"
+    android:id="@+id/customs_Layout"
     >
 
     <androidx.recyclerview.widget.RecyclerView

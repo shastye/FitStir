@@ -1,5 +1,7 @@
 package com.fitstir.fitstirapp.ui.yoga.models;
 
+import java.util.ArrayList;
+
 public class PoseModel {
 
 
@@ -7,6 +9,15 @@ public class PoseModel {
             translation_name,pose_description,pose_benefits,url_png,url_Vid,pose_Type, routineName;
     private PoseModel yogaPose;
     private Integer routineSize;
+    private ArrayList<PoseModel>yogaList;
+
+    public ArrayList<PoseModel> getYogaList() {
+        return yogaList;
+    }
+
+    public void setYogaList(ArrayList<PoseModel> yogaList) {
+        this.yogaList = yogaList;
+    }
 
     public Integer getRoutineSize() {return routineSize;}
     public String getRoutineName() {return routineName;}
