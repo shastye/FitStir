@@ -38,6 +38,7 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.TotalNutrients;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -104,20 +105,23 @@ public class CalorieTrackerFragment extends Fragment {
         assert authUser != null;
         stringUserID = authUser.getUid();
         DatabaseReference thisUser = FirebaseDatabase.getInstance()
-                .getReference("Users")
+                .getReference("User")
                 .child(stringUserID);
 
         toggleLoadingScreen();
         thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserProfileData value = snapshot.getValue(UserProfileData.class);
-                calorieTrackerViewModel.setThisUser(value);
-                calorieTrackerViewModel.setCalorieTrackerGoal(value.getCalorieTrackerGoal());
+                Users value = snapshot.getValue(Users.class);
+
+                    calorieTrackerViewModel.setThisUser(value);
+                    calorieTrackerViewModel.setCalorieTrackerGoal(value.getCalorieTrackerGoal());
 
 
 
-                float weight = (float) value.get_Weight();
+
+
+                float weight = (float) value.getWeight();
                 weight /= 2.2f;
                 String sex = value.getSex();
                 float sexMod = 0.0f;

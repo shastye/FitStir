@@ -18,6 +18,7 @@ import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.settings.dialogs.ChangeThemeDialog;
 import com.fitstir.fitstirapp.ui.settings.customviews.SettingsThemeItemView;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class SettingsThemeFragment extends Fragment {
     private FragmentSettingsThemeBinding binding;
     private SettingsViewModel settingsViewModel;
     private String uid;
-    private UserProfileData user;
+    private Users user;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,

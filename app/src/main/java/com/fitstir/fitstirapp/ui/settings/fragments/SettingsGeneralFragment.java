@@ -16,6 +16,7 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentSettingsGeneralBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,7 +26,7 @@ public class SettingsGeneralFragment extends Fragment {
     private FragmentSettingsGeneralBinding binding;
     private LayoutInflater inflater;
     private String uid;
-    private UserProfileData user;
+    private Users user;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,

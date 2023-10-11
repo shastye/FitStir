@@ -17,6 +17,7 @@ import com.fitstir.fitstirapp.databinding.FragmentSettingsMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +54,7 @@ public class SettingsMainFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        UserProfileData value = snapshot.getValue(UserProfileData.class);
+                        Users value = snapshot.getValue(Users.class);
                         settingsViewModel.setThisUser(value);
 
                     }

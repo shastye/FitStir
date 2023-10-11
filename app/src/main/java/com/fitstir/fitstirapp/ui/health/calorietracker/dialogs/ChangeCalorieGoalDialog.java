@@ -13,6 +13,7 @@ import com.fitstir.fitstirapp.ui.health.calorietracker.CalorieTrackerViewModel;
 import com.fitstir.fitstirapp.ui.health.calorietracker.fragments.CalorieTrackerFragment;
 import com.fitstir.fitstirapp.ui.utility.classes.IBasicDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -61,7 +62,7 @@ public class ChangeCalorieGoalDialog extends IBasicDialog {
     public void onAccept() {
         calorieTrackerViewModel.setCalorieTrackerGoal(Integer.parseInt(changedGoal.getText().toString()));
 
-        UserProfileData user = calorieTrackerViewModel.getThisUser().getValue();
+        Users user = calorieTrackerViewModel.getThisUser().getValue();
         user.setCalorieTrackerGoal(calorieTrackerViewModel.getCalorieTrackerGoal().getValue());
         calorieTrackerViewModel.setThisUser(user);
 

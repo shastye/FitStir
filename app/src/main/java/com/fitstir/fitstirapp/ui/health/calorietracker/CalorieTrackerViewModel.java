@@ -12,13 +12,14 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CalorieTrackerViewModel extends ViewModel {
 
-    private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
+    private final MutableLiveData<Users> thisUser = new MutableLiveData<>(new Users());
     private final MutableLiveData<Calendar> selectedDate = new MutableLiveData<>(Calendar.getInstance()); //set to today initially
     private final MutableLiveData<String> dateString = new MutableLiveData<>("Today");
     private final MutableLiveData<ArrayList<ResponseInfo>> calorieTrackerData = new MutableLiveData<>(new ArrayList<ResponseInfo>());
@@ -62,10 +63,10 @@ public class CalorieTrackerViewModel extends ViewModel {
 
 
 
-    public MutableLiveData<UserProfileData> getThisUser() {
+    public MutableLiveData<Users> getThisUser() {
         return thisUser;
     }
-    public void setThisUser(UserProfileData user) {
+    public void setThisUser(Users user) {
         thisUser.setValue(user);
     }
 

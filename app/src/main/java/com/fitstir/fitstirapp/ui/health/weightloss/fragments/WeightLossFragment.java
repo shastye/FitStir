@@ -24,6 +24,7 @@ import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.DeleteConformationDia
 import com.fitstir.fitstirapp.ui.health.weightloss.WeightLossViewModel;
 import com.fitstir.fitstirapp.ui.health.weightloss.dialogs.UpdateWeightDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,7 +83,7 @@ public class WeightLossFragment extends Fragment {
                         R.layout.dialog_change_calorie_goal,
                         R.id.dialog_calgoal_accept_button,
                         R.id.dialog_calgoal_cancel_button,
-                        weightLossViewModel.getThisUser().getValue().get_Weight()
+                        weightLossViewModel.getThisUser().getValue().getWeight()
                 );
                 dialog.showNow(getChildFragmentManager(), "Change Weight Goal");
             }
@@ -97,7 +98,7 @@ public class WeightLossFragment extends Fragment {
                         R.layout.dialog_change_calorie_goal,
                         R.id.dialog_calgoal_accept_button,
                         R.id.dialog_calgoal_cancel_button,
-                        weightLossViewModel.getThisUser().getValue().get_Weight()
+                        weightLossViewModel.getThisUser().getValue().getWeight()
                 );
                 dialog.showNow(getChildFragmentManager(), "Update Weight Data");
             }
@@ -108,14 +109,14 @@ public class WeightLossFragment extends Fragment {
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
         DatabaseReference thisUser = FirebaseDatabase.getInstance()
-                .getReference("Users")
+                .getReference("User")
                 .child(authUser.getUid());
 
         toggleLoadingScreen();
         thisUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserProfileData value = snapshot.getValue(UserProfileData.class);
+                Users value = snapshot.getValue(Users.class);
                 weightLossViewModel.setThisUser(value);
                 weightLossViewModel.setWeightGoal(value.getGoal_weight());
 
@@ -242,7 +243,7 @@ public class WeightLossFragment extends Fragment {
         public void bind(GoalDataPair data) {
             this.data = data;
 
-            UserProfileData user = weightLossViewModel.getThisUser().getValue();
+            Users user = weightLossViewModel.getThisUser().getValue();
             String unitString;
             if (user.getUnitID() == 0) {
                 unitString = "lbs";

@@ -9,6 +9,7 @@ import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.IBasicDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.ResetTheme;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ChangeThemeDialog extends IBasicDialog {
@@ -65,7 +66,7 @@ public class ChangeThemeDialog extends IBasicDialog {
     public void onAccept() {
         settingsViewModel.setThemeID(theme);
 
-        UserProfileData user = settingsViewModel.getThisUser().getValue();
+        Users user = settingsViewModel.getThisUser().getValue();
         user.setThemeID(theme);
         settingsViewModel.setThisUser(user);
 

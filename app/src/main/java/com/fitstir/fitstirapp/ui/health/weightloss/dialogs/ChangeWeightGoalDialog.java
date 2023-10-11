@@ -13,6 +13,7 @@ import com.fitstir.fitstirapp.ui.health.weightloss.WeightLossViewModel;
 import com.fitstir.fitstirapp.ui.health.weightloss.fragments.WeightLossFragment;
 import com.fitstir.fitstirapp.ui.utility.classes.IBasicDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -43,7 +44,7 @@ public class ChangeWeightGoalDialog extends IBasicDialog {
         weightLossViewModel = new ViewModelProvider(requireActivity()).get(WeightLossViewModel.class);
         DialogChangeCalorieGoalBinding binding = DialogChangeCalorieGoalBinding.bind(requireView());
 
-        UserProfileData user = weightLossViewModel.getThisUser().getValue();
+        Users user = weightLossViewModel.getThisUser().getValue();
 
         assert getArguments() != null;
         currWeight = getArguments().getInt("currWeight");
@@ -74,7 +75,7 @@ public class ChangeWeightGoalDialog extends IBasicDialog {
 
     @Override
     public void onAccept() {
-        UserProfileData user = weightLossViewModel.getThisUser().getValue();
+        Users user = weightLossViewModel.getThisUser().getValue();
         int newGoal = Integer.parseInt(changedGoal.getText().toString());
         if (newGoal != user.getGoal_weight()) {
             user.setGoal_weight(newGoal);

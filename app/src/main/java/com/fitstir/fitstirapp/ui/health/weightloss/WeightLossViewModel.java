@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 
 import java.util.ArrayList;
 
 public class WeightLossViewModel extends ViewModel {
-    private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
+    private final MutableLiveData<Users> thisUser = new MutableLiveData<>(new Users());
     private final MutableLiveData<Integer> weightGoal = new MutableLiveData<>(0);
 
     private final MutableLiveData<String> goalID = new MutableLiveData<>("");
@@ -29,10 +30,10 @@ public class WeightLossViewModel extends ViewModel {
 
 
 
-    public MutableLiveData<UserProfileData> getThisUser() {
+    public MutableLiveData<Users> getThisUser() {
         return thisUser;
     }
-    public void setThisUser(UserProfileData user) {
+    public void setThisUser(Users user) {
         this.thisUser.setValue(user);
     }
 

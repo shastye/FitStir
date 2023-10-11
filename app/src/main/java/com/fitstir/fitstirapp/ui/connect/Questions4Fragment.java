@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,7 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestion4Binding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +35,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.auth.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -74,7 +75,7 @@ public class Questions4Fragment extends Fragment {
 
         //firebase integration
         database = FirebaseDatabase.getInstance();
-        dbRef = database.getReference("Users");
+        dbRef = database.getReference("User");
         auth = FirebaseAuth.getInstance();
 
         //additional code here
@@ -161,27 +162,29 @@ public class Questions4Fragment extends Fragment {
 
         if(!fName.isEmpty())
         {
-                if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches())
+            if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches())
+            {
+                if(!pass.isEmpty() && pass.length() >= 6)
                 {
-                    if(!pass.isEmpty() && pass.length() >= 6)
+                    if(pass.matches(confirm_pass))
                     {
-                        if(pass.matches(confirm_pass))
+                        if(finalWt > 55)
                         {
-                            if(finalWt > 55)
+                            if(finalGWt > 55)
                             {
-                                if(finalGWt > 55)
-                                {
-                                    auth.createUserWithEmailAndPassword(email, pass)
-                                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                auth.createUserWithEmailAndPassword(email, pass)
+                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if(task.isSuccessful()){
                                                     Boolean radioBtnState = male.isChecked();
                                                     Boolean radioBtnState_female = female.isChecked();
 
                                                     if(radioBtnState == true)
                                                     {
                                                         final String uid = auth.getCurrentUser().getUid();
-                                                        UserProfileData user = new UserProfileData(fName,email,pass,"male", finalFt, finalIn, finalWt, finalGWt, finalAge);
+                                                        Users user = new Users(fName,email,pass,"male", finalFt, finalIn, finalWt, finalGWt, finalAge);
+                                                        user.addWeightData(finalWt);
                                                         if(uid != null)
                                                         {
                                                             dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -203,7 +206,7 @@ public class Questions4Fragment extends Fragment {
                                                     else if(radioBtnState_female == true)
                                                     {
                                                         final String uid = auth.getCurrentUser().getUid();
-                                                        UserProfileData user = new UserProfileData(fName,email,pass,"female", finalFt, finalIn, finalWt, finalGWt, finalAge);
+                                                        Users user = new Users(fName,email,pass,"female", finalFt, finalIn, finalWt, finalGWt, finalAge);
                                                         user.addWeightData(finalWt);
 
                                                         if(uid != null) {
@@ -221,46 +224,49 @@ public class Questions4Fragment extends Fragment {
                                                                 }
                                                             });
                                                         }
+
                                                     }
                                                 }
-                                            });
-                                }
-                                else
-                                {
-                                    weight.setError("Error reading weight or equals 0...please enter another number", warning);
-                                }
+                                            }
+                                        });
                             }
                             else
                             {
-                                goal_weight.setError("Error reading weight or equals 0...please enter another number", warning);
+                                weight.setError("Error reading weight or equals 0...please enter another number", warning);
                             }
                         }
                         else
                         {
-                            confirmPassword.setError("Passwords do not match", warning);
+                            goal_weight.setError("Error reading weight or equals 0...please enter another number", warning);
                         }
-                    }
-                    else if (pass.isEmpty())
-                    {
-                        setPassword.setError("Password can not be empty",warning);
                     }
                     else
                     {
-                        setPassword.setError("Password must be at least 6 characters", warning);
+                        confirmPassword.setError("Passwords do not match", warning);
                     }
                 }
-                else if (email.isEmpty())
+                else if (pass.isEmpty())
                 {
-                    setEmail.setError("Email can not be empty...Please Try Again!!", warning);
+                    setPassword.setError("Password can not be empty",warning);
                 }
                 else
                 {
-                    setEmail.setError("Please enter valid Email!!", warning);
+                    setPassword.setError("Password must be at least 6 characters", warning);
                 }
+            }
+            else if (email.isEmpty())
+            {
+                setEmail.setError("Email can not be empty...Please Try Again!!", warning);
+            }
+            else
+            {
+                setEmail.setError("Please enter valid Email!!", warning);
+            }
         }
         else
         {
             fullName.setError("Field can not be left empty", warning);
         }
+
     }
 }

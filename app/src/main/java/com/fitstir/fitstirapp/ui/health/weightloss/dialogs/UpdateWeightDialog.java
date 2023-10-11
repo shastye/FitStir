@@ -25,6 +25,7 @@ import com.fitstir.fitstirapp.ui.health.weightloss.fragments.WeightLossFragment;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.IBasicDialog;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -57,7 +58,7 @@ public class UpdateWeightDialog extends IBasicDialog {
         weightLossViewModel = new ViewModelProvider(requireActivity()).get(WeightLossViewModel.class);
         DialogChangeCalorieGoalBinding binding = DialogChangeCalorieGoalBinding.bind(requireView());
 
-        UserProfileData user = weightLossViewModel.getThisUser().getValue();
+        Users user = weightLossViewModel.getThisUser().getValue();
 
         assert getArguments() != null;
         currWeight = getArguments().getInt("currWeight");
@@ -90,7 +91,7 @@ public class UpdateWeightDialog extends IBasicDialog {
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getView().getWindowToken(), 0);
 
-        UserProfileData user = weightLossViewModel.getThisUser().getValue();
+        Users user = weightLossViewModel.getThisUser().getValue();
 
         int newWeight = Integer.parseInt(changedWeight.getText().toString());
         if (newWeight != currWeight) {
@@ -128,13 +129,13 @@ public class UpdateWeightDialog extends IBasicDialog {
             //                                            //
             // ////////////////////////////////////////// //
 
-            user.set_Weight(newWeight);
+            user.setWeight(newWeight);
 
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
             assert authUser != null;
 
             user.addWeightData(newWeight);
-            user.set_Weight(newWeight);
+            user.setWeight(newWeight);
 
             weightLossViewModel.setThisUser(user);
 

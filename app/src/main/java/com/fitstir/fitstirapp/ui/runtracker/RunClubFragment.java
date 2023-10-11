@@ -35,6 +35,7 @@ import com.fitstir.fitstirapp.ui.runtracker.utilites.RunnerData;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.RvInterface;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Granularity;
@@ -263,9 +264,9 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
                 userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        UserProfileData value = snapshot.getValue(UserProfileData.class);
+                        Users value = snapshot.getValue(Users.class);
                         viewRuns.setUser(value);
-                        viewRuns.setWeight(value.get_Weight());
+                        viewRuns.setWeight(value.getWeight());
                         viewRuns.setAge(value.getAge());
                         int weight = Integer.parseInt(String.valueOf(viewRuns.getWeight().getValue()));
                         int age = Integer.parseInt(String.valueOf(viewRuns.getAge().getValue()));

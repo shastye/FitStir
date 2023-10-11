@@ -29,6 +29,7 @@ import com.fitstir.fitstirapp.ui.settings.dialogs.ResetApplicationDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.IOnBackPressed;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -44,7 +45,7 @@ public class SettingsAccountFragment extends Fragment {
 
     private FragmentSettingsAccountBinding binding;
     private String uid;
-    private UserProfileData user;
+    private Users user;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,

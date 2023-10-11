@@ -21,6 +21,7 @@ import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
 import com.fitstir.fitstirapp.ui.goals.dialogs.CreateGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -61,12 +62,12 @@ public class GoalsFragment extends Fragment {
         assert authUser != null;
 
         DatabaseReference userRef = FirebaseDatabase.getInstance()
-                .getReference("Users")
+                .getReference("User")
                 .child(authUser.getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserProfileData value = snapshot.getValue(UserProfileData.class);
+                Users value = snapshot.getValue(Users.class);
                 goalsViewModel.setThisUser(value);
                 //goalsViewModel.setGoals((ArrayList<Goal>) value.getGoals());
 

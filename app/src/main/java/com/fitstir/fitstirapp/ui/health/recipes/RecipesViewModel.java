@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class RecipesViewModel extends ViewModel {
     private final MutableLiveData<Hit> firstHit = new MutableLiveData<>(new Hit());
     private final MutableLiveData<ArrayList<Recipe>> likedRecipes = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<String> instructionsList;
-    private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
+    private final MutableLiveData<Users> thisUser = new MutableLiveData<>(new Users());
 
 
     public RecipesViewModel() {
@@ -108,7 +109,7 @@ public class RecipesViewModel extends ViewModel {
         return likedRecipes;
     }
 
-    public MutableLiveData<UserProfileData> getThisUser() {
+    public MutableLiveData<Users> getThisUser() {
         return thisUser;
     }
 
@@ -137,7 +138,7 @@ public class RecipesViewModel extends ViewModel {
     public void setLikedRecipes(ArrayList<Recipe> likedRecipes) {
         this.likedRecipes.setValue(likedRecipes);
     }
-    public void setThisUser(UserProfileData user) {
+    public void setThisUser(Users user) {
         this.thisUser.setValue(user);
     }
 }

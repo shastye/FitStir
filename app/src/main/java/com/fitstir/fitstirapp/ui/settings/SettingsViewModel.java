@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.settings.fragments.SettingsBlankFragment;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +32,7 @@ public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<Fragment> cameFromFragment = new MutableLiveData<>(new SettingsBlankFragment());
     private final MutableLiveData<Boolean> cameFromProfile = new MutableLiveData<>(false);
 
-    private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
+    private final MutableLiveData<Users> thisUser = new MutableLiveData<>(new Users());
     private final MutableLiveData<Bitmap> avatar = new MutableLiveData<>(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.profileimage_background));
 
 
@@ -50,7 +51,7 @@ public class SettingsViewModel extends ViewModel {
     public MutableLiveData<Boolean> getCameFromProfile() { return cameFromProfile; }
 
     public LiveData<Integer> getPreviousPage() { return previousPage; }
-    public MutableLiveData<UserProfileData> getThisUser() { return thisUser; }
+    public MutableLiveData<Users> getThisUser() { return thisUser; }
 
 
 
@@ -69,7 +70,7 @@ public class SettingsViewModel extends ViewModel {
     public void setThemeID(int themeID) {
         sThemeID = themeID;
     }
-    public void setThisUser(UserProfileData user) { this.thisUser.setValue(user); }
+    public void setThisUser(Users user) { this.thisUser.setValue(user); }
 
 
 

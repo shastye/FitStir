@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 
 public class RunViewModel extends ViewModel {
 
@@ -20,7 +21,7 @@ public class RunViewModel extends ViewModel {
     private final MutableLiveData<String> runDate = new MutableLiveData<>(" ");
     private final MutableLiveData<Integer> weight = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> age = new MutableLiveData<>(0);
-    private final MutableLiveData<UserProfileData> user = new MutableLiveData<>(new UserProfileData());
+    private final MutableLiveData<Users> user = new MutableLiveData<>(new Users());
     private final MutableLiveData<Double> lat = new MutableLiveData<>(0.0);
     private final MutableLiveData<Double> lng = new MutableLiveData<>(0.0);
     private final MutableLiveData<Double> altitude = new MutableLiveData<>(0.0);
@@ -50,7 +51,7 @@ public class RunViewModel extends ViewModel {
     public MutableLiveData<String> getRunDate() {return runDate;}
     public MutableLiveData<Integer> getWeight() {return weight;}
     public MutableLiveData<Integer> getAge() {return age;}
-    public MutableLiveData<UserProfileData> getUser() {return user;}
+    public MutableLiveData<Users> getUser() {return user;}
     public MutableLiveData<Double> getLat() {return lat;}
     public MutableLiveData<Double> getLng() {return lng;}
 
@@ -70,7 +71,7 @@ public class RunViewModel extends ViewModel {
     public void setBurnedCalories(float calories){this.burnedCalories.setValue(calories);}
     public void setWeight(Integer weight){this.weight.setValue(weight);}
     public void setAge(Integer age){this.age.setValue(age);}
-    public void setUser(UserProfileData user){this.user.setValue(user);}
+    public void setUser(Users user){this.user.setValue(user);}
     public void setRunDate(String date){this.runDate.setValue(date);}
     public void setLat(double lat){this.lat.setValue(lat);}
     public void setLng(double lng){this.lng.setValue(lng);}

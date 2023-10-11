@@ -26,6 +26,7 @@ import com.fitstir.fitstirapp.databinding.FragmentSettingsProfileBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.classes.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +50,7 @@ public class SettingsProfileFragment extends Fragment {
     private FragmentSettingsProfileBinding binding;
     private LayoutInflater inflater;
     private String uid;
-    private UserProfileData user;
+    private Users user;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -163,9 +164,9 @@ public class SettingsProfileFragment extends Fragment {
         binding.heightView.setOnClickListener(getListener(user.getHeight_ft().toString(), unitHeightText1, user.getHeight_in().toString(), unitHeightText2));
 
 
-        String weightText = user.get_Weight().toString() + unitWeightText;
+        String weightText = user.getWeight().toString() + unitWeightText;
         binding.weightView.setTitle(weightText);
-        binding.weightView.setOnClickListener(getListener(user.get_Weight().toString(), unitWeightText));
+        binding.weightView.setOnClickListener(getListener(user.getWeight().toString(), unitWeightText));
 
 
         binding.emailView.setTitle(user.getEmail());
