@@ -6,21 +6,25 @@ import androidx.lifecycle.ViewModel;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
 import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.FoodResponse;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class CalorieTrackerViewModel extends ViewModel {
 
     private final MutableLiveData<UserProfileData> thisUser = new MutableLiveData<>(new UserProfileData());
+    private final MutableLiveData<ArrayList<GoalDataPair>> exerciseData = new MutableLiveData<>(new ArrayList<GoalDataPair>());
     private final MutableLiveData<Calendar> selectedDate = new MutableLiveData<>(Calendar.getInstance()); //set to today initially
-    private final MutableLiveData<String> dateString = new MutableLiveData<>("Today");
+    //private final MutableLiveData<String> dateString = new MutableLiveData<>("Today");
     private final MutableLiveData<ArrayList<ResponseInfo>> calorieTrackerData = new MutableLiveData<>(new ArrayList<ResponseInfo>());
     private final MutableLiveData<Integer> calorieTrackerGoal = new MutableLiveData<>(2000);
     private final MutableLiveData<Integer> suggestedGoal = new MutableLiveData<>(2000);
@@ -61,6 +65,8 @@ public class CalorieTrackerViewModel extends ViewModel {
     }
 
 
+    public MutableLiveData<ArrayList<GoalDataPair>> getExerciseData() { return exerciseData; }
+    public void setExerciseData(ArrayList<GoalDataPair> exerciseData) { this.exerciseData.setValue(exerciseData); }
 
     public MutableLiveData<UserProfileData> getThisUser() {
         return thisUser;
@@ -83,12 +89,28 @@ public class CalorieTrackerViewModel extends ViewModel {
         calorieTrackerData.setValue(data);
     }
 
-    public MutableLiveData<String> getDateString() {
-        return dateString;
+    public String getDateString() {
+        //return dateString;
+        final String[] dateString = { "Today" };
+        if (!Methods.isToday(selectedDate.getValue().getTime())) {
+            dateString[0] = "";
+            String shortName = selectedDate.getValue().getDisplayName(Calendar.MONTH, Calendar.SHORT_FORMAT, Locale.ENGLISH);
+            String longName = selectedDate.getValue().getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.ENGLISH);
+
+            if (longName != null && longName.length() <= 4) {
+                dateString[0] += longName;
+            } else {
+                dateString[0] += shortName;
+                dateString[0] += ".";
+            }
+
+            dateString[0] += " " + selectedDate.getValue().get(Calendar.DATE) + ", " + selectedDate.getValue().get(Calendar.YEAR);
+        }
+        return dateString[0];
     }
-    public void setDateString(String dateAsString) {
-        dateString.setValue(dateAsString);
-    }
+    //public void setDateString(String dateAsString) {
+    //    dateString.setValue(dateAsString);
+    //}
 
     public MutableLiveData<Integer> getCalorieTrackerGoal() {
         return calorieTrackerGoal;

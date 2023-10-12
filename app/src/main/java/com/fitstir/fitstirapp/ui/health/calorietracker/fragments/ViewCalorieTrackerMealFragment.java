@@ -74,7 +74,7 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
 
         // Hide dropdown button on toolbar and show correct date
         root.findViewById(R.id.calendar_toolbar_dropdown_button).setVisibility(View.GONE);
-        ((TextView) root.findViewById(R.id.calendar_date_label)).setText(calorieTrackerViewModel.getDateString().getValue());
+        ((TextView) root.findViewById(R.id.calendar_date_label)).setText(calorieTrackerViewModel.getDateString()/*.getValue()*/);
 
         updateUI();
 

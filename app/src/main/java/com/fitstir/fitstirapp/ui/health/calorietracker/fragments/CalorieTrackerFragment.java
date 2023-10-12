@@ -23,9 +23,11 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentCalorieTrackerBinding;
+import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
 import com.fitstir.fitstirapp.ui.health.calorietracker.CalorieTrackerViewModel;
 import com.fitstir.fitstirapp.ui.health.calorietracker.ResponseInfo;
 import com.fitstir.fitstirapp.ui.health.calorietracker.dialogs.ChangeCalorieGoalDialog;
@@ -36,8 +38,10 @@ import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Nutrients;
 import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
 import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.TotalNutrients;
+import com.fitstir.fitstirapp.ui.runtracker.utilites.RunnerData;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -51,8 +55,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -64,7 +71,7 @@ public class CalorieTrackerFragment extends Fragment {
     private ConstraintLayout loadingPopupView;
     private RecyclerView dataRecyclerView;
     private DataAdapter dataAdapter;
-    private TextView dateName, goalCalTextView, usedCalTextView, remainingCalTextView;
+    private TextView dateName, goalCalTextView, usedCalTextView, spentCalTextView, remainingCalTextView;
     private ShapeableImageView goalBackgroundView;
     private LinearLayoutCompat goalInfoView;
     private AppBarLayout dateToolbar;
@@ -82,6 +89,8 @@ public class CalorieTrackerFragment extends Fragment {
 
         // Addition Text Here
 
+        calorieTrackerViewModel.setSelectedDate(Calendar.getInstance());
+
         decimalFormat = new DecimalFormat("####.#");
         dateName = root.findViewById(R.id.calendar_date_label);
 
@@ -90,6 +99,7 @@ public class CalorieTrackerFragment extends Fragment {
 
         goalCalTextView = binding.ctgoalGoalAmount;
         usedCalTextView = binding.ctgoalUsedAmount;
+        spentCalTextView = binding.ctgoalSpentAmount;
         remainingCalTextView = binding.ctgoalRemainingAmount;
 
         loadingPopupView = root.findViewById(R.id.generic_loading_screen);
@@ -100,9 +110,9 @@ public class CalorieTrackerFragment extends Fragment {
 
 
 
-        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert authUser != null;
-        stringUserID = authUser.getUid();
+        //region Get data from Firebase ////////////////////////////////////////////////////////////
+        stringUserID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //"eOWvN6SSKEbFYLsqqaoY4CYEpe13";
+
         DatabaseReference thisUser = FirebaseDatabase.getInstance()
                 .getReference("Users")
                 .child(stringUserID);
@@ -133,72 +143,161 @@ public class CalorieTrackerFragment extends Fragment {
 
 
 
-                DatabaseReference listRef = FirebaseDatabase.getInstance()
-                        .getReference("CalorieTrackingData").child(stringUserID);
-                listRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Iterable<DataSnapshot> children = snapshot.getChildren();
-                        ArrayList<ResponseInfo> data = new ArrayList<>();
-                        ObjectMapper objectMapper = new ObjectMapper();
+                FirebaseDatabase.getInstance()
+                    .getReference("CalorieTrackingData")
+                    .child(stringUserID)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Iterable<DataSnapshot> children = snapshot.getChildren();
+                            ArrayList<ResponseInfo> data = new ArrayList<>();
+                            ObjectMapper objectMapper = new ObjectMapper();
 
-                        for (DataSnapshot child : children) {
-                            ResponseInfo info = new ResponseInfo();
+                            for (DataSnapshot child : children) {
+                                ResponseInfo info = new ResponseInfo();
 
-                            Map<String, Object> kid = (Map<String, Object>) child.getValue();
-                            assert kid != null;
+                                Map<String, Object> kid = (Map<String, Object>) child.getValue();
+                                assert kid != null;
 
-                            String resultID = (String) child.getKey();
-                            info.setResultID(resultID);
+                                String resultID = (String) child.getKey();
+                                info.setResultID(resultID);
 
-                            Calendar cal = Calendar.getInstance();
-                            HashMap<String, Object> calInfo = (HashMap<String, Object>) kid.get("date");
+                                Calendar cal = Calendar.getInstance();
+                                HashMap<String, Object> calInfo = (HashMap<String, Object>) kid.get("date");
 
-                            long timeInMillis = (long) calInfo.get("timeInMillis");
-                            cal.setTimeInMillis(timeInMillis);
-                            info.setDate(cal);
+                                long timeInMillis = (long) calInfo.get("timeInMillis");
+                                cal.setTimeInMillis(timeInMillis);
+                                info.setDate(cal);
 
-                            String mealType = (String) kid.get("mealType");
-                            info.setMealType(mealType);
+                                String mealType = (String) kid.get("mealType");
+                                info.setMealType(mealType);
 
-                            long quantityLong = (long) kid.get("quantity");
-                            int quantity = (int) quantityLong;
-                            info.setQuantity(quantity);
+                                long quantityLong = (long) kid.get("quantity");
+                                int quantity = (int) quantityLong;
+                                info.setQuantity(quantity);
 
-                            ISearchResult item;
-                            Map<String, Object> tItem = (Map<String, Object>) kid.get("item");
-                            try {
-                                Parsed parsed = objectMapper.convertValue(tItem, Parsed.class);
-                                item = parsed;
-                            } catch (IllegalArgumentException e1) {
+                                ISearchResult item;
+                                Map<String, Object> tItem = (Map<String, Object>) kid.get("item");
                                 try {
-                                    Hint hint = objectMapper.convertValue(tItem, Hint.class);
-                                    item = hint;
-                                } catch (IllegalArgumentException e2) {
+                                    Parsed parsed = objectMapper.convertValue(tItem, Parsed.class);
+                                    item = parsed;
+                                } catch (IllegalArgumentException e1) {
                                     try {
-                                        Hit hit = objectMapper.convertValue(tItem, Hit.class);
-                                        item = hit;
-                                    } catch (IllegalArgumentException e3) {
-                                        throw new RuntimeException();
+                                        Hint hint = objectMapper.convertValue(tItem, Hint.class);
+                                        item = hint;
+                                    } catch (IllegalArgumentException e2) {
+                                        try {
+                                            Hit hit = objectMapper.convertValue(tItem, Hit.class);
+                                            item = hit;
+                                        } catch (IllegalArgumentException e3) {
+                                            throw new RuntimeException();
+                                        }
                                     }
                                 }
-                            }
-                            info.setItem(item);
+                                info.setItem(item);
 
-                            data.add(info);
+                                data.add(info);
+                            }
+
+                            final ArrayList<GoalDataPair> episodes = new ArrayList<>();
+
+                            DatabaseReference runRef = GoalTypes.RUN_CLUB_DISTANCE.getDatabaseReference(stringUserID);
+                            if (runRef != null) {
+                                runRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        Iterable<DataSnapshot> children = snapshot.getChildren();
+
+                                        for (DataSnapshot child : children) {
+                                            Map<String, Object> kid = (Map<String, Object>) child.getValue();
+                                            assert kid != null;
+
+                                            String dateString = (String) kid.get("completedDate");
+                                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                            Calendar returnedDate = Calendar.getInstance();
+                                            try {
+                                                Date date = format.parse(dateString);
+                                                returnedDate.setTime(date);
+                                                Double cal = (Double) kid.get("burnedCalories");
+                                                GoalDataPair pair = new GoalDataPair(returnedDate.getTime(), cal);
+
+                                                episodes.add(pair);
+                                            } catch (ParseException | NullPointerException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                        // TODO:
+                                        //          UpperBody, LowerBody, WeightLifting, Yoga: NO BURNED CAL DATA
+                                        //          Circuit: NO DATE DATA
+                                        DatabaseReference circRef = GoalTypes.CIRCUIT_WORKOUTS_WEIGHT.getDatabaseReference(stringUserID);
+                                        if (circRef != null) {
+                                            circRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    Iterable<DataSnapshot> children = snapshot.getChildren();
+
+                                                    for (DataSnapshot child : children) {
+                                                        Map<String, Object> kid = (Map<String, Object>) child.getValue();
+                                                        assert kid != null;
+
+                                                        String dateString = (String) kid.get("completedDate");
+                                                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                                        Calendar returnedDate = Calendar.getInstance();
+                                                        try {
+                                                            Date date = returnedDate.getTime();
+                                                            //Date date = format.parse(dateString);
+                                                            returnedDate.setTime(date);
+                                                            Double cal = (Double) kid.get("totalBurn");
+                                                            GoalDataPair pair = new GoalDataPair(returnedDate.getTime(), cal);
+
+                                                            episodes.add(pair);
+                                                        } catch (/*ParseException | */NullPointerException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+
+                                                    //TODO: Add reference/get for other exercises and more this to inside onDataChange AND onCancelled AND else
+                                                    calorieTrackerViewModel.setExerciseData(episodes);
+                                                    calorieTrackerViewModel.setCalorieTrackerData(data);
+                                                    updateUI();
+                                                    toggleLoadingScreen();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                    calorieTrackerViewModel.setCalorieTrackerData(data);
+                                                    updateUI();
+                                                    toggleLoadingScreen();
+                                                }
+                                            });
+                                        } else {
+                                            calorieTrackerViewModel.setExerciseData(episodes);
+                                            calorieTrackerViewModel.setCalorieTrackerData(data);
+                                            updateUI();
+                                            toggleLoadingScreen();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        calorieTrackerViewModel.setCalorieTrackerData(data);
+                                        updateUI();
+                                        toggleLoadingScreen();
+                                    }
+                                });
+                            } else {
+                                calorieTrackerViewModel.setCalorieTrackerData(data);
+                                updateUI();
+                                toggleLoadingScreen();
+                            }
                         }
 
-                        calorieTrackerViewModel.setCalorieTrackerData(data);
-                        updateUI();
-
-                        toggleLoadingScreen();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        throw error.toException();
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            throw error.toException();
+                        }
+                    });
             }
 
             @Override
@@ -206,6 +305,7 @@ public class CalorieTrackerFragment extends Fragment {
                 throw error.toException();
             }
         });
+        //endregion ////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -230,32 +330,13 @@ public class CalorieTrackerFragment extends Fragment {
                 View popUpView = inflater.inflate(R.layout.popup_date_picker, null);
                 PopupWindow popupWindow = new PopupWindow(popUpView, LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
-                Calendar selectedDate = Calendar.getInstance();
-                final String[] dateString = {"Today"};
+                Calendar selectedDate = calorieTrackerViewModel.getSelectedDate().getValue();
 
                 CalendarView calendarView = popUpView.findViewById(R.id.popup_calender_view);
                 calendarView.setDate(calorieTrackerViewModel.getSelectedDate().getValue().getTime().getTime());
                 calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                     @Override
                     public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                        Calendar setDay = Calendar.getInstance();
-                        setDay.set(year, month, dayOfMonth);
-
-                        if (!Methods.isToday(setDay.getTime())) {
-                            dateString[0] = "";
-                            String shortName = setDay.getDisplayName(Calendar.MONTH, Calendar.SHORT_FORMAT, Locale.ENGLISH);
-                            String longName = setDay.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.ENGLISH);
-
-                            if (longName != null && longName.length() <= 4) {
-                                dateString[0] += longName;
-                            } else {
-                                dateString[0] += shortName;
-                                dateString[0] += ".";
-                            }
-
-                            dateString[0] += " " + dayOfMonth + ", " + year;
-                        }
-
                         selectedDate.set(year, month, dayOfMonth);
                     }
                 });
@@ -263,9 +344,8 @@ public class CalorieTrackerFragment extends Fragment {
                 popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
-                        dateName.setText(dateString[0]);
                         calorieTrackerViewModel.setSelectedDate(selectedDate);
-                        calorieTrackerViewModel.setDateString(dateString[0]);
+                        dateName.setText(calorieTrackerViewModel.getDateString());
                         updateUI();
                     }
                 });
@@ -316,7 +396,7 @@ public class CalorieTrackerFragment extends Fragment {
     }
 
     private void updateUI() {
-        if (calorieTrackerViewModel.getDateString().getValue().equals("Today")) {
+        if (calorieTrackerViewModel.getDateString().equals("Today")) {
             moreButton.setVisibility(View.VISIBLE);
             moreButton.setClickable(true);
         } else {
@@ -324,15 +404,18 @@ public class CalorieTrackerFragment extends Fragment {
             moreButton.setClickable(false);
         }
 
-        dateName.setText(calorieTrackerViewModel.getDateString().getValue());
+        dateName.setText(calorieTrackerViewModel.getDateString());
 
         ArrayList<ResponseInfo> dataArray = calorieTrackerViewModel.getCalorieTrackerData().getValue();
         ArrayList<ResponseInfo> used = new ArrayList<>();
+
+        ArrayList<GoalDataPair> exerciseArray = calorieTrackerViewModel.getExerciseData().getValue();
+
         int dayCalSum = 0;
+        double spentCalSum = 0;
+        Calendar cal = calorieTrackerViewModel.getSelectedDate().getValue();
 
         for (int i = 0; i < dataArray.size(); i++) {
-            Calendar cal = calorieTrackerViewModel.getSelectedDate().getValue();
-
             if (dataArray.get(i).isDate(cal)) {
                 used.add(dataArray.get(i));
                 if (dataArray.get(i).getItem() instanceof Parsed) {
@@ -346,13 +429,20 @@ public class CalorieTrackerFragment extends Fragment {
             }
         }
 
+        for (int i = 0; i < exerciseArray.size(); i++) {
+            if (Methods.firstIsSecond(exerciseArray.get(i).first, cal.getTime())) {
+                spentCalSum += exerciseArray.get(i).second;
+            }
+        }
+
         dataAdapter = new DataAdapter(used);
         dataRecyclerView.setAdapter(dataAdapter);
 
         int goal = calorieTrackerViewModel.getCalorieTrackerGoal().getValue();
         goalCalTextView.setText(String.valueOf(goal));
         usedCalTextView.setText(String.valueOf(dayCalSum));
-        int remaining = goal - dayCalSum;
+        spentCalTextView.setText(String.valueOf((int) spentCalSum));
+        int remaining = goal - dayCalSum + (int) spentCalSum;
         remainingCalTextView.setText(String.valueOf(remaining));
     }
 
