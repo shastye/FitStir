@@ -70,9 +70,8 @@ public class SettingsProfileFragment extends Fragment {
 
         binding.userId.setText(uid);
 
-        if (settingsViewModel.getAvatar().getValue() != null) {
-            binding.profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
-        }
+        binding.profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
+
         binding.editPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +80,6 @@ public class SettingsProfileFragment extends Fragment {
                             @Override
                             public void onPickResult(PickResult r) {
                                 if (r.getError() == null) {
-                                    settingsViewModel.setAvatar(r.getBitmap());
-                                    binding.profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
-
                                     //Add image to database storage
                                     Uri filePath = Uri.fromFile(new File(r.getPath()));
                                     assert user != null;
@@ -92,16 +88,20 @@ public class SettingsProfileFragment extends Fragment {
                                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            Toast.makeText(getContext(), "Image chosen", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getContext(), "Image chosen and saved successfully.", Toast.LENGTH_LONG).show();
                                             taskSnapshot.getMetadata();
 
+                                            settingsViewModel.setAvatar(r.getBitmap());
+                                            binding.profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getContext(), r.getError().getMessage(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getContext(), "Image not saved, please try again.", Toast.LENGTH_LONG).show();
                                         }
                                     });
+                                } else {
+                                    Toast.makeText(getContext(), "Error choosing image: " + r.getError().getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             }
                         })

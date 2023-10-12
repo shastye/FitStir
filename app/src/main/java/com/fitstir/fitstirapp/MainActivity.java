@@ -143,6 +143,31 @@ public class MainActivity extends AppCompatActivity  {
             editor.putLong(Constants.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
             editor.commit();
         }
+
+        //access firebase storage for profile pic
+        try{
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            String user = auth.getCurrentUser().getUid();
+            StorageReference photo = storageReference.child("images/"+user);
+            photo.getBytes(Constants.MEGA_BYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    settingsViewModel.setAvatar(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }
+        catch (NullPointerException e){
+
+        }
     }
 
     @Override
