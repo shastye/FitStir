@@ -23,6 +23,8 @@ public class UserProfileData {
     Integer height_ft, height_in, weight, goal_weight, age,
             themeID, intervalID, rangeID, unitID,
             calorieTrackerGoal;
+
+    @com.google.firebase.database.Exclude
     FirebaseUser user;
 
 
@@ -35,6 +37,7 @@ public class UserProfileData {
         this.calorieTrackerGoal = calorieTrackerGoal;
     }
 
+    @com.google.firebase.database.Exclude
     public void setUser(FirebaseUser user) {this.user = user;}
 
     public Integer getThemeID() {
@@ -80,6 +83,8 @@ public class UserProfileData {
     public String getEmail() {
         return email;
     }
+
+    @com.google.firebase.database.Exclude
     public FirebaseUser getUser(){
        user = FirebaseAuth.getInstance().getCurrentUser();
        return user;
@@ -115,6 +120,7 @@ public class UserProfileData {
 
     public Integer get_Weight() {return weight;}
 
+    @com.google.firebase.database.Exclude
     public void addWeightData(Integer newWeight) throws RuntimeException {
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -160,6 +166,7 @@ public class UserProfileData {
         });
     }
 
+    @com.google.firebase.database.Exclude
     public void updateWeightGoal(Integer newGoal) {
         this.goal_weight = newGoal;
 
