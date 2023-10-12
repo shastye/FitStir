@@ -10,7 +10,7 @@ public class GoalDataPair {
     public double second;
 
 
-    GoalDataPair() {
+    public GoalDataPair() {
         Calendar zero = Calendar.getInstance();
         zero.clear();
 

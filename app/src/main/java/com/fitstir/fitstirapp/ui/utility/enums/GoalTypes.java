@@ -48,15 +48,26 @@ public enum GoalTypes { // TODO: Add more to represent all types
         return this.metricUnit;
     }
 
-    public DatabaseReference getDatabaseReferenceStringsForTypeData(String userID) {
+    public DatabaseReference getDatabaseReference(String userID) {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+
         switch (this) {
             case RUN_CLUB_DISTANCE:
-                //      returns List of class items representing each run
-                //      each Object will use { kid.getTotalDistance } and { kid.getCompletedDate }
             case RUN_CLUB_ENDURANCE:
-                return FirebaseDatabase.getInstance().getReference("CompletedRun").child(userID);
+                return db.getReference("CompletedRun").child(userID);
                 //      returns List of class items representing each run
-                //      each Object will use { kid.getCompletedRunInMinutes } and { kid.getCompletedDate }
+                //      each Object will use { kid.getTotalDistance } and { kid.getCompletedRunInMinutes } and { kid.getCompletedDate }
+            case CIRCUIT_WORKOUTS_WEIGHT:
+            case CIRCUIT_WORKOUTS_ENDURANCE:
+                return null;
+            case UPPER_BODY_WEIGHT:
+            case UPPER_BODY_REPS:
+            case LOWER_BODY_REPS:
+            case LOWER_BODY_WEIGHT:
+            case WEIGHT_LIFTING_REPS:
+            case WEIGHT_LIFTING_WEIGHT:
+            case YOGA_DURATION:
+            case YOGA_POSITION_COUNT:
             default:
                 return null;
         }
