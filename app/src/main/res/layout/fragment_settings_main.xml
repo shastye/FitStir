@@ -65,7 +65,7 @@
             android:background="?android:selectableItemBackground"
             app:title0="General"
             app:description="Theme, units..."
-            app:image="@drawable/ic_pencil_black_200dp"/>
+            app:image="@drawable/ic_settings_black_200dp"/>
 
         <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
             android:id="@+id/goals_view"
@@ -83,7 +83,16 @@
             android:background="?android:selectableItemBackground"
             app:title0="Account"
             app:description="Change password, delete account..."
-            app:image="@drawable/ic_age_black_200dp"/>
+            app:image="@drawable/ic_account_black_200dp"/>
+
+        <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTopicView
+            android:id="@+id/contact_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            app:title0="Contact"
+            app:description="Contact FitStir team for any issues..."
+            app:image="@drawable/ic_contact_black_200dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

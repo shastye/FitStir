@@ -209,25 +209,25 @@ public class RecipesFragment extends Fragment {
                 for (int i = 0; i < DietOptions.values().length; i++) {
                     dietOptions[i] = DietOptions.values()[i].getSpinnerTitle();
                 }
-                Spinner diet = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.diet_spinner, dietOptions);
+                Spinner diet = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.diet_spinner), dietOptions);
 
                 String[] healthOptions = new String[HealthOptions.values().length];
                 for (int i = 0; i < HealthOptions.values().length; i++) {
                     healthOptions[i] = HealthOptions.values()[i].getSpinnerTitle();
                 }
-                Spinner health = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.health_spinner, healthOptions);
+                Spinner health = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.health_spinner), healthOptions);
 
                 String[] cuisineOptions = new String[CuisineType.values().length];
                 for (int i = 0; i < CuisineType.values().length; i++) {
                     cuisineOptions[i] = CuisineType.values()[i].getSpinnerTitle();
                 }
-                Spinner cuisine = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.cuisine_spinner, cuisineOptions);
+                Spinner cuisine = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.cuisine_spinner), cuisineOptions);
 
                 String[] mealOptions = new String[MealType.values().length];
                 for (int i = 0; i < MealType.values().length; i++) {
                     mealOptions[i] = MealType.values()[i].getSpinnerTitle();
                 }
-                Spinner meal = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.meal_spinner, mealOptions);
+                Spinner meal = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.meal_spinner), mealOptions);
 
 
 

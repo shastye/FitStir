@@ -36,6 +36,7 @@
                     android:id="@+id/mood_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="How are you feeling today?"
                     android:layout_alignParentStart="true"
                     android:textColor="?attr/colorPrimaryVariant"
@@ -65,6 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="How are you feeling today?"
+                    android:textStyle="bold"
                     android:layout_alignParentStart="true"
                     android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="20dp"/>

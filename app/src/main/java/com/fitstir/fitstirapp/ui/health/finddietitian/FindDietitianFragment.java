@@ -165,8 +165,8 @@ public class FindDietitianFragment extends Fragment {
 
                                         String[] minRatingOptions = new String[]{"Min", "0", "1", "2", "3", "4", "5"};
                                         String[] maxRatingOptions = new String[]{"Max", "0", "1", "2", "3", "4", "5"};
-                                        Spinner minSpinner = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.min_rating, minRatingOptions);
-                                        Spinner maxSpinner = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.max_rating, maxRatingOptions);
+                                        Spinner minSpinner = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.min_rating), minRatingOptions);
+                                        Spinner maxSpinner = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.max_rating), maxRatingOptions);
 
                                         SeekBar seekBar = popUpView.findViewById(R.id.distance_slider);
                                         seekBar.setProgress((int) distanceMiles);

@@ -226,8 +226,6 @@
                 android:layout_marginBottom="2.5dp"
                 android:layout_toEndOf="@id/diet_tv"
                 android:elevation="5dp"
-                android:inputType="number"
-                android:textColorHint="@color/black"
                 tools:ignore="TouchTargetSizeCheck" />
         </RelativeLayout>
 
@@ -257,8 +255,6 @@
                 android:layout_marginBottom="2.5dp"
                 android:layout_toEndOf="@id/health_tv"
                 android:elevation="5dp"
-                android:inputType="number"
-                android:textColorHint="@color/black"
                 tools:ignore="TouchTargetSizeCheck" />
         </RelativeLayout>
 
@@ -288,8 +284,6 @@
                 android:layout_marginBottom="2.5dp"
                 android:layout_toEndOf="@id/cuisine_tv"
                 android:elevation="5dp"
-                android:inputType="number"
-                android:textColorHint="@color/black"
                 tools:ignore="TouchTargetSizeCheck" />
         </RelativeLayout>
 
@@ -319,8 +313,6 @@
                 android:layout_marginBottom="2.5dp"
                 android:layout_toEndOf="@id/meal_tv"
                 android:elevation="5dp"
-                android:inputType="number"
-                android:textColorHint="@color/black"
                 tools:ignore="TouchTargetSizeCheck" />
         </RelativeLayout>
 

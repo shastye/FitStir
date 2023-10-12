@@ -30,6 +30,7 @@
         android:textColor="?attr/colorPrimary"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/dialog_background"
         app:layout_constraintEnd_toEndOf="@id/dialog_background"
         app:layout_constraintStart_toStartOf="@id/dialog_background"

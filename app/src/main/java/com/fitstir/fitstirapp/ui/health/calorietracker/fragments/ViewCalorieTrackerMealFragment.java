@@ -377,7 +377,7 @@ public class ViewCalorieTrackerMealFragment extends Fragment {
                     currentDayPart = i;
                 }
             }
-            Spinner mealType = Methods.getSpinnerWithAdapter(requireActivity(), popUpView, R.id.dialog_meal_type_spinner, spinnerOptions);
+            Spinner mealType = Methods.setSpinnerAdapter(requireContext(), popUpView.findViewById(R.id.dialog_meal_type_spinner), spinnerOptions);
             mealType.setSelection(currentDayPart);
 
             int index2 = data.getResultID().indexOf("&");

@@ -86,7 +86,7 @@ public class CreateGoalDialog extends IGenericGoalDialog {
         }
         unitTextView = binding.dialogCreateGoalUnitTextView;
 
-        typeSpinner = Methods.getSpinnerWithAdapter(requireActivity(), getView(), binding.dialogCreateGoalTypeSpinner.getId(), spinnerOptions);
+        typeSpinner = Methods.setSpinnerAdapter(requireContext(), binding.dialogCreateGoalTypeSpinner, spinnerOptions);
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

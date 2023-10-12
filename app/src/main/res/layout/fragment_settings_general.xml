@@ -65,7 +65,7 @@
                 android:background="?android:selectableItemBackground"
                 app:title0="Default Theme"
                 app:description="Theme"
-                app:image="@drawable/ic_check_box_outline_blank_20dp"
+                app:image="@drawable/ic_theme_grey_200dp"
                 app:reference="themeID" />
 
             <com.fitstir.fitstirapp.ui.settings.customviews.SettingsTwoOptionItemView
@@ -74,8 +74,8 @@
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
                 app:title1="Units"
-                app:image1="@drawable/ic_worldwww_black_200dp"
-                app:image2="@drawable/ic_worldwww_black_200dp"
+                app:image1="@drawable/ic_crown_black_200dp"
+                app:image2="@drawable/ic_world_black_200dp"
                 app:option1="Imperial"
                 app:option2="Metric"
                 app:reference1="unitID" />

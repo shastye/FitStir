@@ -115,6 +115,13 @@ public class SettingsMainFragment extends Fragment {
             }
         });
 
+        binding.contactView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new SettingsContactFragment());
+            }
+        });
+
         // End
 
         return root;

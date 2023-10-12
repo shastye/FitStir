@@ -43,10 +43,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_toEndOf="@id/rating_tv"
                 android:elevation="5dp"
-                android:hint="min"
-                android:textColorHint="@color/mid_grey"
                 android:textSize="16sp"
-                android:textAlignment="textEnd"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -65,10 +62,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/num_rating_dash_tv"
                 android:elevation="5dp"
-                android:gravity="center_horizontal"
-                android:hint="max"
-                android:inputType="number"
-                android:textColorHint="@color/mid_grey"
                 android:textSize="12sp"
                 tools:ignore="TouchTargetSizeCheck" />
         </RelativeLayout>

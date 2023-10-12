@@ -13,14 +13,6 @@
         <item name="itemRippleColor">@color/bnv_ripple</item>
     </style>
 
-    <!-- Spinner Style settings -->
-    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
-
-    </style>
-
-    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-
-    </style>
 
 
     <!-- Base application theme. -->
@@ -42,6 +34,7 @@
         <item name="bottomNavigationStyle">@style/BottomNavigation</item>
         <item name="android:navigationBarColor">?attr/colorSecondary</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/family</item>
     </style>
 
     <!-- Secondary application theme. -->
@@ -63,6 +56,7 @@
         <item name="bottomNavigationStyle">@style/BottomNavigation</item>
         <item name="android:navigationBarColor">?attr/colorSecondary</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/family</item>
     </style>
 
     <style name="RoundedTop" parent="">
