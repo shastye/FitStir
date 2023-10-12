@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentGoalsBinding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.goals.GoalsViewModel;
@@ -56,6 +57,8 @@ public class GoalsFragment extends Fragment {
         root = binding.getRoot();
 
         // Addition Text Here
+
+        ((SettingsViewModel) new ViewModelProvider(requireActivity()).get(SettingsViewModel.class)).setPreviousPage(0);
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;

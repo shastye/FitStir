@@ -204,22 +204,26 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public boolean doBackUp(int pageID) {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).getChildFragmentManager().getPrimaryNavigationFragment();
-        if (!(fragment instanceof IOnBackPressed)) {
-            if (pageID == R.id.log_out_item) {
-                signOut();
-            } else {
-                settingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());
-                navController.navigate(pageID);
-            }
-            return false;
-        } else {
-            if (pageID == R.id.navigation_profile) {
-                navController.navigate(pageID);
+        if (pageID != 0) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).getChildFragmentManager().getPrimaryNavigationFragment();
+            if (!(fragment instanceof IOnBackPressed)) {
+                if (pageID == R.id.log_out_item) {
+                    signOut();
+                } else {
+                    settingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());
+                    navController.navigate(pageID);
+                }
                 return false;
             } else {
-                return ((IOnBackPressed) fragment).onBackPressed();
+                if (pageID == R.id.navigation_profile) {
+                    navController.navigate(pageID);
+                    return false;
+                } else {
+                    return ((IOnBackPressed) fragment).onBackPressed();
+                }
             }
+        } else {
+            return Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigateUp();
         }
     }
 
