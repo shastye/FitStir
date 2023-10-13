@@ -45,6 +45,7 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
     private TextView english_Name, san_Name, tran_Name, descript,benefits;
     private ImageView png;
     private ImageView favorite_Button;
+    private int favoriteButtonColorOn, favoriteButtonColorOff;
     private FragmentYogaPoseBinding binding;
     private WebView youtube;
     private ArrayList<PoseModel> faveList;
@@ -62,7 +63,6 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         // saving favorite button state
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
         isFavoriteButtonOn = sharedPreferences.getBoolean("is_favorite", false);
-        updateFavorite();
 
 
         // Inflate the layout for this fragment
@@ -78,6 +78,8 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         png = root.findViewById(R.id.url_PNG);
         youtube = root.findViewById(R.id.youtube_View);
         favorite_Button = root.findViewById(R.id.favoriteButton);
+        favoriteButtonColorOff = R.drawable.baseline_favorite_24;
+        favoriteButtonColorOn = R.drawable.baseline_favorite_purple;
         faveList = new ArrayList<>();
         rvInterface = this;
 
@@ -98,30 +100,33 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         youtube.setWebChromeClient(new WebChromeClient());
 
 
-            favorite_Button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        favorite_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    // Toggle favorite state
-                    isFavoriteButtonOn = !isFavoriteButtonOn;
+                // Toggle favorite state
+                isFavoriteButtonOn = !isFavoriteButtonOn;
+                updateFavorite();
 
-                    updateFavorite();
+                // Save button state
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("is_favorite", isFavoriteButtonOn);
+                editor.apply();
 
-                    // Save button state
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("is_favorite", isFavoriteButtonOn);
-                    editor.apply();
-
-                    onItemClick(yogaView.getFavoriteItemPosition().getValue());
-                }
-            });
+                onItemClick(yogaView.getFavoriteItemPosition().getValue());
+            }
+        });
 
         return root;
     }
 
+
     private void updateFavorite() {
         if(isFavoriteButtonOn){
-            favorite_Button.setImageResource(R.drawable.baseline_favorite_purple);
+            if(favorite_Button != null){
+                favorite_Button.setImageResource(R.drawable.baseline_favorite_purple);
+            }
+
         }
         else{
             if(favorite_Button != null){
@@ -153,9 +158,9 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         }
         else {
 
-           favoriteList.remove(model);
+            favoriteList.remove(model);
 
-           //delete item from firebase
+            //delete item from firebase
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseUser user = auth.getCurrentUser();
             DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("FavoriteItemYoga")
@@ -169,8 +174,6 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
                 }
             });
         }
-
-
     }
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState){
@@ -178,6 +181,7 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
 
         // Saving the favorite state
         outState.putBoolean("is_favorite", isFavoriteButtonOn);
+        updateFavorite();
     }
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState){
@@ -186,6 +190,7 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         //restoring the favorite button state
         if(savedInstanceState != null){
             isFavoriteButtonOn = savedInstanceState.getBoolean("is_favorite");
+
             updateFavorite();
         }
     }

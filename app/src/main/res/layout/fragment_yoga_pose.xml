@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Pose Name: "
-                android:layout_marginStart="-75dp"
+                android:layout_marginStart="-25dp"
                 android:layout_marginTop="-19dp"
                 android:textSize="14sp"
                 android:textColorHighlight="@color/white"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="Translated Name: "
                 android:textStyle="bold"
-                android:layout_marginStart="-147dp"
+                android:layout_marginStart="-147.5dp"
                 android:layout_marginTop="2dp"
                 />
             <TextView
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Translated Name: "
-                android:layout_marginStart="-30dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="-19dp"
                 android:textSize="14sp"
                 />
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sanskrit Name: "
                 android:textStyle="bold"
-                android:layout_marginStart="-153dp"
+                android:layout_marginStart="-154.5dp"
                 android:layout_marginTop="2dp"
                 />
             <TextView
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Sanskrit Name: "
-                android:layout_marginStart="-50dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="-19dp"
                 android:textSize="14sp"
                 />
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:text="Pose Benefits: "
                 android:textStyle="bold"
-                android:layout_marginStart="-155dp"
+                android:layout_marginStart="-156.7dp"
                 android:layout_marginTop="10dp"
                 />
             <TextView
@@ -118,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pose Benefits: "
+                android:layout_marginLeft="5dp"
                 android:textColorHighlight="@color/cotton_candy_pink"
                 android:textSize="14sp"
                 />
@@ -128,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:text="Description: "
                 android:textStyle="bold"
-                android:layout_marginStart="-163dp"
+                android:layout_marginStart="-161dp"
                 android:layout_marginTop="20dp"
                 />
             <TextView
@@ -136,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Description: "
-
+                android:layout_marginLeft="5dp"
                 android:textSize="14sp"
                 />
 

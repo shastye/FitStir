@@ -107,7 +107,7 @@ public class WorkoutApi {
                             }
                             adapter.notifyDataSetChanged();
                         }else{
-                           //
+                            //
                         }
 
                     }
@@ -153,6 +153,5 @@ public class WorkoutApi {
         }
         return filter;
     }
-
 
 }

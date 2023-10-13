@@ -6,6 +6,7 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -72,8 +73,6 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -116,6 +115,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
     private Date currentDate;
     private RvInterface rvInterface;
     private ImageView holder;
+    private Location lastLocationBeforePause;
     //endregion
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -171,21 +171,24 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
             public void onClick(View v) {
 
                 updateLocationRequest();
+                if(isPaused == true){
+                    pathPoint = new ArrayList<>();
+                    pathPoint.add(new LatLng(lastLocationBeforePause.getLatitude(), lastLocationBeforePause.getLongitude()));
+                }
 
+                isPaused = false;
+                isTimerOn = true;
                 isTracking = true;
                 startRun.setVisibility(View.INVISIBLE);
                 miniTimer.setVisibility(View.INVISIBLE);
                 pauseRun.setVisibility(View.VISIBLE);
                 stopRun.setVisibility(View.VISIBLE);
 
-                if(isTracking){
-                    isPaused = false;
-                    isTimerOn = true;
-                    timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-                    timer.start();
-                    miniTimer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-                    miniTimer.start();
-                }
+                timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                timer.start();
+                miniTimer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                miniTimer.start();
+
             }
         });
         pauseRun.setOnClickListener(new View.OnClickListener() {
@@ -194,17 +197,19 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
                 isPaused = true;
                 updateLocationRequest();
                 startRun.setVisibility(View.VISIBLE);
-                if(isPaused){
-                    isTracking = false;
-                    isTimerOn = false;
+                isTracking = false;
+                isTimerOn = false;
 
-                    timer.stop();
-                    pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+                pathPoint.clear();
+                lastLocationBeforePause = mCurrentLocation;
 
-                    //finished elapsed timer
-                    miniTimer.stop();
-                    pauseOffset = SystemClock.elapsedRealtime() - miniTimer.getBase();
-                }
+                timer.stop();
+                pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+
+                //finished elapsed timer
+                miniTimer.stop();
+                pauseOffset = SystemClock.elapsedRealtime() - miniTimer.getBase();
+
             }
         });
         stopRun.setOnClickListener(new View.OnClickListener() {
@@ -265,8 +270,8 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         UserProfileData value = snapshot.getValue(UserProfileData.class);
                         viewRuns.setUser(value);
-                        viewRuns.setWeight(value.get_Weight());
-                        viewRuns.setAge(value.getAge());
+                        viewRuns.setWeight(value.get_Weight().intValue());
+                        viewRuns.setAge(value.getAge().intValue());
                         int weight = Integer.parseInt(String.valueOf(viewRuns.getWeight().getValue()));
                         int age = Integer.parseInt(String.valueOf(viewRuns.getAge().getValue()));
 
@@ -483,9 +488,11 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
                 LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
                 RunViewModel viewRuns = new ViewModelProvider(requireActivity()).get(RunViewModel.class);
 
-                if(isTracking == true)
+                if(isTracking && !isPaused)
                 {
                     pathPoint.add(loc);
+
+                    //drawing the route lines
                     Polyline route = mMap.addPolyline(opts);
                     route.setPoints(pathPoint);
                     pathPoly.add(route);
@@ -494,16 +501,22 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
                     //set view model
                     viewRuns.setAltitude(mCurrentLocation.getAltitude());
                     viewRuns.setBearing(mCurrentLocation.getBearing());
-                    viewRuns.setElapsedRealTime(mCurrentLocation.getElapsedRealtimeMillis());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        viewRuns.setElapsedRealTime(mCurrentLocation.getElapsedRealtimeMillis());
+                    }
                     viewRuns.setSpeed(mCurrentLocation.getSpeed());
                     viewRuns.setClockTime(mCurrentLocation.getTime());
                     viewRuns.setAccuracy(mCurrentLocation.getAccuracy());
+
+                }
+                else{
+
+                    lastLocationBeforePause = location;
                 }
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
             }
 
-            Log.d("Updated", "on Location Result" + locationResult);
-            if(isStopped == true){
+            if(isStopped){
                 LatLng loc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,14));
             }
@@ -541,14 +554,14 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
         imageRef.getBytes(Constants.MEGA_BYTE).addOnCompleteListener(new OnCompleteListener<byte[]>() {
             @Override
             public void onComplete(@NonNull Task<byte[]> task) {
-               byte[] photo = task.getResult();
-                    String image = new String(photo, StandardCharsets.UTF_8);
-                    viewRuns.setMapImage(image);
+                byte[] photo = task.getResult();
+                String image = new String(photo, StandardCharsets.UTF_8);
+                viewRuns.setMapImage(image);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                     Toast.makeText(requireActivity(),"No data gathered", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireActivity(),"No data gathered", Toast.LENGTH_LONG).show();
             }
         });
 

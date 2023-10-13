@@ -260,6 +260,9 @@
         <action
             android:id="@+id/action_viewWorkoutFragment_to_navigation_upper_body2"
             app:destination="@id/navigation_upper_body" />
+        <action
+            android:id="@+id/action_viewWorkoutFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
     </fragment>
   
     <fragment
@@ -327,5 +330,10 @@
         android:name="com.fitstir.fitstirapp.ui.yoga.fragments.YogaPoseFragment"
         android:label="fragment_yoga_pose"
         tools:layout="@layout/fragment_yoga_pose" />
+    <fragment
+        android:id="@+id/tutorialFragment"
+        android:name="com.fitstir.fitstirapp.ui.workouts.exercises.TutorialFragment"
+        android:label="fragment_tutorial"
+        tools:layout="@layout/fragment_tutorial" />
 
 </navigation>

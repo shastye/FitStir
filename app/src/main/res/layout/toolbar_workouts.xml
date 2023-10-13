@@ -24,15 +24,16 @@
                     android:textColor="?attr/colorOnPrimary"
                     android:textSize="20sp"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageButton
                     android:id="@+id/favorite_workOut"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:elevation="0dp"
-                    android:src="@drawable/ic_heart_black_200dp"
-                    android:tint="?attr/colorOnPrimary"
+                    android:background="@drawable/baseline_favorite_24_white"
                     android:layout_marginEnd="15dp"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_alignParentRight="true"
+                    android:onClick="toggleFavorite"
+                    />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

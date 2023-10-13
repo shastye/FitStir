@@ -6,19 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.yoga.fragments.CustomYogaFragment"
     android:background="@drawable/expert"
+    android:id="@+id/customs_Layout"
     >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_RV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="570dp"
 
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/include2"
+        app:layout_constraintEnd_toEndOf="@+id/include2"
+        app:layout_constraintStart_toStartOf="@+id/include2"
+        app:layout_constraintTop_toTopOf="parent" />
     <include
         android:id="@+id/include"
         layout="@layout/dialog_empty_list"
         />
-    <include layout="@layout/custom_expandable_cardview"/>
+
+    <include
+        android:id="@+id/include2"
+        layout="@layout/custom_expandable_cardview"
+        android:visibility="invisible" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/addPoses_CV"
@@ -52,9 +60,6 @@
                     android:layout_height="165dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="-2dp" />
-
-
-
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>

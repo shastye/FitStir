@@ -4,16 +4,24 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.RvInterface;
 import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -47,6 +55,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         Glide.with(context)
                 .load(poseApi.getUrl_png())
                 .into(holder.pose_Image);
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(rvInterface != null){
+                    rvInterface.onItemClick(holder.getAdapterPosition());
+                }
+            }
+        });
         holder.pose_Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,12 +81,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView pose_name, pose_Level, pose_Type;
         private ImageView pose_Image;
+        private ImageButton delete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             pose_name = itemView.findViewById(R.id.fave_YogaName);
             pose_Image = itemView.findViewById(R.id.yoga_Image);
             pose_Level = itemView.findViewById(R.id.fave_Difficulty);
             pose_Type = itemView.findViewById(R.id.fave_Type);
+            delete = itemView.findViewById(R.id.delete_Favorite);
         }
     }
 }

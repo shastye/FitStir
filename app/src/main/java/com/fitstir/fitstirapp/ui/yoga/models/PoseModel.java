@@ -1,15 +1,25 @@
 package com.fitstir.fitstirapp.ui.yoga.models;
 
+import java.util.ArrayList;
+
 public class PoseModel {
 
 
     private String difficulty_level,english_name,sanskrit_name,
             translation_name,pose_description,pose_benefits,url_png,url_Vid,pose_Type, routineName;
-    private Boolean isClosedCardView;
     private PoseModel yogaPose;
+    private Integer routineSize;
+    private ArrayList<PoseModel>yogaList;
 
-    public Boolean getIsClosedCardView() {return isClosedCardView;}
+    public ArrayList<PoseModel> getYogaList() {
+        return yogaList;
+    }
 
+    public void setYogaList(ArrayList<PoseModel> yogaList) {
+        this.yogaList = yogaList;
+    }
+
+    public Integer getRoutineSize() {return routineSize;}
     public String getRoutineName() {return routineName;}
     public PoseModel getYoga() {return yogaPose;}
     public String getDifficulty_level() {return difficulty_level;}
@@ -24,9 +34,6 @@ public class PoseModel {
 
     public PoseModel(){};
 
-    public PoseModel(Boolean isClosed){
-        this.isClosedCardView = isClosed;
-    }
     public PoseModel(String english_name, String url_png, String url_Vid) {
         this.english_name = english_name;
         this.url_png = url_png;
@@ -72,5 +79,5 @@ public class PoseModel {
     public void setUrl_png(String url_png) {this.url_png = url_png;}
     public void setUrl_Vid(String url_Vid) {this.url_Vid = url_Vid;}
     public void setYoga(PoseModel yoga) {this.yogaPose = yoga;}
-    public void setIsClosedCardView(Boolean closedCardView) {isClosedCardView = closedCardView;}
+    public void setRoutineSize(Integer routineSize) {this.routineSize = routineSize;}
 }

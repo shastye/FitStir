@@ -20,7 +20,7 @@ import java.util.Calendar;
 public class UserProfileData {
 
     String fullname, email, password, sex;
-    Integer height_ft, height_in, weight, goal_weight, age,
+    Integer height_ft, height_in, _Weight, goal_weight, age,
             themeID, intervalID, rangeID, unitID,
             calorieTrackerGoal;
 
@@ -118,7 +118,7 @@ public class UserProfileData {
         this.height_in = height_in;
     }
 
-    public Integer get_Weight() {return weight;}
+    public Integer get_Weight() {return _Weight;}
 
     @com.google.firebase.database.Exclude
     public void addWeightData(Integer newWeight) throws RuntimeException {
@@ -206,7 +206,7 @@ public class UserProfileData {
     }
 
     public void set_Weight(Integer weight) {
-        this.weight = weight;
+        this._Weight = weight;
     }
 
     public Integer getGoal_weight() {
@@ -238,7 +238,7 @@ public class UserProfileData {
         sex = "";
         height_ft = 0;
         height_in = 0;
-        weight = 0;
+        _Weight = 0;
         goal_weight = 0;
         age = 0;
 
@@ -257,7 +257,7 @@ public class UserProfileData {
         this.password = password;
         this.height_ft = height_ft;
         this.height_in = height_in;
-        this.weight = weight;
+        this._Weight = weight;
         this.goal_weight = goal_weight;
         this.age = age;
         this.sex = sex;

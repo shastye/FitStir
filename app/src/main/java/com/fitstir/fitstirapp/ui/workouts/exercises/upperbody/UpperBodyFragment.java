@@ -41,7 +41,7 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
 
         binding = FragmentUpperBodyBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        
+
         // Addition Text Here
         searchView = root.findViewById(R.id.searchView_Upperbody);
         searchView.clearFocus();
@@ -80,25 +80,23 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    @Override
     public void onItemClick(int position) {
-     WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
-     try {
-         if (filtered.size() >= 1) {
-             upperBody.getWorkoutClicked(position,filtered,workoutsViewModel);
-             Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
-                     .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
-         }
-     }catch (NullPointerException e){
-         upperBody.getWorkoutClicked(position,upperBodyApiArrayList,workoutsViewModel);
-         Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
-                 .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
-     }
+        WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
+        try {
+            if (filtered.size() >= 1) {
+                upperBody.getWorkoutClicked(position,filtered,workoutsViewModel);
+                workoutsViewModel.setFavoriteItemPosition(position);
+                workoutsViewModel.setWorkouts(filtered);
+                Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
+                        .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
+            }
+        }catch (NullPointerException e){
+            upperBody.getWorkoutClicked(position,upperBodyApiArrayList,workoutsViewModel);
+            workoutsViewModel.setFavoriteItemPosition(position);
+            workoutsViewModel.setWorkouts(upperBodyApiArrayList);
+            Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
+                    .navigate(R.id.action_navigation_upper_body_to_viewWorkoutFragment);
+        }
 
     }
 }

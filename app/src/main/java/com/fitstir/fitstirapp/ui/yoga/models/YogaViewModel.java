@@ -136,9 +136,11 @@ public class YogaViewModel extends ViewModel {
 						i++;
 						Toast.makeText(context, "Saved Failed...Please try again", Toast.LENGTH_LONG).show();
 
+
 					} else if ( i > 3 && i != 0 ) {
 						i++;
 						Toast.makeText(context, "Check title for errors", Toast.LENGTH_LONG).show();
+
 					}
 					else{
 						i++;
@@ -175,7 +177,7 @@ public class YogaViewModel extends ViewModel {
 					}
 				});
 	}
-	public void fetchYogaData(ArrayList<PoseModel> arrayList, String string, CustomsAdapter adapter){
+	public void fetchCustomData(ArrayList<PoseModel> arrayList, String string, CustomsAdapter adapter){
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
 		db.collection(string).get()
 				.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -190,9 +192,8 @@ public class YogaViewModel extends ViewModel {
 							}
 							adapter.notifyDataSetChanged();
 						}else{
-							//
+							Log.d("Document Snapshot", "onSuccess: Empty Document");
 						}
-
 					}
 				}).addOnFailureListener(new OnFailureListener() {
 					@Override
@@ -201,7 +202,7 @@ public class YogaViewModel extends ViewModel {
 					}
 				});
 	}
-	public void fetchFavorites(ArrayList<PoseModel> data, FavoriteAdapter adapter, Context context){
+	public void fetchFavorites(ArrayList<PoseModel> data, FavoriteAdapter adapter){
 
 		FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 		FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -211,13 +212,14 @@ public class YogaViewModel extends ViewModel {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot snapshot) {
 				if(!snapshot.exists()){
-					Toast.makeText(context, "No Runs Completed Yet..", Toast.LENGTH_LONG).show();
+					//Toast.makeText(context, "No Runs Completed Yet..", Toast.LENGTH_LONG).show();
 				}
 				else{
 					for(DataSnapshot dataSnapshot : snapshot.getChildren())
 					{
 						PoseModel faveData =  dataSnapshot.getValue(PoseModel.class);
 						data.add(faveData);
+						setYoga(data);
 					}
 					adapter.notifyDataSetChanged();
 				}
@@ -228,5 +230,9 @@ public class YogaViewModel extends ViewModel {
 			}
 		});
 	}
+	public ArrayList<PoseModel> fetchAllData(ArrayList<PoseModel> data){
+		//TODO: fetch all yoga levels data and return array list
 
+		return null;
+	}
 }
