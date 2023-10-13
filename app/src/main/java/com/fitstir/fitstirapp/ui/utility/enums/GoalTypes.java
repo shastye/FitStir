@@ -2,8 +2,15 @@ package com.fitstir.fitstirapp.ui.utility.enums;
 
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
+import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public enum GoalTypes { // TODO: Add more to represent all types
     WEIGHT_CHANGE("Weight Change", 0, "Pounds", "Kilograms"),
@@ -66,6 +73,7 @@ public enum GoalTypes { // TODO: Add more to represent all types
             case LOWER_BODY_WEIGHT:
             case WEIGHT_LIFTING_REPS:
             case WEIGHT_LIFTING_WEIGHT:
+                return null;
             case YOGA_DURATION:
             case YOGA_POSITION_COUNT:
             default:

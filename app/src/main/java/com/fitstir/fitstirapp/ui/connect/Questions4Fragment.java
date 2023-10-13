@@ -25,8 +25,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestion4Binding;
+import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -186,6 +189,9 @@ public class Questions4Fragment extends Fragment {
                                                             dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
+                                                                    Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
+                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, user.get_Weight());
+
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
                                                                     Intent myIntent = new Intent(getActivity(), MainActivity.class);
                                                                     Objects.requireNonNull(getActivity()).startActivity(myIntent);
@@ -208,6 +214,9 @@ public class Questions4Fragment extends Fragment {
                                                             dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
+                                                                    Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
+                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, user.get_Weight());
+
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
                                                                     Intent myIntent = new Intent(getActivity(), MainActivity.class);
                                                                     Objects.requireNonNull(getActivity()).startActivity(myIntent);

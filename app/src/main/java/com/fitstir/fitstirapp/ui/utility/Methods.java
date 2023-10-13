@@ -19,6 +19,15 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,8 +35,10 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -134,5 +145,55 @@ public class Methods {
         int secondDay = secondCal.get(Calendar.DAY_OF_YEAR);
 
         return secondDay < firstDay;
+    }
+
+    public static void addGoalToFirebase(GoalTypes type, int value) {
+        Goal thisGoal = new Goal(type, value);
+
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        FirebaseDatabase.getInstance()
+                .getReference("GoalsData")
+                .child(authUser.getUid())
+                .child(thisGoal.getID())
+                .setValue(thisGoal);
+    }
+
+    public static void addDataToGoal(GoalTypes type, double value) {
+        FirebaseDatabase.getInstance()
+                .getReference("GoalsData")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Iterable<DataSnapshot> children = snapshot.getChildren();
+                        Goal goal = null;
+
+                        for (DataSnapshot child : children) {
+                            goal = child.getValue(Goal.class);
+
+                            if (goal != null && goal.getType().equals(type)) {
+                                if (goal.getData() == null) {
+                                    goal.setData(new ArrayList<>());
+                                }
+
+                                goal.addData(Calendar.getInstance().getTime(), value);
+
+                                break;
+                            }
+                        }
+
+                        FirebaseDatabase.getInstance()
+                                .getReference("GoalsData")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .child(goal.getID())
+                                .setValue(goal);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }

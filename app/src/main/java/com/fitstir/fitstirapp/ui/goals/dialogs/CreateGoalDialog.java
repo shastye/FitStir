@@ -117,18 +117,15 @@ public class CreateGoalDialog extends IGenericGoalDialog {
         }
 
         Goal thisGoal = new Goal(uniqueOptions.get(type), value);
+        goalsViewModel.addGoal(thisGoal);
+
+        Methods.addGoalToFirebase(uniqueOptions.get(type), value);
 
         // TODO: pull from database
         //       get workouts that match {type}
         //       add data to goal
 
-        goalsViewModel.addGoal(thisGoal);
-
-        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert authUser != null;
-        DatabaseReference goalsReference = FirebaseDatabase.getInstance().getReference("GoalsData")
-                .child(authUser.getUid());
-        goalsReference.child(thisGoal.getID()).setValue(thisGoal);
+        // Methods.addDataToGoal(uniqueOptions.get(type), newData);
     }
 
     @Override
