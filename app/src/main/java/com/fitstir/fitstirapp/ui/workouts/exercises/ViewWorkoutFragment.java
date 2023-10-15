@@ -132,9 +132,6 @@ public class ViewWorkoutFragment extends Fragment implements RvInterface {
                 String exerciseEquipment = workoutsViewModel.getEquipment().getValue().toString().trim();
                 String exerciseTargetArea = workoutsViewModel.getTarget().getValue().toString().trim();
                 String workoutLength = saveDuration.getText().toString();
-                String filePath = exerciseName +" "+date;
-
-
 
                 if(workoutLength != null && !workoutLength.isEmpty()){
                     //get info enter from user and parse
@@ -154,7 +151,8 @@ public class ViewWorkoutFragment extends Fragment implements RvInterface {
                     DatabaseReference runRef = FirebaseDatabase.getInstance()
                             .getReference("CompletedWorkout")
                             .child(authUser.getUid())
-                            .child(filePath);
+                            .child(date)
+                            .child(exerciseName);
 
                     runRef.setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
