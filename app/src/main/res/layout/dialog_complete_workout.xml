@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="275dp"
+    android:layout_height="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="55dp"
+    android:layout_marginLeft="65dp"
+    app:cardCornerRadius="25dp"
+    android:id="@+id/completed_Workouts_Dialog"
+    android:backgroundTint="@color/cotton_candy_pink">
+
+<androidx.cardview.widget.CardView
+    android:layout_width="268dp"
+    android:layout_height="290dp"
+    app:cardCornerRadius="20dp"
+    android:layout_gravity="center"
+    android:backgroundTint="@color/soft_blue"
+    >
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="260dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="15dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="25dp"
+            android:src="@drawable/flag"
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="35dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completed Workout "
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="26dp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="25dp"
+            android:src="@drawable/flag"
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="190dp"/>
+        <View
+            android:layout_width="200dp"
+            android:layout_height="3dp"
+            android:background="@color/soft_blue"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="47dp"
+            />
+
+        <TextView
+            android:id="@+id/exerciseName_Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:textSize="14sp"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="30dp"/>
+        <TextView
+            android:id="@+id/exerciseTarget_Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Target"
+            android:textSize="14sp"
+            android:layout_marginTop="75dp"
+            android:layout_marginLeft="30dp"/>
+        <TextView
+            android:id="@+id/exerciseEquipment_Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Equipment"
+            android:textSize="14sp"
+            android:layout_marginTop="95dp"
+            android:layout_marginLeft="30dp"/>
+        <TextView
+            android:id="@+id/exerciseGroup_Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Group"
+            android:textSize="14sp"
+            android:layout_marginTop="115dp"
+            android:layout_marginLeft="30dp"/>
+        <EditText
+            android:id="@+id/timeInput_Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="0"
+            android:textSize="12sp"
+            android:inputType="number"
+            android:layout_marginTop="125dp"
+            android:layout_marginLeft="28dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":Enter Duration in mins"
+            android:textSize="14sp"
+            android:layout_marginTop="135dp"
+            android:layout_marginLeft="55dp"/>
+
+        <Button
+            android:id="@+id/cancelWorkout_BTN"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="205dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/buttonquestion"
+            android:text="Cancel"
+            android:textSize="10dp"
+            android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/saveWorkout_BTN"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="205dp"
+            android:layout_marginLeft="145dp"
+            android:background="@drawable/buttonquestion"
+            android:text="Save"
+            android:textSize="10dp"
+            android:textColor="@color/white"/>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.cardview.widget.CardView>
+
+</androidx.cardview.widget.CardView>

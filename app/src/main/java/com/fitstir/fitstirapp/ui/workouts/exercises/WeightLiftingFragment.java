@@ -73,8 +73,6 @@ public class WeightLiftingFragment extends Fragment implements RvInterface {
             workoutApi.fetchData(weights, Constants.WORKOUT_BODYPART.WEIGHT_LIFTING,workoutAdapter);
         }
 
-
-
         // End
 
         return root;
@@ -93,10 +91,12 @@ public class WeightLiftingFragment extends Fragment implements RvInterface {
         try {
             if (filtered.size() >= 1) {
                 workoutApi.getWorkoutClicked(position,filtered,workoutsViewModel);
+                workoutsViewModel.setFavoriteItemPosition(position);
                 Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_weight_lifting_to_viewWorkoutFragment);
             }
         }catch (NullPointerException e){
             workoutApi.getWorkoutClicked(position,weights,workoutsViewModel);
+            workoutsViewModel.setFavoriteItemPosition(position);
             Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_weight_lifting_to_viewWorkoutFragment);
         }
 

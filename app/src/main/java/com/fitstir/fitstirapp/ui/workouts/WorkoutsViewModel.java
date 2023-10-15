@@ -1,6 +1,7 @@
 package com.fitstir.fitstirapp.ui.workouts;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
 import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,8 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.errorprone.annotations.MustBeClosed;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -42,9 +48,11 @@ public class WorkoutsViewModel extends ViewModel {
     private final MutableLiveData<String> vidURL = new MutableLiveData<>();
     private final MutableLiveData<String> altURL = new MutableLiveData<>();
     private final MutableLiveData<String> alt2URL = new MutableLiveData<>();
+    private final MutableLiveData<Integer> currentUser_Weight = new MutableLiveData<>(0);
     private final MutableLiveData<ArrayList<WorkoutApi>> workOuts = new MutableLiveData<>();
 
 
+    public MutableLiveData<Integer> getCurrentUser_Weight() {return currentUser_Weight;}
     public MutableLiveData<ArrayList<WorkoutApi>> getWorkOuts() {return workOuts;}
     public MutableLiveData<Integer> getFavoriteItemPosition() {return favoriteItemPosition;}
     public MutableLiveData<String> getAltURL() {return altURL;}
@@ -66,10 +74,14 @@ public class WorkoutsViewModel extends ViewModel {
     public MutableLiveData<Integer> getDuration() {return duration;}
     public MutableLiveData<Integer> getCalBurned() {return calBurned;}
 
+
     public WorkoutsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("");
     }
+
+
+    public void setCurrentUser_Weight(int weight){this.currentUser_Weight.setValue(weight);}
     public void setWorkouts(ArrayList<WorkoutApi> workOut){this.workOuts.setValue(workOut);}
     public void setFavoriteItemPosition(int pos){this.favoriteItemPosition.setValue(pos);}
     public void setPageCLicked(Integer page){this.pageCLicked.setValue(page);}
@@ -89,26 +101,7 @@ public class WorkoutsViewModel extends ViewModel {
     public void setAlt2URL(String url){this.alt2URL.setValue(url);}
     public void setTotalBurned(Integer totalBurned){this.totalBurned.setValue(totalBurned);}
 
-    public void getClickedItem(int position, ArrayList<WorkoutsViewModel> list){
 
-        String bodyPart = String.valueOf(list.get(position).getBodyPart());
-        String directions = String.valueOf(list.get(position).getDirections());
-        String exerciseName = String.valueOf(list.get(position).getExercise());
-        String equipment = String.valueOf(list.get(position).getEquipment());
-        String gifURL = String.valueOf(list.get(position).getGifURL());
-        String target = String.valueOf(list.get(position).getTarget());
-        String image = String.valueOf(list.get(position).getImage());
-
-
-        setExercise(exerciseName);
-        setDirections(directions);
-        setBodyPart(bodyPart);
-        setEquipment(equipment);
-        setGifURL(gifURL);
-        setTarget(target);
-        setImage(image);
-
-    }
     public void saveFavoriteWorkout(WorkoutApi workout, Context context, String path, String childTitle){
 
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -133,22 +126,45 @@ public class WorkoutsViewModel extends ViewModel {
                     if(i >= 0){
                         i++;
                         Toast.makeText(context, "Saved Failed...Please try again", Toast.LENGTH_LONG).show();
-
-
                     } else if ( i > 3 && i != 0 ) {
                         i++;
                         Toast.makeText(context, "Check title for errors", Toast.LENGTH_LONG).show();
-
                     }
                     else{
                         i++;
                         Toast.makeText(context, "Sorry for the issues...Restart the application", Toast.LENGTH_LONG).show();
                     }
                 }
-
-
             }
         });
     }
+    public double calculateBurnedCaloriesFromExercise( int weight, double time, double metValue) {
 
+        double convertedWeight = weight * 0.45359237;
+        double convertedTime = time / 60;
+
+        double calBurnt = Math.round(metValue * convertedWeight * convertedTime);
+
+        return calBurnt;
+    }
+    public void getUserData(){
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(authUser.getUid());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserProfileData value = snapshot.getValue(UserProfileData.class);
+
+               setCurrentUser_Weight(value.get_Weight().intValue());
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("User Details", "onCancelled: "+error );
+            }
+        });
+    }
 }

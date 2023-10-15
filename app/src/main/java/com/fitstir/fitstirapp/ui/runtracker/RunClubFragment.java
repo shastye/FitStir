@@ -276,7 +276,7 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
                         int age = Integer.parseInt(String.valueOf(viewRuns.getAge().getValue()));
 
                         float burned = 0;
-                        burned += currentRunner.calculateBurnedCalories( weight, converted , age,distanceCal);
+                        burned += currentRunner.calculateBurnedCaloriesFromRun( weight, converted , age,distanceCal);
                         double formatting = Double.parseDouble(decimalFormat.format(burned));
                         String calBurned = String.valueOf(formatting);
                         calories.setText(calBurned);

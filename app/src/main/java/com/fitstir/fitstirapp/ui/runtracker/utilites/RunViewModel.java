@@ -80,9 +80,6 @@ public class RunViewModel extends ViewModel {
     public void setSpeed(double speed){this.speed.setValue(speed);}
     public void setClockTime(double time){this.time.setValue(time);}
     public void setAccuracy(double accuracy){this.accuracy.setValue(accuracy);}
-
-
-
 //endregion
 
 

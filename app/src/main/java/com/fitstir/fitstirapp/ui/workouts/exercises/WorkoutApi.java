@@ -13,74 +13,50 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class WorkoutApi {
-    private String bodyPart;
-    private String equipment;
-    private String exercise;
-    private String target;
-    private String directions;
-    private String gifURL;
-    private String image;
+    private String bodyPart, image, gifURL,
+            directions, target, exercise, equipment, date;
+    private double calories_Burned;
 
+
+    public String getDate() {return date;}
+    public Double getCalories_Burned() {return calories_Burned;}
     public String getImage() {
         return image;
     }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getBodyPart() {
         return bodyPart;
     }
-
-    public void setBodyPart(String bodyPart) {
-        this.bodyPart = bodyPart;
-    }
-
     public String getEquipment() {
         return equipment;
     }
-
-    public void setEquipment(String equipment) {
-        this.equipment = equipment;
-    }
-
     public String getExercise() {
         return exercise;
     }
-
-    public void setExercise(String exercise) {
-        this.exercise = exercise;
-    }
-
     public String getTarget() {
         return target;
     }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
     public String getDirections() {
         return directions;
     }
-
-    public void setDirections(String directions) {
-        this.directions = directions;
-    }
-
     public String getGifURL() {
         return gifURL;
     }
 
-    public void setGifURL(String gifURL) {
-        this.gifURL = gifURL;
-    }
-
     public WorkoutApi(){}
+
+    public WorkoutApi(String bodyPart, String target, String exercise,
+                      String equipment, double calsBurned, String data) {
+        this.bodyPart = bodyPart;
+        this.target = target;
+        this.exercise = exercise;
+        this.equipment = equipment;
+        this.calories_Burned = calsBurned;
+        this.date = data;
+    }
 
     public WorkoutApi(String bodyPart, String equipment, String exercise, String target, String directions, String gifURL, String image) {
         this.bodyPart = bodyPart;
@@ -91,6 +67,31 @@ public class WorkoutApi {
         this.gifURL = gifURL;
         this.image = image;
     }
+
+    public void setDate(String date) {this.date = date;}
+    public void setCalories_Burned(double calories_Burned) {this.calories_Burned = calories_Burned;}
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public void setBodyPart(String bodyPart) {
+        this.bodyPart = bodyPart;
+    }
+    public void setEquipment(String equipment) {
+        this.equipment = equipment;
+    }
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
+    }
+    public void setTarget(String target) {
+        this.target = target;
+    }
+    public void setDirections(String directions) {
+        this.directions = directions;
+    }
+    public void setGifURL(String gifURL) {
+        this.gifURL = gifURL;
+    }
+
 
     public void fetchData(ArrayList<WorkoutApi> arrayList, String string, workoutAdapter adapter){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -103,7 +104,6 @@ public class WorkoutApi {
                             for(DocumentSnapshot d : list){
                                 WorkoutApi bodyApi = d.toObject(WorkoutApi.class);
                                 arrayList.add(bodyApi);
-
                             }
                             adapter.notifyDataSetChanged();
                         }else{
@@ -127,6 +127,8 @@ public class WorkoutApi {
         String image = list.get(position).getImage().trim();
         String gif = list.get(position).getGifURL().trim();
         String equipment = list.get(position).getEquipment().trim();
+        int metValue = list.get(position).getCalories_Burned().intValue();
+
 
         workoutsViewModel.setExercise(exerciseName);
         workoutsViewModel.setBodyPart(bodyPart);
@@ -135,6 +137,7 @@ public class WorkoutApi {
         workoutsViewModel.setImage(image);
         workoutsViewModel.setGifURL(gif);
         workoutsViewModel.setEquipment(equipment);
+        workoutsViewModel.setCalBurned(metValue);
 
     }
     public ArrayList searchList(String text, ArrayList<WorkoutApi> workoutApiArrayList, workoutAdapter viewAdapter) {

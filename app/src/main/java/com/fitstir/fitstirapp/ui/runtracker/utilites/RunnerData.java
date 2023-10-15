@@ -213,7 +213,7 @@ public class RunnerData {
 
         return (float) miles;
     }
-    public double calculateBurnedCalories( int weight, double time, int age, double totalDistance ) {
+    public double calculateBurnedCaloriesFromRun( int weight, double time, int age, double totalDistance ) {
 
         if(totalDistance >= 0.05){
             double calBurnt = Math.round(75.4991 - (age * 0.2757) + (weight * 0.03295) + (totalDistance * 1.0781)) * time/ 8.368;
@@ -230,7 +230,6 @@ public class RunnerData {
             return (float)avg;
         }
         return 0;
-
     }
 
 }

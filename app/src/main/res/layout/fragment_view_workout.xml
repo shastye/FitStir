@@ -21,6 +21,9 @@
         app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
         app:shapeAppearanceOverlay="@style/RoundedBottom" />
 
+    <include layout="@layout/dialog_complete_workout"
+        android:visibility="invisible"/>
+
     <RelativeLayout
         android:id="@+id/toolbar_upperbody_layout"
         android:layout_width="match_parent"
@@ -44,7 +47,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="280dp"
         android:layout_marginTop="350dp"
         >
         <LinearLayout
@@ -159,10 +162,23 @@
         android:id="@+id/tutorial_BTN"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="650dp"
+        android:layout_marginLeft="250dp"
         android:background="@drawable/custom_color_button"
         android:text="Full Tutorial"
-        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_upperbody_layout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/completeWorkout_BTN"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="650dp"
+        android:layout_marginLeft="60dp"
+        android:background="@drawable/custom_color_button"
+        android:text="Complete workout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.003"
         app:layout_constraintStart_toStartOf="@+id/toolbar_upperbody_layout"
