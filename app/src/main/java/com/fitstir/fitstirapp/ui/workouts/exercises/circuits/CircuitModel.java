@@ -105,7 +105,6 @@ public class CircuitModel {
                             }
                             adapter.notifyDataSetChanged();
                         }
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

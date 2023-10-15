@@ -37,7 +37,6 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
     private SearchView searchView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
 
         binding = FragmentUpperBodyBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -63,7 +62,6 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
 
             workouts_RV = root.findViewById(R.id.upper_Body_RV);
             workouts_RV.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            //workouts_RV.setItemAnimator(new DefaultItemAnimator());
             workouts_RV.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
 
             viewAdapter = new workoutAdapter(this.getActivity(), upperBodyApiArrayList, this);
@@ -75,7 +73,6 @@ public class UpperBodyFragment extends Fragment implements RvInterface {
         }
 
         // End
-
         return root;
     }
 

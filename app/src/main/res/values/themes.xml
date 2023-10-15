@@ -23,9 +23,9 @@
         <item name="colorPrimaryVariant">@color/fuchsia</item>
         <item name="colorOnPrimary">@color/off_white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/forest</item>
+        <item name="colorSecondary">@color/soft_blue</item>
         <item name="colorSecondaryVariant">@color/lime</item>
-        <item name="colorOnSecondary">@color/off_white</item>
+        <item name="colorOnSecondary">@color/cool_green</item>
         <!-- Background image. -->
         <item name="background">@drawable/background2</item>
         <!-- Status bar color. -->
@@ -42,14 +42,14 @@
         <item name="android:name">Dark Theme</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/pumpkin_orange</item>
+        <item name="colorOnPrimary">@color/soft_blue</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/purple_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/off_white</item>
+        <item name="colorOnSecondary">@color/safety_orange</item>
         <!-- Background image. -->
-        <item name="background">@drawable/background</item>
+        <item name="background">@drawable/background_darkmode</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Custom Bottom Navigation theme. -->

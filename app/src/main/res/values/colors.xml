@@ -19,5 +19,11 @@
     <color name="Red">#D40B0B</color>
     <color name="soft_pink_pink">#FFB8E5</color>
     <color name="soft_deep_purple">#632272</color>
+    <color name="pear">#74B72E</color>
+    <color name="emerald">#028A0F</color>
+    <color name="cool_green">#33B864</color>
+    <color name="safety_orange">#F28500</color>
+    <color name="pumpkin_orange">#FF7518</color>
+    <color name="neon_orange">#FF5F1F</color>
 
 </resources>
