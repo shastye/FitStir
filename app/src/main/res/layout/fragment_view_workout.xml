@@ -47,10 +47,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="305dp"
         android:layout_marginTop="350dp"
         >
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Body Part: "
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -68,11 +68,10 @@
                 android:id="@+id/tv_BodyPart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginLeft="86dp"
                 android:hint="Body Part: "
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="italic"
                 />
 
@@ -81,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
                 android:text="Target: "
-                android:layout_marginStart="-173dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="18sp"
@@ -91,23 +90,20 @@
                 android:id="@+id/tv_Target"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="37dp"
+                android:layout_marginTop="36dp"
                 android:hint="Target: "
-                android:layout_marginLeft="5dp"
-                android:textSize="20sp"
+                android:layout_marginLeft="60dp"
+                android:textSize="18sp"
                 android:textColor="@color/white"
                 android:textStyle="italic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.275"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                />
 
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="75dp"
-                android:layout_marginStart="-120dp"
+                android:layout_marginLeft="5dp"
                 android:text="Equipment: "
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -119,10 +115,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="75dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="93dp"
                 android:hint="equipment: "
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="italic"
                 />
 
@@ -130,32 +126,27 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="120dp"
-                android:layout_marginStart="-190dp"
+                android:layout_marginTop="115dp"
+                android:layout_marginLeft="5dp"
                 android:text="Directions:"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.003"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                />
 
             <TextView
                 android:id="@+id/tv_Directions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="122dp"
+                android:layout_marginTop="138dp"
                 android:hint="Directions: "
-                android:layout_marginLeft="7dp"
-                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                android:textSize="18.5sp"
                 android:textColor="@color/white"
                 android:textStyle="italic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.275"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
+                />
+
+        </FrameLayout>
     </ScrollView>
 
     <Button

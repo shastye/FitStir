@@ -246,7 +246,7 @@
     <fragment
         android:id="@+id/viewWorkoutFragment"
         android:name="com.fitstir.fitstirapp.ui.workouts.exercises.ViewWorkoutFragment"
-        android:label="fragment_view_workout"
+        android:label="Full Workout View"
         tools:layout="@layout/fragment_view_workout" >
         <action
             android:id="@+id/action_viewWorkoutFragment_to_navigation_upper_body"
@@ -268,7 +268,7 @@
     <fragment
         android:id="@+id/viewCircuitFragment"
         android:name="com.fitstir.fitstirapp.ui.workouts.exercises.circuits.ViewCircuitFragment"
-        android:label="fragment_view_circuit"
+        android:label="Circuit Workouts"
         tools:layout="@layout/fragment_view_circuit" >
         <action
             android:id="@+id/action_viewCircuitFragment_to_navigation_workouts"
@@ -280,7 +280,7 @@
     <fragment
         android:id="@+id/runStatisticsFragment"
         android:name="com.fitstir.fitstirapp.ui.runtracker.RunStatisticsFragment"
-        android:label="fragment_run_statistics"
+        android:label="Run Statistics"
         tools:layout="@layout/fragment_run_statistics" >
         <action
             android:id="@+id/action_runStatisticsFragment_to_navigation_run_club"
@@ -289,7 +289,7 @@
     <fragment
         android:id="@+id/categoryViewFragment"
         android:name="com.fitstir.fitstirapp.ui.yoga.fragments.CategoryViewFragment"
-        android:label="fragment_yoga_view"
+        android:label="Yoga Poses"
         tools:layout="@layout/fragment_yoga_view" >
         <action
             android:id="@+id/action_categoryViewFragment_to_yogaPoseFragment"
@@ -298,7 +298,7 @@
     <fragment
         android:id="@+id/customYogaFragment"
         android:name="com.fitstir.fitstirapp.ui.yoga.fragments.CustomYogaFragment"
-        android:label="fragment_custom_yoga"
+        android:label="Custom Routines"
         tools:layout="@layout/fragment_custom_yoga" >
         <action
             android:id="@+id/action_customYogaFragment_to_yogaPoseFragment"
@@ -310,7 +310,7 @@
     <fragment
         android:id="@+id/favoriteYogaFragment"
         android:name="com.fitstir.fitstirapp.ui.yoga.fragments.FavoriteYogaFragment"
-        android:label="fragment_favorite_yoga"
+        android:label="Favorite Poses"
         tools:layout="@layout/fragment_favorite_yoga" >
         <action
             android:id="@+id/action_favoriteYogaFragment_to_yogaPoseFragment"
@@ -328,12 +328,12 @@
     <fragment
         android:id="@+id/yogaPoseFragment"
         android:name="com.fitstir.fitstirapp.ui.yoga.fragments.YogaPoseFragment"
-        android:label="fragment_yoga_pose"
+        android:label="Full Yoga Pose"
         tools:layout="@layout/fragment_yoga_pose" />
     <fragment
         android:id="@+id/tutorialFragment"
         android:name="com.fitstir.fitstirapp.ui.workouts.exercises.TutorialFragment"
-        android:label="fragment_tutorial"
+        android:label="Workout Tutorials"
         tools:layout="@layout/fragment_tutorial" />
 
 </navigation>
