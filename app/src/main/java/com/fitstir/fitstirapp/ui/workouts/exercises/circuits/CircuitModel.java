@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
+import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -14,17 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CircuitModel {
-    private String exercise;
-    private int duration;
-    private int sets;
-    private int reps;
-    private int calBurn;
-    private String directions;
-    private String gif;
-    private String mapImage;
-    private int totalBurn;
+    private String exercise, directions, gif, mapImage, date ;
+    private int duration, sets, reps, calBurn, totalBurn;
 
 
+    public String getDate() {return date;}
     public String getGif() {
         return gif;
     }
@@ -48,7 +44,14 @@ public class CircuitModel {
     }
 
     public CircuitModel(){}
-    public CircuitModel(String exercise, int duration, int sets, int reps, int calBurned, String directions, String gif,String mapImage, int totalBurn) {
+
+    public CircuitModel(String exercise, int totalBurn, String date) {
+        this.exercise = exercise;
+        this.totalBurn = totalBurn;
+        this.date = date;
+    }
+
+    public CircuitModel(String exercise, int duration, int sets, int reps, int calBurned, String directions, String gif, String mapImage, int totalBurn) {
         this.exercise = exercise;
         this.duration = duration;
         this.sets = sets;
@@ -60,6 +63,7 @@ public class CircuitModel {
         this.mapImage = mapImage;
     }
 
+    public void setDate(String date) {this.date = date;}
     public void setMapImage(String mapImage) {this.mapImage = mapImage;}
     public void setTotalBurn(int totalBurn) {this.totalBurn = totalBurn;}
     public void setExercise(String exercise) {
@@ -84,6 +88,7 @@ public class CircuitModel {
         this.gif = gif;
     }
 
+
     public void fetchCircuitData(ArrayList<CircuitModel> circuit, circuitAdapter adapter, String string){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(string)
@@ -95,6 +100,8 @@ public class CircuitModel {
                             for(DocumentSnapshot d :snapshots ){
                                 CircuitModel circuits = d.toObject(CircuitModel.class);
                                 circuit.add(circuits);
+                                setExercise(circuits.getExercise());
+                                setTotalBurn(circuits.getTotalBurn());
                             }
                             adapter.notifyDataSetChanged();
                         }
@@ -106,5 +113,14 @@ public class CircuitModel {
                         Log.e("error while loading",e.toString());
                     }
                 });
+    }
+    public void getWorkoutClicked(int position, ArrayList<CircuitModel> list, WorkoutsViewModel workoutsViewModel){
+
+        String exerciseName = list.get(position).getExercise().trim();
+        int totalBurned = list.get(position).getTotalBurn();
+
+        workoutsViewModel.setExercise(exerciseName);
+        workoutsViewModel.setTotalBurned(totalBurned);
+
     }
 }

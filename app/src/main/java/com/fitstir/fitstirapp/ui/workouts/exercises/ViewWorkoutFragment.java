@@ -134,7 +134,7 @@ public class ViewWorkoutFragment extends Fragment implements RvInterface {
                 String workoutLength = saveDuration.getText().toString();
 
                 if(workoutLength != null && !workoutLength.isEmpty()){
-                    //get info enter from user and parse
+                    //get user input and parse
                     //get METValue from firebase database
                     //get users current weight from profile
                     //add MetValue and users input into method to calculate total calories burned
@@ -145,6 +145,7 @@ public class ViewWorkoutFragment extends Fragment implements RvInterface {
 
                     double totalCaloriesBurned = workoutsViewModel.calculateBurnedCaloriesFromExercise(usersWeight,workoutDuration,metValue);
 
+                    //create data model and filepath
                     WorkoutApi data = new WorkoutApi(exerciseGroup, exerciseTargetArea,exerciseName,exerciseEquipment,totalCaloriesBurned, date);
 
                     FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();

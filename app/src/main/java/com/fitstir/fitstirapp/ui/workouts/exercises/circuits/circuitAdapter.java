@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
@@ -13,18 +14,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
+import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.RvInterface;
+import com.fitstir.fitstirapp.ui.workouts.exercises.WorkoutApi;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class circuitAdapter extends RecyclerView.Adapter<circuitAdapter.ViewHolder> {
 
     private ArrayList<CircuitModel> list;
     private Context context;
+    private RvInterface rvInterface;
 
-    public circuitAdapter(Context context, ArrayList<CircuitModel> circuitModels) {
+    public circuitAdapter(Context context, ArrayList<CircuitModel> circuitModels, RvInterface rvInterface) {
 
         this.context = context;
         this.list = circuitModels;
+        this.rvInterface = rvInterface;
     }
 
     @NonNull
@@ -38,7 +52,6 @@ public class circuitAdapter extends RecyclerView.Adapter<circuitAdapter.ViewHold
     public void onBindViewHolder(@NonNull circuitAdapter.ViewHolder holder, int position) {
 
         CircuitModel circuits = list.get(position);
-
         holder.name.setText(circuits.getExercise());
         holder.direction.setText(circuits.getDirections());
         holder.sets.setText(Integer.toString(circuits.getSets()));
@@ -50,7 +63,9 @@ public class circuitAdapter extends RecyclerView.Adapter<circuitAdapter.ViewHold
         holder.mapImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_viewCircuitFragment_to_navigation_circuit_workouts);
+               if(rvInterface != null){
+                   rvInterface.onItemClick(holder.getAdapterPosition());
+               }
             }
         });
 
