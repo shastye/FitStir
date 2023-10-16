@@ -21,11 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            >
 
             <androidx.cardview.widget.CardView
                 android:layout_width="355dp"
                 android:layout_height="235dp"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="55dp"
                 app:cardCornerRadius="35dp"
                 app:cardElevation="20dp"
@@ -55,8 +56,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pose Name: "
+                android:layout_marginLeft="5dp"
                 android:textStyle="bold"
-                android:layout_marginStart="-165dp"
                 android:layout_marginTop="70dp"
                 />
             <TextView
@@ -64,8 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Pose Name: "
-                android:layout_marginStart="-25dp"
-                android:layout_marginTop="-19dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="-20dp"
                 android:textSize="14sp"
                 android:textColorHighlight="@color/white"
                 />
@@ -74,8 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Translated Name: "
+                android:layout_marginLeft="5dp"
                 android:textStyle="bold"
-                android:layout_marginStart="-147.5dp"
                 android:layout_marginTop="2dp"
                 />
             <TextView
@@ -83,8 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Translated Name: "
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="-19dp"
+                android:layout_marginTop="-20dp"
+                android:layout_marginLeft="110dp"
                 android:textSize="14sp"
                 />
             <TextView
@@ -92,16 +93,16 @@
                 android:layout_height="wrap_content"
                 android:text="Sanskrit Name: "
                 android:textStyle="bold"
-                android:layout_marginStart="-154.5dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginLeft="5dp"
                 />
             <TextView
                 android:id="@+id/pose_SanskritName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Sanskrit Name: "
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="-19dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="-20dp"
                 android:textSize="14sp"
                 />
 
@@ -109,8 +110,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pose Benefits: "
+                android:layout_marginLeft="5dp"
                 android:textStyle="bold"
-                android:layout_marginStart="-156.7dp"
+
                 android:layout_marginTop="10dp"
                 />
             <TextView
@@ -118,9 +120,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pose Benefits: "
-                android:layout_marginLeft="5dp"
                 android:textColorHighlight="@color/cotton_candy_pink"
                 android:textSize="14sp"
+                android:layout_marginLeft="5dp"
                 />
 
 
@@ -129,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:text="Description: "
                 android:textStyle="bold"
-                android:layout_marginStart="-161dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="20dp"
                 />
             <TextView
