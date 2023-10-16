@@ -49,8 +49,10 @@ public class YogaViewModel extends ViewModel {
 	private final MutableLiveData<String> url_Vid = new MutableLiveData<>(" ");
 	private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
 	private MutableLiveData<String> type = new MutableLiveData<>();
+	private MutableLiveData<Integer> favoriteItemCLickID = new MutableLiveData<>();
 
 
+	public MutableLiveData<Integer> getFavoriteItemCLickID() {return favoriteItemCLickID;}
 
 	public MutableLiveData<Integer> getFavoriteItemPosition() {return favoriteItemPosition;}
 	public MutableLiveData<ArrayList<PoseModel>> getYoga() {return yoga;}
@@ -66,6 +68,30 @@ public class YogaViewModel extends ViewModel {
 	public MutableLiveData<String> getUrl_PNG() {return url_PNG;}
 	public MutableLiveData<String> getVideo() {return url_Vid;}
 	public MutableLiveData<String> getType() {return type;}
+
+	public MutableLiveData<PoseModel> getLikedFavorites() {return likedFavorites;}
+
+	public YogaViewModel() {
+		mText = new MutableLiveData<>();
+		mText.setValue(" ");
+	}
+
+	public void setFavoriteItemCLickID(int id){favoriteItemCLickID.setValue(id);}
+	public void setFavoriteItemPosition(int pos){favoriteItemPosition.setValue(pos);}
+	public void setYoga(ArrayList<PoseModel> allPoses){yoga.setValue(allPoses);}
+	public void setLikedFavorites(PoseModel yogaModel){likedFavorites.setValue(yogaModel);}
+	public void setType(String types) {type.setValue(types);}
+	public void setCat_Id(Integer id){cat_Id.setValue(id);}
+	public void setEnglish_Name(String englishName){english_Name.setValue(englishName);}
+	public void setSanskrit_Name(String sanskritName){sanskrit_Name.setValue(sanskritName);}
+	public void setTranslated_Name(String translatedName){translated_Name.setValue(translatedName);}
+	public void setPose_Description(String poseDescription){pose_Description.setValue(poseDescription);}
+	public void setPose_Benefits(String benefits){pose_Benefits.setValue(benefits);}
+	public void setUrl_PNG(String urlPng){url_PNG.setValue(urlPng);}
+	public void setUrl_Vid(String urlVid){url_Vid.setValue(urlVid);}
+	public void setLevels(String difficulty_Levels){levels.setValue(difficulty_Levels);}
+
+
 	public void getClickedItem(int position, ArrayList<PoseModel> list){
 
 		String englishName = list.get(position).getEnglish_name();
@@ -88,29 +114,6 @@ public class YogaViewModel extends ViewModel {
 		setUrl_Vid(urlVid);
 		setType(pose_Type);
 	}
-	public MutableLiveData<PoseModel> getLikedFavorites() {return likedFavorites;}
-
-	public YogaViewModel() {
-		mText = new MutableLiveData<>();
-		mText.setValue(" ");
-	}
-
-	public void setFavoriteItemPosition(int pos){favoriteItemPosition.setValue(pos);}
-	public void setYoga(ArrayList<PoseModel> allPoses){yoga.setValue(allPoses);}
-	public void setLikedFavorites(PoseModel yogaModel){likedFavorites.setValue(yogaModel);}
-	public void setType(String types) {type.setValue(types);}
-	public void setCat_Id(Integer id){cat_Id.setValue(id);}
-	public void setEnglish_Name(String englishName){english_Name.setValue(englishName);}
-	public void setSanskrit_Name(String sanskritName){sanskrit_Name.setValue(sanskritName);}
-	public void setTranslated_Name(String translatedName){translated_Name.setValue(translatedName);}
-	public void setPose_Description(String poseDescription){pose_Description.setValue(poseDescription);}
-	public void setPose_Benefits(String benefits){pose_Benefits.setValue(benefits);}
-	public void setUrl_PNG(String urlPng){url_PNG.setValue(urlPng);}
-	public void setUrl_Vid(String urlVid){url_Vid.setValue(urlVid);}
-	public void setLevels(String difficulty_Levels){levels.setValue(difficulty_Levels);}
-
-
-
 	public void saveYogaData(PoseModel pose, Context context, String path, String childTitle){
 
 		FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -202,7 +205,7 @@ public class YogaViewModel extends ViewModel {
 					}
 				});
 	}
-	public void fetchFavorites(ArrayList<PoseModel> data, FavoriteAdapter adapter){
+	public void fetchFavorites(ArrayList<PoseModel> data, FavoriteAdapter adapter, View dialog){
 
 		FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 		FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -212,14 +215,16 @@ public class YogaViewModel extends ViewModel {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot snapshot) {
 				if(!snapshot.exists()){
-					//Toast.makeText(context, "No Runs Completed Yet..", Toast.LENGTH_LONG).show();
+					dialog.setVisibility(View.VISIBLE);
 				}
 				else{
+					dialog.setVisibility(View.INVISIBLE);
 					for(DataSnapshot dataSnapshot : snapshot.getChildren())
 					{
 						PoseModel faveData =  dataSnapshot.getValue(PoseModel.class);
 						data.add(faveData);
 						setYoga(data);
+
 					}
 					adapter.notifyDataSetChanged();
 				}

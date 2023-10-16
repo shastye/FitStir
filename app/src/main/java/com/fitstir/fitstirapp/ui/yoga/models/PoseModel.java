@@ -8,17 +8,14 @@ public class PoseModel {
     private String difficulty_level,english_name,sanskrit_name,
             translation_name,pose_description,pose_benefits,url_png,url_Vid,pose_Type, routineName;
     private PoseModel yogaPose;
-    private Integer routineSize;
+    private Integer routineSize, favoriteClickID;
     private ArrayList<PoseModel>yogaList;
 
+
+    public Integer getFavoriteClickID() {return favoriteClickID;}
     public ArrayList<PoseModel> getYogaList() {
         return yogaList;
     }
-
-    public void setYogaList(ArrayList<PoseModel> yogaList) {
-        this.yogaList = yogaList;
-    }
-
     public Integer getRoutineSize() {return routineSize;}
     public String getRoutineName() {return routineName;}
     public PoseModel getYoga() {return yogaPose;}
@@ -68,6 +65,11 @@ public class PoseModel {
         this.yogaPose = yogaPose;
     }
 
+
+    public void setFavoriteClickID(Integer favoriteClickID) {this.favoriteClickID = favoriteClickID;}
+    public void setYogaList(ArrayList<PoseModel> yogaList) {
+        this.yogaList = yogaList;
+    }
     public void setRoutineName(String routineName) {this.routineName = routineName;}
     public void setPose_Type(String pose_Type) {this.pose_Type = pose_Type;}
     public void setDifficulty_level(String difficulty_level) {this.difficulty_level = difficulty_level;}

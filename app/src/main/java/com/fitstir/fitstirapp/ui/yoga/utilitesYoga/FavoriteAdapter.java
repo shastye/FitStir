@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.utility.RvInterface;
 import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
+import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
@@ -59,7 +60,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 if(rvInterface != null){
+                    poseApi.setFavoriteClickID(0);
                     rvInterface.onItemClick(holder.getAdapterPosition());
+
                 }
             }
         });
@@ -67,6 +70,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 if(rvInterface != null){
+                    poseApi.setFavoriteClickID(1);
                     rvInterface.onItemClick(holder.getAdapterPosition());
                 }
             }

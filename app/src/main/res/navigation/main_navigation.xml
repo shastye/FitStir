@@ -89,9 +89,6 @@
             android:id="@+id/action_navigation_yoga_to_categoryViewFragment"
             app:destination="@id/categoryViewFragment" />
         <action
-            android:id="@+id/action_navigation_yoga_to_recentYogaFragment"
-            app:destination="@id/recentYogaFragment" />
-        <action
             android:id="@+id/action_navigation_yoga_to_favoriteYogaFragment"
             app:destination="@id/favoriteYogaFragment" />
         <action
@@ -314,15 +311,6 @@
         tools:layout="@layout/fragment_favorite_yoga" >
         <action
             android:id="@+id/action_favoriteYogaFragment_to_yogaPoseFragment"
-            app:destination="@id/yogaPoseFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/recentYogaFragment"
-        android:name="com.fitstir.fitstirapp.ui.yoga.fragments.RecentYogaFragment"
-        android:label="fragment_recent_yoga"
-        tools:layout="@layout/fragment_recent_yoga" >
-        <action
-            android:id="@+id/action_recentYogaFragment_to_yogaPoseFragment"
             app:destination="@id/yogaPoseFragment" />
     </fragment>
     <fragment

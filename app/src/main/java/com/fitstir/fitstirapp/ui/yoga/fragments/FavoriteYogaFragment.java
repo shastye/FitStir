@@ -43,11 +43,9 @@ public class FavoriteYogaFragment extends Fragment implements RvInterface {
     private ArrayList<PoseModel> favoriteList;
     private RecyclerView rv;
     private FavoriteAdapter adapter;
-    private ImageButton delete;
-    private PoseModel yogaPose;
     private RvInterface rvI;
-
     private View dialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,7 +62,6 @@ public class FavoriteYogaFragment extends Fragment implements RvInterface {
             dialog.setVisibility(View.INVISIBLE);
         }
 
-        yogaPose = new PoseModel();
         rvI = this;
         favoriteList = new ArrayList<>();
 
@@ -74,24 +71,30 @@ public class FavoriteYogaFragment extends Fragment implements RvInterface {
         adapter = new FavoriteAdapter(rvI, requireActivity(), favoriteList);
         rv.setAdapter(adapter);
 
+        favoriteList.clear();
+        yogaView.fetchFavorites(favoriteList, adapter, dialog);
+
         return root;
     }
 
     @Override
     public void onItemClick(int position) {
 
-        PoseModel poseApi = new PoseModel();
+        //PoseModel poseApi = new PoseModel();
+        YogaViewModel yogaView = new ViewModelProvider(this).get(YogaViewModel.class);
+        yogaView.getClickedItem(position, favoriteList);
 
         //delete item from firebase
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("FavoriteItemYoga")
                 .child(user.getUid())
-                .child(poseApi.getEnglish_name());
+                .child(yogaView.getEnglish_Name().getValue().toString());
         dataRef.removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-
+                favoriteList.remove(position);
+                adapter.notifyItemRemoved(position);
                 Toast.makeText(requireActivity(), "Favorite unsaved", Toast.LENGTH_LONG).show();
             }
         });

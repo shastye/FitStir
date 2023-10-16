@@ -47,9 +47,6 @@
                     android:onClick="toggleFavorite"
                     android:src="@drawable/baseline_favorite_24"
                     />
-
-
-
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -70,7 +67,6 @@
                 android:textSize="14sp"
                 android:textColorHighlight="@color/white"
                 />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,7 +101,6 @@
                 android:layout_marginTop="-20dp"
                 android:textSize="14sp"
                 />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,8 +119,6 @@
                 android:textSize="14sp"
                 android:layout_marginLeft="5dp"
                 />
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,13 +135,11 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="14sp"
                 />
-
             <WebView
                 android:id="@+id/youtube_View"
                 android:layout_width="match_parent"
                 android:layout_height="255dp"
                 android:layout_marginTop="20dp"/>
-
         </LinearLayout>
     </ScrollView>
 

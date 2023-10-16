@@ -92,18 +92,16 @@ public class LowerBodyFragment extends Fragment implements RvInterface {
     public void onItemClick(int position) {
         WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
 
-        try {
-            if (filtered.size() >= 1) {
+            if (filtered != null && filtered.size() != 0) {
                 lowerBody.getWorkoutClicked(position,filtered,workoutsViewModel);
                 workoutsViewModel.setFavoriteItemPosition(position);
                 Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_lower_body_to_viewWorkoutFragment);
             }
-        }catch (NullPointerException e){
-            lowerBody.getWorkoutClicked(position,lowerBodyArrayList,workoutsViewModel);
-            workoutsViewModel.setFavoriteItemPosition(position);
-            Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_lower_body_to_viewWorkoutFragment);
-
-        }
+            else{
+                lowerBody.getWorkoutClicked(position,lowerBodyArrayList,workoutsViewModel);
+                workoutsViewModel.setFavoriteItemPosition(position);
+                Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_lower_body_to_viewWorkoutFragment);
+            }
 
     }
 }

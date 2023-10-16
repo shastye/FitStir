@@ -51,7 +51,7 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
     private ArrayList<PoseModel> faveList;
     private RvInterface rvInterface;
     private SharedPreferences sharedPreferences;
-    private Boolean isFavoriteButtonOn = false;
+    private Boolean isFavoriteButtonOn;
 
 
     @Override
@@ -106,13 +106,13 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
 
                 // Toggle favorite state
                 isFavoriteButtonOn = !isFavoriteButtonOn;
-                updateFavorite();
 
                 // Save button state
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("is_favorite", isFavoriteButtonOn);
                 editor.apply();
 
+                updateFavorite(isFavoriteButtonOn);
                 onItemClick(yogaView.getFavoriteItemPosition().getValue());
             }
         });
@@ -121,7 +121,7 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
     }
 
 
-    private void updateFavorite() {
+    private void updateFavorite(boolean isFavorite) {
         if(isFavoriteButtonOn){
             if(favorite_Button != null){
                 favorite_Button.setImageResource(R.drawable.baseline_favorite_purple);
@@ -180,8 +180,9 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
         super.onSaveInstanceState(outState);
 
         // Saving the favorite state
+        updateFavorite(isFavoriteButtonOn);
         outState.putBoolean("is_favorite", isFavoriteButtonOn);
-        updateFavorite();
+
     }
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState){
@@ -189,9 +190,10 @@ public class YogaPoseFragment extends Fragment implements RvInterface {
 
         //restoring the favorite button state
         if(savedInstanceState != null){
+            updateFavorite(isFavoriteButtonOn);
             isFavoriteButtonOn = savedInstanceState.getBoolean("is_favorite");
 
-            updateFavorite();
+
         }
     }
 
