@@ -241,7 +241,7 @@ public class SettingsProfileFragment extends Fragment {
                         try {
                             int newValueInt = Integer.parseInt(newValue);
 
-                            ((SettingsTopicView) view).setTitle(newValue);
+                            ((SettingsTopicView) view).setTitle(newValue + unitValue);
                             toSet.setValue(newValueInt);
 
                             popupWindow.dismiss();
@@ -252,7 +252,7 @@ public class SettingsProfileFragment extends Fragment {
                         try {
                             int newValueInt = Integer.parseInt(newValue);
 
-                            ((SettingsTopicView) view).setTitle(newValue);
+                            ((SettingsTopicView) view).setTitle(newValue + unitValue);
                             user.addWeightData(newValueInt);
 
                             popupWindow.dismiss();
@@ -263,7 +263,7 @@ public class SettingsProfileFragment extends Fragment {
                         try {
                             int newValueInt = Integer.parseInt(newValue);
 
-                            ((SettingsTopicView) view).setTitle(newValue);
+                            ((SettingsTopicView) view).setTitle(newValue + unitValue);
                             user.updateWeightGoal(newValueInt);
 
                             popupWindow.dismiss();
@@ -282,7 +282,7 @@ public class SettingsProfileFragment extends Fragment {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task2) {
                                                                 if (task2.isSuccessful()) {
-                                                                    ((SettingsTopicView) view).setTitle(newValue);
+                                                                    ((SettingsTopicView) view).setTitle(newValue + unitValue);
                                                                     toSet.setValue(newValue);
                                                                 } else {
                                                                     Toast.makeText(getActivity(), "An error occurred. Email not updated.", Toast.LENGTH_SHORT).show();
@@ -298,7 +298,7 @@ public class SettingsProfileFragment extends Fragment {
                             popupWindow.dismiss();
                         }
                     } else {
-                        ((SettingsTopicView) view).setTitle(newValue);
+                        ((SettingsTopicView) view).setTitle(newValue + unitValue);
                         toSet.setValue(newValue);
                         popupWindow.dismiss();
                     }
