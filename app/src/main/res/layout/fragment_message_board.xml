@@ -7,6 +7,7 @@
     tools:context=".ui.connect.MessageBoardFragment">
 
     <ImageView
+        android:id="@+id/imageView11"
         android:layout_width="650dp"
         android:layout_height="523dp"
         android:background="@drawable/backgroundzoomed"
@@ -17,10 +18,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="350dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/dialog_register_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView29" />
+
     <TextView
+        android:id="@+id/textView29"
         android:layout_width="411dp"
         android:layout_height="38dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="204dp"
         android:text="Congratulations on your new fitness journey with FitStir:"
         android:textAlignment="center"
         android:textSize="16dp"
@@ -31,21 +44,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:layout_marginTop="253dp"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
         android:text="Regular physical activity is one of the most important things you can do for your health. Being physically active can improve your brain health, help manage weight, reduce the risk of disease, strengthen bones and muscles, and improve your ability to do everyday activities."
-        android:textSize="17dp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="viewStart"
+        android:textSize="15dp"
+        android:textColor="@color/off_white"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintEnd_toEndOf="@+id/imageView12"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/imageView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView29"
+        app:layout_constraintVertical_bias="0.404" />
 
     <ImageView
+        android:id="@+id/imageView13"
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="132dp"
         android:background="@drawable/rounded_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
@@ -56,15 +72,15 @@
         android:id="@+id/textView6"
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="154dp"
         android:text="Health and WellNess"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
     <Button
         android:id="@+id/button_next1"

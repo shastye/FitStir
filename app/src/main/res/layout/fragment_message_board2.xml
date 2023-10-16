@@ -18,6 +18,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
+        android:id="@+id/imageView14"
         android:layout_width="402dp"
         android:layout_height="62dp"
         android:layout_marginTop="152dp"
@@ -52,19 +53,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="216dp"
-        android:layout_marginTop="252dp"
-        android:text="Tackling a new diet and weight loss can be tough. 28% of people give up because of lack of will power, another 27% lose motivation. Theres another 25% that have trouble finding time to workout and a shared 25% between the expenses of healither foods and having gym access. Every health journey comes with some bumps in the road. With this journey you can decrease anxiety, depression and boost your overall brain power. So keep pushing and welcome to FitStir where we help you bet the odds."
-        android:textSize="17dp"
-
-        android:textAlignment="center"
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="380dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/dialog_register_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+
+    <TextView
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:text="Tackling a new diet and weight loss can be tough. 28% of people give up because of lack of will power, another 27% lose motivation. Theres another 25% that have trouble finding time to workout and a shared 25% between the expenses of healither foods and having gym access. Every health journey comes with some bumps in the road. With this journey you can decrease anxiety, depression and boost your overall brain power. So keep pushing and welcome to FitStir where we help you bet the odds."
+        android:textAlignment="viewStart"
+        android:textColor="@color/off_white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView15"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="@+id/imageView15"
+        app:layout_constraintTop_toTopOf="@+id/imageView15" />
 
     <Button
         android:id="@+id/button_next2"

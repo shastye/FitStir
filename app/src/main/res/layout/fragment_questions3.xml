@@ -8,51 +8,114 @@
     android:background="@drawable/background2">
 
 
-    <Button
+    <ImageView
         android:id="@+id/button_non_active"
-        android:layout_width="280dp"
-        android:layout_height="112dp"
-        android:layout_marginTop="228dp"
-        android:background="@color/soft_blue"
-        android:text="Non-Active -
-                                               when you don't move your body for long periods of time. This can include sitting or lying on the sofa watching TV, and sitting at a desk or computer."
-        android:textAlignment="textStart"
-        android:textSize="12sp"
+        android:layout_width="320dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/dialog_register_message"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Non-Active"
+        android:textColor="@color/off_white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/button_non_active"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_non_active" />
+
+    <TextView
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:text="when you don't move your body for long periods of time.This can include sitting or lying on the sofa watching TV, and sitting at a desk or computer."
+        android:textAlignment="viewStart"
+        android:textColor="@color/off_white"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_non_active"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/button_non_active"
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <ImageView
         android:id="@+id/button_light_active"
-        android:layout_width="280dp"
-        android:layout_height="105dp"
-        android:layout_marginTop="356dp"
-        android:text="Light-Active -
-
-                                             Light physical demands on a daily basis with exercise routines consistent of 2- 3 times a week"
-        android:textAlignment="textStart"
-        android:textSize="12sp"
-        android:background="@color/soft_blue"
+        android:layout_width="320dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/dialog_register_message"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button_non_active" />
 
-    <Button
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Light Active"
+        android:textColor="@color/off_white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/button_non_active"
+        app:layout_constraintHorizontal_bias="0.446"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_light_active" />
+
+    <TextView
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Light physical demands on a daily basis with exercise routines consistent of 2- 3 times a week"
+        android:textAlignment="viewStart"
+        android:textColor="@color/off_white"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_light_active"
+        app:layout_constraintStart_toStartOf="@+id/button_light_active"
+        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+    <ImageView
         android:id="@+id/button_active"
-        android:layout_width="280dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="480dp"
-        android:background="@color/soft_blue"
-        android:text="Active -
-                                                 Alternating moderate to intense workouts 4-5 times per week"
-        android:textAlignment="textStart"
-        android:textSize="12sp"
+        android:layout_width="320dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/dialog_register_message"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button_light_active" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Active"
+        android:textColor="@color/off_white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/button_non_active"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_active" />
+
+    <TextView
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:text="Alternating moderate to intense workouts 4-5 times per week"
+        android:textAlignment="viewStart"
+        android:textColor="@color/off_white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_active"
+        app:layout_constraintStart_toStartOf="@+id/button_active"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
     <Button
         android:id="@+id/button_back3"

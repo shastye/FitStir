@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestionBinding;
@@ -32,21 +33,18 @@ public class Questions2Fragment extends Fragment {
         View root = binding.getRoot();
 
         //additional text here
-
-
-
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
         //navigate to next questions
-        Button toneUp = root.findViewById(R.id.button_tone_up);
+        ImageView toneUp = root.findViewById(R.id.button_tone_up);
         toneUp.setOnClickListener(v->{
             Navigation.findNavController(v).navigate(R.id.action_questions2Fragment_to_questions3Fragment);
         });
-        Button bulkUp = root.findViewById(R.id.button_bulk_up);
+        ImageView bulkUp = root.findViewById(R.id.button_bulk_up);
         bulkUp.setOnClickListener(v->{
             Navigation.findNavController(v).navigate(R.id.action_questions2Fragment_to_questions3Fragment);
         });
-        Button strength = root.findViewById(R.id.button_strength);
+        ImageView strength = root.findViewById(R.id.button_strength);
         strength.setOnClickListener(v->{
             Navigation.findNavController(v).navigate(R.id.action_questions2Fragment_to_questions3Fragment);
         });

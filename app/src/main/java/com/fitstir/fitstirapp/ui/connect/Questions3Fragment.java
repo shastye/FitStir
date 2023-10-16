@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestions2Binding;
@@ -39,15 +40,15 @@ public class Questions3Fragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
         //navigate to next questions
-        Button nonActive = root.findViewById(R.id.button_non_active);
+        ImageView nonActive = root.findViewById(R.id.button_non_active);
         nonActive.setOnClickListener(v->{
             Navigation.findNavController(v).navigate(R.id.action_questions3Fragment_to_questions4Fragment);
         });
-        Button lightActive = root.findViewById(R.id.button_light_active);
+        ImageView lightActive = root.findViewById(R.id.button_light_active);
         lightActive.setOnClickListener(v->{
             Navigation.findNavController(v).navigate(R.id.action_questions3Fragment_to_questions4Fragment);
         });
-        Button active = root.findViewById(R.id.button_active);
+        ImageView active = root.findViewById(R.id.button_active);
         active.setOnClickListener(v->{
             Navigation.findNavController(v).navigate(R.id.action_questions3Fragment_to_questions4Fragment);
         });
