@@ -163,9 +163,6 @@ public class GoalsFragment extends Fragment {
         binding = null;
     }
 
-    private void updateUI(ArrayList<Goal> goals) {
-    }
-
     private class GoalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Goal goal;
         private final TextView nameTextView;

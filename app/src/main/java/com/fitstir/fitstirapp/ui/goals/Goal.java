@@ -1,5 +1,6 @@
 package com.fitstir.fitstirapp.ui.goals;
 
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -54,14 +55,14 @@ public class Goal {
         } else if (this.data.size() == 1) {
             Date tempDate = this.maxDate;
 
-            if (data.first.before(tempDate)) {
+            if (Methods.firstIsAfterSecond(tempDate, data.first)) {
                 this.minDate = data.first;
             } else {
                 this.maxDate = data.first;
                 this.minDate = tempDate;
             }
         } else {
-            if (data.first.after(this.maxDate)) {
+            if (Methods.firstIsAfterSecond(data.first, this.maxDate)) {
                 this.maxDate = data.first;
             } else if (data.first.before(this.minDate)) {
                 this.minDate = data.first;

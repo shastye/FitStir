@@ -70,6 +70,7 @@ public class DeleteConformationDialog extends IGenericAlertDialog {
                     .setValue(dataArray);
 
             weightLossViewModel.setWeightData(dataArray);
+            weightLossViewModel.getThisUser().getValue().set_Weight((int) dataArray.get(dataArray.size() - 1).second);
         }
     }
 

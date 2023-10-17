@@ -186,14 +186,15 @@ public class Methods {
                             goal = child.getValue(Goal.class);
 
                             if (goal != null && goal.getType().equals(type)) {
-                                if (goal.getData() == null) {
+                                if (goal.getData() == null || goal.getData().size() == 0) {
                                     goal.setData(new ArrayList<>());
-                                }
-
-                                if (Methods.firstIsSecond(goal.getData().get(goal.getData().size() - 1).first, date)) {
-                                    goal.getData().set(goal.getData().size() - 1, new GoalDataPair(goal.getData().get(goal.getData().size() - 1).first, value));
-                                } else {
                                     goal.addData(date, value);
+                                } else {
+                                    if (Methods.firstIsSecond(goal.getData().get(goal.getData().size() - 1).first, date)) {
+                                        goal.getData().set(goal.getData().size() - 1, new GoalDataPair(goal.getData().get(goal.getData().size() - 1).first, value));
+                                    } else {
+                                        goal.addData(date, value);
+                                    }
                                 }
 
                                 break;

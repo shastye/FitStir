@@ -45,7 +45,10 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void methodAddDataToGoalWorksIfIsGoal() {
-        Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), 135.0);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -2);
+
+        Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, cal.getTime(), 132.0);
 
         try {
             Thread.sleep(2000);
