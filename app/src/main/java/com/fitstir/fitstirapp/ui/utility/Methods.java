@@ -21,6 +21,8 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -159,7 +161,17 @@ public class Methods {
                 .setValue(thisGoal);
     }
 
-    public static void addDataToGoal(GoalTypes type, double value) {
+    public static void addGoalToFirebase(Goal goal) {
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert authUser != null;
+        FirebaseDatabase.getInstance()
+                .getReference("GoalsData")
+                .child(authUser.getUid())
+                .child(goal.getID())
+                .setValue(goal);
+    }
+
+    public static void addDataToGoal(GoalTypes type, Date date, double value) {
         FirebaseDatabase.getInstance()
                 .getReference("GoalsData")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -177,7 +189,7 @@ public class Methods {
                                     goal.setData(new ArrayList<>());
                                 }
 
-                                goal.addData(Calendar.getInstance().getTime(), value);
+                                goal.addData(date, value);
 
                                 break;
                             }
@@ -192,7 +204,7 @@ public class Methods {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        int x = 0;
                     }
                 });
     }

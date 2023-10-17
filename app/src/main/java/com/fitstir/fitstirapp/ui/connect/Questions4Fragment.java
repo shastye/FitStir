@@ -190,7 +190,7 @@ public class Questions4Fragment extends Fragment {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
-                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, user.get_Weight());
+                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), user.get_Weight());
 
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
                                                                     Intent myIntent = new Intent(getActivity(), MainActivity.class);
@@ -215,7 +215,7 @@ public class Questions4Fragment extends Fragment {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
-                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, user.get_Weight());
+                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), user.get_Weight());
 
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
                                                                     Intent myIntent = new Intent(getActivity(), MainActivity.class);

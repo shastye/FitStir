@@ -57,6 +57,12 @@ public class GoalsFragment extends Fragment {
         root = binding.getRoot();
 
         // Addition Text Here
+        goalsViewModel.setGoals(new ArrayList<>());
+
+        goalRecyclerView = binding.goalRecyclerView;
+        goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        goalAdapter = new GoalAdapter(goalsViewModel.getGoals().getValue());
+        goalRecyclerView.setAdapter(goalAdapter);
 
         ((SettingsViewModel) new ViewModelProvider(requireActivity()).get(SettingsViewModel.class)).setPreviousPage(0);
 
@@ -71,7 +77,6 @@ public class GoalsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserProfileData value = snapshot.getValue(UserProfileData.class);
                 goalsViewModel.setThisUser(value);
-                //goalsViewModel.setGoals((ArrayList<Goal>) value.getGoals());
 
                 int tRange = 0;
                 switch (value.getRangeID()) {
@@ -104,8 +109,6 @@ public class GoalsFragment extends Fragment {
 
 
 
-                goalRecyclerView = binding.goalRecyclerView;
-                goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
                 DatabaseReference goalsRef = FirebaseDatabase.getInstance()
                         .getReference("GoalsData").child(authUser.getUid());
@@ -113,17 +116,14 @@ public class GoalsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Iterable<DataSnapshot> children = snapshot.getChildren();
-                        ArrayList<Goal> goals = new ArrayList<>();
 
+                        goalsViewModel.getGoals().getValue().clear();
                         for (DataSnapshot child : children) {
                             Goal goal = child.getValue(Goal.class);
-                            goals.add(goal);
+                            goalsViewModel.addGoal(goal);
                         }
 
-                        goalsViewModel.setGoals(goals);
-                        goalRecyclerView = binding.goalRecyclerView;
-                        goalRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                        updateUI(goals);
+                        goalAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -147,7 +147,8 @@ public class GoalsFragment extends Fragment {
                         R.layout.dialog_generic_goal,
                         R.id.dialog_create_goal_accept_button,
                         R.id.dialog_create_goal_cancel_button,
-                        requireContext()
+                        requireContext(),
+                        goalAdapter
                 ).show(getParentFragmentManager(), "Create Goal");
             }
         });
@@ -163,8 +164,6 @@ public class GoalsFragment extends Fragment {
     }
 
     private void updateUI(ArrayList<Goal> goals) {
-        goalAdapter = new GoalAdapter(goals);
-        goalRecyclerView.setAdapter(goalAdapter);
     }
 
     private class GoalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -322,7 +321,7 @@ public class GoalsFragment extends Fragment {
         }
     }
 
-    private class GoalAdapter extends RecyclerView.Adapter<GoalHolder> {
+    public class GoalAdapter extends RecyclerView.Adapter<GoalHolder> {
         private final ArrayList<Goal> goals;
 
         public GoalAdapter(ArrayList<Goal> goals) {
