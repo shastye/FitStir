@@ -22,7 +22,7 @@
         android:id="@+id/imageView12"
         android:layout_width="350dp"
         android:layout_height="180dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="88dp"
         android:background="@drawable/dialog_register_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -31,15 +31,15 @@
 
     <TextView
         android:id="@+id/textView29"
-        android:layout_width="411dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="204dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="168dp"
         android:text="Congratulations on your new fitness journey with FitStir:"
         android:textAlignment="center"
         android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,20 +48,20 @@
         android:layout_height="wrap_content"
         android:text="Regular physical activity is one of the most important things you can do for your health. Being physically active can improve your brain health, help manage weight, reduce the risk of disease, strengthen bones and muscles, and improve your ability to do everyday activities."
         android:textAlignment="viewStart"
-        android:textSize="15dp"
         android:textColor="@color/off_white"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView12"
         app:layout_constraintEnd_toEndOf="@+id/imageView12"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/imageView12"
         app:layout_constraintTop_toBottomOf="@+id/textView29"
-        app:layout_constraintVertical_bias="0.404" />
+        app:layout_constraintVertical_bias="0.691" />
 
     <ImageView
         android:id="@+id/imageView13"
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/rounded_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
@@ -78,9 +78,10 @@
         android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView13"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView13" />
+        app:layout_constraintTop_toTopOf="@+id/imageView13"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button_next1"

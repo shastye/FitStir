@@ -4,7 +4,8 @@
 
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
-            <solid android:color="?attr/colorOnPrimary" android:alpha="0.80"/>
+            <gradient android:startColor="@color/soft_blue"
+                android:endColor="@color/cotton_candy_pink"/>
             <corners android:radius="500dp" />
         </shape>
     </item>
@@ -13,7 +14,8 @@
         <shape android:shape="rectangle">
             <padding android:left="20dp" android:right="20dp"/>
             <corners android:radius="500dp" />
-            <solid android:color="?attr/colorPrimaryVariant"/>
+            <gradient android:startColor="@color/soft_blue"
+                android:endColor="@color/cotton_candy_pink"/>
         </shape>
     </item>
 </ripple>

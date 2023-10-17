@@ -21,7 +21,7 @@
         android:id="@+id/imageView9"
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/rounded_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
@@ -32,7 +32,7 @@
         android:id="@+id/textView6"
         android:layout_width="402dp"
         android:layout_height="62dp"
-        android:layout_marginTop="155dp"
+        android:layout_marginTop="100dp"
         android:text="Health and WellNess"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -44,15 +44,15 @@
 
     <TextView
         android:id="@+id/textView28"
-        android:layout_width="411dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="216dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="172dp"
         android:text="Congratulations on your new fitness journey with FitStir:"
         android:textAlignment="center"
         android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +60,7 @@
         android:id="@+id/imageView10"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="92dp"
         android:background="@drawable/dialog_register_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -73,22 +73,21 @@
         android:layout_height="wrap_content"
         android:text="Been Having trouble sleeping? Having insomnia and not sure why or have you been feeling anxious? If you didn't know, walking or running is a great way to imporve your sleep habits. While exercising you're increasing your endorphins and dopamine levels. Both are chemicals in your brain that give people their happy feeling. They can also give a since of calm to ease anxiety that sometimes lead to insomnia. If you run outside you give yourself a good level of serotonin as well from the sun. All running roads lead to better sleep and mental health. "
         android:textAlignment="viewStart"
-        android:textSize="15sp"
         android:textColor="@color/off_white"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="@+id/imageView10"
-        app:layout_constraintTop_toTopOf="@+id/imageView10"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/imageView10" />
 
     <Button
         android:id="@+id/button_next3"
         android:layout_width="85dp"
         android:layout_height="50dp"
-        android:layout_marginTop="556dp"
-        android:text="Next"
+        android:layout_marginTop="600dp"
         android:background="@drawable/custom_color_button"
+        android:text="Next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
