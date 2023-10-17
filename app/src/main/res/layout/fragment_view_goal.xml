@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/view_goal_background"
         android:layout_width="390dp"
-        android:layout_height="500dp"
+        android:layout_height="530dp"
         android:outlineProvider="none"
         android:elevation="0dp"
         app:cardBackgroundColor="?attr/colorPrimary"
@@ -21,7 +21,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="380dp"
-        android:layout_height="490dp"
+        android:layout_height="520dp"
         android:outlineProvider="none"
         android:alpha="0.25"
         android:elevation="0dp"
@@ -34,7 +34,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="370dp"
-        android:layout_height="410dp"
+        android:layout_height="420dp"
         android:outlineProvider="none"
         android:alpha="0.25"
         android:elevation="1dp"
@@ -76,7 +76,7 @@
         android:textAlignment="textEnd"
         android:layout_gravity="end"
         android:elevation="3dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="75dp"
         android:layout_marginEnd="30dp"
         app:layout_constraintBottom_toBottomOf="@id/view_goal_background"
         app:layout_constraintEnd_toEndOf="@id/view_goal_background"
@@ -105,7 +105,7 @@
 
     <RelativeLayout
         android:layout_width="340dp"
-        android:layout_height="380dp"
+        android:layout_height="390dp"
         android:elevation="5dp"
         android:outlineProvider="none"
         app:layout_constraintBottom_toBottomOf="@id/view_goal_background"
@@ -118,7 +118,7 @@
 
         <com.jjoe64.graphview.GraphView
             android:id="@+id/view_goal_grid_graph"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="5dp"
             android:outlineProvider="none"/>

@@ -237,8 +237,14 @@ public class GoalsFragment extends Fragment {
             dataLine.setDrawBackground(true);
             this.graphView.addSeries(dataLine);
 
+            Calendar c = Calendar.getInstance();
+            c.setTime(endCal.getTime());
+            c.add(Calendar.DATE, -17);
+            if (Methods.firstIsAfterSecond(c.getTime(), startCal.getTime())) {
+                c.setTime(startCal.getTime());
+            }
             DataPoint[] valuePoints = new DataPoint[] {
-                    new DataPoint(dataLine.getLowestValueX(), this.goal.getValue()),
+                    new DataPoint(c.getTime(), this.goal.getValue()),
                     new DataPoint(endCal.getTime(), this.goal.getValue())
             };
             LineGraphSeries<DataPoint> valueLine = new LineGraphSeries<>(valuePoints);
