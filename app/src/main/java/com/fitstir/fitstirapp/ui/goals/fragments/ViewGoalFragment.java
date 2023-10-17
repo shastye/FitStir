@@ -115,19 +115,9 @@ public class ViewGoalFragment extends Fragment {
         super.onDestroyView();
 
         ArrayList<Goal> goals = goalsViewModel.getGoals().getValue();
-
-        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert authUser != null;
-        DatabaseReference goalsRef = FirebaseDatabase.getInstance()
-                .getReference("GoalsData").child(authUser.getUid());
-
         for (int i = 0; i < goals.size(); i++) {
-            DatabaseReference goalID = goalsRef.child(goals.get(i).getID());
-            goalID.setValue(goals.get(i));
+            Methods.addGoalToFirebase(goals.get(i));
         }
-
-
-
 
         binding = null;
     }

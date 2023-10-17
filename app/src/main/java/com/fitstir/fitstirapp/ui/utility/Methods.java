@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.ui.goals.Goal;
+import com.fitstir.fitstirapp.ui.goals.GoalDataPair;
 import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -189,7 +190,11 @@ public class Methods {
                                     goal.setData(new ArrayList<>());
                                 }
 
-                                goal.addData(date, value);
+                                if (Methods.firstIsSecond(goal.getData().get(goal.getData().size() - 1).first, date)) {
+                                    goal.getData().set(goal.getData().size() - 1, new GoalDataPair(goal.getData().get(goal.getData().size() - 1).first, value));
+                                } else {
+                                    goal.addData(date, value);
+                                }
 
                                 break;
                             }

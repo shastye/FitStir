@@ -128,8 +128,6 @@ public class UpdateWeightDialog extends IBasicDialog {
             //                                            //
             // ////////////////////////////////////////// //
 
-            user.set_Weight(newWeight);
-
             FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
             assert authUser != null;
 

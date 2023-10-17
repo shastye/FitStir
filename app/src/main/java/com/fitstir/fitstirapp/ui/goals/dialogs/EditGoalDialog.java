@@ -5,6 +5,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fitstir.fitstirapp.ui.goals.Goal;
@@ -15,7 +16,10 @@ import com.fitstir.fitstirapp.ui.utility.classes.IGenericGoalDialog;
 import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class EditGoalDialog extends IGenericGoalDialog {
 
@@ -84,6 +88,33 @@ public class EditGoalDialog extends IGenericGoalDialog {
                     .child(authUser.getUid())
                     .child("goal_weight")
                     .setValue(value);
+
+            FirebaseDatabase.getInstance()
+                    .getReference("GoalsData")
+                    .child(authUser.getUid())
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Iterable<DataSnapshot> children = snapshot.getChildren();
+
+                            for (DataSnapshot child : children) {
+                                Goal goal = child.getValue(Goal.class);
+                                if (goal.getType() == GoalTypes.WEIGHT_CHANGE) {
+                                    FirebaseDatabase.getInstance()
+                                            .getReference("GoalsData")
+                                            .child(authUser.getUid())
+                                            .child(goal.getID())
+                                            .child("value")
+                                            .setValue(value);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
         }
 
         baseFragment.bind();

@@ -1,14 +1,20 @@
 package com.fitstir.fitstirapp;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Calendar;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -22,5 +28,31 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.fitstir.fitstirapp", appContext.getPackageName());
+    }
+
+    @Test
+    public void methodAddDataToGoalWorksIfNoGoal() {
+        Methods.addDataToGoal(GoalTypes.RUN_CLUB_ENDURANCE, Calendar.getInstance().getTime(), 30.0);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertTrue(true);
+    }
+
+    @Test
+    public void methodAddDataToGoalWorksIfIsGoal() {
+        Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), 135.0);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertTrue(true);
     }
 }

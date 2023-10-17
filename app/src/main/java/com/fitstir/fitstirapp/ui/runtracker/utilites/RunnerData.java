@@ -11,7 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.Methods;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +34,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
 
 
 public class RunnerData {
@@ -110,6 +114,10 @@ public class RunnerData {
             public void onComplete(@NonNull Task<Void> task) {
 
                 Toast.makeText(context, "Run saved successfully", Toast.LENGTH_LONG).show();
+
+                // add data to goal if exists
+                Methods.addDataToGoal(GoalTypes.RUN_CLUB_DISTANCE, Calendar.getInstance().getTime(), runner.getTotalDistance());
+                Methods.addDataToGoal(GoalTypes.RUN_CLUB_ENDURANCE, Calendar.getInstance().getTime(), runner.getCompletedRunInMinutes());
             }
         });
     }

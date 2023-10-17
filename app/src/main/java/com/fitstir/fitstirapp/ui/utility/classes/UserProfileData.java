@@ -125,45 +125,14 @@ public class UserProfileData {
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // update data on GoalsData collection
-        DatabaseReference goalsRef = FirebaseDatabase.getInstance()
-                .getReference("GoalsData").child(authUser.getUid());
-        goalsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> children = snapshot.getChildren();
-                for (DataSnapshot child : children) {
-                    Goal goal = child.getValue(Goal.class);
+        Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), newWeight);
 
-                    if (goal.getType().equals(GoalTypes.WEIGHT_CHANGE)) {
-                        ArrayList<GoalDataPair> data = goal.getData();
-
-                        int size = data.size();
-                        GoalDataPair lastDateData = data.get(size - 1);
-
-                        if (!Methods.isToday(lastDateData.first)) {
-                            goal.addData(Calendar.getInstance().getTime(), newWeight);
-                        } else {
-                            goal.getData().get(size - 1).second = newWeight;
-                        }
-
-                        goalsRef.child(child.getKey())
-                                .setValue(goal);
-
-                        // update data on Users collection
-                        FirebaseDatabase.getInstance()
-                                .getReference("Users")
-                                .child(authUser.getUid())
-                                .child("_Weight")
-                                .setValue(newWeight);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        // update data on Users collection
+        FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(authUser.getUid())
+                .child("_Weight")
+                .setValue(newWeight);
     }
 
     @com.google.firebase.database.Exclude

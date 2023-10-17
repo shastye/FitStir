@@ -27,7 +27,9 @@ import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewWorkoutBinding;
 import com.fitstir.fitstirapp.ui.runtracker.utilites.RunnerData;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.RvInterface;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
 import com.fitstir.fitstirapp.ui.yoga.models.PoseModel;
 import com.fitstir.fitstirapp.ui.yoga.models.YogaViewModel;
@@ -42,6 +44,7 @@ import com.google.protobuf.StringValue;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ViewWorkoutFragment extends Fragment implements RvInterface {
@@ -162,6 +165,34 @@ public class ViewWorkoutFragment extends Fragment implements RvInterface {
                             Toast.makeText(requireActivity(), "Workout Completed and Saved", Toast.LENGTH_LONG).show();
                             dialog_CompletedWorkout.setVisibility(View.INVISIBLE);
                             image.setVisibility(View.VISIBLE);
+
+                            // add data to goal if exists
+                            String target = data.getBodyPart();
+                            String equipment = data.getEquipment();
+
+                            if (target.equals("Chest") || target.equals("Upper Arms") || target.equals("Lower Arms") || target.equals("Upper Body")) {
+                                if (equipment.equals("Body Weight") || equipment.equals("Resistance Band") || equipment.equals("Stability Ball")
+                                        || equipment.equals("Bosu Ball") || equipment.equals("Medicine Ball")
+                                        || equipment.equals("Kettlebell") || equipment.equals("Parallel Bar/Chair")) {
+                                    Methods.addDataToGoal(GoalTypes.UPPER_BODY_CALORIES, Calendar.getInstance().getTime(), data.getCalories_Burned());
+                                }
+                            }
+
+                            if (target.equals("Upper Legs") || target.equals("Lower Legs")) {
+                                if (equipment.equals("Body Weight") || equipment.equals("Resistance Band") || equipment.equals("Pull-up Bar")
+                                        || equipment.equals("Body Weight/Assisted") || equipment.equals("Band") || equipment.equals("Kettlebell")) {
+                                    Methods.addDataToGoal(GoalTypes.LOWER_BODY_CALORIES, Calendar.getInstance().getTime(), data.getCalories_Burned());
+                                }
+                            }
+
+                            if (target.equals("Chest") || target.equals("Upper Arms") || target.equals("Lower Arms") || target.equals("Upper Body")
+                                    || target.equals("Upper Legs") || target.equals("Lower Legs") || target.equals("Back") || target.equals("Upper Back")) {
+                                if (equipment.equals("Barbell") || equipment.equals("Cable") || equipment.equals("Dumbbell")
+                                        || equipment.equals("Machine") || equipment.equals("Cable Machine")
+                                        || equipment.equals("Press Machine") || equipment.equals("Smith Machine")) {
+                                    Methods.addDataToGoal(GoalTypes.WEIGHT_LIFTING_CALORIES, Calendar.getInstance().getTime(), data.getCalories_Burned());
+                                }
+                            }
                         }
                     });
                 }else{

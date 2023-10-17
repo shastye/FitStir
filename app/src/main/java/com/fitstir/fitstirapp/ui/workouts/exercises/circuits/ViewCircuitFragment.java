@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentViewCircuitBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.RvInterface;
+import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
 import com.fitstir.fitstirapp.ui.workouts.WorkoutsViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ViewCircuitFragment extends Fragment implements RvInterface {
@@ -129,6 +132,11 @@ public class ViewCircuitFragment extends Fragment implements RvInterface {
                     Toast.makeText(requireActivity(), "Workout Completed and Saved", Toast.LENGTH_LONG).show();
                     Navigation.findNavController(requireActivity(),R.id.nav_host_fragment_activity_main)
                             .navigate(R.id.action_viewCircuitFragment_to_navigation_circuit_workouts);
+
+
+                    // add data to goal if exists
+                    Methods.addDataToGoal(GoalTypes.CIRCUIT_WORKOUTS_ENDURANCE, Calendar.getInstance().getTime(), model.getDuration() / 60.0);
+                    Methods.addDataToGoal(GoalTypes.CIRCUIT_WORKOUTS_REPS, Calendar.getInstance().getTime(), model.getReps());
                 }
             });
 
