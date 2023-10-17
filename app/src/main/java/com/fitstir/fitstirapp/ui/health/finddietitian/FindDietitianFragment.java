@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -60,11 +61,13 @@ import com.google.android.material.slider.Slider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class FindDietitianFragment extends Fragment {
 
     private FragmentFindDietitianBinding binding;
+    final private Object syncObject = new Object();
 
     private ArrayList<Place> places;
     private LatLng currLatLng;
@@ -84,7 +87,6 @@ public class FindDietitianFragment extends Fragment {
         View root = binding.getRoot();
 
         // Addition Text Here
-
 
 
         // Get Permissions
@@ -109,14 +111,7 @@ public class FindDietitianFragment extends Fragment {
                 @Override
                 public void onActivityResult(Boolean result) {
 
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-
                     if (result) {
-
 
 
                         //region Map instantiation /////////////////////////////////////////////////
@@ -141,11 +136,33 @@ public class FindDietitianFragment extends Fragment {
                                 }
                                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-                                LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+                                /*LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
                                 Criteria criteria = new Criteria();
                                 Location currLoc = new Location(locationManager.getBestProvider(criteria, false));
                                 currLoc = locationManager.getLastKnownLocation(Objects.requireNonNull(locationManager.getBestProvider(criteria, false)));
+
+                                Log.e("CURRLOC: ", currLoc.toString());
+
                                 currLatLng = new LatLng(currLoc.getLatitude(), currLoc.getLongitude());
+                                zoomToRadius(distanceMiles);*/
+
+                                LocationManager LocationManager = (LocationManager)requireContext().getSystemService(Context.LOCATION_SERVICE);
+                                List<String> providers = LocationManager.getProviders(true);
+                                Location bestLocation = null;
+                                for (String provider : providers) {
+                                    Location l = LocationManager.getLastKnownLocation(provider);
+                                    if (l == null) {
+                                        continue;
+                                    }
+                                    if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                                        // Found best last known location: %s", l);
+                                        bestLocation = l;
+                                    }
+                                }
+
+                                Log.e("CURRLOC: ", bestLocation.toString());
+
+                                currLatLng = new LatLng(bestLocation.getLatitude(), bestLocation.getLongitude());
                                 zoomToRadius(distanceMiles);
 
                                 // TODO: FOR SHOWING ZOOM FUNCTIONALITY

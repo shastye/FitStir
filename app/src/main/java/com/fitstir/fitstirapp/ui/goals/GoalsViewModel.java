@@ -35,7 +35,9 @@ public class GoalsViewModel extends ViewModel {
     public void setClickedGoal(Goal goal) { clickedGoal.setValue(goal); }
     public void addGoal(Goal goal) {
         ArrayList<Goal> temp = goals.getValue();
-        assert temp != null;
+        if (temp == null) {
+            temp = new ArrayList<>();
+        }
         temp.add(goal);
         goals.setValue(temp);
     }

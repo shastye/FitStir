@@ -1,8 +1,10 @@
 package com.fitstir.fitstirapp.ui.settings.fragments;
 
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import androidx.navigation.Navigation;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentProfileBinding;
 import com.fitstir.fitstirapp.ui.utility.Constants;
+import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,61 +56,34 @@ public class ProfileFragment extends Fragment {
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance()
-                .getReference("Users")
-                .child(authUser.getUid());
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserProfileData value = snapshot.getValue(UserProfileData.class);
-                settingsViewModel.setThisUser(value);
-
-                binding.textName.setText(value.getFullname());
-                String tAge = value.getAge() + " years old";
-                binding.textAge.setText(tAge);
-                String tHeightFeet = value.getHeight_ft() + " feet ";
-                binding.textHeightFt.setText(tHeightFeet);
-                String tHeightInches = value.getHeight_in() + " inches";
-                binding.textHeightIn.setText(tHeightInches);
-                String tWeight = value.get_Weight() + " lbs";
-                binding.textWeight.setText(tWeight);
-                binding.textEmail.setText(value.getEmail());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                throw error.toException();
-            }
-        });
-
-
-
-
-
-        try{
-            //access firebase storage for profile pic
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageReference = storage.getReference();
-
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            String user = auth.getCurrentUser().getUid();
-            StorageReference photo = storageReference.child("images/"+user);
-            photo.getBytes(Constants.MEGA_BYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        FirebaseDatabase.getInstance()
+            .getReference("Users")
+            .child(authUser.getUid())
+            .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onSuccess(byte[] bytes) {
-                   Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                   binding.profileImage.setImageBitmap(bitmap);
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserProfileData value = snapshot.getValue(UserProfileData.class);
+                    settingsViewModel.setThisUser(value);
+
+                    binding.textName.setText(value.getFullname());
+                    String tAge = value.getAge() + " years old";
+                    binding.textAge.setText(tAge);
+                    String tHeightFeet = value.getHeight_ft() + " feet ";
+                    binding.textHeightFt.setText(tHeightFeet);
+                    String tHeightInches = value.getHeight_in() + " inches";
+                    binding.textHeightIn.setText(tHeightInches);
+                    String tWeight = value.get_Weight() + " lbs";
+                    binding.textWeight.setText(tWeight);
+                    binding.textEmail.setText(value.getEmail());
+
+                    binding.profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    throw error.toException();
                 }
             });
-        }
-        catch (NullPointerException e){
-            Toast.makeText(requireActivity(),"Refer to Google to see Account Details", Toast.LENGTH_SHORT).show();
-        }
 
 
         CardView editButton = binding.editbuttonCardViewProfile;

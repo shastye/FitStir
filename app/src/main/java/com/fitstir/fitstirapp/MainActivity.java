@@ -6,11 +6,14 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -28,6 +31,7 @@ import androidx.navigation.ui.NavigationUiSaveStateControl;
 
 import com.fitstir.fitstirapp.databinding.ActivityMainBinding;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.settings.fragments.ProfileFragment;
 import com.fitstir.fitstirapp.ui.utility.CheckRecentRun;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.Methods;
@@ -39,10 +43,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -84,7 +91,7 @@ public class MainActivity extends AppCompatActivity  {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_workouts, R.id.navigation_health, R.id.navigation_goals, R.id.navigation_explore)
+                R.id.navigation_workouts, R.id.navigation_health, R.id.navigation_goals)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -110,7 +117,6 @@ public class MainActivity extends AppCompatActivity  {
                             break;
                         case R.id.log_out_item:
                             pageID = R.id.log_out_item;
-                            signOut();
                             break;
                         default:
                             pageID = settingsViewModel.getPreviousPage().getValue();
@@ -118,27 +124,11 @@ public class MainActivity extends AppCompatActivity  {
                     }
 
                     try {
-                        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).getChildFragmentManager().getPrimaryNavigationFragment();
-                        if (!(fragment instanceof IOnBackPressed)) {
-                            settingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());
-                            navController.navigate(pageID);
-                        } else {
-                            switch (pageID) {
-                                case R.id.navigation_profile:
-                                case R.id.navigation_settings:
-                                    navController.navigate(pageID);
-                                    break;
-                                case R.id.log_out_item:
-                                    signOut();
-                                    break;
-                                default:
-                                    return ((IOnBackPressed) fragment).onBackPressed();
-                            }
-                        }
+                        return doBackUp(pageID);
                     } catch (IllegalArgumentException e) {
                         Log.e("Back up error", e.getMessage());
+                        return true;
                     }
-                    return true;
                 } else {
                     return false;
                 }
@@ -152,6 +142,31 @@ public class MainActivity extends AppCompatActivity  {
         if (userAllowedNotifications) {
             editor.putLong(Constants.LAST_ON_DESTROY_TAG, System.currentTimeMillis());
             editor.commit();
+        }
+
+        //access firebase storage for profile pic
+        try{
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            String user = auth.getCurrentUser().getUid();
+            StorageReference photo = storageReference.child("images/"+user);
+            photo.getBytes(Constants.MEGA_BYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    settingsViewModel.setAvatar(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }
+        catch (NullPointerException e){
+
         }
     }
 
@@ -185,11 +200,30 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).getChildFragmentManager().getPrimaryNavigationFragment();
-        if (!(fragment instanceof IOnBackPressed)) {
-            return Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigateUp();
+        return doBackUp(settingsViewModel.getPreviousPage().getValue());
+    }
+
+    public boolean doBackUp(int pageID) {
+        if (pageID != 0) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).getChildFragmentManager().getPrimaryNavigationFragment();
+            if (!(fragment instanceof IOnBackPressed)) {
+                if (pageID == R.id.log_out_item) {
+                    signOut();
+                } else {
+                    settingsViewModel.setPreviousPage(navController.getCurrentDestination().getId());
+                    navController.navigate(pageID);
+                }
+                return false;
+            } else {
+                if (pageID == R.id.navigation_profile) {
+                    navController.navigate(pageID);
+                    return false;
+                } else {
+                    return ((IOnBackPressed) fragment).onBackPressed();
+                }
+            }
         } else {
-            return ((IOnBackPressed) fragment).onBackPressed();
+            return Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigateUp();
         }
     }
 

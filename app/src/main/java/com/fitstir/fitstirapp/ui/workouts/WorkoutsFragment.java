@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentWorkoutsBinding;
+import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.SectionGridAdapter;
 import com.fitstir.fitstirapp.ui.utility.classes.SectionItem;
 
@@ -36,6 +37,8 @@ public class WorkoutsFragment extends Fragment {
         workoutsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here
+
+        ((SettingsViewModel) new ViewModelProvider(requireActivity()).get(SettingsViewModel.class)).setPreviousPage(0);
 
         SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(getWorkoutsSections(), root);
         GridView grid = binding.workoutsGridView;
