@@ -16,9 +16,4 @@
         android:icon="@drawable/ic_goals_black_200dp"
         android:title="@string/title_goals" />
 
-    <item
-        android:id="@+id/navigation_explore"
-        android:icon="@drawable/ic_explore_black_200dp"
-        android:title="@string/title_explore" />
-
 </menu>

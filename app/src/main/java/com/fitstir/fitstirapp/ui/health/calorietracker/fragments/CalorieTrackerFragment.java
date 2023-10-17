@@ -53,6 +53,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -111,7 +113,7 @@ public class CalorieTrackerFragment extends Fragment {
 
 
         //region Get data from Firebase ////////////////////////////////////////////////////////////
-        stringUserID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //"eOWvN6SSKEbFYLsqqaoY4CYEpe13";
+        stringUserID = "p1USaMf6PDggBROK1t3pDSqCkiq2";//FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DatabaseReference thisUser = FirebaseDatabase.getInstance()
                 .getReference("Users")
@@ -227,10 +229,7 @@ public class CalorieTrackerFragment extends Fragment {
                                             }
                                         }
 
-                                        // TODO:
-                                        //          UpperBody, LowerBody, WeightLifting, Yoga: NO BURNED CAL DATA
-                                        //          Circuit: NO DATE DATA
-                                        DatabaseReference circRef = GoalTypes.CIRCUIT_WORKOUTS_WEIGHT.getDatabaseReference(stringUserID);
+                                        DatabaseReference circRef = GoalTypes.UPPER_BODY_CALORIES.getDatabaseReference(stringUserID);
                                         if (circRef != null) {
                                             circRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
@@ -238,26 +237,43 @@ public class CalorieTrackerFragment extends Fragment {
                                                     Iterable<DataSnapshot> children = snapshot.getChildren();
 
                                                     for (DataSnapshot child : children) {
-                                                        Map<String, Object> kid = (Map<String, Object>) child.getValue();
-                                                        assert kid != null;
+                                                        Iterable<DataSnapshot> kids = child.getChildren();
 
-                                                        String dateString = (String) kid.get("completedDate");
-                                                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                                        Calendar returnedDate = Calendar.getInstance();
-                                                        try {
-                                                            Date date = returnedDate.getTime();
-                                                            //Date date = format.parse(dateString);
-                                                            returnedDate.setTime(date);
-                                                            Double cal = (Double) kid.get("totalBurn");
-                                                            GoalDataPair pair = new GoalDataPair(returnedDate.getTime(), cal);
+                                                        for (DataSnapshot kid : kids) {
+                                                            Map<String, Object> baby = (Map<String, Object>) kid.getValue();
+                                                            assert baby != null;
 
-                                                            episodes.add(pair);
-                                                        } catch (/*ParseException | */NullPointerException e) {
-                                                            e.printStackTrace();
+                                                            String dateString = (String) baby.get("date");
+                                                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                                            Calendar returnedDate = Calendar.getInstance();
+                                                            try {
+                                                                Date date = format.parse(dateString);
+                                                                returnedDate.setTime(date);
+
+                                                                Long cal = null;
+                                                                GoalDataPair pair = null;
+                                                                try {
+                                                                    cal = (Long) baby.get("calories_Burned");
+                                                                    pair = new GoalDataPair(returnedDate.getTime(), cal.doubleValue());
+                                                                } catch (ClassCastException | NullPointerException e1) {
+                                                                    try {
+                                                                        cal = (Long) baby.get("calBurned");
+                                                                        pair = new GoalDataPair(returnedDate.getTime(), cal.doubleValue());
+                                                                    } catch (ClassCastException | NullPointerException e2) {
+                                                                        cal = null;
+                                                                        pair = null;
+                                                                    }
+                                                                }
+
+                                                                if (pair != null && cal != null && cal != 0.0) {
+                                                                    episodes.add(pair);
+                                                                }
+                                                            } catch (ParseException | NullPointerException e) {
+                                                                e.printStackTrace();
+                                                            }
                                                         }
                                                     }
 
-                                                    //TODO: Add reference/get for other exercises and more this to inside onDataChange AND onCancelled AND else
                                                     calorieTrackerViewModel.setExerciseData(episodes);
                                                     calorieTrackerViewModel.setCalorieTrackerData(data);
                                                     updateUI();

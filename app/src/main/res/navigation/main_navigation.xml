@@ -183,12 +183,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_explore"
-        android:name="com.fitstir.fitstirapp.ui.explore.ExploreFragment"
-        android:label="Explore"
-        tools:layout="@layout/fragment_explore" />
-
-    <fragment
         android:id="@+id/navigation_profile"
         android:name="com.fitstir.fitstirapp.ui.settings.fragments.ProfileFragment"
         android:label="Profile"
