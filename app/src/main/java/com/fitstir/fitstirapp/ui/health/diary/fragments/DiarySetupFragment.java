@@ -68,8 +68,11 @@ public class DiarySetupFragment extends Fragment {
                 DiaryData diaryData = new DiaryData();
                 for (int i = 0; i < size; i++) {
                     String taskName = potentialTasks.get(i).getText().toString();
-                    Task newTask = new Task(taskName);
-                    diaryData.addTask(newTask);
+
+                    if (!taskName.isEmpty()) {
+                        Task newTask = new Task(taskName);
+                        diaryData.addTask(newTask);
+                    }
                 }
 
                 if (diaryData.getTasks().size() > 0) {

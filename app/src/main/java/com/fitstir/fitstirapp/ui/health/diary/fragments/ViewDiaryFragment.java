@@ -168,8 +168,10 @@ public class ViewDiaryFragment extends Fragment {
                     if (isChecked) {
                         buttonView.setPaintFlags(buttonView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-                        if (!Methods.isToday(lastCompleted[0])) {
-                            tasks.get(index).addDate(Calendar.getInstance().getTime());
+                        if (lastCompleted[0] == null || !Methods.isToday(lastCompleted[0])) {
+                            Date today = Calendar.getInstance().getTime();
+                            tasks.get(index).addDate(today);
+                            lastCompleted[0] = today;
                         }
                     } else {
                         buttonView.setPaintFlags(buttonView.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
@@ -177,8 +179,12 @@ public class ViewDiaryFragment extends Fragment {
                         ArrayList<Date> completedOn = tasks.get(index).getCompletedOn();
 
                         if (completedOn != null && completedOn.size() != 0) {
-                            if (Methods.isToday(lastCompleted[0]) && lastCompleted[0] != null && completedOn.remove(lastCompleted[0])) {
-                                lastCompleted[0] = completedOn.get(completedOn.size() - 1);
+                            if (lastCompleted[0] != null && Methods.isToday(lastCompleted[0]) && completedOn.remove(lastCompleted[0])) {
+                                try {
+                                    lastCompleted[0] = completedOn.get(completedOn.size() - 1);
+                                } catch (ArrayIndexOutOfBoundsException e) {
+                                    lastCompleted[0] = null;
+                                }
                                 tasks.get(index).setCompletedOn(completedOn);
                             }
                         }
@@ -228,32 +234,32 @@ public class ViewDiaryFragment extends Fragment {
         //region Updating mood on screen and in Firebase ///////////////////////////////////////////
         final boolean isRecordedToday;
 
-        final String todaysMood;
-        final String todaysEmoji;
-        final DiaryEntry potentiallyToday;
+        final String[] todaysMood = new String[1];
+        final String[] todaysEmoji = new String[1];
+        final DiaryEntry[] potentiallyToday = new DiaryEntry[1];
 
         if (diaryData.getEmotions() != null && diaryData.getEmotions().size() != 0) {
-            potentiallyToday = diaryData.getEmotions().get(diaryData.getEmotions().size() - 1);
-            cal.setTime(potentiallyToday.getDate());
+            potentiallyToday[0] = diaryData.getEmotions().get(diaryData.getEmotions().size() - 1);
+            cal.setTime(potentiallyToday[0].getDate());
 
             if (Methods.isToday(cal.getTime())) {
-                todaysMood = potentiallyToday.getComment();
-                todaysEmoji = potentiallyToday.getEmoji();
+                todaysMood[0] = potentiallyToday[0].getComment();
+                todaysEmoji[0] = potentiallyToday[0].getEmoji();
                 isRecordedToday = true;
             } else {
-                todaysMood = "Nothing yet.";
-                todaysEmoji = "";
+                todaysMood[0] = "Nothing yet.";
+                todaysEmoji[0] = "";
                 isRecordedToday = false;
             }
         } else {
-            potentiallyToday = null;
-            todaysMood = "Nothing yet.";
-            todaysEmoji = "";
+            potentiallyToday[0] = null;
+            todaysMood[0] = "Nothing yet.";
+            todaysEmoji[0] = "";
             isRecordedToday = false;
         }
 
-        binding.recordedMood.setText(todaysMood);
-        binding.recordedEmoji.setText(todaysEmoji);
+        binding.recordedMood.setText(todaysMood[0]);
+        binding.recordedEmoji.setText(todaysEmoji[0]);
 
         binding.updateMoodButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,12 +270,12 @@ public class ViewDiaryFragment extends Fragment {
 
                 EditText moodET = popUpView.findViewById(R.id.mood_edit_text);
                 EditText emojiET = popUpView.findViewById(R.id.emoji_edit_text);
-                if (todaysMood.equals("Nothing yet.") && todaysEmoji.equals("")) {
-                    moodET.setText(todaysMood);
-                    emojiET.setText(todaysEmoji);
+                if (todaysMood[0].equals("Nothing yet.") && todaysEmoji[0].equals("")) {
+                    moodET.setText("");
+                    emojiET.setText("");
                 } else {
-                    moodET.setText(potentiallyToday.getComment());
-                    emojiET.setText(potentiallyToday.getEmoji());
+                    moodET.setText(potentiallyToday[0].getComment());
+                    emojiET.setText(potentiallyToday[0].getEmoji());
                 }
 
                 Button updateButton = popUpView.findViewById(R.id.popup_mood_button);
@@ -298,6 +304,10 @@ public class ViewDiaryFragment extends Fragment {
                                     } else {
                                         diaryData.getEmotions().add(diaryEntry);
                                     }
+
+                                    todaysEmoji[0] = emoji;
+                                    todaysMood[0] = mood;
+                                    potentiallyToday[0] = diaryEntry;
 
                                     FirebaseDatabase.getInstance()
                                             .getReference("DiaryData")

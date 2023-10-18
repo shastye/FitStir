@@ -87,7 +87,7 @@
                         <ImageView
                             android:id="@+id/profile_image"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="137dp"
                             android:layout_gravity="center"
                             android:scaleType="centerCrop"
                             android:src="@drawable/profileimage_background" />
@@ -117,7 +117,7 @@
                         android:layout_height="15dp"
                         android:layout_gravity="center"
                         android:foreground="@drawable/ic_pencil_black_200dp"
-                        android:foregroundTint="?attr/colorOnSecondary" />
+                        android:foregroundTint="?attr/colorOnPrimary" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
