@@ -8,8 +8,19 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.fitstir.fitstirapp.ui.health.calorietracker.ResponseInfo;
+import com.fitstir.fitstirapp.ui.health.edamamapi.ISearchResult;
+import com.fitstir.fitstirapp.ui.health.edamamapi.enums.MealType;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Hint;
+import com.fitstir.fitstirapp.ui.health.edamamapi.fooddatabaseparser.Parsed;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Hit;
+import com.fitstir.fitstirapp.ui.health.edamamapi.recipev2.Recipe;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

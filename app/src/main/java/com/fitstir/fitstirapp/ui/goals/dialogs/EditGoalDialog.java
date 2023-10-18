@@ -72,6 +72,7 @@ public class EditGoalDialog extends IGenericGoalDialog {
     @Override
     public void onAccept() {
         String strValue = valueEditText.getText().toString().trim();
+        FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
 
         int value = Integer.parseInt(strValue);
 
@@ -79,42 +80,41 @@ public class EditGoalDialog extends IGenericGoalDialog {
         int index = goalsViewModel.getGoals().getValue().indexOf(clickedGoal);
         goalsViewModel.getGoals().getValue().get(index).setValue(value);
 
+        FirebaseDatabase.getInstance()
+                .getReference("GoalsData")
+                .child(authUser.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Iterable<DataSnapshot> children = snapshot.getChildren();
+
+                        for (DataSnapshot child : children) {
+                            Goal goal = child.getValue(Goal.class);
+                            if (goal.getType() == clickedGoal.getType()) {
+                                FirebaseDatabase.getInstance()
+                                        .getReference("GoalsData")
+                                        .child(authUser.getUid())
+                                        .child(goal.getID())
+                                        .child("value")
+                                        .setValue(value);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
         if (clickedGoal.getType() == GoalTypes.WEIGHT_CHANGE) {
             goalsViewModel.getThisUser().getValue().setGoal_weight(value);
 
-            FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseDatabase.getInstance()
                     .getReference("Users")
                     .child(authUser.getUid())
                     .child("goal_weight")
                     .setValue(value);
-
-            FirebaseDatabase.getInstance()
-                    .getReference("GoalsData")
-                    .child(authUser.getUid())
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Iterable<DataSnapshot> children = snapshot.getChildren();
-
-                            for (DataSnapshot child : children) {
-                                Goal goal = child.getValue(Goal.class);
-                                if (goal.getType() == GoalTypes.WEIGHT_CHANGE) {
-                                    FirebaseDatabase.getInstance()
-                                            .getReference("GoalsData")
-                                            .child(authUser.getUid())
-                                            .child(goal.getID())
-                                            .child("value")
-                                            .setValue(value);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
         }
 
         baseFragment.bind();

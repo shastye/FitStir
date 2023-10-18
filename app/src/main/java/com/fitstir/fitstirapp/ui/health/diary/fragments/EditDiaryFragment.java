@@ -267,7 +267,7 @@ public class EditDiaryFragment extends Fragment {
                 }
 
                 for (int i = 0; i < editTexts.size(); i++) {
-                    editTexts.get(i).setEnabled(false);
+                    editTexts.get(i).setEnabled(true);
                     editTexts.get(i).setTextColor(Color.BLACK);
                     editTexts.get(i).setHintTextColor(Color.DKGRAY);
 

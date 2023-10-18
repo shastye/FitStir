@@ -170,7 +170,7 @@ public class LogInFragment extends Fragment {
             Objects.requireNonNull(getActivity()).startActivity(myIntent);
         }
         //auto sign in previous fit-stir user unless logged out
-        FirebaseUser user = auth.getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null)
             {
                 Toast.makeText(requireActivity(),user.getEmail(), Toast.LENGTH_SHORT).show();
