@@ -165,11 +165,13 @@ public class Methods {
     public static void addGoalToFirebase(Goal goal) {
         FirebaseUser authUser = FirebaseAuth.getInstance().getCurrentUser();
         assert authUser != null;
-        FirebaseDatabase.getInstance()
-                .getReference("GoalsData")
-                .child(authUser.getUid())
-                .child(goal.getID())
-                .setValue(goal);
+        if (goal != null) {
+            FirebaseDatabase.getInstance()
+                    .getReference("GoalsData")
+                    .child(authUser.getUid())
+                    .child(goal.getID())
+                    .setValue(goal);
+        }
     }
 
     public static void addDataToGoal(GoalTypes type, Date date, double value) {
@@ -201,11 +203,13 @@ public class Methods {
                             }
                         }
 
-                        FirebaseDatabase.getInstance()
-                                .getReference("GoalsData")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .child(goal.getID())
-                                .setValue(goal);
+                        if (goal != null) {
+                            FirebaseDatabase.getInstance()
+                                    .getReference("GoalsData")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(goal.getID())
+                                    .setValue(goal);
+                        }
                     }
 
                     @Override

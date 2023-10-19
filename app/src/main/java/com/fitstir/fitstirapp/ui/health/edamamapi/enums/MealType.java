@@ -5,9 +5,9 @@ public enum MealType {
     BREAKFAST("Breakfast", 1, "breakfast"),
     TEATIME("Tea Time", 2, "teatime"),
     BRUNCH("Brunch", 3, "brunch"),
-    LUNCH("Lunch", 4, "lunch/dinner"),
+    LUNCH("Lunch", 4, "lunch"),
     SNACK("Snack", 5, "snack"),
-    DINNER("Dinner", 6, "lunch/dinner");
+    DINNER("Dinner", 6, "dinner");
 
     private final String spinnerTitle;
     private final int value;

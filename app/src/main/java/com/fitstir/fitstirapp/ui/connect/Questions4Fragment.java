@@ -189,8 +189,9 @@ public class Questions4Fragment extends Fragment {
                                                             dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                                    Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
-                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), user.get_Weight());
+                                                                    Goal goal = new Goal(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
+                                                                    goal.addData(Calendar.getInstance().getTime(), user.get_Weight());
+                                                                    Methods.addGoalToFirebase(goal);
 
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
                                                                     Intent myIntent = new Intent(getActivity(), MainActivity.class);
@@ -208,14 +209,15 @@ public class Questions4Fragment extends Fragment {
                                                     {
                                                         final String uid = auth.getCurrentUser().getUid();
                                                         UserProfileData user = new UserProfileData(fName,email,pass,"female", finalFt, finalIn, finalWt, finalGWt, finalAge);
-                                                        user.addWeightData(finalWt);
+                                                        //user.addWeightData(finalWt);
 
                                                         if(uid != null) {
                                                             dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                                    Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
-                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), user.get_Weight());
+                                                                    Goal goal = new Goal(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
+                                                                    goal.addData(Calendar.getInstance().getTime(), user.get_Weight());
+                                                                    Methods.addGoalToFirebase(goal);
 
                                                                     Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
                                                                     Intent myIntent = new Intent(getActivity(), MainActivity.class);
