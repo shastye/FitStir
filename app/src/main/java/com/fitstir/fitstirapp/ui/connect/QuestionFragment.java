@@ -45,16 +45,19 @@ public class QuestionFragment extends Fragment {
         });
         Button gainWeight = root.findViewById(R.id.button_gain_weight);
         gainWeight.setOnClickListener(v -> {
+            connectViewModel.setIsGain(true);
             connectViewModel.setUserGoals(Constants.GOAL.GAIN_WEIGHT);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
         });
         Button maintain = root.findViewById(R.id.button_Maintain_weight);
         maintain.setOnClickListener(v -> {
+            connectViewModel.setIsMaintain(true);
             connectViewModel.setUserGoals(Constants.GOAL.MAINTAIN);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
         });
         Button gainMuscle = root.findViewById(R.id.button_gain_muscle);
         gainMuscle.setOnClickListener(v -> {
+            connectViewModel.setIsGainMuscle(true);
             connectViewModel.setUserGoals(Constants.GOAL.GAIN_MUSCLE);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
         });

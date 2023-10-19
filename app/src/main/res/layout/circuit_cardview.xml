@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="8dp"
     >
 
 
@@ -14,6 +15,8 @@
         android:layout_height="733dp"
         android:elevation="3dp"
         android:outlineProvider="paddedBounds"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,19 +51,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="325dp"
+            android:layout_marginTop="335dp"
             android:text="Directions:"
             android:textColor="@color/black"
             android:textSize="18sp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="350dp">
+            <TextView
+                android:id="@+id/circuit_directions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:hint="Directions:"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/circuit_directions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="98dp"
-            android:layout_marginTop="327dp"
-            android:hint="Directions:"
-            android:textSize="16sp" />
+        </ScrollView>
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,10 +86,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="547dp"
-            android:hint="Sets:"
+            android:layout_marginTop="545dp"
+            android:hint="0"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -94,7 +105,7 @@
             android:id="@+id/dur_circuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="312dp"
+            android:layout_marginLeft="316dp"
             android:layout_marginTop="547dp"
             android:hint="time:"
             android:textColor="@color/black"
@@ -103,9 +114,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="345dp"
+            android:layout_marginLeft="350dp"
             android:layout_marginTop="547dp"
-            android:text="(sec):"
+            android:text="(sec)"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -124,9 +135,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="55dp"
             android:layout_marginTop="575dp"
-            android:hint="reps:"
+            android:hint="0"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -141,16 +153,16 @@
             android:id="@+id/cal_circuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="139dp"
+            android:layout_marginLeft="150dp"
             android:layout_marginTop="606dp"
-            android:hint="cal:"
+            android:hint="0"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_marginTop="325dp"
+            android:layout_marginTop="330dp"
             android:background="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,18 +190,18 @@
             android:id="@+id/cal_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="115dp"
+            android:layout_marginLeft="125dp"
             android:layout_marginTop="636dp"
-            android:hint="cal:"
+            android:hint="0"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/map_Image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="290dp"
+            android:layout_marginTop="318dp"
             android:clickable="true"/>
     </androidx.cardview.widget.CardView>
 

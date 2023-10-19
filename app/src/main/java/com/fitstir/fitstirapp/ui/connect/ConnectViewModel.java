@@ -13,11 +13,10 @@ public class ConnectViewModel extends ViewModel {
     private final MutableLiveData<String> age = new MutableLiveData<>();
     private final MutableLiveData<String> weight = new MutableLiveData<>();
     private final MutableLiveData<String> goalWeight = new MutableLiveData<>();
-    private final MutableLiveData<String> featureName = new MutableLiveData<>();
     private final MutableLiveData<String> calories = new MutableLiveData<>();
-    private final MutableLiveData<String> caloriesConsumed = new MutableLiveData<>();
-    private final MutableLiveData<String> caloriesBurned = new MutableLiveData<>();
-    private final MutableLiveData<String> days = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isGain = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isMaintain = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isGainMuscle = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoseWeight = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> isCardioGoal = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> isManageStress = new MutableLiveData<>(false);
@@ -29,6 +28,15 @@ public class ConnectViewModel extends ViewModel {
     private final MutableLiveData<String> userHeight = new MutableLiveData<>();
 
 
+    public MutableLiveData<Boolean> getIsGain() {
+        return isGain;
+    }
+    public MutableLiveData<Boolean> getIsMaintain() {
+        return isMaintain;
+    }
+    public MutableLiveData<Boolean> getIsGainMuscle() {
+        return isGainMuscle;
+    }
     public MutableLiveData<Boolean> getIsFemale() {
         return isFemale;
     }
@@ -80,21 +88,10 @@ public class ConnectViewModel extends ViewModel {
     public MutableLiveData<String> getGoalWeight() {
         return goalWeight;
     }
-    public MutableLiveData<String> getFeatureName() {
-        return featureName;
-    }
     public MutableLiveData<String> getCalories() {
         return calories;
     }
-    public MutableLiveData<String> getCaloriesConsumed() {
-        return caloriesConsumed;
-    }
-    public MutableLiveData<String> getCaloriesBurned() {
-        return caloriesBurned;
-    }
-    public MutableLiveData<String> getDays() {
-        return days;
-    }
+
 
 
     public ConnectViewModel() {
@@ -118,11 +115,13 @@ public class ConnectViewModel extends ViewModel {
     public void setAge(String userAge) {age.setValue(userAge);}
     public void setWeight(String userWeight){weight.setValue(userWeight);}
     public void setGoalWeight(String userGoal){goalWeight.setValue(userGoal);}
-    public void setFeatureName(String feature){featureName.setValue(feature);}
     public void setCalories(String cal){calories.setValue(cal);}
-    public void setCaloriesConsumed(String consumed){caloriesConsumed.setValue(consumed);}
-    public void setCaloriesBurned(String burned){caloriesBurned.setValue(burned);}
-    public void setDays(String numberOfDays){days.setValue(numberOfDays);}
+    public void setIsGain(Boolean gain){isGain.setValue(gain);}
+    public void setIsGainMuscle(Boolean muscle){isGainMuscle.setValue(muscle);}
+    public void setIsMaintain(Boolean maintain){isMaintain.setValue(maintain);}
+
+
+
 
     public double calculateBMR(){
 
@@ -140,11 +139,11 @@ public class ConnectViewModel extends ViewModel {
 
         if(getIsFemale().getValue())
         {
-            return (655.1 + (9.563 * weight_In_Kg) + (1.850 * height_In_Cm) - (4.676 * age));
+            return Math.round(655.1 + (9.5 * weight_In_Kg) + (1.8 * height_In_Cm) - (4.6 * age));
         }
         else{
 
-            return (66.47 + (13.75 * weight_In_Kg) + (5.003 * height_In_Cm) - (6.755 * age));
+            return Math.round(66.4 + (13.7 * weight_In_Kg) + (5.0 * height_In_Cm) - (6.7 * age));
         }
     }
     public double loseWeightCalculator(){
@@ -153,6 +152,13 @@ public class ConnectViewModel extends ViewModel {
         double TDEE = BMR * getActivityScore().getValue();
         double calorieIntake = TDEE - 750;
 
+        return calorieIntake;
+    }
+    public double gainWeightCalculator(){
+
+        double BMR = calculateBMR();
+        double TDEE = BMR * getActivityScore().getValue();
+        double calorieIntake = TDEE + 275;
 
         return calorieIntake;
     }
