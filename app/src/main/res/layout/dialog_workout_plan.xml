@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/imageView16"
-        android:layout_width="400dp"
+        android:layout_width="350dp"
         android:layout_height="400dp"
         android:background="@drawable/dialog_suggusted_plan"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,25 +21,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sugguested_workout_plan"
-        android:textSize="25dp"
-        android:textColor="@color/off_white"
         android:textAppearance="@color/soft_purple_glow"
+        android:textColor="@color/soft_blue"
+        android:textSize="30dp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.268"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
         app:layout_constraintTop_toTopOf="@+id/imageView16" />
 
     <TextView
         android:id="@+id/name_workout_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="52dp"
         android:hint="Name"
         android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="16.5sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
         app:layout_constraintTop_toTopOf="@+id/imageView16" />
 
     <TextView
@@ -52,8 +54,8 @@
         android:textColor="@color/black"
         android:textSize="16.5sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/name_workout_dialog" />
 
     <TextView
@@ -66,8 +68,8 @@
         android:textColor="@color/black"
         android:textSize="14.5sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/age_workout_dialog" />
 
     <TextView
@@ -94,19 +96,134 @@
         android:textColor="@color/black"
         android:textSize="14.5sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
     <TextView
+        android:id="@+id/goalWeight_workout_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Goal Weight:"
+        android:layout_marginTop="6dp"
+        android:hint="0"
         android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="15.5sp"
         app:layout_constraintStart_toEndOf="@+id/textView31"
         app:layout_constraintTop_toBottomOf="@+id/weight_workout_dialog" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Best features to use to accomplish goal"
+        android:textColor="@color/quantum_bluegrey900"
+        android:textSize="17dp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/imageView16"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toBottomOf="@+id/goalWeight_workout_dialog" />
+
+    <TextView
+        android:id="@+id/featureName_workout_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:hint="Feature name"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="14.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+    <TextView
+        android:id="@+id/calories_statement_Burn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Daily Calories to Burn:"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="14.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toBottomOf="@+id/featureName_workout_dialog" />
+    <TextView
+        android:id="@+id/calories_statement_Consume"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Daily Calories to Eat:"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="14.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toBottomOf="@+id/featureName_workout_dialog" />
+
+    <TextView
+        android:id="@+id/calories_workout_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="0"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="15.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toEndOf="@+id/calories_statement_Burn"
+        app:layout_constraintTop_toBottomOf="@+id/featureName_workout_dialog" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="# of Workout Days:"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="14.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.004"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toBottomOf="@+id/calories_statement_Burn" />
+
+    <TextView
+        android:id="@+id/days_workout_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="0"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="15.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView33"
+        app:layout_constraintTop_toBottomOf="@+id/calories_workout_dialog" />
+
+    <Button
+        android:id="@+id/ok_workout_dialog"
+        android:layout_width="70dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/custom_color_button"
+        android:text="ok"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView16"
+        app:layout_constraintEnd_toEndOf="@+id/imageView16"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toBottomOf="@+id/days_workout_dialog"
+        app:layout_constraintVertical_bias="0.062" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

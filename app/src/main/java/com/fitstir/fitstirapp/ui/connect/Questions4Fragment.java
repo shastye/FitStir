@@ -21,12 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestion4Binding;
 import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.classes.UserProfileData;
 import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
@@ -47,30 +49,25 @@ public class Questions4Fragment extends Fragment {
     private DatabaseReference dbRef;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
-    private EditText fullName;
-    private EditText setEmail;
-    private EditText setPassword;
-    private EditText confirmPassword;
-    private RadioButton male;
-    private RadioButton female;
-    private EditText height_ft;
-    private EditText height_in;
-    private EditText weight;
-    private EditText goal_weight;
+    private EditText fullName,confirmPassword,setEmail,setPassword;
+    private RadioButton male, female;
+    private EditText height_ft, height_in,weight,goal_weight;
     private ImageButton dob;
-    private TextView age;
+    private TextView age, userName, userAge, userWeight, userWeightGoal,
+            featureName, calorieAmount, caloriesConsume_TV, caloriesBurn_TV, days;
     private FragmentQuestion4Binding binding;
+    private View dialog;
+    private Button ok_Dialog;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ConnectViewModel connectViewModel =
-                new ViewModelProvider(this).get(ConnectViewModel.class);
+
+        ConnectViewModel connectViewModel = new ViewModelProvider(requireActivity()).get(ConnectViewModel.class);
 
         binding = FragmentQuestion4Binding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
 
@@ -92,7 +89,17 @@ public class Questions4Fragment extends Fragment {
         age = root.findViewById(R.id.age_view);
         male = root.findViewById(R.id.button_male);
         female = root.findViewById(R.id.button_female);
-
+        userName = root.findViewById(R.id.name_workout_dialog);
+        userAge = root.findViewById(R.id.age_workout_dialog);
+        userWeight = root.findViewById(R.id.weight_workout_dialog);
+        userWeightGoal = root.findViewById(R.id.goalWeight_workout_dialog);
+        featureName = root.findViewById(R.id.featureName_workout_dialog);
+        calorieAmount = root.findViewById(R.id.calories_workout_dialog);
+        caloriesConsume_TV = root.findViewById(R.id.calories_statement_Consume);
+        caloriesBurn_TV = root.findViewById(R.id.calories_statement_Burn);
+        days = root.findViewById(R.id.days_workout_dialog);
+        dialog = root.findViewById(R.id.workout_plan);
+        ok_Dialog = root.findViewById(R.id.ok_workout_dialog);
 
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,14 +118,12 @@ public class Questions4Fragment extends Fragment {
         submit.setOnClickListener(v->{
             createUser();
         });
+
         return root;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+
+
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -143,20 +148,18 @@ public class Questions4Fragment extends Fragment {
         return age;
     }
     public void createUser() {
+
+        ConnectViewModel connectViewModel = new ViewModelProvider(requireActivity()).get(ConnectViewModel.class);
+
+        String val_In = height_in.getText().toString();
         String fName = fullName.getText().toString();
         String email = setEmail.getText().toString();
         String pass = setPassword.getText().toString();
         String confirm_pass = confirmPassword.getText().toString();
         String val_Ft = height_ft.getText().toString();
-        int finalFt = Integer.parseInt(val_Ft);
-        String val_In = height_in.getText().toString();
-        int finalIn = Integer.parseInt(val_In);
-        String val_Wt = weight.getText().toString();
-        int finalWt = Integer.parseInt(val_Wt);
-        String val_GWt = goal_weight.getText().toString();
-        int finalGWt = Integer.parseInt(val_GWt);
         String val_age = age.getText().toString();
-        int finalAge = Integer.parseInt(val_age);
+        String val_GWt = goal_weight.getText().toString();
+        String val_Wt = weight.getText().toString();
 
         final Drawable warning = AppCompatResources.getDrawable(requireContext(),R.drawable.baseline_warning_amber_24);
         warning.setBounds(0,0, warning.getIntrinsicWidth(),warning.getIntrinsicHeight());
@@ -169,68 +172,130 @@ public class Questions4Fragment extends Fragment {
                     {
                         if(pass.matches(confirm_pass))
                         {
-                            if(finalWt > 55)
+                            if(!val_Wt.isEmpty())
                             {
-                                if(finalGWt > 55)
+                                if(!val_GWt.isEmpty())
                                 {
-                                    auth.createUserWithEmailAndPassword(email, pass)
-                                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                                    Boolean radioBtnState = male.isChecked();
-                                                    Boolean radioBtnState_female = female.isChecked();
+                                    if(!val_Ft.isEmpty())
+                                    {
+                                        if(!val_In.isEmpty())
+                                        {
+                                          if(!val_age.isEmpty())
+                                          {
+                                              int finalAge = Integer.parseInt(val_age);
 
-                                                    if(radioBtnState == true)
-                                                    {
-                                                        final String uid = auth.getCurrentUser().getUid();
-                                                        UserProfileData user = new UserProfileData(fName,email,pass,"male", finalFt, finalIn, finalWt, finalGWt, finalAge);
-                                                        if(uid != null)
-                                                        {
-                                                            dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
-                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), user.get_Weight());
+                                              if(finalAge >= 14)
+                                              {
+                                                  int finalFt = Integer.parseInt(val_Ft);
+                                                  int finalIn = Integer.parseInt(val_In);
+                                                  int finalWt = Integer.parseInt(val_Wt);
+                                                  int finalGWt = Integer.parseInt(val_GWt);
 
-                                                                    Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
-                                                                    Intent myIntent = new Intent(getActivity(), MainActivity.class);
-                                                                    Objects.requireNonNull(getActivity()).startActivity(myIntent);
-                                                                }
-                                                            }).addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    Toast.makeText(getActivity(), "Sign Up Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            });
-                                                        }
-                                                    }
-                                                    else if(radioBtnState_female == true)
-                                                    {
-                                                        final String uid = auth.getCurrentUser().getUid();
-                                                        UserProfileData user = new UserProfileData(fName,email,pass,"female", finalFt, finalIn, finalWt, finalGWt, finalAge);
-                                                        user.addWeightData(finalWt);
+                                                  auth.createUserWithEmailAndPassword(email, pass)
+                                                          .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                              @Override
+                                                              public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                  Boolean radioBtnState = male.isChecked();
+                                                                  Boolean radioBtnState_female = female.isChecked();
 
-                                                        if(uid != null) {
-                                                            dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
-                                                                    Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), user.get_Weight());
+                                                                  if(radioBtnState == true)
+                                                                  {
+                                                                      final String uid = auth.getCurrentUser().getUid();
+                                                                      UserProfileData user = new UserProfileData(fName,email,pass,"male", finalFt, finalIn, finalWt, finalGWt, finalAge);
+                                                                      String age = String.valueOf(finalAge);
+                                                                      String weight = String.valueOf(finalWt);
+                                                                      String goalWeight = String.valueOf(finalGWt);
+                                                                      String height = String.valueOf(finalFt);
 
-                                                                    Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
-                                                                    Intent myIntent = new Intent(getActivity(), MainActivity.class);
-                                                                    Objects.requireNonNull(getActivity()).startActivity(myIntent);
-                                                                }
-                                                            }).addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    Toast.makeText(getActivity(), "Sign Up Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            });
-                                                        }
-                                                    }
-                                                }
-                                            });
+                                                                      //set viewModel for suggested workout plan data sharing
+                                                                      connectViewModel.setUserName(fName);
+                                                                      connectViewModel.setIsFemale(false);
+                                                                      connectViewModel.setAge(age);
+                                                                      connectViewModel.setWeight(weight);
+                                                                      connectViewModel.setGoalWeight(goalWeight);
+                                                                      connectViewModel.setUserHeight(height);
+
+                                                                      if(uid != null)
+                                                                      {
+                                                                          dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                              @Override
+                                                                              public void onComplete(@NonNull Task<Void> task) {
+                                                                                  Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
+                                                                                  Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), user.get_Weight());
+
+                                                                                  Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
+                                                                                  Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_connect)
+                                                                                          .navigate(R.id.action_questions4Fragment_to_workoutPlanFragment);
+                                                                              }
+                                                                          }).addOnFailureListener(new OnFailureListener() {
+                                                                              @Override
+                                                                              public void onFailure(@NonNull Exception e) {
+                                                                                  Toast.makeText(getActivity(), "Sign Up Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
+                                                                              }
+                                                                          });
+                                                                      }
+                                                                  }
+                                                                  else if(radioBtnState_female == true)
+                                                                  {
+                                                                      final String uid = auth.getCurrentUser().getUid();
+                                                                      UserProfileData user = new UserProfileData(fName,email,pass,"female", finalFt, finalIn, finalWt, finalGWt, finalAge);
+                                                                      user.addWeightData(finalWt);
+
+                                                                      String age = String.valueOf(finalAge);
+                                                                      String weight = String.valueOf(finalWt);
+                                                                      String goalWeight = String.valueOf(finalGWt);
+                                                                      String height = String.valueOf(finalFt);
+
+                                                                      //set viewModel for suggested workout plan data sharing
+                                                                      connectViewModel.setUserName(fName);
+                                                                      connectViewModel.setIsFemale(true);
+                                                                      connectViewModel.setAge(age);
+                                                                      connectViewModel.setWeight(weight);
+                                                                      connectViewModel.setGoalWeight(goalWeight);
+                                                                      connectViewModel.setUserHeight(height);
+
+                                                                      if(uid != null) {
+                                                                          dbRef.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                              @Override
+                                                                              public void onComplete(@NonNull Task<Void> task) {
+                                                                                  Methods.addGoalToFirebase(GoalTypes.WEIGHT_CHANGE, user.getGoal_weight());
+                                                                                  Methods.addDataToGoal(GoalTypes.WEIGHT_CHANGE, Calendar.getInstance().getTime(), user.get_Weight());
+
+                                                                                  Toast.makeText(getActivity(), "Sign In Complete", Toast.LENGTH_SHORT).show();
+                                                                                  Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_connect)
+                                                                                          .navigate(R.id.action_questions4Fragment_to_workoutPlanFragment);
+                                                                              }
+                                                                          }).addOnFailureListener(new OnFailureListener() {
+                                                                              @Override
+                                                                              public void onFailure(@NonNull Exception e) {
+                                                                                  Toast.makeText(getActivity(), "Sign Up Failed...Please Try Again!!!", Toast.LENGTH_SHORT).show();
+                                                                              }
+                                                                          });
+                                                                      }
+                                                                  }
+                                                              }
+                                                          });
+
+                                              }
+                                              else
+                                              {
+                                                  age.setError("User age requires Parental Consent", warning);
+                                              }
+                                          }
+                                          else
+                                          {
+                                              age.setError("Must enter age", warning);
+                                          }
+                                        }
+                                        else
+                                        {
+                                            height_in.setError("Must enter inches for accurate results", warning);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        height_ft.setError("Must enter height for accurate results", warning);
+                                    }
                                 }
                                 else
                                 {

@@ -63,4 +63,34 @@ public class Constants {
         public static final String BCCIRCUIT ="BootCampCircuit";
         public static final String CHALLENGE = "FitChallenge";
     }
+
+    public static final class ACTIVITY{
+        public static final int NON_ACTIVE = 1;
+        public static final int LIGHT_ACTIVE = 3;
+        public static final int ACTIVE = 6;
+    }
+
+    public static final class INTENSITY{
+        public static final int TONE_UP = 1;
+        public static final int BULK_UP = 3;
+        public static final int STRENGTHEN = 2;
+    }
+
+    public static final class GOAL{
+        public static final int GAIN_WEIGHT = 5;
+        public static final int MAINTAIN = 0;
+        public static final int GAIN_MUSCLE = 35;
+        public static final int MODIFY_DIET = 1;
+        public static final int MANAGE_STRESS = 20;
+        public static final int INCREASE_CARDIO = 2;
+        public static final int LOSE_WEIGHT = 50;
+    }
+    public static final class WORKOUT_DAYS{
+        public static final int defaultDays = 3;
+        public static final int  intenseDays = 6;
+        public static final int liteDays = 2;
+        public static final int loseMinDays = 4;
+        public static final int loseMedDays = 5;
+        public static final int loseMaxDays =6;
+    }
 }

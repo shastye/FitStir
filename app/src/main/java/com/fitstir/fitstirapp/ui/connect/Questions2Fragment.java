@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestionBinding;
 import com.fitstir.fitstirapp.databinding.FragmentQuestions2Binding;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 
 import java.util.Objects;
 
@@ -26,8 +27,7 @@ public class Questions2Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ConnectViewModel connectViewModel =
-                new ViewModelProvider(this).get(ConnectViewModel.class);
+        ConnectViewModel connectViewModel = new ViewModelProvider(requireActivity()).get(ConnectViewModel.class);
 
         binding = FragmentQuestions2Binding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -38,14 +38,17 @@ public class Questions2Fragment extends Fragment {
         //navigate to next questions
         ImageView toneUp = root.findViewById(R.id.button_tone_up);
         toneUp.setOnClickListener(v->{
+            connectViewModel.setUserLevelScore(Constants.INTENSITY.TONE_UP);
             Navigation.findNavController(v).navigate(R.id.action_questions2Fragment_to_questions3Fragment);
         });
         ImageView bulkUp = root.findViewById(R.id.button_bulk_up);
         bulkUp.setOnClickListener(v->{
+            connectViewModel.setUserLevelScore(Constants.INTENSITY.BULK_UP);
             Navigation.findNavController(v).navigate(R.id.action_questions2Fragment_to_questions3Fragment);
         });
         ImageView strength = root.findViewById(R.id.button_strength);
         strength.setOnClickListener(v->{
+            connectViewModel.setUserLevelScore(Constants.INTENSITY.STRENGTHEN);
             Navigation.findNavController(v).navigate(R.id.action_questions2Fragment_to_questions3Fragment);
         });
 
@@ -59,9 +62,11 @@ public class Questions2Fragment extends Fragment {
 
         return root;
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
 }

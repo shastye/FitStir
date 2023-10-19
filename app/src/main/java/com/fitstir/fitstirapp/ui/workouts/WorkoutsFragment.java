@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentWorkoutsBinding;
+import com.fitstir.fitstirapp.ui.connect.ConnectViewModel;
 import com.fitstir.fitstirapp.ui.settings.SettingsViewModel;
 import com.fitstir.fitstirapp.ui.utility.classes.SectionGridAdapter;
 import com.fitstir.fitstirapp.ui.utility.classes.SectionItem;
@@ -24,11 +26,13 @@ import java.util.ArrayList;
 public class WorkoutsFragment extends Fragment {
 
     private FragmentWorkoutsBinding binding;
+    private View dialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        WorkoutsViewModel workoutsViewModel =
-                new ViewModelProvider(this).get(WorkoutsViewModel.class);
+
+        WorkoutsViewModel workoutsViewModel = new ViewModelProvider(requireActivity()).get(WorkoutsViewModel.class);
+
 
         binding = FragmentWorkoutsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -37,7 +41,6 @@ public class WorkoutsFragment extends Fragment {
         workoutsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         // Addition Text Here
-
         ((SettingsViewModel) new ViewModelProvider(requireActivity()).get(SettingsViewModel.class)).setPreviousPage(0);
 
         SectionGridAdapter sectionGridAdapter = new SectionGridAdapter(getWorkoutsSections(), root);
@@ -47,7 +50,7 @@ public class WorkoutsFragment extends Fragment {
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch(position) {
+                switch (position) {
                     case 0:
                         Navigation.findNavController(view).navigate(R.id.action_navigation_workouts_to_navigation_run_club);
                         break;
@@ -82,7 +85,6 @@ public class WorkoutsFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 
 
     private ArrayList<SectionItem> getWorkoutsSections() {

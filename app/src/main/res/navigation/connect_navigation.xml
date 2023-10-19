@@ -105,6 +105,15 @@
         android:id="@+id/questions4Fragment"
         android:name="com.fitstir.fitstirapp.ui.connect.Questions4Fragment"
         android:label="fragment_question4"
-        tools:layout="@layout/fragment_question4" />
+        tools:layout="@layout/fragment_question4" >
+        <action
+            android:id="@+id/action_questions4Fragment_to_workoutPlanFragment"
+            app:destination="@id/workoutPlanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutPlanFragment"
+        android:name="com.fitstir.fitstirapp.ui.connect.WorkoutPlanFragment"
+        android:label="fragment_workout_plan"
+        tools:layout="@layout/fragment_workout_plan" />
 
 </navigation>

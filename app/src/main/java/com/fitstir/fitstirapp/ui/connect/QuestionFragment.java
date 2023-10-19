@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import com.fitstir.fitstirapp.MainActivity;
 import com.fitstir.fitstirapp.R;
 import com.fitstir.fitstirapp.databinding.FragmentQuestionBinding;
+import com.fitstir.fitstirapp.ui.utility.Constants;
 
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class QuestionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ConnectViewModel connectViewModel =
-                new ViewModelProvider(this).get(ConnectViewModel.class);
+                new ViewModelProvider(requireActivity()).get(ConnectViewModel.class);
 
         binding = FragmentQuestionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -38,37 +39,41 @@ public class QuestionFragment extends Fragment {
         // navigate to correct message
         Button loseWeight = root.findViewById(R.id.button_lose_weight);
         loseWeight.setOnClickListener(v -> {
-
+            connectViewModel.setUserGoals(Constants.GOAL.LOSE_WEIGHT);
+            connectViewModel.setIsLoseWeight(true);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoard2Fragment2);
         });
         Button gainWeight = root.findViewById(R.id.button_gain_weight);
         gainWeight.setOnClickListener(v -> {
-
+            connectViewModel.setUserGoals(Constants.GOAL.GAIN_WEIGHT);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
         });
         Button maintain = root.findViewById(R.id.button_Maintain_weight);
         maintain.setOnClickListener(v -> {
-
+            connectViewModel.setUserGoals(Constants.GOAL.MAINTAIN);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
         });
         Button gainMuscle = root.findViewById(R.id.button_gain_muscle);
         gainMuscle.setOnClickListener(v -> {
-
+            connectViewModel.setUserGoals(Constants.GOAL.GAIN_MUSCLE);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoardFragment2);
         });
         Button diet = root.findViewById(R.id.button_modify_diet);
         diet.setOnClickListener(v -> {
-
+            connectViewModel.setUserGoals(Constants.GOAL.MODIFY_DIET);
+            connectViewModel.setIsDiet(true);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messageBoard2Fragment2);
         });
         Button stress = root.findViewById(R.id.button_manage_stress);
         stress.setOnClickListener(v -> {
-
+            connectViewModel.setIsManageStress(true);
+            connectViewModel.setUserGoals(Constants.GOAL.MANAGE_STRESS);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messagBoard3Fragment);
         });
         Button cardio = root.findViewById(R.id.button_cardio);
         cardio.setOnClickListener(v -> {
-
+            connectViewModel.setIsCardioGoal(true);
+            connectViewModel.setUserGoals(Constants.GOAL.INCREASE_CARDIO);
             Navigation.findNavController(v).navigate(R.id.action_navigation_question_to_messagBoard3Fragment);
         });
 

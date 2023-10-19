@@ -336,4 +336,8 @@
             android:text="Female" />
     </RadioGroup>
 
+    <include layout="@layout/dialog_workout_plan"
+        android:visibility="invisible"
+       />
+
 </androidx.constraintlayout.motion.widget.MotionLayout>
