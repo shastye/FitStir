@@ -201,7 +201,7 @@ public class WeightLossFragment extends Fragment {
         int goal = weightLossViewModel.getWeightGoal().getValue();
         goalWeightTextView.setText(String.valueOf(goal));
 
-        int index = weightLossViewModel.getWeightData().getValue().size()-1 ;
+        int index = weightLossViewModel.getWeightData().getValue().size() - 1 ;
         double curr = weightLossViewModel.getWeightData().getValue().get(index).second;
         currWeightTextView.setText(decimalFormat.format(curr));
 
@@ -224,6 +224,9 @@ public class WeightLossFragment extends Fragment {
             unitsTextView = itemView.findViewById(R.id.layout_units);
 
             deleteButton = itemView.findViewById(R.id.layout_delete_button);
+            if (weightLossViewModel.getWeightData().getValue().size() == 1) {
+                deleteButton.setVisibility(View.GONE);
+            }
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

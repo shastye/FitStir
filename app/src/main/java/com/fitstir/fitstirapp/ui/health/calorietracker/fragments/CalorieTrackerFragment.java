@@ -113,7 +113,7 @@ public class CalorieTrackerFragment extends Fragment {
 
 
         //region Get data from Firebase ////////////////////////////////////////////////////////////
-        stringUserID = "p1USaMf6PDggBROK1t3pDSqCkiq2";//FirebaseAuth.getInstance().getCurrentUser().getUid();
+        stringUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DatabaseReference thisUser = FirebaseDatabase.getInstance()
                 .getReference("Users")

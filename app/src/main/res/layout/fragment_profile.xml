@@ -74,7 +74,7 @@
             android:layout_height="24dp"
             android:layout_margin="12dp"
             android:foreground="@drawable/ic_pencil_black_200dp"
-            android:foregroundTint="?attr/colorOnSecondary" />
+            android:foregroundTint="?attr/colorOnPrimary" />
     </androidx.cardview.widget.CardView>
 
 

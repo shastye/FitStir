@@ -45,14 +45,14 @@ public class EdamamAPI_FoodDatabaseParser {
         this.health = health;
 
         String tCalories;
-        if (minCalories == "" && maxCalories == "") {
+        if (minCalories.trim().equals("") && maxCalories.trim().equals("")) {
             tCalories = "";
-        } else if (minCalories == "") {
-            tCalories = maxCalories;
-        } else if (maxCalories == "") {
-            tCalories = minCalories + "%2B";
+        } else if (minCalories.trim().equals("")) {
+            tCalories = maxCalories.trim();
+        } else if (maxCalories.trim().equals("")) {
+            tCalories = minCalories.trim() + "%2B";
         } else {
-            tCalories = minCalories + "-" + maxCalories;
+            tCalories = minCalories.trim() + "-" + maxCalories.trim();
         }
         this.calories = tCalories;
 
@@ -63,14 +63,14 @@ public class EdamamAPI_FoodDatabaseParser {
                 "ingr=" + quantity + "%20" + unit + "%20" + ingredient
                 + "&" + "nutrition-type=" + nutritionType;
 
-        if (health != "") {
-            requestBody += "&" + "health=" + health;
+        if (!health.trim().equals("")) {
+            requestBody += "&" + "health=" + health.trim();
         }
-        if (this.calories != "") {
-            requestBody += "&" + "calories=" + this.calories;
+        if (!this.calories.trim().equals("")) {
+            requestBody += "&" + "calories=" + this.calories.trim();
         }
-        if (category != "") {
-            requestBody += "&" + "category=" + category;
+        if (!category.trim().equals("")) {
+            requestBody += "&" + "category=" + category.trim();
         }
 
         client = new OkHttpClient();

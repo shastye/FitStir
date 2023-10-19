@@ -31,6 +31,8 @@ Features
 There are a variety of features available:
 * The ability to create an account/log in to an existing account.
   * (insert picture)
+* The ability to view and edit profile information
+* The ability to view and edit various application settings
 * Various workout tracking options, separated by type of workout:
   * Running: Keeps track of any running workouts data
   * Upper Body: Keeps track of any upper body workouts data
@@ -41,15 +43,12 @@ There are a variety of features available:
   * (insert picture)
 * Various health tracking options, separated by category:
   * Calorie Tracking: Keeps track of caloric intake via meals
-  * Food Guide: Provides a recommended food guide based on chosen goals
   * Weight Loss: Keeps track of any weight data
   * Recipes: Provides recipes for the user to utilize
   * Finding a Dietitian: Provides a map already filtered to dietitians new the user
   * Logging a Diary: Provides a space where the user can keep track of how they are feeling and any daily/weekly goals they might have
   * (insert picture)
 * A sections for adding, viewing, and editting goals for the various categories mentioned above. Each goal provides a graph using quantitative data from logged values (whether from the workouts, or from the health sections).
-  * (insert picture)
-* A section for users to find videos regarding exercise techniques, recipes, or fitness in general.
   * (insert picture)
 
 Technologies
@@ -118,7 +117,7 @@ Team Members:
 Project Status
 --------------
 
-FitStir is currently still in production. About a third of the features are currently created.
+Version 1.0.0 is fully functional.
 
 Acknowledgments
 ---------------

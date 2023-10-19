@@ -241,16 +241,20 @@ public class MainActivity extends AppCompatActivity  {
 
         if(client != null || user != null){
             auth.signOut();
+            user = FirebaseAuth.getInstance().getCurrentUser();
+
             Auth.GoogleSignInApi.signOut(client.asGoogleApiClient()).setResultCallback(
                     new ResultCallback<Status>() {
                         @Override
                         public void onResult(@NonNull Status status) {
+                            auth.signOut();
                             Methods.navigateToLogInActivity(getApplicationContext());
                         }
                     });
             client.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
+                    auth.signOut();
                     Methods.navigateToLogInActivity(getApplicationContext());
                 }
             });

@@ -106,13 +106,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:layout_margin="5dp">
+                android:layout_margin="2dp">
 
                 <TextView
                     android:id="@+id/ctgoal_goal_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="2000"
                     android:textSize="28sp"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"/>
@@ -132,20 +132,20 @@
                 android:textSize="28sp"
                 android:textColor="?attr/colorPrimary"
                 android:textStyle="bold"
-                android:layout_margin="5dp"/>
+                android:layout_margin="2dp"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:layout_margin="5dp">
+                android:layout_margin="2dp">
     
                 <TextView
                     android:id="@+id/ctgoal_used_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="2000"
                     android:textSize="28sp"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"/>
@@ -165,20 +165,20 @@
                 android:textSize="28sp"
                 android:textColor="?attr/colorPrimary"
                 android:textStyle="bold"
-                android:layout_margin="5dp"/>
+                android:layout_margin="2dp"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:layout_margin="5dp">
+                android:layout_margin="2dp">
 
                 <TextView
                     android:id="@+id/ctgoal_spent_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="2000"
                     android:textSize="28sp"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"/>
@@ -198,20 +198,20 @@
                 android:textSize="28sp"
                 android:textColor="?attr/colorPrimary"
                 android:textStyle="bold"
-                android:layout_margin="5dp"/>
+                android:layout_margin="2dp"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:layout_margin="5dp">
+                android:layout_margin="2dp">
 
                 <TextView
                     android:id="@+id/ctgoal_remaining_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="2000"
                     android:textSize="28sp"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"/>
