@@ -241,11 +241,11 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
                 timer.stop();
                 miniTimer.stop();
 
-                //LatLng loc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,13));
 
                 //getting total distance, formatting and displaying to screen
                 distanceCal += currentRunner.calculateDistance(pathPoint, totalDistance);
+
+
                 //currentRunner.setTotalDistance(distanceCal);
                 float formatted = Float.valueOf(decimalFormat.format(distanceCal));
                 String totalDistance = String.valueOf(formatted);
@@ -255,6 +255,8 @@ public class RunClubFragment extends Fragment implements OnMapReadyCallback, RvI
                 //getting average pace of runner to set data and viewModel
                 double avgPace = 0;
                 avgPace += currentRunner.calculateSpeed(distanceCal,converted);
+
+
                 //currentRunner.setAvgPace(avgPace);
                 viewRuns.setAvgPace(avgPace);
 

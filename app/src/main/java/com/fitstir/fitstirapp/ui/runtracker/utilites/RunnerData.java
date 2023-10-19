@@ -15,7 +15,10 @@ import com.fitstir.fitstirapp.ui.goals.Goal;
 import com.fitstir.fitstirapp.ui.utility.Constants;
 import com.fitstir.fitstirapp.ui.utility.Methods;
 import com.fitstir.fitstirapp.ui.utility.enums.GoalTypes;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -149,6 +152,8 @@ public class RunnerData {
     }
     public void saveRouteImage(GoogleMap map, Context context, RunViewModel viewRun){
 
+        CameraUpdate update = CameraUpdateFactory.zoomOut();
+        map.moveCamera(update);
         map.snapshot(new GoogleMap.SnapshotReadyCallback() {
             @Override
             public void onSnapshotReady(@Nullable Bitmap bitmap) {

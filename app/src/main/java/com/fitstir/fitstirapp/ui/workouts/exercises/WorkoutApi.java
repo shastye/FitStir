@@ -18,9 +18,21 @@ import java.util.List;
 
 public class WorkoutApi {
     private String bodyPart, image, gifURL,
-            directions, target, exercise, equipment, date;
+            directions, target, exercise, equipment, date, vid_Url, vid_Alt, vid_Secondary;
     private double calories_Burned;
 
+
+    public String getVid_Url() {
+        return vid_Url;
+    }
+
+    public String getVid_Alt() {
+        return vid_Alt;
+    }
+
+    public String getVid_Secondary() {
+        return vid_Secondary;
+    }
 
     public String getDate() {return date;}
     public Double getCalories_Burned() {return calories_Burned;}
@@ -92,6 +104,17 @@ public class WorkoutApi {
         this.gifURL = gifURL;
     }
 
+    public void setVid_Url(String vid_Url) {
+        this.vid_Url = vid_Url;
+    }
+
+    public void setVid_Alt(String vid_Alt) {
+        this.vid_Alt = vid_Alt;
+    }
+
+    public void setVid_Secondary(String vid_Secondary) {
+        this.vid_Secondary = vid_Secondary;
+    }
 
     public void fetchData(ArrayList<WorkoutApi> arrayList, String string, workoutAdapter adapter){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
