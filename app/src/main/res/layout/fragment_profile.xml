@@ -6,21 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.fragments.ProfileFragment">
 
-    <TextView
-        android:id="@+id/text_user_id_profile"
+    <LinearLayout
+        android:id="@+id/user_id_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="User ID: 785216"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_button"
+        android:clickable="false"
+        android:backgroundTint="@color/off_white"
+        android:layout_marginTop="60dp"
+        android:layout_marginHorizontal="20dp"
+        android:padding="20dp"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.10" />
+        android:elevation="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="User ID: "/>
+
+        <TextView
+            android:id="@+id/text_user_id_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text=""/>
+    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_cardView"
@@ -29,11 +44,12 @@
         app:cardElevation="50dp"
         app:cardBackgroundColor="?attr/colorPrimary"
         app:cardCornerRadius="250dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_user_id_profile"
-        app:layout_constraintVertical_bias="0.10">
+        app:layout_constraintTop_toBottomOf="@id/user_id_row"
+        app:layout_constraintVertical_bias="0.00">
 
         <androidx.cardview.widget.CardView
             android:layout_width="190dp"
@@ -77,129 +93,150 @@
             android:foregroundTint="?attr/colorOnPrimary" />
     </androidx.cardview.widget.CardView>
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profile_textbox"
-        android:layout_width="320dp"
-        android:layout_height="300dp"
-        android:outlineProvider="none"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_cardView"
-        app:layout_constraintVertical_bias="0.30">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="40dp"
+            android:padding="20dp"
+            android:background="@drawable/rounded_a80_section_background"
+            android:divider="@drawable/empty_short_divider"
+            android:showDividers="middle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_cardView">
 
-            <ImageView
-                android:id="@+id/textbox_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/fiveline_textblock_background"/>
-
-            <ImageView
-                android:id="@+id/name_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_person_black_200dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp" />
-
-            <TextView
-                android:id="@+id/text_name"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jane Doe"
-                android:textSize="20sp"
-                android:textAlignment="viewStart"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="30dp" />
+                android:layout_height="wrap_content" >
 
-            <ImageView
-                android:id="@+id/age_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_age_black_200dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="77dp" />
+                <ImageView
+                    android:id="@+id/name_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/ic_person_black_200dp" />
 
-            <TextView
-                android:id="@+id/text_age"
+                <TextView
+                    android:id="@+id/text_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jane Doe"
+                    android:textColor="@color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/name_image"
+                    android:textSize="20sp"
+                    android:textAlignment="viewStart"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="21 years old"
-                android:textSize="20sp"
-                android:textAlignment="viewStart"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="83dp" />
+                android:layout_height="wrap_content" >
 
-            <ImageView
-                android:id="@+id/height_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_height_black_200dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="128dp" />
+                <ImageView
+                        android:id="@+id/age_image"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_age_black_200dp" />
 
-            <TextView
-                android:id="@+id/text_height_ft"
+                <TextView
+                    android:id="@+id/text_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="21 years old"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/age_image"
+                    android:textSize="20sp"
+                    android:textAlignment="viewStart" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="135dp"
-                android:text="5 feet"
-                android:textAlignment="viewStart"
-                android:textSize="20sp" />
+                android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/text_height_in"
+                <ImageView
+                    android:id="@+id/height_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/ic_height_black_200dp"/>
+
+                <TextView
+                    android:id="@+id/text_height_ft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/height_image"
+                    android:text="5 feet"
+                    android:textAlignment="viewStart"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/text_height_in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/text_height_ft"
+                    android:text="5 inch"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="135dp"
-                android:layout_marginTop="135dp"
-                android:text="5 inch"
+                android:layout_height="wrap_content" >
 
-                android:textSize="20sp" />
+                <ImageView
+                    android:id="@+id/weight_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_weight_black_200dp"
+                    android:layout_alignParentStart="true" />
 
-            <ImageView
-                android:id="@+id/weight_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_weight_black_200dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="179dp" />
+                <TextView
+                    android:id="@+id/text_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="148 lbs"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textAlignment="viewStart"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/weight_image" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/text_weight"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="148 lbs"
-                android:textSize="20sp"
-                android:textAlignment="viewStart"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="183.5dp" />
+                android:layout_height="wrap_content" >
 
-            <ImageView
-                android:id="@+id/email_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_email_black_200dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="230dp" />
+                <ImageView
+                    android:id="@+id/email_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_email_black_200dp"
+                    android:layout_alignParentStart="true" />
 
-            <TextView
-                android:id="@+id/text_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="janedoe-177@gmail.com"
-                android:textSize="18sp"
-                android:textAlignment="viewStart"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="235dp" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/text_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="janedoe-177@gmail.com"
+                    android:textSize="18sp"
+                    android:textAlignment="viewStart"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/email_image" />
+            </RelativeLayout>
+        </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

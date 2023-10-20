@@ -75,6 +75,7 @@ public class ProfileFragment extends Fragment {
                     String tWeight = value.get_Weight() + " lbs";
                     binding.textWeight.setText(tWeight);
                     binding.textEmail.setText(value.getEmail());
+                    binding.textUserIdProfile.setText(value.getUser().getUid());
 
                     binding.profileImage.setImageBitmap(settingsViewModel.getAvatar().getValue());
                 }
